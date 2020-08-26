@@ -7,6 +7,9 @@ export const STYLE_SHEET = StyleSheet.create({
   header: {
     fontSize: 30,
   },
+  smallHeader: {
+    fontSize : 24
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
