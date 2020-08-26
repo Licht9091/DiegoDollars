@@ -44,3 +44,7 @@ class Goal {
     let goalAmount; // float
   }
 }
+
+export function getUser() {
+  return User();
+}
