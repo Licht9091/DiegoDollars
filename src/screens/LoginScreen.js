@@ -4,7 +4,7 @@ import { Text, View, Button } from 'react-native';
 import navigateAndReset from '../helper/functions';
 import { STYLE_SHEET } from '../styles/stylesheet';
 import { TextInput } from 'react-native-gesture-handler';
-import { AppContext } from '../helper/context';
+import AppContext from '../helper/context';
 
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState('');
