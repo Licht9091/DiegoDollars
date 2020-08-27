@@ -6,18 +6,23 @@ import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import UserScreen from "./screens/UserScreen";
+import { User } from "./helper/api";
+import { AppContext } from "./helper/context";
 
 const Stack = createStackNavigator();
+const user = new User();
 
 function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
-        <Stack.Screen name="User" component={UserScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <AppContext>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="User" component={UserScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AppContext>
   );
 }
 
