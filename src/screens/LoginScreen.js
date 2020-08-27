@@ -12,12 +12,9 @@ export default function LoginScreen({ navigation }) {
 
   const Context = useContext(AppContext);
 
-  //console.log(options);
-  console.log(Context);
-
   const clickFunctionLogin = async () => {
-    console.log(user);
-    const loginSucess = await user.logIn(username, password);
+    const loginSucess = Context.User.logIn(username, password);
+
     if (loginSucess) {
       navigateAndReset(navigation, 'User');
       setUsername('');
@@ -47,7 +44,7 @@ export default function LoginScreen({ navigation }) {
 
         <Text
           style={STYLE_SHEET.notauser}
-          // onPress={() => props.navigation.navigate("Register")}
+          onPress={() => props.navigation.navigate('Register')}
         >
           {' '}
           Not a user? Register here{' '}

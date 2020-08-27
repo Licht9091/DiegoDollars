@@ -6,7 +6,7 @@ export default AppContext;
 
 export const ContextProvider = ({ children }) => {
   const [state, setState] = useState({
-    user: new User(),
+    User: new User(),
   });
 
   const setContext = (newContext) => {
