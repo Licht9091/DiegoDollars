@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Text, View, Button } from 'react-native';
 import navigateAndReset from '../helper/functions';
-import { STYLE_SHEET } from '../styles/stylesheet';
+import { STYLESHEET } from '../styles/stylesheet';
 import { TextInput } from 'react-native-gesture-handler';
 import AppContext from '../helper/context';
 
@@ -12,29 +12,37 @@ export default function LoginScreen({ navigation }) {
 
   const Context = useContext(AppContext);
 
-  const clickFunctionLogin = async () => {
+  const login = async (username = username, passsword = password) => {
     const loginSucess = Context.User.logIn(username, password);
 
     if (loginSucess) {
-      navigateAndReset(navigation, 'User');
+      navigateAndReset(navigation, 'Main');
       setUsername('');
       setPassword('');
     }
   };
 
-  return (
-    <View style={STYLE_SHEET.container}>
-      <Text style={STYLE_SHEET.header}>This is Diego Dollars :D</Text>
+  useEffect(() => {
+    // Automatically log in
+    // TODO: take this out later
+    setTimeout(() => {
+      login('test', 'test');
+    }, 1000);
+  });
 
-      <View style={STYLE_SHEET.loginbox}>
+  return (
+    <View style={STYLESHEET.container}>
+      <Text style={STYLESHEET.header}>This is Diego Dollars :D</Text>
+
+      <View style={STYLESHEET.loginbox}>
         <TextInput
-          style={STYLE_SHEET.textInput}
+          style={STYLESHEET.textInput}
           placeholder='Username'
           onChangeText={(username) => setUsername(username)}
           value={username}
         />
         <TextInput
-          style={STYLE_SHEET.textInput}
+          style={STYLESHEET.textInput}
           secureTextEntry={true}
           placeholder='Password'
           onChangeText={(password) => setPassword(password)}
@@ -43,7 +51,7 @@ export default function LoginScreen({ navigation }) {
         />
 
         <Text
-          style={STYLE_SHEET.notauser}
+          style={STYLESHEET.notauser}
           onPress={() => props.navigation.navigate('Register')}
         >
           {' '}
@@ -51,11 +59,11 @@ export default function LoginScreen({ navigation }) {
         </Text>
       </View>
 
-      <View style={STYLE_SHEET.loginbuttonbox}>
+      <View style={STYLESHEET.loginbuttonbox}>
         <Button
           title='Login'
-          style={STYLE_SHEET.loginbutton}
-          onPress={clickFunctionLogin}
+          style={STYLESHEET.loginbutton}
+          onPress={() => login()}
           disabled={username == '' || password == ''}
         />
       </View>

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import navigateAndReset from '../helper/functions';
-import { STYLE_SHEET } from '../styles/stylesheet';
+import { STYLESHEET } from '../styles/stylesheet';
 import { Text, Button, View } from 'react-native';
 import AppContext from '../helper/context';
 
@@ -23,18 +23,18 @@ export default function UserScreen({ navigation }) {
   };
 
   return (
-    <View style={STYLE_SHEET.container}>
-      <Text style={STYLE_SHEET.header}>Hello {User.getUsername()}</Text>
+    <View style={STYLESHEET.container}>
+      <Text style={STYLESHEET.header}>Hello {User.getUsername()}</Text>
       <Text>Status: {api}</Text>
-      <View style={STYLE_SHEET.loginbuttonbox}>
+      <View style={STYLESHEET.loginbuttonbox}>
         <Button
           title='TestLoggedIn'
-          style={STYLE_SHEET.loginbutton}
+          style={STYLESHEET.loginbutton}
           onPress={clickFunctionTestLoggedIn}
         />
         <Button
           title='Logout'
-          style={STYLE_SHEET.loginbutton}
+          style={STYLESHEET.loginbutton}
           onPress={clickFunctionLogout}
         />
       </View>

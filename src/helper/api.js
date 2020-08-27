@@ -1,4 +1,4 @@
-import { API_LOGIN, API_TEST_LOGGED_IN, API_LOGOUT } from "./constants";
+import { API_LOGIN, API_TEST_LOGGED_IN, API_LOGOUT } from './constants';
 
 class Transaction {
   constructor() {
@@ -19,18 +19,16 @@ export class User {
 
   logIn = async (username, password) => {
     let formdata = new FormData();
-    formdata.append("username", username);
-    formdata.append("password", password);
+    formdata.append('username', username);
+    formdata.append('password', password);
 
     const response = await fetch(API_LOGIN, {
-      method: "POST",
-      headers: { "Content-Type": "multipart/form-data" },
+      method: 'POST',
+      headers: { 'Content-Type': 'multipart/form-data' },
       body: formdata,
     });
 
-    alert(response);
-
-    if (response.includes("Successfully logged in!")) {
+    if (response.includes('Successfully logged in!')) {
       this.username = username;
       return true;
     }
@@ -38,42 +36,15 @@ export class User {
     return false;
   };
 
-  // logInOLD(username, password) {
-  //   let formdata = new FormData();
-  //   formdata.append("username", username);
-  //   formdata.append("password", password);
-
-  //   fetch(API_LOGIN, {
-  //     method: "POST",
-  //     headers: { "Content-Type": "multipart/form-data" },
-  //     body: formdata,
-  //   })
-  //     .then((response) => {
-  //       return response.text().then(function (text) {
-  //         return text;
-  //       });
-  //     })
-  //     .then((res) => {
-  //       alert(res);
-  //       // This is very much temporary until we decide on the exact return values for backend
-  //       if (res.includes("Successfully logged in!")) {
-  //         this.username = username;
-  //         return true;
-  //       }
-  //     })
-
-  //     //return false;
-  // }
-
   logOut() {
-    fetch(API_LOGOUT, { method: "GET" })
+    fetch(API_LOGOUT, { method: 'GET' })
       .then((response) => {
         return response.text().then(function (text) {
           return text;
         });
       })
       .then((res) => {
-        if (res.includes("Successfully logged out!")) {
+        if (res.includes('Successfully logged out!')) {
           return true;
         }
       });
@@ -82,7 +53,7 @@ export class User {
   }
 
   testLoggedIn() {
-    fetch(API_TEST_LOGGED_IN, { method: "GET" }).then((response) => {
+    fetch(API_TEST_LOGGED_IN, { method: 'GET' }).then((response) => {
       response.text().then(function (text) {
         return true;
       });

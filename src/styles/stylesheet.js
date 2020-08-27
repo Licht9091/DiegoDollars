@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 // Most of these current styles need to be moved to local screen, but they
 // will all probably be changed anyway.
 
-export const STYLE_SHEET = StyleSheet.create({
+export const STYLESHEET = StyleSheet.create({
   header: {
     fontSize: 30,
   },
