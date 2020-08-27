@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { STYLE_SHEET } from "../styles/stylesheet";
-import { TextInput } from "react-native-gesture-handler";
-import { Text, Button, View } from "react-native";
+import React, { useState } from 'react';
+import { STYLE_SHEET } from '../styles/stylesheet';
+import { TextInput } from 'react-native-gesture-handler';
+import { Text, Button, View } from 'react-native';
 
 export default function RegisterScreen({ navigation }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordCheck, setPasswordCheck] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordCheck, setPasswordCheck] = useState('');
 
   return (
     <View style={STYLE_SHEET.container}>
@@ -16,21 +16,21 @@ export default function RegisterScreen({ navigation }) {
       <View style={STYLE_SHEET.loginbox}>
         <TextInput
           style={STYLE_SHEET.textInput}
-          placeholder="Username"
+          placeholder='Username'
           onChangeText={(username) => setUsername(username)}
           value={username}
         />
         <TextInput
           style={STYLE_SHEET.textInput}
           secureTextEntry={true}
-          placeholder="Password"
+          placeholder='Password'
           onChangeText={(password) => setPassword(password)}
           value={password}
         />
         <TextInput
-          style={STYLE_SHEET.textInput}
+          style={STYLE_SHEET.hairline}
           secureTextEntry={true}
-          placeholder="Confirm Password"
+          placeholder='Confirm Password'
           onChangeText={(passwordCheck) => setPasswordCheck(passwordCheck)}
           value={passwordCheck}
         />
@@ -40,11 +40,11 @@ export default function RegisterScreen({ navigation }) {
 
       <View style={STYLE_SHEET.loginbuttonbox}>
         <Button
-          title="Register"
+          title='Register'
           style={STYLE_SHEET.loginbutton}
           //onPress={()}
           disabled={
-            !(password == passwordCheck) || username == "" || password == ""
+            !(password == passwordCheck) || username == '' || password == ''
           }
         />
       </View>
