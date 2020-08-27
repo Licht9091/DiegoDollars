@@ -1,40 +1,28 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Text, View, Button } from "react-native";
-import { API_LOGIN } from "../helper/constants";
 import navigateAndReset from "../helper/functions";
 import { STYLE_SHEET } from "../styles/stylesheet";
 import { TextInput } from "react-native-gesture-handler";
+import { AppContext } from "../helper/context";
 
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const clickFunctionLogin = () => {
-    let formdata = new FormData();
-    formdata.append("username", username);
-    formdata.append("password", password);
+  const Context = useContext(AppContext);
 
-    fetch(API_LOGIN, {
-      method: "POST",
-      headers: { "Content-Type": "multipart/form-data" },
-      body: formdata,
-    })
-      .then((response) => {
-        return response.text().then(function (text) {
-          return text;
-        });
-      })
-      .then((res) => {
-        setUsername("");
-        setPassword("");
+  //console.log(options);
+  console.log(Context);
 
-        // This is very much temporary until we decide on the exact return values for backend
-        if (res.includes("Successfully logged in!")) {
-          navigateAndReset(navigation, "User");
-        }
-      })
-      .catch((error) => setApi(error.message));
+  const clickFunctionLogin = async () => {
+    console.log(user);
+    const loginSucess = await user.logIn(username, password);
+    if (loginSucess) {
+      navigateAndReset(navigation, "User");
+      setUsername("");
+      setPassword("");
+    }
   };
 
   return (
@@ -58,7 +46,7 @@ export default function LoginScreen({ navigation }) {
 
         <Text
           style={STYLE_SHEET.notauser}
-          onPress={() => navigation.navigate("Register")}
+          // onPress={() => props.navigation.navigate("Register")}
         >
           {" "}
           Not a user? Register here{" "}
