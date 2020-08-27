@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import Colors from './colors';
 // Most of these current styles need to be moved to local screen, but they
 // will all probably be changed anyway.
 

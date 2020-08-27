@@ -8,6 +8,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import UserScreen from './screens/UserScreen';
 import { ContextProvider } from './helper/context';
 import MainScreen from './screens/MainScreen';
+import HeaderStyle from './styles/Header/HeaderStyle';
 
 const Stack = createStackNavigator();
 
@@ -19,7 +20,15 @@ function App() {
           <Stack.Screen name='Login' component={LoginScreen} />
           <Stack.Screen name='Register' component={RegisterScreen} />
           <Stack.Screen name='User' component={UserScreen} />
-          <Stack.Screen name='Main' component={MainScreen} />
+          <Stack.Screen
+            name='Main'
+            component={MainScreen}
+            options={{
+              title: 'Diego Dollars',
+              headerStyle: HeaderStyle.bar,
+              headerTitleStyle: HeaderStyle.title,
+            }}
+          />
         </Stack.Navigator>
       </ContextProvider>
     </NavigationContainer>
