@@ -1,25 +1,29 @@
-import React, { useState, useContext } from 'react';
-import navigateAndReset from '../helper/functions';
-import { STYLESHEET } from '../styles/stylesheet';
-import { Text, Button, View } from 'react-native';
-import AppContext from '../helper/context';
+import React, { useState, useContext } from "react";
+import navigateAndReset from "../helper/functions";
+import { STYLESHEET } from "../styles/stylesheet";
+import { Text, Button, View } from "react-native";
+import AppContext from "../helper/context";
 
 export default function UserScreen({ navigation }) {
-  const [api, setApi] = useState('None');
+  const [api, setApi] = useState("None");
 
   const Context = useContext(AppContext);
   const User = Context.User;
 
-  const clickFunctionLogout = () => {
-    if (User.logOut()) {
-      navigateAndReset(navigation, 'Login');
+  const clickFunctionLogout = async () => {
+    const logoutSucess = await Context.User.logOut();
+
+    if (logoutSucess) {
+      navigateAndReset(navigation, "Login");
+    } else {
+      alert("Logout failed");
     }
   };
 
-  const clickFunctionTestLoggedIn = () => {
-    if (User.testLoggedIn()) {
-      setApi(text);
-    }
+  const clickFunctionTestLoggedIn = async () => {
+    const testReturn = await Context.User.testLoggedIn();
+
+    setApi(testReturn);
   };
 
   return (
@@ -28,12 +32,12 @@ export default function UserScreen({ navigation }) {
       <Text>Status: {api}</Text>
       <View style={STYLESHEET.loginbuttonbox}>
         <Button
-          title='TestLoggedIn'
+          title="TestLoggedIn"
           style={STYLESHEET.loginbutton}
           onPress={clickFunctionTestLoggedIn}
         />
         <Button
-          title='Logout'
+          title="Logout"
           style={STYLESHEET.loginbutton}
           onPress={clickFunctionLogout}
         />

@@ -1,4 +1,4 @@
-import { API_LOGIN, API_TEST_LOGGED_IN, API_LOGOUT } from './constants';
+import { API_LOGIN, API_TEST_LOGGED_IN, API_LOGOUT } from "./constants";
 
 class Transaction {
   constructor() {
@@ -17,50 +17,66 @@ export class User {
     this.goals; // List<Goal>
   }
 
+  /**
+   *  logIn
+   *
+   * @param {string} username
+   * @param {string} password
+   *
+   * @return {boolean} Returns true if the login suceeded, false otherwise.
+   */
   logIn = async (username, password) => {
     let formdata = new FormData();
-    formdata.append('username', username);
-    formdata.append('password', password);
+    formdata.append("username", username);
+    formdata.append("password", password);
 
     const response = await fetch(API_LOGIN, {
-      method: 'POST',
-      headers: { 'Content-Type': 'multipart/form-data' },
+      method: "POST",
+      headers: { "Content-Type": "multipart/form-data" },
       body: formdata,
     });
 
-    if (response.includes('Successfully logged in!')) {
+    const body = await response.text();
+    const loggedIn = body.includes("Successfully logged in!");
+
+    if (loggedIn) {
       this.username = username;
       return true;
+    } else {
+      return false;
     }
-
-    return false;
   };
 
-  logOut() {
-    fetch(API_LOGOUT, { method: 'GET' })
-      .then((response) => {
-        return response.text().then(function (text) {
-          return text;
-        });
-      })
-      .then((res) => {
-        if (res.includes('Successfully logged out!')) {
-          return true;
-        }
-      });
+  /**
+   * logOut
+   *
+   * @return {boolean}  Returns true if logout was successful.
+   */
+  logOut = async () => {
+    const response = await fetch(API_LOGOUT, { method: "GET" });
 
-    return false;
-  }
+    const body = await response.text();
+    const loggedOut = body.includes("Successfully logged out!");
 
-  testLoggedIn() {
-    fetch(API_TEST_LOGGED_IN, { method: 'GET' }).then((response) => {
-      response.text().then(function (text) {
-        return true;
-      });
-    });
+    if (loggedOut) {
+      this.username = "";
+      return true;
+    } else {
+      return false;
+    }
+  };
 
-    return false;
-  }
+  /**
+   * testLoggedIn
+   *
+   * @return {string} Returns the API call body which gives some information of whether the user is logged in.
+   */
+  testLoggedIn = async () => {
+    const response = await fetch(API_TEST_LOGGED_IN, { method: "GET" });
+    const body = await response.text();
+
+    return body;
+  };
 
   getUsername() {
     return this.username;
