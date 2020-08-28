@@ -3,12 +3,12 @@ import navigateAndReset from "../helper/functions";
 import { STYLESHEET } from "../styles/stylesheet";
 import { Text, Button, View } from "react-native";
 import AppContext from "../helper/context";
+import Colors from "../styles/colors";
 
 export default function UserScreen({ navigation }) {
   const [api, setApi] = useState("None");
 
   const Context = useContext(AppContext);
-  const User = Context.User;
 
   const clickFunctionLogout = async () => {
     const logoutSucess = await Context.User.logOut();
@@ -26,19 +26,27 @@ export default function UserScreen({ navigation }) {
     setApi(testReturn);
   };
 
+  const style = {
+    statusMessage: { color: Colors.White, alignSelf: "center" },
+  };
+
   return (
-    <View style={STYLESHEET.container}>
-      <Text style={STYLESHEET.header}>Hello {User.getUsername()}</Text>
-      <Text>Status: {api}</Text>
+    <View style={STYLESHEET.defaultView}>
+      <Text style={STYLESHEET.defaultHeader}>
+        Hello: {Context.User.getUsername()}
+      </Text>
+
+      <Text style={style.statusMessage}>Status: {api}</Text>
+
       <View style={STYLESHEET.loginbuttonbox}>
         <Button
           title="TestLoggedIn"
-          style={STYLESHEET.loginbutton}
+          style={STYLESHEET.defaultButton}
           onPress={clickFunctionTestLoggedIn}
         />
         <Button
           title="Logout"
-          style={STYLESHEET.loginbutton}
+          style={STYLESHEET.defaultButton}
           onPress={clickFunctionLogout}
         />
       </View>

@@ -5,6 +5,7 @@ import navigateAndReset from "../helper/functions";
 import { STYLESHEET } from "../styles/stylesheet";
 import { TextInput } from "react-native-gesture-handler";
 import AppContext from "../helper/context";
+import Colors from "../styles/colors";
 
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState("");
@@ -32,11 +33,20 @@ export default function LoginScreen({ navigation }) {
     }, 1000);
   });
 
-  return (
-    <View style={STYLESHEET.container}>
-      <Text style={STYLESHEET.header}>This is Diego Dollars :D</Text>
+  // Local styles
+  const style = {
+    notauser: {
+      color: Colors.White,
+      alignSelf: "center",
+      paddingVertical: 10,
+    },
+  };
 
-      <View style={STYLESHEET.loginbox}>
+  return (
+    <View style={STYLESHEET.defaultView}>
+      <Text style={STYLESHEET.defaultHeader}>This is Diego Dollars :D</Text>
+
+      <View style={STYLESHEET.defaultView}>
         <TextInput
           style={STYLESHEET.textInput}
           placeholder="Username"
@@ -53,23 +63,20 @@ export default function LoginScreen({ navigation }) {
         />
 
         <Text
-          style={STYLESHEET.notauser}
-          onPress={() => props.navigation.navigate("Register")}
+          style={style.notauser}
+          onPress={() => navigation.navigate("Register")}
         >
           {" "}
-          Not a user? Register here{" "}
+          Not a user? Register here
         </Text>
-      </View>
 
-      <View style={STYLESHEET.loginbuttonbox}>
         <Button
           title="Login"
-          style={STYLESHEET.loginbutton}
-          onPress={() => login()}
+          style={STYLESHEET.defaultButton}
+          onPress={() => login(username, password)}
           disabled={username == "" || password == ""}
         />
       </View>
-      <StatusBar style="auto" />
     </View>
   );
 }
