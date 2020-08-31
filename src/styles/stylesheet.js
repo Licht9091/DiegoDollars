@@ -7,8 +7,19 @@ export const STYLE_SHEET = StyleSheet.create({
   header: {
     fontSize: 30,
   },
+  topHeader: {
+    fontSize: 30,
+    paddingVertical : 10,
+  },
   smallHeader: {
-    fontSize : 24
+    fontSize : 24,
+    paddingVertical : 10,
+    textAlign : "center",
+  },
+  hLine : {
+    borderBottomColor: 'black',
+    borderBottomWidth: 3,
+    alignSelf:'stretch',
   },
   container: {
     flex: 1,
@@ -21,6 +32,19 @@ export const STYLE_SHEET = StyleSheet.create({
     width: "100%",
   },
   loginbutton: {
+    paddingVertical: 10,
+  },
+  checkboxContainer: {
+    width: "100%",
+    paddingHorizontal: 35,
+    paddingVertical: 20,
+  },
+  confirmButtonBox: {
+    width: "100%",
+    paddingHorizontal: 35,
+    paddingVertical: 20,
+  },
+  confirmButton: {
     paddingVertical: 10,
   },
   hairline: {

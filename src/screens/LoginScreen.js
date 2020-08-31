@@ -58,7 +58,7 @@ export default function LoginScreen({ navigation }) {
 
         <Text
           style={STYLE_SHEET.notauser}
-          onPress={() => navigation.navigate("Register")}
+          onPress={() => navigation.navigate("CategoriseTransaction")}
         >
           {" "}
           Not a user? Register here{" "}

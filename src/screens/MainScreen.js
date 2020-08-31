@@ -22,6 +22,7 @@ export default function MainScreen({ navigation }) {
       <Text style={STYLE_SHEET.smallHeader}>Rainy Day Fund ($1500/$1000)</Text>
       
       <Text style={STYLE_SHEET.smallHeader}>Overseas Trip ($4500/$5000)</Text>
+
       <Text style={STYLE_SHEET.smallHeader}>New Computer ($650/$2000)</Text>
     </View>
   );
