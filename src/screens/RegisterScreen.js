@@ -1,47 +1,54 @@
 import React, { useState } from "react";
-import { STYLE_SHEET } from "../styles/stylesheet";
+import { STYLESHEET } from "../styles/stylesheet";
 import { TextInput } from "react-native-gesture-handler";
 import { Text, Button, View } from "react-native";
+import Colors from "../styles/colors";
 
 export default function RegisterScreen({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
 
-  return (
-    <View style={STYLE_SHEET.container}>
-      <Text style={STYLE_SHEET.header}>Register Page</Text>
-      <Text>(Doesn't work yet. Work on this later)</Text>
+  const style = {
+    helpmessage: {
+      color: "red",
+      alignSelf: "center",
+      paddingVertical: 10,
+    },
+  };
 
-      <View style={STYLE_SHEET.loginbox}>
+  return (
+    <View style={STYLESHEET.defaultView}>
+      <Text style={STYLESHEET.defaultHeader}>Register Page</Text>
+      <Text style={{ alignSelf: "center", color: Colors.White }}>
+        (Doesn't work yet. Work on this later)
+      </Text>
+
+      <View style={STYLESHEET.defaultView}>
         <TextInput
-          style={STYLE_SHEET.textInput}
+          style={STYLESHEET.textInput}
           placeholder="Username"
           onChangeText={(username) => setUsername(username)}
           value={username}
         />
         <TextInput
-          style={STYLE_SHEET.textInput}
+          style={STYLESHEET.textInput}
           secureTextEntry={true}
           placeholder="Password"
           onChangeText={(password) => setPassword(password)}
           value={password}
         />
         <TextInput
-          style={STYLE_SHEET.hairline}
+          style={STYLESHEET.textInput}
           secureTextEntry={true}
           placeholder="Confirm Password"
           onChangeText={(passwordCheck) => setPasswordCheck(passwordCheck)}
           value={passwordCheck}
         />
-      </View>
-
-      <Text style={STYLE_SHEET.helpmessage}>Passwords do not match.</Text>
-
-      <View style={STYLE_SHEET.loginbuttonbox}>
+        <Text style={style.helpmessage}>Passwords do not match.</Text>
         <Button
           title="Register"
-          style={STYLE_SHEET.loginbutton}
+          style={STYLESHEET.defaultButton}
           //onPress={()}
           disabled={
             !(password == passwordCheck) || username == "" || password == ""

@@ -1,79 +1,82 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Text, View, Button } from "react-native";
-import { API_LOGIN } from "../helper/constants";
 import navigateAndReset from "../helper/functions";
-import { STYLE_SHEET } from "../styles/stylesheet";
+import { STYLESHEET } from "../styles/stylesheet";
 import { TextInput } from "react-native-gesture-handler";
+import AppContext from "../helper/context";
+import Colors from "../styles/colors";
 
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const clickFunctionLogin = () => {
-    let formdata = new FormData();
-    formdata.append("username", username);
-    formdata.append("password", password);
+  const Context = useContext(AppContext);
 
-    fetch(API_LOGIN, {
-      method: "POST",
-      headers: { "Content-Type": "multipart/form-data" },
-      body: formdata,
-    })
-      .then((response) => {
-        return response.text().then(function (text) {
-          return text;
-        });
-      })
-      .then((res) => {
-        setUsername("");
-        setPassword("");
+  const login = async (username = username, password = password) => {
+    const loginSucess = await Context.User.logIn(username, password);
 
-        // This is very much temporary until we decide on the exact return values for backend
-        if (res.includes("Successfully logged in!")) {
-          navigateAndReset(navigation, "User");
-        }
-      })
-      .catch((error) => setApi(error.message));
+    if (loginSucess) {
+      navigateAndReset(navigation, "Main");
+      setUsername("");
+      setPassword("");
+    } else {
+      alert("Login failed");
+    }
+  };
+
+  useEffect(() => {
+    // Automatically log in
+    // TODO: take this out later
+    setTimeout(() => {
+      login("test", "test");
+    }, 1000);
+  });
+
+  // Local styles
+  const style = {
+    notauser: {
+      color: Colors.White,
+      alignSelf: "center",
+      paddingVertical: 10,
+    },
   };
 
   return (
-    <View style={STYLE_SHEET.container}>
-      <Text style={STYLE_SHEET.header}>This is Diego Dollars :D</Text>
+    <View style={STYLESHEET.defaultView}>
+      <Text style={STYLESHEET.defaultHeader}>This is Diego Dollars :D</Text>
 
-      <View style={STYLE_SHEET.loginbox}>
+      <View style={STYLESHEET.defaultView}>
         <TextInput
-          style={STYLE_SHEET.textInput}
+          style={STYLESHEET.textInput}
           placeholder="Username"
           onChangeText={(username) => setUsername(username)}
           value={username}
         />
         <TextInput
-          style={STYLE_SHEET.textInput}
+          style={STYLESHEET.textInput}
           secureTextEntry={true}
           placeholder="Password"
           onChangeText={(password) => setPassword(password)}
           value={password}
+          secureTextEntry={true}
         />
 
         <Text
-          style={STYLE_SHEET.notauser}
-          onPress={() => navigation.navigate("CategoriseTransaction")}
+          style={style.notauser}
+          onPress={() => navigation.navigate("Register")}
         >
           {" "}
-          Not a user? Register here{" "}
+          Not a user? Register here
         </Text>
-      </View>
 
-      <View style={STYLE_SHEET.loginbuttonbox}>
         <Button
           title="Login"
-          style={STYLE_SHEET.loginbutton}
-          onPress={clickFunctionLogin}
+          style={STYLESHEET.defaultButton}
+          onPress={() => login(username, password)}
           disabled={username == "" || password == ""}
         />
       </View>
-      <StatusBar style="auto" />
     </View>
   );
 }

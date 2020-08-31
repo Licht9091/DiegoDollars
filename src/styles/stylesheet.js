@@ -1,10 +1,17 @@
 import React from "react";
-import { StyleSheet } from "react-native";
-// Most of these current styles need to be moved to local screen, but they
-// will all probably be changed anyway.
+import { StyleSheet, Dimensions } from "react-native";
+import Colors from "./colors";
+import { H_PADDING } from "./spacing";
 
-export const STYLE_SHEET = StyleSheet.create({
-  header: {
+export const STYLESHEET = StyleSheet.create({
+  // Default main <View />
+  defaultView: {
+    backgroundColor: Colors.Primary,
+    minHeight: Dimensions.get("window").height,
+    padding: H_PADDING,
+  },
+  // Default for <Text /> when used as a header
+  defaultHeader: {
     fontSize: 30,
   },
   topHeader: {
@@ -62,9 +69,10 @@ export const STYLE_SHEET = StyleSheet.create({
   notauser: {
     color: "blue",
     alignSelf: "center",
+    color: Colors.White,
   },
-  helpmessage: {
-    color: "red",
+  // Default for <Button />
+  defaultButton: {
     alignSelf: "center",
   },
   // Use this style for any <TextInput /> used throughout the app.

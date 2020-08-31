@@ -1,50 +1,52 @@
-import React, { useState } from "react";
-import { API_LOGOUT, API_TEST_LOGGED_IN } from "../helper/constants";
+import React, { useState, useContext } from "react";
 import navigateAndReset from "../helper/functions";
-import { STYLE_SHEET } from "../styles/stylesheet";
+import { STYLESHEET } from "../styles/stylesheet";
 import { Text, Button, View } from "react-native";
+import AppContext from "../helper/context";
+import Colors from "../styles/colors";
 
 export default function UserScreen({ navigation }) {
   const [api, setApi] = useState("None");
 
-  const clickFunctionLogout = () => {
-    fetch(API_LOGOUT, { method: "GET" })
-      .then((response) => {
-        return response.text().then(function (text) {
-          return text;
-        });
-      })
-      .then((res) => {
-        if (res.includes("Successfully logged out!")) {
-          navigateAndReset(navigation, "Login");
-        }
-      })
-      .catch((error) => setApi(error.message));
+  const Context = useContext(AppContext);
+
+  const clickFunctionLogout = async () => {
+    const logoutSucess = await Context.User.logOut();
+
+    if (logoutSucess) {
+      navigateAndReset(navigation, "Login");
+    } else {
+      alert("Logout failed");
+    }
   };
 
-  const clickFunctionTestLoggedIn = () => {
-    fetch(API_TEST_LOGGED_IN, { method: "GET" })
-      .then((response) => {
-        response.text().then(function (text) {
-          setApi(text);
-        });
-      })
-      .catch((error) => setApi(error.message));
+  const clickFunctionTestLoggedIn = async () => {
+    const testReturn = await Context.User.testLoggedIn();
+
+    setApi(testReturn);
+  };
+
+  const style = {
+    statusMessage: { color: Colors.White, alignSelf: "center" },
   };
 
   return (
-    <View style={STYLE_SHEET.container}>
-      <Text style={STYLE_SHEET.header}>Hello User</Text>
-      <Text>Status: {api}</Text>
-      <View style={STYLE_SHEET.loginbuttonbox}>
+    <View style={STYLESHEET.defaultView}>
+      <Text style={STYLESHEET.defaultHeader}>
+        Hello: {Context.User.getUsername()}
+      </Text>
+
+      <Text style={style.statusMessage}>Status: {api}</Text>
+
+      <View style={STYLESHEET.loginbuttonbox}>
         <Button
           title="TestLoggedIn"
-          style={STYLE_SHEET.loginbutton}
+          style={STYLESHEET.defaultButton}
           onPress={clickFunctionTestLoggedIn}
         />
         <Button
           title="Logout"
-          style={STYLE_SHEET.loginbutton}
+          style={STYLESHEET.defaultButton}
           onPress={clickFunctionLogout}
         />
       </View>
