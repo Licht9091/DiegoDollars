@@ -5,7 +5,7 @@ import Colors from "../styles/colors";
 import Pill from "../components/Pill";
 import AppContext from "../helper/context";
 
-const MainScreen = () => {
+const MainScreen = ({ navigation }) => {
   // START EDITS
   const Context = useContext(AppContext);
 
@@ -111,6 +111,11 @@ const MainScreen = () => {
               backgroundColor={Colors.White}
             />
           </View>
+
+          <Text
+          style={style.notauser}
+          onPress={() => navigation.navigate("CategoriseGoal")}
+        >Categorise</Text>
         </View>
       )}
     </>

@@ -1,33 +1,48 @@
-import React from "react";
-import { STYLE_SHEET } from "../styles/stylesheet";
+import React, { useState } from "react";
+import { STYLESHEET } from "../styles/stylesheet";
 import { Button, View, Text, TextInput } from "react-native";
+import Pill from "../components/Pill"
+import Colors from "../styles/colors"
 
 export default function CategoriseGoalScreen() {
-  return <View style={STYLE_SHEET.container}>
-    <Text style={STYLE_SHEET.topHeader}>Add a New Goal</Text>
+  const [goalname, setGoalname] = useState("");
+  const [goalamount, setGoalamount] = useState("");
+  const [fortnightlygoal, setFortnightlygoal] = useState("");
+  const [completiondate, setCompletiondate] = useState("");
+
+  return <View style={STYLESHEET.defaultView}>
+    <Text style={STYLESHEET.defaultHeader}>Add a New Goal</Text>
     <TextInput
-          style={STYLE_SHEET.textInput}
+          style={STYLESHEET.textInput}
           placeholder="Enter goal name"
+          onChangeText={(goalname) => setGoalname(goalname)}
+          value={goalname}
         />
     <TextInput
-          style={STYLE_SHEET.textInput}
+          style={STYLESHEET.textInput}
           placeholder="Enter goal amount"
+          onChangeText={(goalamount) => setGoalamount(goalamount)}
+          value={goalamount}
       />
     <TextInput
-          style={STYLE_SHEET.textInput}
+          style={STYLESHEET.textInput}
           placeholder="Enter fornightly goal amount"
+          onChangeText={(fortnightlygoal) => setFortnightlygoal(fortnightlygoal)}
+          value={fortnightlygoal}
         />
-    <Text style={STYLE_SHEET.topHeader}>Completion Date</Text>
+    <Text style={STYLESHEET.defaultHeader}>Completion Date</Text>
     <TextInput
-          style={STYLE_SHEET.textInput}
+          style={STYLESHEET.textInput}
           placeholder="Enter completion date"
+          onChangeText={(completiondate) => setCompletiondate(completiondate)}
+          value={completiondate}
         />
-    <Text style={STYLE_SHEET.smallHeader}>This will require you to put $25.32 towards your goal each fortnight</Text>
-    <View style={STYLE_SHEET.confirmButtonBox}>
-      <Button 
-        title="Add Goal"
-        style={STYLE_SHEET.confirmButton}
-        //onPress={}
+    <Text style={STYLESHEET.defaultSmallHeader}>This will require you to put $25.32 towards your goal each fortnight</Text>
+    <View style={STYLESHEET.confirmButtonBox}>
+      <Pill
+        content="Add Goal"
+        color={Colors.Primary}
+        backgroundColor={Colors.White}
       />
     </View>
   </View>;

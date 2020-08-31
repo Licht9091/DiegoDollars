@@ -13,20 +13,22 @@ export const STYLESHEET = StyleSheet.create({
   // Default for <Text /> when used as a header
   defaultHeader: {
     fontSize: 30,
+    textAlign : "center"
   },
-  topHeader: {
-    fontSize: 30,
-    paddingVertical : 10,
-  },
-  smallHeader: {
+  defaultSmallHeader: {
     fontSize : 24,
     paddingVertical : 10,
     textAlign : "center",
   },
-  hLine : {
+  defaulthLine : {
     borderBottomColor: 'black',
-    borderBottomWidth: 3,
+    borderBottomWidth: 5,
     alignSelf:'stretch',
+    paddingVertical : 10,
+  },
+  topHeader: {
+    fontSize: 30,
+    paddingVertical : 10,
   },
   container: {
     flex: 1,
@@ -40,11 +42,6 @@ export const STYLESHEET = StyleSheet.create({
   },
   loginbutton: {
     paddingVertical: 10,
-  },
-  checkboxContainer: {
-    width: "100%",
-    paddingHorizontal: 35,
-    paddingVertical: 20,
   },
   confirmButtonBox: {
     width: "100%",

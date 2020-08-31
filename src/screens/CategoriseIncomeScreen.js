@@ -1,22 +1,51 @@
 import React from "react";
-import { STYLE_SHEET } from "../styles/stylesheet";
-import { Button, View, Text } from "react-native";
+import { STYLESHEET } from "../styles/stylesheet";
+import { Button, View, Text, Slider } from "react-native";
+import Pill from "../components/Pill";
+import Colors from "../styles/colors";
+
+const style = {
+  bigMoney: {
+    fontSize: 70,
+    textAlign : "center",
+    paddingVertical: 20,
+  },
+  slider: {
+    color : Colors.White,
+  }
+};
 
 export default function CategoriseIncomeScreen() {
-  return <View style={STYLE_SHEET.container}>
-    <Text style={STYLE_SHEET.header}>Income Transaction</Text>
-    <Text style={STYLE_SHEET.hLine}></Text>
-    <Text style={STYLE_SHEET.header}>$1000.00</Text>
-    <Text style={STYLE_SHEET.smallHeader}>Rain Day Fund</Text>
-    <Text style={STYLE_SHEET.smallHeader}>Overseas Trip</Text>
-    <Text style={STYLE_SHEET.smallHeader}>New Computer</Text>
-    <Text style={STYLE_SHEET.smallHeader}>This will leave you with $504.30 for spending for the fortnight</Text>
-    <View style={STYLE_SHEET.confirmButtonBox}>
-      <Button 
-        title="Confirm"
-        style={STYLE_SHEET.confirmButton}
-        //onPress={}
-      />
-    </View>
-  </View>;
+  return <View style={STYLESHEET.defaultView}>
+      <Text style={STYLESHEET.defaultHeader}>Income Transaction</Text>
+      <Text style={STYLESHEET.defaulthLine}></Text>
+      <Text style={style.bigMoney}>$1000.00</Text>
+      <Text style={STYLESHEET.defaultSmallHeader}>Rain Day Fund</Text>
+      <Slider 
+      maximumValue={50} 
+      minimumValue={10} 
+      minimumTrackTintColor={Colors.White}
+      maximumTrackTintColor={Colors.White}
+      thumbTintColor={Colors.White}></Slider>
+      <Text style={STYLESHEET.defaultSmallHeader}>Overseas Trip</Text>
+      <Slider 
+      maximumValue={50} 
+      minimumValue={10} 
+      minimumTrackTintColor={Colors.White}
+      maximumTrackTintColor={Colors.White}
+      thumbTintColor={Colors.White}></Slider>
+      <Text style={STYLESHEET.defaultSmallHeader}>New Computer</Text>
+      <Slider 
+      maximumValue={50} 
+      minimumValue={10} 
+      minimumTrackTintColor={Colors.White}
+      maximumTrackTintColor={Colors.White}
+      thumbTintColor={Colors.White}></Slider>
+      <Text style={STYLESHEET.defaultSmallHeader}>This will leave you with $504.30 for spending for the fortnight</Text>
+        <Pill
+                content="Confirm"
+                color={Colors.Primary}
+                backgroundColor={Colors.White}
+        />
+    </View>;
 }

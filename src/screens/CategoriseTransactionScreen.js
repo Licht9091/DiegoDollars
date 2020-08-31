@@ -1,32 +1,30 @@
-import React from "react";
-import { STYLE_SHEET } from "../styles/stylesheet";
-import { CheckBox, Text, StyleSheet, View } from "react-native";
+import React, { useState} from "react";
+import { STYLESHEET } from "../styles/stylesheet";
+import { CheckBox, Text, StyleSheet, View, Button } from "react-native";
+import Pill from "../components/Pill"
+import Colors from "../styles/colors"
 
 export default function CategoriseTransactionScreen() {
-  return <View style={STYLE_SHEET.container}>
-    <Text style={STYLE_SHEET.topHeader}>Transaction</Text>
-    <Text style={STYLE_SHEET.hLine}></Text>
-    <Text style={STYLE_SHEET.header}>Transaction info here</Text>
-    <Text style={STYLE_SHEET.hLine}></Text>
-    <Text style={STYLE_SHEET.header}>Select Goal</Text>
-    <Text style={STYLE_SHEET.smallHeader}>Rain Day Fund</Text>
-    <Text style={STYLE_SHEET.smallHeader}>Overseas Trip</Text>
-    <Text style={STYLE_SHEET.smallHeader}>New Computer</Text>
-    <View style={styles.checkboxContainer}>
-        <CheckBox
-          value={isSelected}
-          onValueChange={setSelection}
-          style={styles.checkbox}
-        />
-        <Text style={styles.label}>Do you like React Native?</Text>
-      </View>
-      <Text>Is CheckBox selected: {isSelected ? "👍" : "👎"}</Text>
-    <View style={STYLE_SHEET.confirmButtonBox}>
-      <Button 
-        title="Claim as Goal"
-        style={STYLE_SHEET.confirmButton}
-        //onPress={}
-      />
-    </View>
-  </View>;
+  const [isSelected, setSelection] = useState(false);
+
+  return <View style={STYLESHEET.defaultView}>
+    <Text style={STYLESHEET.defaultHeader}>Transaction</Text>
+    <Text style={STYLESHEET.defaulthLine}></Text>
+    <Text style={STYLESHEET.defaultHeader}>Transaction info here</Text>
+    <Text style={STYLESHEET.defaulthLine}></Text>
+    <Text style={STYLESHEET.defaultHeader}>Select Goal</Text>
+    <Text style={STYLESHEET.defaultSmallHeader}>Rain Day Fund ($1500/$1000)</Text>
+    <Text style={STYLESHEET.defaultSmallHeader}>Overseas Trip ($4500/$5000)</Text>
+    <Text style={STYLESHEET.defaultSmallHeader}>New Computer ($650/$2000)</Text>
+    <Text style={STYLESHEET.defaulthLine}></Text>
+      <CheckBox
+        value={isSelected}
+        onValueChange={setSelection}
+        style={STYLESHEET.notauser}
+      /><Text style={STYLESHEET.defaultSmallHeader}>Completed?</Text>
+      <Pill 
+      content="Claim as Goal"
+      color={Colors.Primary}
+      backgroundColor={Colors.White}/>
+  </View>
 }
