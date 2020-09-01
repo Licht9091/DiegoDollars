@@ -1,6 +1,6 @@
 const Colors = {
   // COLORS
-  Primary: '#238FEB',
+  Primary: '#2699FB',
   Secondary: '#767676',
   White: '#FFFFFF',
   Black: '#000000',
@@ -14,6 +14,7 @@ const Colors = {
   LightGray: '#e6e6e6',
   MediumGray: '#cacaca',
   DarkGray: '#8a8a8a',
+  DarkerGray: '#565758',
 };
 
 export default Colors;
