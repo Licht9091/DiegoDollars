@@ -114,7 +114,7 @@ const MainScreen = ({ navigation }) => {
 
           <Text
           style={style.notauser}
-          onPress={() => navigation.navigate("CategoriseGoal")}
+          onPress={() => navigation.navigate("CategoriseIncome")}
         >Categorise</Text>
         </View>
       )}
