@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, Button } from 'react-native';
 import Colors from '../styles/colors';
+import { FONT_FAMILY_SEMIBOLD } from '../styles/typography';
+import { STYLESHEET } from '../styles/stylesheet';
 
 const Pill = ({
   content,
@@ -16,19 +18,21 @@ const Pill = ({
       backgroundColor,
       color,
       alignSelf: 'flex-start',
-      fontWeight: 'bold',
+      fontFamily: FONT_FAMILY_SEMIBOLD,
       paddingLeft: 20,
       paddingRight: 20,
-      paddingTop: 13,
-      paddingBottom: 10,
-      height: 45,
+      paddingTop: 9,
+      height: 40,
       borderRadius: 23,
     },
   };
 
   return (
     <View style={style.container}>
-      <Text style={style.button} onPress={onPress}>
+      <Text
+        style={{ ...style.button, ...STYLESHEET.shadowNormal }}
+        onPress={onPress}
+      >
         {content}
       </Text>
     </View>

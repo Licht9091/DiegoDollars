@@ -1,6 +1,8 @@
 // FONT FAMILY
-export const FONT_FAMILY_REGULAR = 'OpenSans-Regular';
-export const FONT_FAMILY_BOLD = 'OpenSans-Bold';
+export const FONT_FAMILY_REGULAR = 'montserrat';
+export const FONT_FAMILY_BOLD = 'montserratBold';
+export const FONT_FAMILY_LIGHT = 'montserratLight';
+export const FONT_FAMILY_SEMIBOLD = 'montserratSemiBold';
 
 // FONT WEIGHT
 export const FONT_WEIGHT_REGULAR = '400';

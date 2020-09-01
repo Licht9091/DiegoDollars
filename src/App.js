@@ -1,4 +1,5 @@
 import { registerRootComponent } from "expo";
+import { useFonts } from "expo-font";
 import "react-native-gesture-handler";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
@@ -12,51 +13,93 @@ import CategoriseIncomeScreen from "./screens/CategoriseIncomeScreen";
 import CategoriseTransactionScreen from "./screens/CategoriseTransactionScreen";
 import EditGoalScreen from "./screens/EditGoalScreen";
 import { ContextProvider } from "./helper/context";
-import MainScreen from "./screens/MainScreen";
+import MainScreen from "./screens/MainScreen/MainScreen";
 import HeaderStyle from "./styles/Header/HeaderStyle";
+import MainScreenOptions from "./screens/MainScreen/MainScreenOptions";
+import { StatusBar } from "react-native";
+import { Colors } from "react-native/Libraries/NewAppScreen";
+import TransactionScreen from "./screens/TransactionScreen";
 
 const Stack = createStackNavigator();
 
 // This is useful for all the pages, feel free to change this if you don't like it here
-defaultOptions = {
+let defaultOptions = {
   title: "Diego Dollars",
   headerStyle: HeaderStyle.bar,
   headerTitleStyle: HeaderStyle.title,
 };
 
 function App() {
+  // Load fonts
+
+  let [loaded] = useFonts({
+    montserrat: require("./assets/fonts/Montserrat-Regular.ttf"),
+    montserratBold: require("./assets/fonts/Montserrat-Bold.ttf"),
+    MontserratBlack: require("./assets/fonts/Montserrat-Black.ttf"),
+    montserratBlackItalic: require("./assets/fonts/Montserrat-BlackItalic.ttf"),
+    montserratBold: require("./assets/fonts/Montserrat-Bold.ttf"),
+    montserratBoldItalic: require("./assets/fonts/Montserrat-BoldItalic.ttf"),
+    montserratExtraBold: require("./assets/fonts/Montserrat-ExtraBold.ttf"),
+    montserratExtraBoldItalic: require("./assets/fonts/Montserrat-ExtraBoldItalic.ttf"),
+    montserratExtraLight: require("./assets/fonts/Montserrat-ExtraLight.ttf"),
+    montserratExtraLightItalic: require("./assets/fonts/Montserrat-ExtraLightItalic.ttf"),
+    montserratItalic: require("./assets/fonts/Montserrat-Italic.ttf"),
+    montserratLight: require("./assets/fonts/Montserrat-Light.ttf"),
+    montserratLightItalic: require("./assets/fonts/Montserrat-LightItalic.ttf"),
+    montserratMedium: require("./assets/fonts/Montserrat-Medium.ttf"),
+    montserratMediumItalic: require("./assets/fonts/Montserrat-MediumItalic.ttf"),
+    montserratRegular: require("./assets/fonts/Montserrat-Regular.ttf"),
+    montserratSemiBold: require("./assets/fonts/Montserrat-SemiBold.ttf"),
+    montserratSemiBoldItalic: require("./assets/fonts/Montserrat-SemiBoldItalic.ttf"),
+    montserratThin: require("./assets/fonts/Montserrat-Thin.ttf"),
+    montserratThinItalic: require("./assets/fonts/Montserrat-ThinItalic.ttf"),
+  });
+
+  if (!loaded) {
+    // TODO handy error message if fonts failed to load.
+    return null;
+  }
+
   return (
-    <NavigationContainer>
-      <ContextProvider>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={defaultOptions}
-          />
-          <Stack.Screen
-            name="Register"
-            component={RegisterScreen}
-            options={defaultOptions}
-          />
-          <Stack.Screen
-            name="User"
-            component={UserScreen}
-            options={defaultOptions}
-          />
-          <Stack.Screen
-            name="Main"
-            component={MainScreen}
-            options={defaultOptions}
-          />
-          <Stack.Screen name="Account" component={AccountScreen} />
-          <Stack.Screen name="CategoriseGoal" component={CategoriseGoalScreen} />
-          <Stack.Screen name="CategoriseIncome" component={CategoriseIncomeScreen} />
-          <Stack.Screen name="CategoriseTransaction" component={CategoriseTransactionScreen} />
-          <Stack.Screen name="EditGoal" component={EditGoalScreen} />
-        </Stack.Navigator>
-      </ContextProvider>
-    </NavigationContainer>
+    <>
+      <StatusBar backgroundColor="#2699FB" />
+      <NavigationContainer>
+        <ContextProvider>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={defaultOptions}
+            />
+            <Stack.Screen
+              name="Register"
+              component={RegisterScreen}
+              options={defaultOptions}
+            />
+            <Stack.Screen
+              name="User"
+              component={UserScreen}
+              options={defaultOptions}
+            />
+            <Stack.Screen
+              name="Main"
+              component={MainScreen}
+              options={MainScreenOptions}
+            />
+            <Stack.Screen
+              name="Transactions"
+              component={TransactionScreen}
+              options={MainScreenOptions}
+            />
+            <Stack.Screen name="Account" component={AccountScreen} />
+            <Stack.Screen name="CategoriseGoal" component={CategoriseGoalScreen} />
+            <Stack.Screen name="CategoriseIncome" component={CategoriseIncomeScreen} />
+            <Stack.Screen name="CategoriseTransaction" component={CategoriseTransactionScreen} />
+            <Stack.Screen name="EditGoal" component={EditGoalScreen} />
+          </Stack.Navigator>
+        </ContextProvider>
+      </NavigationContainer>
+    </>
   );
 }
 

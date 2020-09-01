@@ -4,15 +4,21 @@ import {
   API_LOGOUT,
   API_GOALS_STATUS,
   API_TRANSACTION_STATS,
+  API_TRANSACTION_LIST,
 } from "./constants";
 
 class Transaction {
-  constructor() {
-    this.accountName; // string
-    this.bsb; // string
-    this.amount; // float
-    this.type; // string
-    this.date;
+  constructor(_obj) {
+    this.id = _obj["id"];
+    this.date = _obj["date"];
+    this.description = _obj["description"];
+    this.value = _obj["value"];
+    this.category = _obj["category"];
+    if ("goal" in _obj) {
+      this.goalId = _obj["goal"];
+    } else {
+      this.goalId = null;
+    }
   }
 }
 
@@ -89,15 +95,6 @@ export class User {
    */
   getUsername() {
     return this.username;
-  }
-
-  /**
-   * getAccount - TODO
-   *
-   * @return {Account} Account of the user if they are logged in, otherwise null.
-   */
-  getAccount() {
-    return this.account;
   }
 
   /**
@@ -195,6 +192,18 @@ export class User {
   };
 
   /**
+   * fetchTransactions - [PRIVATE]
+   *
+   * @return {Object} Transaction data object belonging to the account
+   */
+  fetchTransactions = async () => {
+    const response = await fetch(API_TRANSACTION_LIST, { method: "GET" });
+    const bodyJson = await response.json();
+
+    return bodyJson;
+  };
+
+  /**
    * fetchAccountStatus [PRIVATE]
    *
    * @ensure User.account and User.spendingCategories will be updated if fetch does not fail.
@@ -203,15 +212,32 @@ export class User {
     const response = await fetch(API_TRANSACTION_STATS, { method: "GET" });
     const bodyJson = await response.json();
 
-    // We don't have this data yet - TODO
-    transactions = [];
+    // Get the transactions list for the user
+    transactionData = await this.fetchTransactions();
+
+    allTransactions = [];
+    incomeTransactions = [];
+    expenseTransactions = [];
+
+    await transactionData["all_transactions"].forEach((obj) => {
+      allTransactions.push(new Transaction(obj));
+    });
+
+    await transactionData["uncategorized_income"].forEach((obj) => {
+      incomeTransactions.push(new Transaction(obj));
+    });
+    await transactionData["uncategorized_expense"].forEach((obj) => {
+      expenseTransactions.push(new Transaction(obj));
+    });
 
     // Set the Account
     this.account = new Account(
       bodyJson["spending-amount"],
       bodyJson["total-cash"],
       bodyJson["days-till-pay"],
-      transactions
+      allTransactions,
+      incomeTransactions,
+      expenseTransactions
     );
 
     this.spendingCategories = [];
@@ -257,11 +283,20 @@ class SpendingCategory {
 }
 
 class Account {
-  constructor(_spendingBalance, _totalBalance, _daysUntilPay, _transactions) {
+  constructor(
+    _spendingBalance,
+    _totalBalance,
+    _daysUntilPay,
+    _allTransactions,
+    _uncategorisedIncome,
+    _uncategorisedExpenses
+  ) {
     this.spendingBalance = _spendingBalance; // float
     this.totalBalance = _totalBalance; // float
     this.daysUntilPay = _daysUntilPay; // int
-    this.transactions = _transactions; // List<Transaction
+    this.allTransactions = _allTransactions; // List<Transaction>
+    this.uncategorisedIncome = _uncategorisedIncome; // List<Transaction>
+    this.uncategorisedExpenses = _uncategorisedExpenses; // List<Transaction>
   }
 
   /**
