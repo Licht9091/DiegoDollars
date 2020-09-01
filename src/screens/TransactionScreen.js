@@ -10,6 +10,7 @@ import Pill from "../components/Pill";
 import AppContext from "../helper/context";
 
 export default function TransactionScreen({ navigation }) {
+  // "all", "income", "expense"
   const [data, setData] = useState([{}]);
   const [loaded, setLoaded] = useState(false);
 
@@ -122,14 +123,14 @@ export default function TransactionScreen({ navigation }) {
                       content={"Categorise"}
                       color={Colors.DarkerGray}
                       backgroundColor={Colors.White}
-                      onPress={() => {}}
+                      onPress={() => {}} // Do nothing or go to Income Screen if income
                     />
 
-                    <Pill
+                    <Pill // Only display if this is expense transactions
                       content={"Add to Fund"}
                       color={Colors.DarkerGray}
                       backgroundColor={Colors.White}
-                      onPress={() => {}}
+                      onPress={() => {}} // Go to categorise Transaction Screen
                     />
                   </View>
                 </View>

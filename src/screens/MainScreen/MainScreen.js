@@ -81,7 +81,15 @@ const MainScreen = ({ navigation }) => {
                 content={`${data.uncategorisedTransactions} Uncategorised Transactions`}
                 color={Colors.DarkerGray}
                 backgroundColor={Colors.White}
-                onPress={() => navigation.navigate("Transactions")}
+                onPress={() => navigation.navigate("Transactions")} // "expense"
+              />
+            </View>
+            <View style={mainStyle.heroUncategorised}>
+              <Pill
+                content={`${data.uncategorisedTransactions} Uncategorised Income`}
+                color={Colors.DarkerGray}
+                backgroundColor={Colors.White}
+                onPress={() => navigation.navigate("Transactions")} // "income"
               />
             </View>
 

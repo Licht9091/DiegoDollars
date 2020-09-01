@@ -6,9 +6,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
-import UserScreen from "./screens/UserScreen";
 import AccountScreen from "./screens/AccountScreen";
-import CategoriseGoalScreen from "./screens/CategoriseGoalScreen";
+import AddGoalScreen from "./screens/AddGoalScreen";
 import CategoriseIncomeScreen from "./screens/CategoriseIncomeScreen";
 import CategoriseTransactionScreen from "./screens/CategoriseTransactionScreen";
 import EditGoalScreen from "./screens/EditGoalScreen";
@@ -77,11 +76,6 @@ function App() {
               options={defaultOptions}
             />
             <Stack.Screen
-              name="User"
-              component={UserScreen}
-              options={defaultOptions}
-            />
-            <Stack.Screen
               name="Main"
               component={MainScreen}
               options={MainScreenOptions}
@@ -92,9 +86,15 @@ function App() {
               options={MainScreenOptions}
             />
             <Stack.Screen name="Account" component={AccountScreen} />
-            <Stack.Screen name="CategoriseGoal" component={CategoriseGoalScreen} />
-            <Stack.Screen name="CategoriseIncome" component={CategoriseIncomeScreen} />
-            <Stack.Screen name="CategoriseTransaction" component={CategoriseTransactionScreen} />
+            <Stack.Screen name="AddGoal" component={AddGoalScreen} />
+            <Stack.Screen
+              name="CategoriseIncome"
+              component={CategoriseIncomeScreen}
+            />
+            <Stack.Screen
+              name="CategoriseTransaction"
+              component={CategoriseTransactionScreen}
+            />
             <Stack.Screen name="EditGoal" component={EditGoalScreen} />
           </Stack.Navigator>
         </ContextProvider>
