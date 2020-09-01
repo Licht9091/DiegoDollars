@@ -75,7 +75,7 @@ const MainScreen = () => {
                 {Format.toCents(data.availableSpending)}
               </Text>
             </View>
-            <Text style={mainStyle.availablelable}>VAILABLE THIS PERIOD</Text>
+            <Text style={mainStyle.availablelable}>AVAILABLE THIS PERIOD</Text>
 
             <View style={mainStyle.heroUncategorised}>
               <Pill
