@@ -1,4 +1,5 @@
 import { registerRootComponent } from "expo";
+import { useFonts } from 'expo-font';
 import "react-native-gesture-handler";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
@@ -13,13 +14,25 @@ import HeaderStyle from "./styles/Header/HeaderStyle";
 const Stack = createStackNavigator();
 
 // This is useful for all the pages, feel free to change this if you don't like it here
-defaultOptions = {
+let defaultOptions = {
   title: "Diego Dollars",
   headerStyle: HeaderStyle.bar,
   headerTitleStyle: HeaderStyle.title,
 };
 
 function App() {
+  // Load fonts
+
+  let [loaded] = useFonts({
+    montserrat: require('./assets/fonts/Montserrat-Regular.ttf'),
+    montserratBold: require('./assets/fonts/Montserrat-Bold.ttf'),
+  });
+
+  if (!loaded) {
+    // TODO handy error message if fonts failed to load.
+    return null;
+  }
+
   return (
     <NavigationContainer>
       <ContextProvider>

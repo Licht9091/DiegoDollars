@@ -4,6 +4,7 @@ import Format from "../helper/Format";
 import Colors from "../styles/colors";
 import Pill from "../components/Pill";
 import AppContext from "../helper/context";
+import { FONT_FAMILY_REGULAR } from "../styles/typography";
 
 const MainScreen = () => {
   // START EDITS
@@ -68,7 +69,7 @@ const MainScreen = () => {
       textAlign: "center",
     },
     availableSpend: {
-      fontFamily: "normal",
+      fontFamily: FONT_FAMILY_REGULAR,
       fontWeight: "light",
       fontSize: 80,
       textAlign: "center",
