@@ -8,3 +8,5 @@ export const API_LOGIN = "https://pylicht.pythonanywhere.com/login";
 export const API_GOALS_STATUS = "https://benno.pythonanywhere.com/goal_status";
 export const API_TRANSACTION_STATS =
   "https://benno.pythonanywhere.com/transaction_stats";
+export const API_TRANSACTION_LIST =
+  "https://benno.pythonanywhere.com/get_transactions";
