@@ -33,7 +33,7 @@ export default class CategoriseIncomeScreen extends Component {
       <Text style={STYLESHEET.defaultHeader}>Income Transaction</Text>
       <Text style={STYLESHEET.defaulthLine}></Text>
       <Text style={style.bigMoney}>${this.state.totalValue}</Text>
-      <Text style={STYLESHEET.defaultSmallHeader}>Rain Day Fund : {this.state.slider1Value}</Text>
+      <Text style={STYLESHEET.defaultSmallHeader}>Rain Day Fund : ${this.state.slider1Value}</Text>
        <Slider 
          maximumValue={1000}
          minimumValue={0}
@@ -44,7 +44,7 @@ export default class CategoriseIncomeScreen extends Component {
          value={this.state.slider1Value}
          onValueChange={(slider1Value) => this.setState({ slider1Value })}
        />
-      <Text style={STYLESHEET.defaultSmallHeader}>Overseas Trip : {this.state.slider2Value}</Text>
+      <Text style={STYLESHEET.defaultSmallHeader}>Overseas Trip : ${this.state.slider2Value}</Text>
       <Slider 
          maximumValue={1000}
          minimumValue={0}
@@ -55,7 +55,7 @@ export default class CategoriseIncomeScreen extends Component {
          value={this.state.slider2Value}
          onValueChange={(slider2Value) => this.setState({ slider2Value })}
        />
-      <Text style={STYLESHEET.defaultSmallHeader}>New Computer : {this.state.slider3Value}</Text>
+      <Text style={STYLESHEET.defaultSmallHeader}>New Computer : ${this.state.slider3Value}</Text>
       <Slider 
          maximumValue={1000}
          minimumValue={0}
@@ -66,7 +66,7 @@ export default class CategoriseIncomeScreen extends Component {
          value={this.state.slider3Value}
          onValueChange={(slider3Value) => this.setState({ slider3Value })}
        />
-       <Text style={STYLESHEET.defaultSmallHeader}>This will leave you with {this.state.totalValue - this.state.slider1Value - this.state.slider2Value - this.state.slider3Value} for spending for the fortnight</Text>
+       <Text style={STYLESHEET.defaultSmallHeader}>This will leave you with ${this.state.totalValue - this.state.slider1Value - this.state.slider2Value - this.state.slider3Value} for spending for the fortnight</Text>
         <Pill
                 content="Confirm"
                 color={Colors.Primary}
