@@ -16,7 +16,8 @@ const MainScreen = ({ navigation }) => {
   const [loaded, setLoaded] = useState(false);
   // Empty data useState
   const [data, setData] = useState({
-    uncategorisedTransactions: 0,
+    uncategorisedSpending: 0,
+    uncategorisedIncome: 0,
     availableSpending: 0,
     goals: [],
     spendingCategories: [],
@@ -24,13 +25,15 @@ const MainScreen = ({ navigation }) => {
 
   const setupUser = async () => {
     _ucSpending = await Context.User.getUncategorisedSpending();
+    _ucIncome = await Context.User.getUncategorisedIncome();
     _account = await Context.User.getAccount();
     _totalSpending = (await _account.getSpendingBalance()) + 0.57;
     _goals = await Context.User.getGoals();
     _spendingCategories = await Context.User.getSpendingCategories();
 
     _data = {
-      uncategorisedTransactions: _ucSpending,
+      uncategorisedSpending: _ucSpending,
+      uncategorisedIncome: _ucIncome,
       availableSpending: _totalSpending,
       goals: _goals,
       spendingCategories: _spendingCategories,
@@ -78,18 +81,26 @@ const MainScreen = ({ navigation }) => {
 
             <View style={mainStyle.heroUncategorised}>
               <Pill
-                content={`${data.uncategorisedTransactions} Uncategorised Transactions`}
+                content={`${data.uncategorisedSpending} Uncategorised Spending`}
                 color={Colors.DarkerGray}
                 backgroundColor={Colors.White}
-                onPress={() => navigation.navigate("Transactions")} // "expense"
+                onPress={() =>
+                  navigation.navigate("Transactions", {
+                    navigatedState: "expense",
+                  })
+                } // "expense"
               />
             </View>
             <View style={mainStyle.heroUncategorised}>
               <Pill
-                content={`${data.uncategorisedTransactions} Uncategorised Income`}
+                content={`${data.uncategorisedIncome} Uncategorised Income`}
                 color={Colors.DarkerGray}
                 backgroundColor={Colors.White}
-                onPress={() => navigation.navigate("Transactions")} // "income"
+                onPress={() =>
+                  navigation.navigate("Transactions", {
+                    navigatedState: "income",
+                  })
+                } // "income"
               />
             </View>
 
@@ -114,10 +125,25 @@ const MainScreen = ({ navigation }) => {
                       ...STYLESHEET.shadowNormal,
                     }}
                   >
-                    <Text style={mainStyle.subtitle}>{goal.goalName}</Text>
+                    <Text style={mainStyle.subtitle}>{goal.description}</Text>
                   </View>
                 );
               })}
+
+              {/* Add Goal Card */}
+              <View
+                style={{
+                  ...mainStyle.fundWrapper,
+                  ...STYLESHEET.shadowNormal,
+                }}
+              >
+                <Text // The navigation here should be on the whole button not the text
+                  style={{ fontSize: 50, alignSelf: "center" }}
+                  onPress={() => navigation.navigate("AddGoal")}
+                >
+                  +
+                </Text>
+              </View>
             </ScrollView>
           </View>
 

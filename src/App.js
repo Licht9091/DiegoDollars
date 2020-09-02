@@ -86,8 +86,8 @@ function App() {
               options={MainScreenOptions}
             />
             <Stack.Screen name="Account" component={AccountScreen} />
-            <Stack.Screen 
-              name="AddGoal" 
+            <Stack.Screen
+              name="AddGoal"
               component={AddGoalScreen}
               options={MainScreenOptions}
             />

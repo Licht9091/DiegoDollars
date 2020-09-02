@@ -19,6 +19,7 @@ class Transaction {
     } else {
       this.goalId = null;
     }
+    this.isIncome = parseFloat(this.value) > 0;
   }
 }
 
@@ -122,13 +123,18 @@ export class User {
     const bodyJson = await response.json();
 
     this.goals = [];
-    goals = bodyJson["goals"];
 
-    for (g in goals) {
+    await bodyJson["goals"].forEach((g) => {
       this.goals.push(
-        new Goal(g["name"], g["goal-value"], g["current-contribution"], null)
+        new Goal(
+          g["id"],
+          g["description"],
+          g["current-contribution"],
+          g["goal-value"],
+          null
+        )
       );
-    }
+    });
   };
 
   /**
@@ -310,10 +316,17 @@ class Account {
 }
 
 class Goal {
-  constructor(_goalName, _amount, _goalAmount, _goalCompletion) {
-    this.goalName = _goalName; // string
-    this.amount = _amount; // float
+  constructor(
+    _id,
+    _description,
+    _currentContribution,
+    _goalAmount,
+    _completion
+  ) {
+    this.id = _id;
+    this.description = _description; // string
+    this.currentContribution = _currentContribution;
     this.goalAmount = _goalAmount; // float
-    this.goalCompletion = _goalCompletion; // datetime
+    this.completion = _completion; // datetime
   }
 }

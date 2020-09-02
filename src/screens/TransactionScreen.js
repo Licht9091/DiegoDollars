@@ -9,16 +9,23 @@ import { FONT_FAMILY_LIGHT, FONT_FAMILY_SEMIBOLD } from "../styles/typography";
 import Pill from "../components/Pill";
 import AppContext from "../helper/context";
 
-export default function TransactionScreen({ navigation }) {
+export default function TransactionScreen({ route, navigation }) {
   // "all", "income", "expense"
-  const [data, setData] = useState([{}]);
+  const [data, setData] = useState([]);
   const [loaded, setLoaded] = useState(false);
+  const { navigatedState } = route.params; // "expense", "income" or "all". Can use this for determining which page we navigated from.
 
   const Context = useContext(AppContext);
 
   const updateTransactionList = async () => {
     _account = await Context.User.getAccount();
-    _data = _account.uncategorisedExpenses;
+    if (navigatedState === "expense") {
+      _data = _account.uncategorisedExpenses;
+    } else if (navigatedState === "income") {
+      _data = _account.uncategorisedIncome;
+    } else if (navigatedState === "all") {
+      _data = _account.allTransactions;
+    }
 
     setData(_data);
   };
@@ -86,7 +93,9 @@ export default function TransactionScreen({ navigation }) {
       {data && (
         <ScrollView style={styles.mainView}>
           <View style={styles.mainView}>
-            <Text style={STYLESHEET.defaultHeader}>Transactions</Text>
+            <Text style={STYLESHEET.defaultHeader}>
+              Transactions {navigatedState}
+            </Text>
           </View>
 
           {data.map((transaction) => {
@@ -126,12 +135,14 @@ export default function TransactionScreen({ navigation }) {
                       onPress={() => {}} // Do nothing or go to Income Screen if income
                     />
 
-                    <Pill // Only display if this is expense transactions
-                      content={"Add to Fund"}
-                      color={Colors.DarkerGray}
-                      backgroundColor={Colors.White}
-                      onPress={() => {}} // Go to categorise Transaction Screen
-                    />
+                    {transaction.isIncome === false && (
+                      <Pill // Only display if this is expense transactions
+                        content={"Add to Fund"}
+                        color={Colors.DarkerGray}
+                        backgroundColor={Colors.White}
+                        onPress={() => {}} // Go to categorise Transaction Screen
+                      />
+                    )}
                   </View>
                 </View>
               </>
