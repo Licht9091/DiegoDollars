@@ -7,8 +7,7 @@ import { FONT_FAMILY_REGULAR, FONT_FAMILY_SEMIBOLD, FONT_REGULAR } from './typog
 export const STYLESHEET = StyleSheet.create({
 addGoalView: {
     backgroundColor: '#F1F9FF',
-    minHeight: Dimensions.get('window').height,
-    padding: H_PADDING,
+    height: Dimensions.get('window').height,
   },
   addGoalSmallHeader: {
     fontSize : Dimensions.get('window').width/22,
@@ -24,8 +23,10 @@ addGoalView: {
     backgroundColor: Colors.Primary,
     color: Colors.White,
     minHeight: Dimensions.get('window').height/12,
-    paddingVertical: Dimensions.get('window').height/40,
+    width: Dimensions.get('window').width,
+    paddingVertical: Dimensions.get('window').height/25,
     textAlign: 'center',
+
   },
   addGoalSubHeader: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
@@ -39,7 +40,7 @@ addGoalView: {
     fontFamily: FONT_FAMILY_REGULAR,
     height: Dimensions.get('window').height/12,
     color: '#565758',
-    backgroundColor: '#ededed',
+    backgroundColor: Colors.White,
     borderRadius: Dimensions.get('window').height/80,
     paddingLeft: Dimensions.get('window').width/20,
     marginTop: Dimensions.get('window').height/100,
