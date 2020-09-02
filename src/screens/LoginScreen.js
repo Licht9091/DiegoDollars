@@ -17,7 +17,7 @@ export default function LoginScreen({ navigation }) {
     const loginSucess = await Context.User.logIn(username, password);
 
     if (loginSucess) {
-      navigateAndReset(navigation, "Main");
+      navigateAndReset(navigation, "AddGoal");
       setUsername("");
       setPassword("");
     } else {
