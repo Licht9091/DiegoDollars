@@ -1,13 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Image, ScrollView, Text, View } from 'react-native';
-import BottomBar from '../../components/BottomBar';
-import PieChart from '../../components/PieChart';
-import Pill from '../../components/Pill';
-import AppContext from '../../helper/context';
-import Format from '../../helper/Format';
-import Colors from '../../styles/colors';
-import { STYLESHEET } from '../../styles/stylesheet';
-import mainStyle from './MainScreen.style';
+import React, { useContext, useEffect, useState } from "react";
+import { Image, ScrollView, Text, View } from "react-native";
+import BottomBar from "../../components/BottomBar";
+import PieChart from "../../components/PieChart";
+import Pill from "../../components/Pill";
+import AppContext from "../../helper/context";
+import Format from "../../helper/Format";
+import Colors from "../../styles/colors";
+import { STYLESHEET } from "../../styles/stylesheet";
+import mainStyle from "./MainScreen.style";
+import { round } from "react-native-reanimated";
 
 const MainScreen = ({ navigation }) => {
   // START EDITS
@@ -85,8 +86,8 @@ const MainScreen = ({ navigation }) => {
                 color={Colors.DarkerGray}
                 backgroundColor={Colors.White}
                 onPress={() =>
-                  navigation.navigate('Transactions', {
-                    navigatedState: 'expense',
+                  navigation.navigate("Transactions", {
+                    navigatedState: "expense",
                   })
                 } // "expense"
               />
@@ -97,8 +98,8 @@ const MainScreen = ({ navigation }) => {
                 color={Colors.DarkerGray}
                 backgroundColor={Colors.White}
                 onPress={() =>
-                  navigation.navigate('Transactions', {
-                    navigatedState: 'income',
+                  navigation.navigate("Transactions", {
+                    navigatedState: "income",
                   })
                 } // "income"
               />
@@ -107,7 +108,7 @@ const MainScreen = ({ navigation }) => {
             <View>
               <Image
                 style={mainStyle.chartImg}
-                source={require('./chart.png')}
+                source={require("./chart.png")}
               />
             </View>
           </View>
@@ -127,7 +128,7 @@ const MainScreen = ({ navigation }) => {
                   >
                     <Text style={mainStyle.subtitle}>{goal.description}</Text>
                     <View style={mainStyle.fundDetailsWrapper}>
-                      <PieChart /*value={goal.completion / 100}*/ value={0.3} />
+                      <PieChart value={goal.percent / 100} />
                       <View style={mainStyle.fundInfo}>
                         <Text style={mainStyle.fundContribution}>
                           {`$${Format.toDollars(
@@ -135,7 +136,7 @@ const MainScreen = ({ navigation }) => {
                           )}.${Format.toCents(goal.currentContribution)}`}
                         </Text>
                         <Text style={mainStyle.fundCompletion}>
-                          {parseInt(goal.completion)}% Complete
+                          {goal.percent}% Complete
                         </Text>
                       </View>
                     </View>
@@ -151,8 +152,8 @@ const MainScreen = ({ navigation }) => {
                 }}
               >
                 <Text // The navigation here should be on the whole button not the text
-                  style={{ fontSize: 50, alignSelf: 'center' }}
-                  onPress={() => navigation.navigate('AddGoal')}
+                  style={{ fontSize: 50, alignSelf: "center" }}
+                  onPress={() => navigation.navigate("AddGoal")}
                 >
                   +
                 </Text>
@@ -169,8 +170,8 @@ const MainScreen = ({ navigation }) => {
                 return (
                   <View style={mainStyle.spendWrapper}>
                     <PieChart
-                      value={0.3}
-                      color='#13629B'
+                      value={category.percent}
+                      color="#13629B"
                       size={85}
                       showPercentage
                     />
