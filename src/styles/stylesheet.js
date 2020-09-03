@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
 import Colors from './colors';
 import { H_PADDING } from './spacing';
+import { FONT_FAMILY_LIGHT } from './typography';
 
 export const STYLESHEET = StyleSheet.create({
   // Default main <View />
@@ -12,39 +13,41 @@ export const STYLESHEET = StyleSheet.create({
   },
   // Default for <Text /> when used as a header
   defaultHeader: {
-    fontSize: 30,
-    textAlign : "center"
+    fontSize: 28,
+    textAlign: 'center',
+    fontFamily: FONT_FAMILY_LIGHT,
+    color: Colors.White,
   },
   defaultSmallHeader: {
-    fontSize : 24,
-    paddingVertical : 10,
-    textAlign : "center",
+    fontSize: 24,
+    paddingVertical: 10,
+    textAlign: 'center',
   },
-  defaulthLine : {
+  defaulthLine: {
     borderBottomColor: 'black',
     borderBottomWidth: 5,
-    alignSelf:'stretch',
-    paddingVertical : 10,
+    alignSelf: 'stretch',
+    paddingVertical: 10,
   },
   topHeader: {
     fontSize: 30,
-    paddingVertical : 10,
+    paddingVertical: 10,
   },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   loginbuttonbox: {
     padding: 24,
-    width: "100%",
+    width: '100%',
   },
   loginbutton: {
     paddingVertical: 10,
   },
   confirmButtonBox: {
-    width: "100%",
+    width: '100%',
     paddingHorizontal: 35,
     paddingVertical: 20,
   },
@@ -52,20 +55,20 @@ export const STYLESHEET = StyleSheet.create({
     paddingVertical: 10,
   },
   hairline: {
-    width: "100%",
+    width: '100%',
     paddingHorizontal: 10,
     paddingVertical: 5,
-    borderBottomColor: "blue",
+    borderBottomColor: 'blue',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   loginbox: {
-    width: "100%",
+    width: '100%',
     paddingHorizontal: 35,
     paddingVertical: 10,
   },
   notauser: {
-    color: "blue",
-    alignSelf: "center",
+    color: 'blue',
+    alignSelf: 'center',
     color: Colors.White,
   },
   // Default for <Button />

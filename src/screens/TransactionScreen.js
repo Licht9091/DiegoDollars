@@ -1,13 +1,12 @@
-import React, { useContext, useEffect } from "react";
-import { STYLESHEET } from "../styles/stylesheet";
-import { ScrollView } from "react-native-gesture-handler";
-import { useState } from "react";
-import { StyleSheet, Dimensions, View, Text, Button } from "react-native";
-import Colors from "../styles/colors";
-import { H_PADDING } from "../styles/spacing";
-import { FONT_FAMILY_LIGHT, FONT_FAMILY_SEMIBOLD } from "../styles/typography";
-import Pill from "../components/Pill";
-import AppContext from "../helper/context";
+import moment from 'moment';
+import React, { useContext, useEffect, useState } from 'react';
+import { Text, View } from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import AppContext from '../helper/context';
+import { STYLESHEET } from '../styles/stylesheet';
+import transactionStyles from './Transactions/TransactionsScreen.style';
+import BottomBar from '../components/BottomBar';
+import Format from '../helper/Format';
 
 export default function TransactionScreen({ route, navigation }) {
   // "all", "income", "expense"
@@ -19,11 +18,11 @@ export default function TransactionScreen({ route, navigation }) {
 
   const updateTransactionList = async () => {
     _account = await Context.User.getAccount();
-    if (navigatedState === "expense") {
+    if (navigatedState === 'expense') {
       _data = _account.uncategorisedExpenses;
-    } else if (navigatedState === "income") {
+    } else if (navigatedState === 'income') {
       _data = _account.uncategorisedIncome;
-    } else if (navigatedState === "all") {
+    } else if (navigatedState === 'all') {
       _data = _account.allTransactions;
     }
 
@@ -40,116 +39,100 @@ export default function TransactionScreen({ route, navigation }) {
   });
 
   // Local Styles
-  const styles = StyleSheet.create({
-    mainView: {
-      backgroundColor: Colors.Primary,
-      paddingBottom: 20,
-      paddingTop: 20,
-    },
-    transactionView: {
-      backgroundColor: "white",
-      paddingTop: 0,
-      paddingBottom: 10,
-    },
-    transactionText: {
-      fontFamily: FONT_FAMILY_LIGHT,
-      fontWeight: "100",
-      fontSize: 20,
-      textAlign: "left",
-      color: "black",
-      paddingLeft: 10,
-    },
-    dateText: {
-      fontFamily: FONT_FAMILY_LIGHT,
-      fontWeight: "100",
-      fontSize: 15,
-      textAlign: "center",
-      color: "black",
-      paddingLeft: 10,
-    },
-    categoryText: {
-      fontFamily: FONT_FAMILY_SEMIBOLD,
-      fontWeight: "100",
-      fontSize: 20,
-      textAlign: "left",
-      color: "black",
-    },
-    moneyText: {
-      fontFamily: FONT_FAMILY_SEMIBOLD,
-      fontWeight: "100",
-      fontSize: 20,
-      textAlign: "left",
-      color: "black",
-      paddingLeft: 10,
-    },
-    firstLine: {
-      flexDirection: "row",
-    },
-  });
 
   // Sorry that this is a complete mess :(. Need to make each of these a component probs
   return (
     <>
       {data && (
-        <ScrollView style={styles.mainView}>
-          <View style={styles.mainView}>
+        <ScrollView style={transactionStyles.mainView}>
+          <View style={transactionStyles.mainView}>
             <Text style={STYLESHEET.defaultHeader}>
-              Transactions {navigatedState}
+              Transactions
+              {/* Transactions {navigatedState} */}
             </Text>
           </View>
 
-          {data.map((transaction) => {
-            return (
-              <>
-                {/* Single Transaction Component */}
-                <View style={styles.transactionView}>
-                  {/* Line 1 */}
-                  <View style={styles.firstLine}>
-                    <Text style={styles.transactionText}>
-                      {transaction.description}
-                    </Text>
-                  </View>
+          <View style={transactionStyles.transactionsWrapper}>
+            {data
+              .sort((a, b) => new Date(b.date) - new Date(a.date))
+              .map((transaction) => {
+                const niceDate = moment(transaction.date).format('D MMMM');
+                const dollars = Format.toDollars(
+                  navigatedState === 'expense'
+                    ? -1 * transaction.value
+                    : transaction.value
+                );
+                const cents = Format.toCents(transaction.value);
 
-                  {/* Line 2 */}
-                  <View style={styles.firstLine}>
-                    <Text style={styles.categoryText}>
-                      {transaction.category}
-                    </Text>
-                  </View>
+                return (
+                  <>
+                    {/* Single Transaction Component */}
+                    <View style={transactionStyles.transactionView}>
+                      {/* Line 1 */}
+                      <View style={transactionStyles.topLine}>
+                        <View style={transactionStyles.transactionTextWrapper}>
+                          <Text style={transactionStyles.transactionText}>
+                            {transaction.description}
+                          </Text>
+                        </View>
 
-                  {/* Line 3 */}
-                  <View>
-                    <Text style={styles.dateText}>{transaction.date}</Text>
-                  </View>
+                        <View>
+                          <Text style={transactionStyles.dateText}>
+                            {niceDate}
+                          </Text>
+                          <Text style={transactionStyles.categoryText}>
+                            {transaction.category}
+                          </Text>
+                        </View>
+                      </View>
 
-                  {/* Line 4 */}
-                  <View style={styles.firstLine}>
-                    <Text style={styles.moneyText}>
-                      {`$ ${transaction.value}  `}
-                    </Text>
+                      {/* Line 4 */}
+                      <View style={transactionStyles.bottomLine}>
+                        <View style={transactionStyles.moneyText}>
+                          <Text style={transactionStyles.moneyDollars}>
+                            {`$ ${dollars}.`}
+                          </Text>
+                          <Text style={transactionStyles.moneyCents}>
+                            {`${cents}`}
+                          </Text>
+                        </View>
 
-                    <Pill
-                      content={"Categorise"}
-                      color={Colors.DarkerGray}
-                      backgroundColor={Colors.White}
-                      onPress={() => {}} // Do nothing or go to Income Screen if income
-                    />
+                        <View style={transactionStyles.buttonContainer}>
+                          <TouchableOpacity
+                            style={{
+                              ...transactionStyles.buttonLeft,
+                              ...transactionStyles.button,
+                            }}
+                            onPress={() => {}} // Do nothing or go to Income Screen if income
+                          >
+                            <Text style={transactionStyles.buttonText}>
+                              Categorise
+                            </Text>
+                          </TouchableOpacity>
 
-                    {transaction.isIncome === false && (
-                      <Pill // Only display if this is expense transactions
-                        content={"Add to Fund"}
-                        color={Colors.DarkerGray}
-                        backgroundColor={Colors.White}
-                        onPress={() => {}} // Go to categorise Transaction Screen
-                      />
-                    )}
-                  </View>
-                </View>
-              </>
-            );
-          })}
+                          {transaction.isIncome === false && (
+                            <TouchableOpacity
+                              style={{
+                                ...transactionStyles.buttonRight,
+                                ...transactionStyles.button,
+                              }}
+                              onPress={() => {}} // Do nothing or go to Income Screen if income
+                            >
+                              <Text style={transactionStyles.buttonText}>
+                                Add to Fund
+                              </Text>
+                            </TouchableOpacity>
+                          )}
+                        </View>
+                      </View>
+                    </View>
+                  </>
+                );
+              })}
+          </View>
         </ScrollView>
       )}
+      <BottomBar />
     </>
   );
 }

@@ -1,13 +1,13 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Text, View, Dimensions, Image, ScrollView } from "react-native";
-import Pill from "../../components/Pill";
-import AppContext from "../../helper/context";
-import { FONT_FAMILY_REGULAR } from "../../styles/typography";
-import Format from "../../helper/Format";
-import Colors from "../../styles/colors";
-import mainStyle from "./MainScreen.style";
-import { STYLESHEET } from "../../styles/stylesheet";
-import BottomBar from "../../components/BottomBar";
+import React, { useContext, useEffect, useState } from 'react';
+import { Image, ScrollView, Text, View } from 'react-native';
+import BottomBar from '../../components/BottomBar';
+import PieChart from '../../components/PieChart';
+import Pill from '../../components/Pill';
+import AppContext from '../../helper/context';
+import Format from '../../helper/Format';
+import Colors from '../../styles/colors';
+import { STYLESHEET } from '../../styles/stylesheet';
+import mainStyle from './MainScreen.style';
 
 const MainScreen = ({ navigation }) => {
   // START EDITS
@@ -71,7 +71,7 @@ const MainScreen = ({ navigation }) => {
           <View style={mainStyle.statusContainer}>
             <View style={mainStyle.availableSpend}>
               <Text style={mainStyle.availableSpendDollars}>
-                {Format.toDollars(data.availableSpending)}.
+                {`$${Format.toDollars(data.availableSpending)}`}.
               </Text>
               <Text style={mainStyle.availableSpendCents}>
                 {Format.toCents(data.availableSpending)}
@@ -85,8 +85,8 @@ const MainScreen = ({ navigation }) => {
                 color={Colors.DarkerGray}
                 backgroundColor={Colors.White}
                 onPress={() =>
-                  navigation.navigate("Transactions", {
-                    navigatedState: "expense",
+                  navigation.navigate('Transactions', {
+                    navigatedState: 'expense',
                   })
                 } // "expense"
               />
@@ -97,8 +97,8 @@ const MainScreen = ({ navigation }) => {
                 color={Colors.DarkerGray}
                 backgroundColor={Colors.White}
                 onPress={() =>
-                  navigation.navigate("Transactions", {
-                    navigatedState: "income",
+                  navigation.navigate('Transactions', {
+                    navigatedState: 'income',
                   })
                 } // "income"
               />
@@ -107,7 +107,7 @@ const MainScreen = ({ navigation }) => {
             <View>
               <Image
                 style={mainStyle.chartImg}
-                source={require("./chart.png")}
+                source={require('./chart.png')}
               />
             </View>
           </View>
@@ -126,6 +126,19 @@ const MainScreen = ({ navigation }) => {
                     }}
                   >
                     <Text style={mainStyle.subtitle}>{goal.description}</Text>
+                    <View style={mainStyle.fundDetailsWrapper}>
+                      <PieChart /*value={goal.completion / 100}*/ value={0.3} />
+                      <View style={mainStyle.fundInfo}>
+                        <Text style={mainStyle.fundContribution}>
+                          {`$${Format.toDollars(
+                            goal.currentContribution
+                          )}.${Format.toCents(goal.currentContribution)}`}
+                        </Text>
+                        <Text style={mainStyle.fundCompletion}>
+                          {parseInt(goal.completion)}% Complete
+                        </Text>
+                      </View>
+                    </View>
                   </View>
                 );
               })}
@@ -138,8 +151,8 @@ const MainScreen = ({ navigation }) => {
                 }}
               >
                 <Text // The navigation here should be on the whole button not the text
-                  style={{ fontSize: 50, alignSelf: "center" }}
-                  onPress={() => navigation.navigate("AddGoal")}
+                  style={{ fontSize: 50, alignSelf: 'center' }}
+                  onPress={() => navigation.navigate('AddGoal')}
                 >
                   +
                 </Text>
@@ -155,7 +168,22 @@ const MainScreen = ({ navigation }) => {
               {data.spendingCategories.map((category) => {
                 return (
                   <View style={mainStyle.spendWrapper}>
-                    <Text style={mainStyle.subtitle}>{category.name}</Text>
+                    <PieChart
+                      value={0.3}
+                      color='#13629B'
+                      size={85}
+                      showPercentage
+                    />
+                    <View style={mainStyle.spendInfo}>
+                      <Text style={mainStyle.spendAmount}>
+                        {`$${Format.toDollars(
+                          category.amount
+                        )}.${Format.toCents(category.amount)}`}
+                      </Text>
+                      <Text style={mainStyle.spendCategory}>
+                        {category.name}
+                      </Text>
+                    </View>
                   </View>
                 );
               })}
