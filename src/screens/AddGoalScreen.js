@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { STYLESHEET } from "../styles/addGoalStyle";
-import { Button, View, Text, TextInput, ScrollView} from "react-native";
+import { Button, View, Text, TextInput, ScrollView, Image} from "react-native";
 import Pill from "../components/Pill";
 import Colors from "../styles/colors";
 import BottomBar from "../components/BottomBar";
@@ -16,7 +16,10 @@ const AddGoal = ({ navigation }) => {
       <>
         <View style={STYLESHEET.addGoalView}>
           <ScrollView>
-            <Text style={STYLESHEET.addGoalHeader}>Create fund</Text>
+            <Text style={STYLESHEET.addGoalHeader}>
+              <Image src={("../assets/backArrow.png")} style={STYLESHEET.addGoalHeader}/>
+              Create fund
+            </Text>
             <Text style={STYLESHEET.addGoalSubHeader}>New Fund</Text>
             <TextInput
                   style={STYLESHEET.addGoalTextInput}

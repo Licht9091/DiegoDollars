@@ -8,6 +8,7 @@ import Colors from "../../styles/colors";
 import mainStyle from "./MainScreen.style";
 import { STYLESHEET } from "../../styles/stylesheet";
 import BottomBar from "../../components/BottomBar";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const MainScreen = ({ navigation }) => {
   // START EDITS
@@ -131,19 +132,21 @@ const MainScreen = ({ navigation }) => {
               })}
 
               {/* Add Goal Card */}
-              <View
+              <TouchableOpacity
                 style={{
                   ...mainStyle.fundWrapper,
                   ...STYLESHEET.shadowNormal,
+                  
                 }}
+                onPress={() => navigation.navigate("AddGoal")}
               >
+
                 <Text // The navigation here should be on the whole button not the text
                   style={{ fontSize: 50, alignSelf: "center" }}
-                  onPress={() => navigation.navigate("AddGoal")}
                 >
                   +
                 </Text>
-              </View>
+              </TouchableOpacity>
             </ScrollView>
           </View>
 
