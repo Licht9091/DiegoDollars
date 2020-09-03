@@ -15,9 +15,10 @@ const AddGoal = ({ navigation }) => {
     
       <>
         <View style={STYLESHEET.addGoalView}>
+        {/* <Image source={require("../assets/backArrow.png")}/> */}
           <ScrollView>
             <Text style={STYLESHEET.addGoalHeader}>
-              <Image src={("../assets/backArrow.png")} style={STYLESHEET.addGoalHeader}/>
+              
               Create fund
             </Text>
             <Text style={STYLESHEET.addGoalSubHeader}>New Fund</Text>
