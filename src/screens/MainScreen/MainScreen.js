@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Image, ScrollView, Text, View } from "react-native";
-import BottomBar from "../../components/BottomBar";
-import PieChart from "../../components/PieChart";
-import Pill from "../../components/Pill";
-import AppContext from "../../helper/context";
-import Format from "../../helper/Format";
-import Colors from "../../styles/colors";
-import { STYLESHEET } from "../../styles/stylesheet";
-import mainStyle from "./MainScreen.style";
-import { round } from "react-native-reanimated";
+import React, { useContext, useEffect, useState } from 'react';
+import { Image, ScrollView, Text, View } from 'react-native';
+import BottomBar from '../../components/BottomBar';
+import PieChart from '../../components/PieChart';
+import Pill from '../../components/Pill';
+import AppContext from '../../helper/context';
+import Format from '../../helper/Format';
+import Colors from '../../styles/colors';
+import { STYLESHEET } from '../../styles/stylesheet';
+import mainStyle from './MainScreen.style';
+import { round } from 'react-native-reanimated';
 
 const MainScreen = ({ navigation }) => {
   // START EDITS
@@ -86,8 +86,8 @@ const MainScreen = ({ navigation }) => {
                 color={Colors.DarkerGray}
                 backgroundColor={Colors.White}
                 onPress={() =>
-                  navigation.navigate("Transactions", {
-                    navigatedState: "expense",
+                  navigation.navigate('Transactions', {
+                    navigatedState: 'expense',
                   })
                 } // "expense"
               />
@@ -98,8 +98,8 @@ const MainScreen = ({ navigation }) => {
                 color={Colors.DarkerGray}
                 backgroundColor={Colors.White}
                 onPress={() =>
-                  navigation.navigate("Transactions", {
-                    navigatedState: "income",
+                  navigation.navigate('Transactions', {
+                    navigatedState: 'income',
                   })
                 } // "income"
               />
@@ -108,7 +108,7 @@ const MainScreen = ({ navigation }) => {
             <View>
               <Image
                 style={mainStyle.chartImg}
-                source={require("./chart.png")}
+                source={require('./chart.png')}
               />
             </View>
           </View>
@@ -143,22 +143,21 @@ const MainScreen = ({ navigation }) => {
                   </View>
                 );
               })}
-
-              {/* Add Goal Card */}
-              <View
-                style={{
-                  ...mainStyle.fundWrapper,
-                  ...STYLESHEET.shadowNormal,
-                }}
-              >
-                <Text // The navigation here should be on the whole button not the text
-                  style={{ fontSize: 50, alignSelf: "center" }}
-                  onPress={() => navigation.navigate("AddGoal")}
-                >
-                  +
-                </Text>
-              </View>
             </ScrollView>
+            {/* Add Goal Button */}
+            <View
+              style={{
+                ...mainStyle.fundWrapper,
+                ...STYLESHEET.shadowNormal,
+              }}
+            >
+              <Text // The navigation here should be on the whole button not the text
+                style={{ fontSize: 50, alignSelf: 'center' }}
+                onPress={() => navigation.navigate('AddGoal')}
+              >
+                +
+              </Text>
+            </View>
           </View>
 
           {/* Spending */}
@@ -167,11 +166,12 @@ const MainScreen = ({ navigation }) => {
             <View style={mainStyle.spendsWrapper}>
               {/* Spending Categories Data loop */}
               {data.spendingCategories.map((category) => {
+                console.log(category);
                 return (
-                  <View style={mainStyle.spendWrapper}>
+                  <View key={category.name} style={mainStyle.spendWrapper}>
                     <PieChart
                       value={category.percent}
-                      color="#13629B"
+                      color='#13629B'
                       size={85}
                       showPercentage
                     />

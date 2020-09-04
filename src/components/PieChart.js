@@ -31,8 +31,8 @@ const PieChart = ({
     margin: 10,
     opacity: 0.18,
     position: 'absolute',
-    top: 2.5,
-    left: 2.5,
+    top: 3.5,
+    left: 3.5,
   };
 
   const textStyle = {
@@ -61,7 +61,7 @@ const PieChart = ({
   };
 
   const data = {
-    data: [value],
+    data: [value > 0.94 ? 0.94 : value],
   };
 
   const chartConfig = {

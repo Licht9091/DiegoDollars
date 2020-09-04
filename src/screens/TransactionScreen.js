@@ -67,7 +67,10 @@ export default function TransactionScreen({ route, navigation }) {
                 return (
                   <>
                     {/* Single Transaction Component */}
-                    <View style={transactionStyles.transactionView}>
+                    <View
+                      key={transaction.id}
+                      style={transactionStyles.transactionView}
+                    >
                       {/* Line 1 */}
                       <View style={transactionStyles.topLine}>
                         <View style={transactionStyles.transactionTextWrapper}>

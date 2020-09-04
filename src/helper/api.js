@@ -5,17 +5,17 @@ import {
   API_GOALS_STATUS,
   API_TRANSACTION_STATS,
   API_TRANSACTION_LIST,
-} from "./constants";
+} from './constants';
 
 class Transaction {
   constructor(_obj) {
-    this.id = _obj["id"];
-    this.date = _obj["date"];
-    this.description = _obj["description"];
-    this.value = _obj["value"];
-    this.category = _obj["category"];
-    if ("goal" in _obj) {
-      this.goalId = _obj["goal"];
+    this.id = _obj['id'];
+    this.date = _obj['date'];
+    this.description = _obj['description'];
+    this.value = _obj['value'];
+    this.category = _obj['category'];
+    if ('goal' in _obj) {
+      this.goalId = _obj['goal'];
     } else {
       this.goalId = null;
     }
@@ -38,17 +38,17 @@ export class User {
    */
   logIn = async (username, password) => {
     let formdata = new FormData();
-    formdata.append("username", username);
-    formdata.append("password", password);
+    formdata.append('username', username);
+    formdata.append('password', password);
 
     const response = await fetch(API_LOGIN, {
-      method: "POST",
-      headers: { "Content-Type": "multipart/form-data" },
+      method: 'POST',
+      headers: { 'Content-Type': 'multipart/form-data' },
       body: formdata,
     });
 
     const body = await response.text();
-    const loggedIn = body.includes("Successfully logged in!");
+    const loggedIn = body.includes('Successfully logged in!');
 
     if (loggedIn) {
       this.username = username;
@@ -64,10 +64,10 @@ export class User {
    * @return {boolean}  Returns true if logout was successful.
    */
   logOut = async () => {
-    const response = await fetch(API_LOGOUT, { method: "GET" });
+    const response = await fetch(API_LOGOUT, { method: 'GET' });
 
     const body = await response.text();
-    const loggedOut = body.includes("Successfully logged out!");
+    const loggedOut = body.includes('Successfully logged out!');
 
     if (loggedOut) {
       this.resetUserState();
@@ -83,7 +83,7 @@ export class User {
    * @return {string} Returns the API call body which gives some information of whether the user is logged in.
    */
   testLoggedIn = async () => {
-    const response = await fetch(API_TEST_LOGGED_IN, { method: "GET" });
+    const response = await fetch(API_TEST_LOGGED_IN, { method: 'GET' });
     const body = await response.text();
 
     return body;
@@ -119,18 +119,21 @@ export class User {
    * @ensure User.goals will be updated if fetch does not fail.
    */
   fetchGoalsStatus = async () => {
-    const response = await fetch(API_GOALS_STATUS, { method: "GET" });
+    const response = await fetch(API_GOALS_STATUS, { method: 'GET' });
     const bodyJson = await response.json();
+
+    console.log('Fetched goals: ');
+    console.log(bodyJson);
 
     this.goals = [];
 
-    await bodyJson["goals"].forEach((g) => {
+    await bodyJson['goals'].forEach((g) => {
       this.goals.push(
         new Goal(
-          g["id"],
-          g["description"],
-          g["current-contribution"],
-          g["goal-value"],
+          g['id'],
+          g['description'],
+          g['current-contribution'],
+          g['goal-value'],
           null
         )
       );
@@ -209,7 +212,7 @@ export class User {
    * @return {Object} Transaction data object belonging to the account
    */
   fetchTransactions = async () => {
-    const response = await fetch(API_TRANSACTION_LIST, { method: "GET" });
+    const response = await fetch(API_TRANSACTION_LIST, { method: 'GET' });
     const bodyJson = await response.json();
 
     return bodyJson;
@@ -221,8 +224,10 @@ export class User {
    * @ensure User.account and User.spendingCategories will be updated if fetch does not fail.
    */
   fetchAccountStatus = async () => {
-    const response = await fetch(API_TRANSACTION_STATS, { method: "GET" });
+    const response = await fetch(API_TRANSACTION_STATS, { method: 'GET' });
     const bodyJson = await response.json();
+
+    console.log(bodyJson);
 
     // Get the transactions list for the user
     transactionData = await this.fetchTransactions();
@@ -231,35 +236,35 @@ export class User {
     incomeTransactions = [];
     expenseTransactions = [];
 
-    await transactionData["all_transactions"].forEach((obj) => {
+    await transactionData['all_transactions'].forEach((obj) => {
       allTransactions.push(new Transaction(obj));
     });
 
-    await transactionData["uncategorized_income"].forEach((obj) => {
+    await transactionData['uncategorized_income'].forEach((obj) => {
       incomeTransactions.push(new Transaction(obj));
     });
-    await transactionData["uncategorized_expense"].forEach((obj) => {
+    await transactionData['uncategorized_expense'].forEach((obj) => {
       expenseTransactions.push(new Transaction(obj));
     });
 
     // Set the Account
     this.account = new Account(
-      bodyJson["spending-amount"],
-      bodyJson["total-cash"],
-      bodyJson["days-till-pay"],
+      bodyJson['spending-amount'],
+      bodyJson['total-cash'],
+      bodyJson['days-till-pay'],
       allTransactions,
       incomeTransactions,
       expenseTransactions
     );
 
     this.spendingCategories = [];
-    spending = bodyJson["spending"];
+    spending = bodyJson['spending'];
 
-    let total = Math.abs(parseFloat(spending["total"]).toFixed(2));
+    let total = Math.abs(parseFloat(spending['total']).toFixed(2));
     // Append all the categories to the list
     for (const [key, value] of Object.entries(spending)) {
       // Skip this one
-      if (key == "total") {
+      if (key == 'total') {
         continue;
       }
 
@@ -267,8 +272,8 @@ export class User {
       this.spendingCategories.push(new SpendingCategory(key, v, v / total));
     }
 
-    this.uncategorisedIncome = bodyJson["uncategorised"]["income"];
-    this.uncategorisedSpending = bodyJson["uncategorised"]["spending"];
+    this.uncategorisedIncome = bodyJson['uncategorised']['income'];
+    this.uncategorisedSpending = bodyJson['uncategorised']['spending'];
 
     // Sorting
     this.spendingCategories = this.spendingCategories.sort(function lambda(
