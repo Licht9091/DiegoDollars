@@ -1,48 +1,64 @@
 import React, { useState} from "react";
 import { STYLESHEET } from "../styles/stylesheet";
-import { CheckBox, Text, StyleSheet, View, Button } from "react-native";
-import Pill from "../components/Pill"
+import { Text, View} from "react-native";
 import Colors from "../styles/colors"
+import BottomBar from '../components/BottomBar';
+import transactionStyles from './Transactions/TransactionsScreen.style';
 
-export default function CategoriseTransactionScreen() {
-  const [completed, setCompletion] = useState(false);
-  const [fund1, setFund1] = useState(false);
-  const [fund2, setFund2] = useState(false);
-  const [fund3, setFund3] = useState(false);
-
+export default function CategoriseTransactionScreen( { route } ) {
+  const { transaction } = route.params; 
+  const { dollars } = route.params;
+  const { cents } = route.params;
+  const style = {
+    transactionView: {
+      backgroundColor: Colors.White,
+      paddingTop: 0,
+      paddingBottom: 10,
+      marginTop: 0,
+      marginBottom: 15,
+      padding: 10,
+      paddingTop: 20,
+      paddingRight: 15,
+    },
+    fundView: {
+      backgroundColor: Colors.PrimaryLighter,
+      paddingTop: 0,
+      paddingBottom: 10,
+      borderRadius: 15,
+      marginTop: 0,
+      marginLeft: 10,
+      marginRight: 10,
+      marginBottom: 15,
+      padding: 10,
+      paddingTop: 20,
+      paddingRight: 15,
+      ...STYLESHEET.shadowNormal,
+    },
+    fundsView: {
+      backgroundColor: Colors.Primary,
+      width : '50%'
+    },
+    container: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop : 10,
+    }
+  }
   return <View style={STYLESHEET.defaultView}>
     <Text style={STYLESHEET.defaultHeader}>Transaction</Text>
-    <Text style={STYLESHEET.defaulthLine}></Text>
-    <Text style={STYLESHEET.defaultHeader}>Transaction info here</Text>
-    <Text style={STYLESHEET.defaulthLine}></Text>
-    <Text style={STYLESHEET.defaultHeader}>Select Goal</Text>
-    <CheckBox
-        value={fund1}
-        onValueChange={setFund1}
-        style={STYLESHEET.notauser}
-      />
-    <Text style={STYLESHEET.defaultSmallHeader}>Rain Day Fund ($1500/$1000)</Text>
-    <CheckBox
-        value={fund2}
-        onValueChange={setFund2}
-        style={STYLESHEET.notauser}
-      />
-    <Text style={STYLESHEET.defaultSmallHeader}>Overseas Trip ($4500/$5000)</Text>
-    <CheckBox
-        value={fund3}
-        onValueChange={setFund3}
-        style={STYLESHEET.notauser}
-      />
-    <Text style={STYLESHEET.defaultSmallHeader}>New Computer ($650/$2000)</Text>
-    <Text style={STYLESHEET.defaulthLine}></Text>
-      <CheckBox
-        value={completed}
-        onValueChange={setCompletion}
-        style={STYLESHEET.notauser}
-      /><Text style={STYLESHEET.defaultSmallHeader}>Completed?</Text>
-      <Pill 
-      content="Claim as Goal"
-      color={Colors.Primary}
-      backgroundColor={Colors.White}/>
+    <View style={style.transactionView}>
+      <Text>{ transaction.description }</Text>
+      <View style={style.container}>
+        <Text style={transactionStyles.moneyDollars}>{`$ ${dollars}.`}{`${cents}`}</Text>
+        <Text> { transaction.category }</Text>
+      </View>
+    </View>
+    <Text style={STYLESHEET.defaultHeader}>
+      Allocate to Fund
+    </Text>
+    <View style={style.fundsView}>
+      <Text style={style.fundView}>Fund data goes here</Text>
+      <Text style={style.fundView}>and here</Text>
+    </View>
   </View>
 }

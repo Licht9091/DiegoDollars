@@ -106,7 +106,8 @@ export default function TransactionScreen({ route, navigation }) {
                               ...transactionStyles.buttonLeft,
                               ...transactionStyles.button,
                             }}
-                            onPress={() => {}} // Do nothing or go to Income Screen if income
+                            onPress={() => {navigation.navigate('CategoriseTransaction', {transaction : transaction, 
+                              dollars : dollars, cents : cents});}} // Do nothing or go to Income Screen if income
                           >
                             <Text style={transactionStyles.buttonText}>
                               Categorise
@@ -119,7 +120,8 @@ export default function TransactionScreen({ route, navigation }) {
                                 ...transactionStyles.buttonRight,
                                 ...transactionStyles.button,
                               }}
-                              onPress={() => {}} // Do nothing or go to Income Screen if income
+                              onPress={() => {navigation.navigate('CategoriseIncome', {transaction : transaction, 
+                              dollars : dollars, cents : cents});}} // Do nothing or go to Income Screen if income
                             >
                               <Text style={transactionStyles.buttonText}>
                                 Add to Fund
