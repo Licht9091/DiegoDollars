@@ -41,6 +41,11 @@ const style = {
     fundsView: {
       backgroundColor: Colors.Primary,
       width : '50%'
+    },
+    container: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop : 10,
     }
 };
 
