@@ -29,6 +29,7 @@ const BottomBar = () => {
     width: Dimensions.get('window').width,
     backgroundColor: Colors.White,
     color: Colors.Primary,
+
     paddingTop: Dimensions.get('window').height * 0.02,
     paddingLeft: Dimensions.get('window').width * 0.02,
     paddingRight: Dimensions.get('window').width * 0.02,
