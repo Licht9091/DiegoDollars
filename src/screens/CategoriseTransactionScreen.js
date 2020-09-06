@@ -1,12 +1,12 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { STYLESHEET } from "../styles/stylesheet";
-import { Text, View} from "react-native";
-import Colors from "../styles/colors"
-import BottomBar from '../components/BottomBar';
-import transactionStyles from './Transactions/TransactionsScreen.style';
+import { Text, View } from "react-native";
+import Colors from "../styles/colors";
+import BottomBar from "../components/BottomBar";
+import transactionStyles from "./Transactions/TransactionsScreen.style";
 
-export default function CategoriseTransactionScreen( { route } ) {
-  const { transaction } = route.params; 
+export default function CategoriseTransactionScreen({ route }) {
+  const { transaction } = route.params;
   const { dollars } = route.params;
   const { cents } = route.params;
   const style = {
@@ -36,29 +36,33 @@ export default function CategoriseTransactionScreen( { route } ) {
     },
     fundsView: {
       backgroundColor: Colors.Primary,
-      width : '50%'
+      width: "50%",
     },
     container: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop : 10,
-    }
-  }
-  return <View style={STYLESHEET.defaultView}>
-    <Text style={STYLESHEET.defaultHeader}>Transaction</Text>
-    <View style={style.transactionView}>
-      <Text>{ transaction.description }</Text>
-      <View style={style.container}>
-        <Text style={transactionStyles.moneyDollars}>{`$ ${dollars}.`}{`${cents}`}</Text>
-        <Text> { transaction.category }</Text>
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: 10,
+    },
+  };
+  return (
+    <View style={STYLESHEET.defaultView}>
+      <Text style={STYLESHEET.defaultHeader}>Transaction</Text>
+      <View style={style.transactionView}>
+        <Text>{transaction.description}</Text>
+        <View style={style.container}>
+          <Text style={transactionStyles.moneyDollars}>
+            {`$ ${dollars}.`}
+            {`${cents}`}
+          </Text>
+          <Text> {transaction.category}</Text>
+        </View>
+      </View>
+      <Text style={STYLESHEET.defaultHeader}>Categories</Text>
+      <View style={style.fundsView}>
+        <Text style={style.fundView}>Groceries</Text>
+        <Text style={style.fundView}>Entertainment</Text>
+        <Text style={style.fundView}>Category 3</Text>
       </View>
     </View>
-    <Text style={STYLESHEET.defaultHeader}>
-      Allocate to Fund
-    </Text>
-    <View style={style.fundsView}>
-      <Text style={style.fundView}>Fund data goes here</Text>
-      <Text style={style.fundView}>and here</Text>
-    </View>
-  </View>
+  );
 }
