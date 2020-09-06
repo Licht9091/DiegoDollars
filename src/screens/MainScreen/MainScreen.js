@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Image, ScrollView, Text, View } from 'react-native';
+import { Image, ScrollView, Text, View, Dimensions } from 'react-native';
 import BottomBar from '../../components/BottomBar';
 import PieChart from '../../components/PieChart';
 import Pill from '../../components/Pill';
@@ -146,19 +146,19 @@ const MainScreen = ({ navigation }) => {
               })}
             </ScrollView>
             {/* Add Goal Button */}
-            <View
+            <TouchableOpacity
               style={{
                 ...mainStyle.fundWrapper,
                 ...STYLESHEET.shadowNormal,
               }}
+              onPress={() => navigation.navigate('AddGoal')}
             >
               <Text // The navigation here should be on the whole button not the text
                 style={{ fontSize: 50, alignSelf: 'center' }}
-                onPress={() => navigation.navigate('AddGoal')}
               >
                 +
               </Text>
-            </View>
+            </TouchableOpacity>
           </View>
 
           {/* Spending */}
