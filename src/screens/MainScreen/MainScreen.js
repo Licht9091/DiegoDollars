@@ -121,7 +121,7 @@ const MainScreen = ({ navigation }) => {
               {/* Goals Data loop */}
               {data.goals.map((goal) => {
                 return (
-                  <View
+                  <TouchableOpacity
                     style={{
                       ...mainStyle.fundWrapper,
                       ...STYLESHEET.shadowNormal,
