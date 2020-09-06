@@ -1,21 +1,23 @@
-import React, { useState, useContext } from 'react';
-import { STYLESHEET } from '../styles/addGoalStyle';
-import { Button, View, Text, TextInput, ScrollView, Image } from 'react-native';
-import Pill from '../components/Pill';
-import Colors from '../styles/colors';
-import BottomBar from '../components/BottomBar';
-import AppContext from '../helper/context';
+import React, { useState, useContext } from "react";
+import { STYLESHEET } from "../styles/addGoalStyle";
+import { Button, View, Text, TextInput, ScrollView, Image } from "react-native";
+import Pill from "../components/Pill";
+import Colors from "../styles/colors";
+import BottomBar from "../components/BottomBar";
+import AppContext from "../helper/context";
+import navigateAndReset from "../helper/functions";
 
 const AddGoal = ({ navigation }) => {
-  const [goalName, setGoalName] = useState('');
-  const [goalAmount, setGoalAmount] = useState('');
-  const [fornightlyGoal, setFortnightlyGoal] = useState('');
-  const [completionDate, setCompletionDate] = useState('');
+  const [goalName, setGoalName] = useState("");
+  const [goalAmount, setGoalAmount] = useState("");
+  const [fornightlyGoal, setFortnightlyGoal] = useState("");
+  const [completionDate, setCompletionDate] = useState("");
 
   const Context = useContext(AppContext);
 
   const createGoal = () => {
-    Context.User.setGoal(goalName, goalAmount);
+    //Context.User.setGoal(goalName, goalAmount); For demo, broken atm
+    navigateAndReset(navigation, "Main");
   };
 
   return (
@@ -27,19 +29,19 @@ const AddGoal = ({ navigation }) => {
           <Text style={STYLESHEET.addGoalSubHeader}>New Fund</Text>
           <TextInput
             style={STYLESHEET.addGoalTextInput}
-            placeholder='Enter goal name'
+            placeholder="Enter goal name"
             onChangeText={(goalName) => setGoalName(goalName)}
             value={goalName}
           />
           <TextInput
             style={STYLESHEET.addGoalTextInput}
-            placeholder='Enter goal amount'
+            placeholder="Enter goal amount"
             onChangeText={(goalAmount) => setGoalAmount(goalAmount)}
             value={goalAmount}
           />
           <TextInput
             style={STYLESHEET.addGoalTextInput}
-            placeholder='Enter fornightly goal amount'
+            placeholder="Enter fornightly goal amount"
             onChangeText={(fornightlyGoal) =>
               setFortnightlyGoal(fornightlyGoal)
             }
@@ -48,7 +50,7 @@ const AddGoal = ({ navigation }) => {
           <Text style={STYLESHEET.addGoalSubHeader}>Completion Date</Text>
           <TextInput
             style={STYLESHEET.addGoalTextInput}
-            placeholder='Enter completion date'
+            placeholder="Enter completion date"
             onChangeText={(completionDate) => setCompletionDate(completionDate)}
             value={completionDate}
           />
@@ -58,9 +60,9 @@ const AddGoal = ({ navigation }) => {
           </Text>
           <View style={STYLESHEET.confirmButtonBox}>
             <Pill
-              content='Add Goal'
+              content="Add Goal"
               color={Colors.White}
-              backgroundColor={'#383838'}
+              backgroundColor={"#383838"}
               onPress={createGoal}
             />
           </View>

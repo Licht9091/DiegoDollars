@@ -5,16 +5,18 @@ import { LinearGradient } from "expo-linear-gradient";
 import { STYLESHEET } from "../styles/stylesheet";
 import Colors from "../styles/colors";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import navigateAndReset from "../helper/functions";
 
 const SCREEN_SIZE = 6;
 
-export default function TutorialScreen(props) {
+export default function TutorialScreen({ navigation, props }) {
   let [page, setPage] = useState(0);
   let [ready, setReady] = useState(true);
 
   const _screenChange = () => {
     if (page + 1 >= SCREEN_SIZE) {
-      props.updateTutorial(true);
+      //props.updateTutorial(true); For demo
+      navigateAndReset(navigation, "Main");
     } else {
       setPage(page + 1);
     }
@@ -66,7 +68,7 @@ function WelcomeScreen(props) {
   return (
     <View style={styles.container}>
       <Text style={[STYLESHEET.FONT_REGULAR, styles.titleText]}>
-        Welcome To DiegoDollars
+        Welcome to DiegoDollars
       </Text>
       <Text style={[STYLESHEET.FONT_REGULAR, styles.smallText, { width: 130 }]}>
         First let's setup a few things.
@@ -110,7 +112,7 @@ function IncomeScreen({ readyFunction }) {
   let [init, setInit] = useState(true);
 
   if (init) {
-    readyFunction(false);
+    readyFunction(true); //For demo
   }
 
   function _checkincome(text) {
@@ -133,8 +135,9 @@ function IncomeScreen({ readyFunction }) {
       </Text>
       <TextInput
         style={[STYLESHEET.textInput, styles.textInput]}
-        placeholder="Enter ammount"
+        placeholder="Enter amount"
         onChangeText={_checkincome}
+        value={"1000"}
       />
     </View>
   );
@@ -175,7 +178,7 @@ function GoalScreen({ readyFunction }) {
     isNaN(data.amount) ||
     isNaN(data.fortnightAmount)
   ) {
-    readyFunction(false);
+    readyFunction(true); // For demo
   } else {
     readyFunction(true);
   }
@@ -227,6 +230,7 @@ function GoalScreen({ readyFunction }) {
           style={[STYLESHEET.textInput, styles.textInput]}
           placeholder="Goal name"
           onChangeText={_nameUpdated}
+          value={"Rainy Day Fund"}
         />
         <TextInput
           style={[STYLESHEET.textInput, styles.textInput]}
@@ -321,6 +325,7 @@ const styles = StyleSheet.create({
     color: "white",
     marginVertical: 40,
     marginTop: 150,
+    textAlign: "center",
   },
   subtitle: {
     fontSize: 30,
