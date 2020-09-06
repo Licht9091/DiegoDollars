@@ -9,6 +9,7 @@ import Colors from '../../styles/colors';
 import { STYLESHEET } from '../../styles/stylesheet';
 import mainStyle from './MainScreen.style';
 import { round } from 'react-native-reanimated';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const MainScreen = ({ navigation }) => {
   // START EDITS
@@ -140,7 +141,7 @@ const MainScreen = ({ navigation }) => {
                         </Text>
                       </View>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 );
               })}
             </ScrollView>
