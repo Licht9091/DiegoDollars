@@ -29,9 +29,10 @@ const BottomBar = () => {
     width: Dimensions.get('window').width,
     backgroundColor: Colors.White,
     color: Colors.Primary,
-    paddingTop: Dimensions.get('window').height / 35,
-    paddingLeft: Dimensions.get('window').width / 35,
-    paddingRight: Dimensions.get('window').width / 35,
+
+    paddingTop: Dimensions.get('window').height * 0.02,
+    paddingLeft: Dimensions.get('window').width * 0.02,
+    paddingRight: Dimensions.get('window').width * 0.02,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -46,31 +47,31 @@ const BottomBar = () => {
       <FontAwesomeIcon
         style={{ ...iconStyle, opacity: 1 }}
         icon={faTachometerAlt}
-        size={24}
+        size={Dimensions.get('window').height * 0.03}
         color={Colors.Primary}
       />
       <FontAwesomeIcon
         style={iconStyle}
         icon={faMoneyBillAlt}
-        size={24}
+        size={Dimensions.get('window').height * 0.03}
         color={Colors.Primary}
       />
       <FontAwesomeIcon
         style={iconStyle}
         icon={faChartLine}
-        size={24}
+        size={Dimensions.get('window').height * 0.03}
         color={Colors.Primary}
       />
       <FontAwesomeIcon
         style={iconStyle}
         icon={faUserCircle}
-        size={24}
+        size={Dimensions.get('window').height * 0.03}
         color={Colors.Primary}
       />
       <FontAwesomeIcon
         style={iconStyle}
         icon={faCog}
-        size={24}
+        size={Dimensions.get('window').height * 0.03}
         color={Colors.Primary}
       />
     </View>

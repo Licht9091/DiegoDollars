@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Image, ScrollView, Text, View } from 'react-native';
+import { Image, ScrollView, Text, View, Dimensions } from 'react-native';
 import BottomBar from '../../components/BottomBar';
 import PieChart from '../../components/PieChart';
 import Pill from '../../components/Pill';
@@ -9,6 +9,7 @@ import Colors from '../../styles/colors';
 import { STYLESHEET } from '../../styles/stylesheet';
 import mainStyle from './MainScreen.style';
 import { round } from 'react-native-reanimated';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const MainScreen = ({ navigation }) => {
   // START EDITS
@@ -140,24 +141,24 @@ const MainScreen = ({ navigation }) => {
                         </Text>
                       </View>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 );
               })}
             </ScrollView>
             {/* Add Goal Button */}
-            <View
+            <TouchableOpacity
               style={{
                 ...mainStyle.fundWrapper,
                 ...STYLESHEET.shadowNormal,
               }}
+              onPress={() => navigation.navigate('AddGoal')}
             >
               <Text // The navigation here should be on the whole button not the text
                 style={{ fontSize: 50, alignSelf: 'center' }}
-                onPress={() => navigation.navigate('AddGoal')}
               >
                 +
               </Text>
-            </View>
+            </TouchableOpacity>
           </View>
 
           {/* Spending */}
