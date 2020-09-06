@@ -3,6 +3,7 @@ import { View, Text, Button } from 'react-native';
 import Colors from '../styles/colors';
 import { FONT_FAMILY_SEMIBOLD } from '../styles/typography';
 import { STYLESHEET } from '../styles/stylesheet';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Pill = ({
   content,
@@ -28,14 +29,14 @@ const Pill = ({
   };
 
   return (
-    <View style={style.container}>
+    <TouchableOpacity activeOpacity={0.9} style={style.container}>
       <Text
         style={{ ...style.button, ...STYLESHEET.shadowNormal }}
         onPress={onPress}
       >
         {content}
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 

@@ -1,7 +1,7 @@
 import { registerRootComponent } from 'expo';
 import { useFonts } from 'expo-font';
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './screens/LoginScreen';
@@ -11,13 +11,14 @@ import AddGoalScreen from './screens/AddGoalScreen';
 import CategoriseIncomeScreen from './screens/CategoriseIncomeScreen';
 import CategoriseTransactionScreen from './screens/CategoriseTransactionScreen';
 import EditGoalScreen from './screens/EditGoalScreen';
-import { ContextProvider } from './helper/context';
+import AppContext, { ContextProvider } from './helper/context';
 import MainScreen from './screens/MainScreen/MainScreen';
 import HeaderStyle from './styles/Header/HeaderStyle';
 import MainScreenOptions from './screens/MainScreen/MainScreenOptions';
 import { StatusBar } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import TransactionScreen from './screens/TransactionScreen';
+import BottomBar from './components/BottomBar';
 
 const Stack = createStackNavigator();
 
@@ -58,6 +59,9 @@ function App() {
     // TODO handy error message if fonts failed to load.
     return null;
   }
+
+  // Load Context
+  const Context = useContext(AppContext);
 
   return (
     <>
@@ -104,6 +108,7 @@ function App() {
           </Stack.Navigator>
         </ContextProvider>
       </NavigationContainer>
+      {Context && Context.User && <BottomBar />}
     </>
   );
 }
