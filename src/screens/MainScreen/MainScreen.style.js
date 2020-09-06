@@ -105,7 +105,7 @@ const mainStyle = {
   fundInfo: {
     flex: 1,
     flexDirection: 'column',
-    marginLeft: 10,
+    marginLeft: 15,
     marginTop: 13,
   },
   fundContribution: {
@@ -117,6 +117,26 @@ const mainStyle = {
     fontFamily: FONT_FAMILY_SEMIBOLD,
     fontSize: 9,
     color: Colors.DarkerGray,
+  },
+  createFundWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginRight: 20,
+  },
+  createFundBtn: {
+    padding: 5,
+    paddingLeft: 15,
+    paddingRight: 15,
+    backgroundColor: Colors.DarkerGray,
+    borderRadius: 20,
+    color: Colors.White,
+    flex: 0,
+  },
+  createFundBtnText: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: Colors.White,
   },
   spendsWrapper: {
     paddingTop: 15,
@@ -139,19 +159,20 @@ const mainStyle = {
   },
   spendInfo: {
     flex: 1,
-    marginLeft: 10,
+    marginLeft: 15,
     flexDirection: 'column',
     justifyContent: 'center',
   },
   spendAmount: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    fontSize: 28,
+    fontSize: 24,
     color: Colors.DarkerGray,
   },
   spendCategory: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    fontSize: 12,
+    fontSize: 10,
     color: Colors.DarkerGray,
+    textTransform: 'capitalize',
   },
   title: {
     fontFamily: FONT_FAMILY_SEMIBOLD,

@@ -5,6 +5,7 @@ import {
   API_GOALS_STATUS,
   API_TRANSACTION_STATS,
   API_TRANSACTION_LIST,
+  API_GOAL_SET,
 } from './constants';
 
 class Transaction {
@@ -144,6 +145,23 @@ export class User {
     this.goals = this.goals.sort(function lambda(a, b) {
       return a.percent < b.percent;
     });
+  };
+
+  setGoal = async (description, goalAmount) => {
+    const params = {
+      method: 'GET',
+      description,
+      goalAmount,
+    };
+    const response = await fetch(
+      `${API_GOAL_SET}?description=${encodeURIComponent(
+        description
+      )}&goalAmount=${encodeURIComponent(goalAmount)}`,
+      params
+    );
+    console.log(response);
+
+    return true;
   };
 
   /**

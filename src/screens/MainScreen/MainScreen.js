@@ -119,46 +119,46 @@ const MainScreen = ({ navigation }) => {
             <Text style={mainStyle.title}>Funds</Text>
             <ScrollView horizontal={true} style={mainStyle.fundsWrapper}>
               {/* Goals Data loop */}
-              {data.goals.map((goal) => {
-                return (
-                  <TouchableOpacity
-                    style={{
-                      ...mainStyle.fundWrapper,
-                      ...STYLESHEET.shadowNormal,
-                    }}
-                  >
-                    <Text style={mainStyle.subtitle}>{goal.description}</Text>
-                    <View style={mainStyle.fundDetailsWrapper}>
-                      <PieChart value={goal.percent / 100} />
-                      <View style={mainStyle.fundInfo}>
-                        <Text style={mainStyle.fundContribution}>
-                          {`$${Format.toDollars(
-                            goal.currentContribution
-                          )}.${Format.toCents(goal.currentContribution)}`}
-                        </Text>
-                        <Text style={mainStyle.fundCompletion}>
-                          {goal.percent}% Complete
-                        </Text>
-                      </View>
+              {data.goals.map((goal) => (
+                <TouchableOpacity
+                  key={goal.id}
+                  activeOpacity={0.6}
+                  style={{
+                    ...mainStyle.fundWrapper,
+                    ...STYLESHEET.shadowNormal,
+                  }}
+                >
+                  <Text style={mainStyle.subtitle}>{goal.description}</Text>
+                  <View style={mainStyle.fundDetailsWrapper}>
+                    <PieChart value={goal.percent / 100} />
+                    <View style={mainStyle.fundInfo}>
+                      <Text style={mainStyle.fundContribution}>
+                        {`$${Format.toDollars(goal.currentContribution)}`}
+                      </Text>
+                      <Text style={mainStyle.fundCompletion}>
+                        {goal.percent}% Complete
+                      </Text>
                     </View>
-                  </TouchableOpacity>
-                );
-              })}
+                  </View>
+                </TouchableOpacity>
+              ))}
             </ScrollView>
             {/* Add Goal Button */}
-            <TouchableOpacity
-              style={{
-                ...mainStyle.fundWrapper,
-                ...STYLESHEET.shadowNormal,
-              }}
-              onPress={() => navigation.navigate('AddGoal')}
-            >
-              <Text // The navigation here should be on the whole button not the text
-                style={{ fontSize: 50, alignSelf: 'center' }}
+            <View style={mainStyle.createFundWrapper}>
+              <TouchableOpacity
+                style={{
+                  ...mainStyle.createFundBtn,
+                  ...STYLESHEET.shadowNormal,
+                }}
+                onPress={() => navigation.navigate('AddGoal')}
               >
-                +
-              </Text>
-            </TouchableOpacity>
+                <Text // The navigation here should be on the whole button not the text
+                  style={mainStyle.createFundBtnText}
+                >
+                  Create Fund
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
 
           {/* Spending */}
@@ -178,9 +178,7 @@ const MainScreen = ({ navigation }) => {
                     />
                     <View style={mainStyle.spendInfo}>
                       <Text style={mainStyle.spendAmount}>
-                        {`$${Format.toDollars(
-                          category.amount
-                        )}.${Format.toCents(category.amount)}`}
+                        {`$${Format.toDollars(category.amount)}`}
                       </Text>
                       <Text style={mainStyle.spendCategory}>
                         {category.name}
