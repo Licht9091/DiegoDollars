@@ -78,7 +78,7 @@ export const STYLESHEET = StyleSheet.create({
   // Use this style for any <TextInput /> used throughout the app.
   textInput: {
     height: 57,
-    backgroundColor: '#ededed',
+    backgroundColor: Colors.White,
     borderRadius: 8,
     paddingLeft: 18,
     margin: 5,

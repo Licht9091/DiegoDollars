@@ -11,6 +11,12 @@ import { STYLESHEET } from '../../styles/stylesheet';
 const win = Dimensions.get('window');
 
 const mainStyle = {
+  loadWrapper: {
+    backgroundColor: Colors.Primary,
+    minHeight: win.height,
+    paddingBottom: 100,
+    paddingTop: 150,
+  },
   mainScreen: {
     backgroundColor: Colors.Primary,
     minHeight: win.height,
@@ -187,6 +193,9 @@ const mainStyle = {
   dummy: {
     width: 5,
     height: 120,
+  },
+  activityIndicator: {
+    color: Colors.White,
   },
 };
 

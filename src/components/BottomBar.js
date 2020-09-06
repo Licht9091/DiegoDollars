@@ -25,17 +25,17 @@ const BottomBar = () => {
 
     position: 'absolute',
     bottom: 0,
-    height: Dimensions.get('window').height * 0.08,
+    height: Dimensions.get('window').height * 0.065,
     width: Dimensions.get('window').width,
     backgroundColor: Colors.White,
     color: Colors.Primary,
 
-    paddingTop: Dimensions.get('window').height * 0.02,
     paddingLeft: Dimensions.get('window').width * 0.02,
     paddingRight: Dimensions.get('window').width * 0.02,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
+    alignItems: 'center',
   };
 
   const iconStyle = {

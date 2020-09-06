@@ -1,5 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Image, ScrollView, Text, View, Dimensions } from 'react-native';
+import {
+  Image,
+  ScrollView,
+  Text,
+  View,
+  Dimensions,
+  ActivityIndicator,
+} from 'react-native';
 import BottomBar from '../../components/BottomBar';
 import PieChart from '../../components/PieChart';
 import Pill from '../../components/Pill';
@@ -17,13 +24,7 @@ const MainScreen = ({ navigation }) => {
 
   const [loaded, setLoaded] = useState(false);
   // Empty data useState
-  const [data, setData] = useState({
-    uncategorisedSpending: 0,
-    uncategorisedIncome: 0,
-    availableSpending: 0,
-    goals: [],
-    spendingCategories: [],
-  });
+  const [data, setData] = useState(undefined);
 
   const setupUser = async () => {
     _ucSpending = await Context.User.getUncategorisedSpending();
@@ -58,12 +59,17 @@ const MainScreen = ({ navigation }) => {
         setupUser();
         setLoaded(true);
       }
-    }, 1000);
+    }, 0);
   });
 
   return (
     <>
-      {data && (
+      {(!loaded || !data) && (
+        <ScrollView style={mainStyle.loadWrapper}>
+          <ActivityIndicator size='large' color='white' />
+        </ScrollView>
+      )}
+      {data && loaded && (
         <ScrollView style={mainStyle.mainScreen}>
           {/* Title */}
           <View style={mainStyle.logoWrapper}>
@@ -72,12 +78,17 @@ const MainScreen = ({ navigation }) => {
           {/* Hero Content */}
           <View style={mainStyle.statusContainer}>
             <View style={mainStyle.availableSpend}>
-              <Text style={mainStyle.availableSpendDollars}>
-                {`$${Format.toDollars(data.availableSpending)}`}.
-              </Text>
-              <Text style={mainStyle.availableSpendCents}>
-                {Format.toCents(data.availableSpending)}
-              </Text>
+              {loaded && (
+                <>
+                  {/* <ActivityIndicator size='large' color='white' /> */}
+                  <Text style={mainStyle.availableSpendDollars}>
+                    {`$${Format.toDollars(data.availableSpending)}`}.
+                  </Text>
+                  <Text style={mainStyle.availableSpendCents}>
+                    {Format.toCents(data.availableSpending)}
+                  </Text>
+                </>
+              )}
             </View>
             <Text style={mainStyle.availablelable}>AVAILABLE THIS PERIOD</Text>
 
