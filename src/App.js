@@ -1,13 +1,14 @@
 import { registerRootComponent } from "expo";
 import { useFonts } from "expo-font";
 import "react-native-gesture-handler";
-import React from "react";
+import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import AccountScreen from "./screens/AccountScreen";
 import AddGoalScreen from "./screens/AddGoalScreen";
+import TutorialScreen from "./screens/TutorialScreen";
 import CategoriseIncomeScreen from "./screens/CategoriseIncomeScreen";
 import CategoriseTransactionScreen from "./screens/CategoriseTransactionScreen";
 import EditGoalScreen from "./screens/EditGoalScreen";
@@ -29,6 +30,14 @@ let defaultOptions = {
 };
 
 function App() {
+  // Means "has done the tutorial"
+  let [tutorial, setTutorial] = useState(false);
+
+  // Passed into tutorial screen.
+  const updateTutorial = (t) => {
+    setTutorial(t);
+  };
+
   // Load fonts
 
   let [loaded] = useFonts({
@@ -57,6 +66,11 @@ function App() {
   if (!loaded) {
     // TODO handy error message if fonts failed to load.
     return null;
+  }
+
+  if (!tutorial) {
+    console.log("Heres the tutorial");
+    return <TutorialScreen updateTutorial={updateTutorial} />;
   }
 
   return (
