@@ -140,7 +140,7 @@ const MainScreen = ({ navigation }) => {
                         </Text>
                       </View>
                     </View>
-                  </TouchableOpacity>
+                  </View>
                 );
               })}
             </ScrollView>
