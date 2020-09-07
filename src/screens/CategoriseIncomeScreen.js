@@ -79,7 +79,7 @@ export default function CategoriseIncomeScreen ( { route }){
          thumbTintColor={Colors.Primary}
          step={1} 
          value={slider1Value}
-         onValueChange={(slider1Value) => setSlider1Value({ slider1Value })}
+         onValueChange={(slider1Value) => setSlider1Value(slider1Value)}
        />
        </View>
       <View style={style.fundView}>
@@ -92,7 +92,7 @@ export default function CategoriseIncomeScreen ( { route }){
          thumbTintColor={Colors.Primary}
          step={1} 
          value={slider2Value}
-         onValueChange={(slider2Value) => setSlider2Value({ slider2Value })}
+         onValueChange={(slider2Value) => setSlider2Value(slider2Value)}
        />
       </View>
       <View style={style.fundView}>
@@ -105,7 +105,7 @@ export default function CategoriseIncomeScreen ( { route }){
          thumbTintColor={Colors.Primary}
          step={1} 
          value={slider3Value}
-         onValueChange={(slider3Value) => setSlider3Value({ slider3Value })}
+         onValueChange={(slider3Value) => setSlider3Value(slider3Value)}
        />
        </View>
        <Text style={STYLESHEET.defaultSmallHeader}>This will leave you with ${totalValue - slider1Value - slider2Value - slider3Value} for spending for the fortnight</Text>

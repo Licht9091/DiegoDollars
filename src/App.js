@@ -31,7 +31,7 @@ let defaultOptions = {
 
 function App() {
   // Means "has done the tutorial"
-  let [tutorial, setTutorial] = useState(false);
+  let [tutorial, setTutorial] = useState(true);
 
   // Passed into tutorial screen.
   const updateTutorial = (t) => {
