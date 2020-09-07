@@ -30,11 +30,7 @@ let defaultOptions = {
 };
 
 function App() {
-<<<<<<< Updated upstream
   // Means "has done the tutorial"
-=======
-  // // Means "has done the tutorial"
->>>>>>> Stashed changes
   let [tutorial, setTutorial] = useState(false);
 
   // Passed into tutorial screen.
