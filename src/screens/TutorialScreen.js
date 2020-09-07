@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Icon } from "react-native-elements";
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -6,6 +6,7 @@ import { STYLESHEET } from "../styles/stylesheet";
 import Colors from "../styles/colors";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import navigateAndReset from "../helper/functions";
+import AppContext from "../helper/context";
 
 const SCREEN_SIZE = 6;
 
@@ -13,9 +14,11 @@ export default function TutorialScreen({ navigation, props }) {
   let [page, setPage] = useState(0);
   let [ready, setReady] = useState(true);
 
+  const Context = useContext(AppContext); // Here is the context, access Context.User.functionName()
+
   const _screenChange = () => {
     if (page + 1 >= SCREEN_SIZE) {
-      //props.updateTutorial(true); For demo
+      props.updateTutorial(true);
       navigateAndReset(navigation, "Main");
     } else {
       setPage(page + 1);
@@ -112,7 +115,7 @@ function IncomeScreen({ readyFunction }) {
   let [init, setInit] = useState(true);
 
   if (init) {
-    readyFunction(true); //For demo
+    readyFunction(false);
   }
 
   function _checkincome(text) {
@@ -178,7 +181,7 @@ function GoalScreen({ readyFunction }) {
     isNaN(data.amount) ||
     isNaN(data.fortnightAmount)
   ) {
-    readyFunction(true); // For demo
+    readyFunction(false);
   } else {
     readyFunction(true);
   }

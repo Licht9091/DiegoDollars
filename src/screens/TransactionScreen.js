@@ -70,13 +70,6 @@ export default function TransactionScreen({ route, navigation }) {
                     key={transaction.id}
                     style={transactionStyles.transactionView}
                     activeOpacity={0.6}
-                    // onPress={() => {
-                    //   navigation.navigate("CategoriseTransaction", {
-                    //     transaction: transaction,
-                    //     dollars: dollars,
-                    //     cents: cents,
-                    //   });
-                    // }} Removed this is causing double navigates at the moment
                   >
                     {/* Line 1 */}
                     <View style={transactionStyles.topLine}>

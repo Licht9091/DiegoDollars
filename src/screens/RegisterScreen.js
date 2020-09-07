@@ -54,9 +54,9 @@ export default function RegisterScreen({ navigation }) {
           onPress={() => {
             navigateAndReset(navigation, "Tutorial");
           }}
-          // disabled={
-          //   !(password == passwordCheck) || username == "" || password == ""
-          // }
+          disabled={
+            !(password == passwordCheck) || username == "" || password == ""
+          }
         />
       </View>
     </View>

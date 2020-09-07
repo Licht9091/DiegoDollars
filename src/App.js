@@ -30,14 +30,6 @@ let defaultOptions = {
 };
 
 function App() {
-  // // Means "has done the tutorial"
-  // let [tutorial, setTutorial] = useState(false);
-
-  // // Passed into tutorial screen.
-  // const updateTutorial = (t) => {
-  //   setTutorial(t);
-  // };
-
   // Load fonts
 
   let [loaded] = useFonts({
@@ -70,11 +62,6 @@ function App() {
 
   // Load Context
   const Context = useContext(AppContext);
-
-  // if (!tutorial) {
-  //   console.log('Heres the tutorial');
-  //   return <TutorialScreen updateTutorial={updateTutorial} />;
-  // }
 
   return (
     <>

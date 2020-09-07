@@ -7,6 +7,7 @@ import {
   API_TRANSACTION_LIST,
   API_GOAL_SET,
 } from "./constants";
+import "./functions";
 
 class Transaction {
   constructor(_obj) {
@@ -147,23 +148,6 @@ export class User {
     });
   };
 
-  setGoal = async (description, goalAmount) => {
-    const params = {
-      method: "GET",
-      description,
-      goalAmount,
-    };
-    const response = await fetch(
-      `${API_GOAL_SET}?description=${encodeURIComponent(
-        description
-      )}&goalAmount=${encodeURIComponent(goalAmount)}`,
-      params
-    );
-    console.log(response);
-
-    return true;
-  };
-
   /**
    * getAccount - async, make sure you wait for this to return.
    *
@@ -301,8 +285,30 @@ export class User {
       return a.percent < b.percent;
     });
 
-    this.setGoal = function (goalName, goalAmount) {
-      return;
+    this.setGoal = async (goalName, goalAmount) => {
+      if (goalName === "") {
+        alert("F1");
+        return false;
+      }
+
+      if (isNaN(goalAmount)) {
+        alert("F2");
+        return false;
+      }
+
+      let API_CALL = API_GOAL_SET;
+      API_CALL = API_CALL.replace("{goalName}", goalName);
+      API_CALL = API_CALL.replace("{goalAmount}", goalAmount);
+
+      const response = await fetch(API_CALL, {
+        method: "GET",
+      }); // This should be post
+
+      if (response.ok) {
+        return true;
+      } else {
+        return false;
+      }
     };
 
     this.removeTransaction = function (transaction, category) {
@@ -312,7 +318,7 @@ export class User {
           if (this.account.uncategorisedIncome[i].id == transaction.id) {
             this.account.uncategorisedIncome.splice(i, 1);
             this.uncategorisedIncome -= 1;
-            return;
+            return true;
           }
           i++;
         }
@@ -322,7 +328,7 @@ export class User {
           if (this.account.uncategorisedExpenses[i].id == transaction.id) {
             this.account.uncategorisedExpenses.splice(i, 1);
             this.uncategorisedSpending -= 1;
-            return;
+            return true;
           }
           i++;
         }

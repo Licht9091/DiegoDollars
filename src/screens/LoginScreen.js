@@ -26,13 +26,13 @@ export default function LoginScreen({ navigation }) {
     }
   };
 
-  // useEffect(() => {
-  //   // Automatically log in
-  //   // TODO: take this out later
-  //   setTimeout(() => {
-  //     login("test", "test");
-  //   }, 100);
-  // });
+  useEffect(() => {
+    // Automatically log in
+    // TODO: take this out later
+    setTimeout(() => {
+      login("test", "test");
+    }, 100);
+  });
 
   // Local styles
   const style = {
@@ -77,8 +77,10 @@ export default function LoginScreen({ navigation }) {
         <Button
           title="Login"
           style={STYLESHEET.defaultButton}
-          onPress={() => login("test", "test")} // For demo, should be username, password
-          // disabled={username == "" || password == ""} For Demo
+          onPress={() => login(username, password)}
+          disabled={username == "" || password == ""}
+          For
+          Demo
         />
       </View>
     </View>
