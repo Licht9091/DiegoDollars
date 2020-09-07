@@ -91,6 +91,7 @@ function App() {
               component={RegisterScreen}
               options={defaultOptions}
             />
+            <Stack.Screen name='Tutorial' component={TutorialScreen} />
             <Stack.Screen
               name='Main'
               component={MainScreen}
