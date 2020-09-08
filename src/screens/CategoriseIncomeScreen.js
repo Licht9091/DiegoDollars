@@ -52,14 +52,14 @@ const style = {
 };
 
 export default function CategoriseIncomeScreen({ navigation, route }) {
-  const [slider1Value, setSlider1Value] = useState(0);
-  const [slider2Value, setSlider2Value] = useState(0);
-  const [slider3Value, setSlider3Value] = useState(0);
-  const { totalValue } = 1000;
-
   const { transaction } = route.params;
   const { dollars } = route.params;
   const { cents } = route.params;
+
+  const [slider1Value, setSlider1Value] = useState(0);
+  const [slider2Value, setSlider2Value] = useState(0);
+  const [slider3Value, setSlider3Value] = useState(0);
+  const [totalValue, setTotalValue] = useState(parseInt(dollars) + 0.01*parseInt(cents));
 
   const Context = useContext(AppContext);
 
@@ -82,14 +82,14 @@ export default function CategoriseIncomeScreen({ navigation, route }) {
           Rain Day Fund : ${slider1Value}
         </Text>
         <Slider
-          maximumValue={1000}
+          maximumValue={totalValue}
           minimumValue={0}
           minimumTrackTintColor={Colors.Primary}
           maximumTrackTintColor={Colors.Primary}
           thumbTintColor={Colors.Primary}
-          step={1}
+          step={0.01}
           value={slider1Value}
-          onValueChange={(slider1Value) => setSlider1Value({ slider1Value })}
+          onValueChange={(slider1Value) => setSlider1Value(slider1Value)}
         />
       </View>
       <View style={style.fundView}>
@@ -97,14 +97,14 @@ export default function CategoriseIncomeScreen({ navigation, route }) {
           Overseas Trip : ${slider2Value}
         </Text>
         <Slider
-          maximumValue={1000}
+          maximumValue={totalValue}
           minimumValue={0}
           minimumTrackTintColor={Colors.Primary}
           maximumTrackTintColor={Colors.Primary}
           thumbTintColor={Colors.Primary}
-          step={1}
+          step={0.01}
           value={slider2Value}
-          onValueChange={(slider2Value) => setSlider2Value({ slider2Value })}
+          onValueChange={(slider2Value) => setSlider2Value(slider2Value)}
         />
       </View>
       <View style={style.fundView}>
@@ -112,30 +112,30 @@ export default function CategoriseIncomeScreen({ navigation, route }) {
           New Computer : ${slider3Value}
         </Text>
         <Slider
-          maximumValue={1000}
+          maximumValue={totalValue}
           minimumValue={0}
           minimumTrackTintColor={Colors.Primary}
           maximumTrackTintColor={Colors.Primary}
           thumbTintColor={Colors.Primary}
-          step={1}
+          step={0.01}
           value={slider3Value}
-          onValueChange={(slider3Value) => setSlider3Value({ slider3Value })}
+          onValueChange={(slider3Value) => setSlider3Value(slider3Value)}
         />
       </View>
       <Text style={STYLESHEET.defaultSmallHeader}>
-        This will leave you with $
-        {totalValue - slider1Value - slider2Value - slider3Value} for spending
-        for the fortnight
+        This will leave you with ${(totalValue - slider1Value - slider2Value - slider3Value).toFixed(2)} for spending for the fortnight.
       </Text>
-      <Pill
-        content="Confirm"
-        color={Colors.Primary}
-        backgroundColor={Colors.White}
-        onPress={() => {
-          navigateAndReset(navigation, "Main");
-          Context.User.removeTransaction(transaction, "income");
-        }}
-      />
+      <View style={style.container}>
+        <Pill
+          content="Confirm"
+          color={Colors.Primary}
+          backgroundColor={Colors.White}
+          onPress={() => {
+            navigateAndReset(navigation, "Main");
+            Context.User.removeTransaction(transaction, "income");
+          }}
+        />
+      </View>
     </View>
   );
 }

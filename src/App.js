@@ -30,17 +30,14 @@ let defaultOptions = {
 };
 
 function App() {
-<<<<<<< HEAD
   // Means "has done the tutorial"
-  let [tutorial, setTutorial] = useState(true);
+  let [tutorial, setTutorial] = useState(false);
 
   // Passed into tutorial screen.
   const updateTutorial = (t) => {
     setTutorial(t);
   };
 
-=======
->>>>>>> af4de101e843d1c799950b56c537eecfc9e451b9
   // Load fonts
 
   let [loaded] = useFonts({
@@ -111,11 +108,7 @@ function App() {
               name="CategoriseTransaction"
               component={CategoriseTransactionScreen}
             />
-<<<<<<< HEAD
-              <Stack.Screen name="EditGoal" component={EditGoalScreen} />
-=======
             <Stack.Screen name="EditGoal" component={EditGoalScreen} />
->>>>>>> af4de101e843d1c799950b56c537eecfc9e451b9
           </Stack.Navigator>
         </ContextProvider>
       </NavigationContainer>

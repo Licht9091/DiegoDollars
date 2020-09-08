@@ -15,17 +15,8 @@ const AddGoal = ({ navigation }) => {
 
   const Context = useContext(AppContext);
 
-  const createGoal = async () => {
-    // Add spinny here
-    success = await Context.User.setGoal(goalName, goalAmount);
-
-    // Stop spinny here
-    if (success) {
-      navigateAndReset(navigation, "Main");
-      return;
-    } else {
-      alert("There was an error setting the goal.");
-    }
+  const createGoal = () => {
+    Context.User.setGoal(goalName, goalAmount);
   };
 
   return (

@@ -148,6 +148,23 @@ export class User {
     });
   };
 
+  setGoal = async (description, goalAmount) => {
+    const params = {
+      method: 'GET',
+      description,
+      goalAmount,
+    };
+    const response = await fetch(
+      `${API_GOAL_SET}?description=${encodeURIComponent(
+        description
+      )}&goalAmount=${encodeURIComponent(goalAmount)}`,
+      params
+    );
+    console.log(response);
+
+    return true;
+  };
+
   /**
    * getAccount - async, make sure you wait for this to return.
    *
