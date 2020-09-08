@@ -51,6 +51,12 @@ const style = {
   },
 };
 
+function setValue(set, totalValue, value1, value2, valueToChange) {
+  if (totalValue - value1 - value2 - valueToChange >= 0) {
+    set(valueToChange)
+  }
+}
+
 export default function CategoriseIncomeScreen({ navigation, route }) {
   const { transaction } = route.params;
   const { dollars } = route.params;
@@ -82,14 +88,14 @@ export default function CategoriseIncomeScreen({ navigation, route }) {
           Rain Day Fund : ${slider1Value}
         </Text>
         <Slider
-          maximumValue={totalValue}
+          maximumValue={totalValue - slider2Value - slider3Value}
           minimumValue={0}
           minimumTrackTintColor={Colors.Primary}
           maximumTrackTintColor={Colors.Primary}
           thumbTintColor={Colors.Primary}
           step={0.01}
           value={slider1Value}
-          onValueChange={(slider1Value) => setSlider1Value(slider1Value)}
+          onValueChange={(slider1Value) => setValue( setSlider1Value, totalValue, slider2Value, slider3Value, slider1Value)}
         />
       </View>
       <View style={style.fundView}>
@@ -97,14 +103,14 @@ export default function CategoriseIncomeScreen({ navigation, route }) {
           Overseas Trip : ${slider2Value}
         </Text>
         <Slider
-          maximumValue={totalValue}
+          maximumValue={totalValue - slider1Value - slider3Value}
           minimumValue={0}
           minimumTrackTintColor={Colors.Primary}
           maximumTrackTintColor={Colors.Primary}
           thumbTintColor={Colors.Primary}
           step={0.01}
           value={slider2Value}
-          onValueChange={(slider2Value) => setSlider2Value(slider2Value)}
+          onValueChange={(slider2Value) => setValue( setSlider2Value, totalValue, slider1Value, slider3Value, slider2Value)}
         />
       </View>
       <View style={style.fundView}>
@@ -112,14 +118,14 @@ export default function CategoriseIncomeScreen({ navigation, route }) {
           New Computer : ${slider3Value}
         </Text>
         <Slider
-          maximumValue={totalValue}
+          maximumValue={totalValue - slider2Value - slider1Value}
           minimumValue={0}
           minimumTrackTintColor={Colors.Primary}
           maximumTrackTintColor={Colors.Primary}
           thumbTintColor={Colors.Primary}
           step={0.01}
           value={slider3Value}
-          onValueChange={(slider3Value) => setSlider3Value(slider3Value)}
+          onValueChange={(slider3Value) => setValue( setSlider3Value, totalValue, slider1Value, slider2Value, slider3Value)}
         />
       </View>
       <Text style={STYLESHEET.defaultSmallHeader}>
