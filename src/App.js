@@ -30,16 +30,7 @@ let defaultOptions = {
 };
 
 function App() {
-  // Means "has done the tutorial"
-  let [tutorial, setTutorial] = useState(false);
-
-  // Passed into tutorial screen.
-  const updateTutorial = (t) => {
-    setTutorial(t);
-  };
-
   // Load fonts
-
   let [loaded] = useFonts({
     montserrat: require("./assets/fonts/Montserrat-Regular.ttf"),
     montserratBold: require("./assets/fonts/Montserrat-Bold.ttf"),

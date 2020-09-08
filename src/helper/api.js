@@ -142,27 +142,9 @@ export class User {
     });
 
     // Sorting
-
     this.goals = this.goals.sort(function lambda(a, b) {
       return a.percent < b.percent;
     });
-  };
-
-  setGoal = async (description, goalAmount) => {
-    const params = {
-      method: 'GET',
-      description,
-      goalAmount,
-    };
-    const response = await fetch(
-      `${API_GOAL_SET}?description=${encodeURIComponent(
-        description
-      )}&goalAmount=${encodeURIComponent(goalAmount)}`,
-      params
-    );
-    console.log(response);
-
-    return true;
   };
 
   /**
@@ -304,12 +286,10 @@ export class User {
 
     this.setGoal = async (goalName, goalAmount) => {
       if (goalName === "") {
-        alert("F1");
         return false;
       }
 
       if (isNaN(goalAmount)) {
-        alert("F2");
         return false;
       }
 
