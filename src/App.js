@@ -116,7 +116,7 @@ function App() {
               component={CategoriseTransactionScreen}
               options={MainScreenOptions}
             />
-            <Stack.Screen name='EditGoal' component={EditGoalScreen} />
+              <Stack.Screen name="EditGoal" component={EditGoalScreen} />
           </Stack.Navigator>
         </ContextProvider>
       </NavigationContainer>

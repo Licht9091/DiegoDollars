@@ -1,44 +1,49 @@
-import React, { useState } from 'react';
-import { STYLESHEET } from '../styles/stylesheet';
-import { Text, View, Dimensions } from 'react-native';
-import Colors from '../styles/colors';
-import BottomBar from '../components/BottomBar';
-import transactionStyles from './Transactions/TransactionsScreen.style';
+import React, { useState, useContext } from "react";
+import { STYLESHEET } from "../styles/stylesheet";
+import { Text, View, Dimensions } from "react-native";
+import Colors from "../styles/colors";
+import BottomBar from "../components/BottomBar";
+import transactionStyles from "./Transactions/TransactionsScreen.style";
+import AppContext from "../helper/context";
+import navigateAndReset from "../helper/functions";
 
-export default function CategoriseTransactionScreen({ route }) {
+export default function CategoriseTransactionScreen({ navigation, route }) {
   const { transaction } = route.params;
   const { dollars } = route.params;
   const { cents } = route.params;
+
+  const Context = useContext(AppContext);
+
   const style = {
     transactionWrapper: {
       flex: 1,
-      flexDirection: 'column',
+      flexDirection: "column",
       paddingTop: 40,
       backgroundColor: Colors.Primary,
     },
     transactionView: {
       backgroundColor: Colors.White,
-      width: Dimensions.get('window').width - 20,
+      width: Dimensions.get("window").width - 20,
       marginTop: 10,
       marginLeft: 10,
       borderRadius: 20,
       padding: 30,
       flex: 0,
-      alignItems: 'center',
+      alignItems: "center",
 
       ...STYLESHEET.shadowNormal,
     },
     category: {
       marginTop: 10,
-      textTransform: 'capitalize',
+      textTransform: "capitalize",
     },
     header: {
-      textAlign: 'left',
+      textAlign: "left",
       margin: 10,
       marginTop: 20,
       marginLeft: 20,
       fontSize: 20,
-      fontWeight: 'bold',
+      fontWeight: "bold",
       color: Colors.White,
       opacity: 0.8,
       flex: 0,
@@ -48,22 +53,22 @@ export default function CategoriseTransactionScreen({ route }) {
       padding: 10,
       margin: 5,
       borderRadius: 15,
-      width: (Dimensions.get('window').width - 40) / 2,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      textAlign: 'center',
+      width: (Dimensions.get("window").width - 40) / 2,
+      flexDirection: "row",
+      justifyContent: "center",
+      textAlign: "center",
       ...STYLESHEET.shadowNormal,
     },
     fundsView: {
       backgroundColor: Colors.Primary,
       margin: 10,
       flex: 0,
-      flexDirection: 'row',
-      flexWrap: 'wrap',
+      flexDirection: "row",
+      flexWrap: "wrap",
     },
     container: {
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: "center",
+      justifyContent: "center",
       marginTop: 10,
     },
   };
@@ -82,9 +87,33 @@ export default function CategoriseTransactionScreen({ route }) {
       </View>
       <Text style={style.header}>Categories</Text>
       <View style={style.fundsView}>
-        <Text style={style.fundView}>Groceries</Text>
-        <Text style={style.fundView}>Entertainment</Text>
-        <Text style={style.fundView}>Category 3</Text>
+        <Text
+          style={style.fundView}
+          onPress={() => {
+            navigateAndReset(navigation, "Main");
+            Context.User.removeTransaction(transaction, "expense");
+          }}
+        >
+          Groceries
+        </Text>
+        <Text
+          style={style.fundView}
+          onPress={() => {
+            navigateAndReset(navigation, "Main");
+            Context.User.removeTransaction(transaction, "expense");
+          }}
+        >
+          Entertainment
+        </Text>
+        <Text
+          style={style.fundView}
+          onPress={() => {
+            navigateAndReset(navigation, "Main");
+            Context.User.removeTransaction(transaction, "expense");
+          }}
+        >
+          Category 3
+        </Text>
       </View>
     </View>
   );
