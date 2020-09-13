@@ -16,8 +16,10 @@ export default function LoginScreen({ navigation }) {
   const login = async (username = username, password = password) => {
     const loginSucess = await Context.User.logIn(username, password);
 
-    if (loginSucess) {
-      navigateAndReset(navigation, "Main");
+    // TODO remove "|| true", this was just so that the login
+    //  would work without the backend.
+    if (loginSucess || true) {
+      navigateAndReset(navigation, "Tutorial");
       setUsername("");
       setPassword("");
     } else {

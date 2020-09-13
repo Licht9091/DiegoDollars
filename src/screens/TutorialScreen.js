@@ -1,10 +1,13 @@
 import React, { useState, useContext } from "react";
 import { Icon } from "react-native-elements";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import { View, Text, StyleSheet, TextInput, Keyboard } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { STYLESHEET } from "../styles/stylesheet";
 import Colors from "../styles/colors";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import {
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native-gesture-handler";
 import navigateAndReset from "../helper/functions";
 import AppContext from "../helper/context";
 
@@ -18,7 +21,6 @@ export default function TutorialScreen({ navigation, props }) {
 
   const _screenChange = () => {
     if (page + 1 >= SCREEN_SIZE) {
-      props.updateTutorial(true);
       navigateAndReset(navigation, "Main");
     } else {
       setPage(page + 1);
@@ -130,19 +132,32 @@ function IncomeScreen({ readyFunction }) {
   }
 
   return (
-    <View style={styles.container}>
-      <Text
-        style={[STYLESHEET.FONT_REGULAR, styles.subtitle, { marginBottom: 40 }]}
-      >
-        Could you please estimate your fortnightly income
-      </Text>
-      <TextInput
-        style={[STYLESHEET.textInput, styles.textInput]}
-        placeholder="Enter amount"
-        onChangeText={_checkincome}
-        value={"1000"}
-      />
-    </View>
+    <TouchableWithoutFeedback
+      style={{ height: "100%" }}
+      onPress={() => {
+        Keyboard.dismiss();
+      }}
+    >
+      <View style={{ flex: 1 }}>
+        <View style={styles.container}>
+          <Text
+            style={[
+              STYLESHEET.FONT_REGULAR,
+              styles.subtitle,
+              { marginBottom: 40 },
+            ]}
+          >
+            Could you please estimate your fortnightly income
+          </Text>
+          <TextInput
+            style={[STYLESHEET.textInput, styles.textInput]}
+            placeholder="Enter amount"
+            onChangeText={_checkincome}
+            keyboardType="number-pad"
+          />
+        </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -203,50 +218,65 @@ function GoalScreen({ readyFunction }) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text
-        style={[
-          STYLESHEET.FONT_REGULAR,
-          styles.subtitle,
-          { marginTop: 100, marginBottom: 30, width: "80%" },
-        ]}
-      >
-        Goal Setting
-      </Text>
-      <Text
-        style={[STYLESHEET.FONT_REGULAR, styles.smallText, { width: "85%" }]}
-      >
-        Experts recommend around $1000 for large unexpected expenses. Please set
-        a comfortable amount for yourself.
-      </Text>
-      <View style={styles.goalBox}>
-        <Text
-          style={[
-            STYLESHEET.FONT_REGULAR,
-            styles.smallText,
-            { marginVertical: 10 },
-          ]}
-        >
-          Add a goal
-        </Text>
-        <TextInput
-          style={[STYLESHEET.textInput, styles.textInput]}
-          placeholder="Goal name"
-          onChangeText={_nameUpdated}
-          value={"Rainy Day Fund"}
-        />
-        <TextInput
-          style={[STYLESHEET.textInput, styles.textInput]}
-          placeholder="Goal amount"
-          onChangeText={_amountUpdated}
-        />
-        <TextInput
-          style={[STYLESHEET.textInput, styles.textInput]}
-          placeholder="Fortnightly amount"
-          onChangeText={_fortnightAmountUpdated}
-        />
+    <TouchableWithoutFeedback
+      style={{ height: "100%" }}
+      onPress={() => {
+        Keyboard.dismiss();
+      }}
+    >
+      <View style={{ flex: 1 }}>
+        {/* Main Page */}
+        <View style={styles.container}>
+          <Text
+            style={[
+              STYLESHEET.FONT_REGULAR,
+              styles.subtitle,
+              { marginTop: 40, marginBottom: 20, width: "80%" },
+            ]}
+          >
+            Goal Setting
+          </Text>
+          <Text
+            style={[
+              STYLESHEET.FONT_REGULAR,
+              styles.smallText,
+              { width: "90%" },
+            ]}
+          >
+            Experts recommend around $1000 for large unexpected expenses. Please
+            set a comfortable amount for yourself.
+          </Text>
+        </View>
+        <View style={styles.goalBox}>
+          <Text
+            style={[
+              STYLESHEET.FONT_REGULAR,
+              styles.smallText,
+              { marginVertical: 10 },
+            ]}
+          >
+            Add a goal
+          </Text>
+          <TextInput
+            style={[STYLESHEET.textInput, styles.textInput]}
+            placeholder="Rainy Day Fund"
+            onChangeText={_nameUpdated}
+          />
+          <TextInput
+            style={[STYLESHEET.textInput, styles.textInput]}
+            placeholder="Goal amount"
+            onChangeText={_amountUpdated}
+            keyboardType="number-pad"
+          />
+          <TextInput
+            style={[STYLESHEET.textInput, styles.textInput]}
+            placeholder="Fortnightly amount"
+            onChangeText={_fortnightAmountUpdated}
+            keyboardType="number-pad"
+          />
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -336,13 +366,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   smallText: {
-    fontSize: 24,
+    fontSize: 22,
     color: "white",
     textAlign: "center",
     marginVertical: 30,
   },
   goalBox: {
     alignItems: "center",
+    alignSelf: "center",
     backgroundColor: Colors.Secondary,
     width: "90%",
     borderRadius: 15,
