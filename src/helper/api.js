@@ -302,6 +302,7 @@ export class User {
       }); // This should be post
 
       if (response.ok) {
+        this.goals.push(new Goal(null, goalName, 0, goalAmount, null));
         return true;
       } else {
         return false;

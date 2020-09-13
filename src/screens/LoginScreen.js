@@ -19,7 +19,7 @@ export default function LoginScreen({ navigation }) {
     // TODO remove "|| true", this was just so that the login
     //  would work without the backend.
     if (loginSucess || true) {
-      navigateAndReset(navigation, "Tutorial");
+      navigateAndReset(navigation, "Main");
       setUsername("");
       setPassword("");
     } else {
