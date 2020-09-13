@@ -30,16 +30,7 @@ let defaultOptions = {
 };
 
 function App() {
-  // Means "has done the tutorial"
-  let [tutorial, setTutorial] = useState(false);
-
-  // Passed into tutorial screen.
-  const updateTutorial = (t) => {
-    setTutorial(t);
-  };
-
   // Load fonts
-
   let [loaded] = useFonts({
     montserrat: require('./assets/fonts/Montserrat-Regular.ttf'),
     montserratBold: require('./assets/fonts/Montserrat-Bold.ttf'),
@@ -70,10 +61,6 @@ function App() {
 
   // Load Context
   const Context = useContext(AppContext);
-  if (!tutorial) {
-    console.log('Heres the tutorial');
-    return <TutorialScreen updateTutorial={updateTutorial} />;
-  }
 
   return (
     <>
@@ -97,11 +84,7 @@ function App() {
               component={MainScreen}
               options={MainScreenOptions}
             />
-            <Stack.Screen
-              name='Transactions'
-              component={TransactionScreen}
-              options={MainScreenOptions}
-            />
+            <Stack.Screen name='Transactions' component={TransactionScreen} />
             <Stack.Screen name='Account' component={AccountScreen} />
             <Stack.Screen
               name='AddGoal'
@@ -115,7 +98,6 @@ function App() {
             <Stack.Screen
               name='CategoriseTransaction'
               component={CategoriseTransactionScreen}
-              options={MainScreenOptions}
             />
             <Stack.Screen name='EditGoal' component={EditGoalScreen} />
           </Stack.Navigator>

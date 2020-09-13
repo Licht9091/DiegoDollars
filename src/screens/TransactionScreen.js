@@ -1,12 +1,12 @@
-import moment from 'moment';
-import React, { useContext, useEffect, useState } from 'react';
-import { Text, View, ActivityIndicator } from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import AppContext from '../helper/context';
-import { STYLESHEET } from '../styles/stylesheet';
-import transactionStyles from './Transactions/TransactionsScreen.style';
-import BottomBar from '../components/BottomBar';
-import Format from '../helper/Format';
+import moment from "moment";
+import React, { useContext, useEffect, useState } from "react";
+import { Text, View, ActivityIndicator } from "react-native";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import AppContext from "../helper/context";
+import { STYLESHEET } from "../styles/stylesheet";
+import transactionStyles from "./Transactions/TransactionsScreen.style";
+import BottomBar from "../components/BottomBar";
+import Format from "../helper/Format";
 
 export default function TransactionScreen({ route, navigation }) {
   // "all", "income", "expense"
@@ -18,11 +18,11 @@ export default function TransactionScreen({ route, navigation }) {
 
   const updateTransactionList = async () => {
     _account = await Context.User.getAccount();
-    if (navigatedState === 'expense') {
+    if (navigatedState === "expense") {
       _data = _account.uncategorisedExpenses;
-    } else if (navigatedState === 'income') {
+    } else if (navigatedState === "income") {
       _data = _account.uncategorisedIncome;
-    } else if (navigatedState === 'all') {
+    } else if (navigatedState === "all") {
       _data = _account.allTransactions;
     }
 
@@ -53,13 +53,13 @@ export default function TransactionScreen({ route, navigation }) {
           </View>
 
           <View style={transactionStyles.transactionsWrapper}>
-            {!loaded && <ActivityIndicator size='large' color='white' />}
+            {!loaded && <ActivityIndicator size="large" color="white" />}
             {data
               .sort((a, b) => new Date(b.date) - new Date(a.date))
               .map((transaction) => {
-                const niceDate = moment(transaction.date).format('D MMMM');
+                const niceDate = moment(transaction.date).format("D MMMM");
                 const dollars = Format.toDollars(
-                  navigatedState === 'expense'
+                  navigatedState === "expense"
                     ? -1 * transaction.value
                     : transaction.value
                 );
@@ -70,13 +70,6 @@ export default function TransactionScreen({ route, navigation }) {
                     key={transaction.id}
                     style={transactionStyles.transactionView}
                     activeOpacity={0.6}
-                    onPress={() => {
-                      navigation.navigate('CategoriseTransaction', {
-                        transaction: transaction,
-                        dollars: dollars,
-                        cents: cents,
-                      });
-                    }}
                   >
                     {/* Line 1 */}
                     <View style={transactionStyles.topLine}>
@@ -108,45 +101,31 @@ export default function TransactionScreen({ route, navigation }) {
                       </View>
 
                       <View style={transactionStyles.buttonContainer}>
-                        {transaction.isIncome === true && ( // Categorise Income button
-                          <TouchableOpacity
-                            style={{
-                              ...transactionStyles.buttonLeft,
-                              ...transactionStyles.button,
-                            }}
-                            onPress={() => {
-                              navigation.navigate('CategoriseIncome', {
+                        <TouchableOpacity
+                          style={{
+                            ...transactionStyles.buttonLeft,
+                            ...transactionStyles.button,
+                          }}
+                          onPress={() => {
+                            if (transaction.isIncome === true) {
+                              navigation.navigate("CategoriseIncome", {
                                 transaction: transaction,
                                 dollars: dollars,
                                 cents: cents,
                               });
-                            }} // Do nothing or go to Income Screen if income
-                          >
-                            <Text style={transactionStyles.buttonText}>
-                              Categorise
-                            </Text>
-                          </TouchableOpacity>
-                        )}
-
-                        {transaction.isIncome === false && ( // Categorise Transaction button
-                          <TouchableOpacity
-                            style={{
-                              ...transactionStyles.buttonLeft,
-                              ...transactionStyles.button,
-                            }}
-                            onPress={() => {
-                              navigation.navigate('CategoriseTransaction', {
+                            } else {
+                              navigation.navigate("CategoriseTransaction", {
                                 transaction: transaction,
                                 dollars: dollars,
                                 cents: cents,
                               });
-                            }} // Do nothing or go to Income Screen if income
-                          >
-                            <Text style={transactionStyles.buttonText}>
-                              Categorise
-                            </Text>
-                          </TouchableOpacity>
-                        )}
+                            }
+                          }}
+                        >
+                          <Text style={transactionStyles.buttonText}>
+                            Categorise
+                          </Text>
+                        </TouchableOpacity>
 
                         {transaction.isIncome === false && (
                           <TouchableOpacity
@@ -155,8 +134,8 @@ export default function TransactionScreen({ route, navigation }) {
                               ...transactionStyles.button,
                             }}
                             onPress={() => {
-                              alert('To be developed');
-                            }} // Do nothing or go to Income Screen if income
+                              alert("To be developed");
+                            }}
                           >
                             <Text style={transactionStyles.buttonText}>
                               Add to Fund

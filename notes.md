@@ -1,28 +1,41 @@
 Individual:
 
 - Keep track of work done each week for individual component
-- Push to master more often
+- Push to master
 
 High:
 
+- Tutorial screen progress bar blocks input field when keyboard is up
+- Check through frontend fields, pop up numpad when appropriate
+- Global bottom bar
+- Move tutorial to registration page
 - Transaction tabs
+- Login page could look a little nicer
 - Backend: Input validation on all endpoints
 - Frontend: Input validation on all fields
 - Fix transaction page loading time
 - UI needs to be rescaled
 - Back button on every screen
+- Add transaction to fund page
 - Interpretation and UX work from Ben's survey results
 - Investing UX and Design
+- Goal Page (Completion graph, add, edit, delete)
+- User interviews
 
 Medium:
 
+- Popup when money received so it can directly be allocated to funds
+- Backend: Spending should be calculated from transactions
+- Backend: Should save the default contribution amount of each fund
+- Add latest transactions segment to home screen
+- Display actual available amount on homescreen
+- Tutorial screen styling improvements, ammount
 - Notifications design and implementation
+- Weekly spending notification
 - Up bank integration
 - Graph on main screen
 - Consistent universal animations
-- Goal Page (Completion graph, add, edit, delete)
 - Goal completion UX
-- User interviews
 - Transaction page redesign, the transactions are too tall
 - Page for visualisation of bank data
 - Automated expense categorisation
