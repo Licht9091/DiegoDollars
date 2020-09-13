@@ -6,6 +6,7 @@ import {
   API_TRANSACTION_STATS,
   API_TRANSACTION_LIST,
   API_GOAL_SET,
+  API_GOAL_DELETE,
 } from "./constants";
 import "./functions";
 
@@ -113,6 +114,33 @@ export class User {
     await this.fetchGoalsStatus();
 
     return this.goals;
+  };
+
+  /**
+   * deleteGoal - async, make sure you wait for this to return.
+   *
+   * @return {boolean}  Returns true if delete was successful.
+   */
+  deleteGoal = async (goal) => {
+    let API_CALL = API_GOAL_DELETE;
+    API_CALL = API_CALL.replace("{goalId}", goal.id);
+
+    const response = await fetch(API_CALL, { method: "GET" });
+    const bodyJson = await response.json();
+
+    if (bodyJson["message"] == "Success") {
+      let i = 0;
+      while (i < this.goals.length) {
+        if (this.goals[i].id == goal.id) {
+          this.goals.splice(i, 1);
+          return true;
+        }
+        i++;
+      }
+    } else {
+      alert(bodyJson["message"]);
+      return false;
+    }
   };
 
   /**
@@ -300,9 +328,12 @@ export class User {
       const response = await fetch(API_CALL, {
         method: "GET",
       }); // This should be post
+      const jsonBody = await response.json();
 
       if (response.ok) {
-        this.goals.push(new Goal(null, goalName, 0, goalAmount, null));
+        this.goals.push(
+          new Goal(jsonBody["id"], goalName, 0, goalAmount, null)
+        );
         return true;
       } else {
         return false;

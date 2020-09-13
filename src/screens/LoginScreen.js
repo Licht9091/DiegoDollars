@@ -18,7 +18,7 @@ export default function LoginScreen({ navigation }) {
 
     // TODO remove "|| true", this was just so that the login
     //  would work without the backend.
-    if (loginSucess || true) {
+    if (loginSucess) {
       navigateAndReset(navigation, "Main");
       setUsername("");
       setPassword("");
@@ -81,8 +81,6 @@ export default function LoginScreen({ navigation }) {
           style={STYLESHEET.defaultButton}
           onPress={() => login(username, password)}
           disabled={username == "" || password == ""}
-          For
-          Demo
         />
       </View>
     </View>
