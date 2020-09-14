@@ -288,6 +288,9 @@ export class User {
 
     this.spendingCategories = [];
     spending = bodyJson["spending"];
+    
+    this.categories = bodyJson["all-categories"];
+    console.log(this.categories);
 
     let total = Math.abs(parseFloat(spending["total"]).toFixed(2));
     // Append all the categories to the list
@@ -377,6 +380,7 @@ export class User {
     this.account = null;
     this.uncategorisedIncome = null;
     this.uncategorisedSpending = null;
+    this.categories = null;
   }
 }
 
