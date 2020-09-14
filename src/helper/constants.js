@@ -9,6 +9,8 @@ export const API_GOALS_STATUS =
   "https://pylicht.pythonanywhere.com/goal_status";
 export const API_GOAL_SET =
   "https://pylicht.pythonanywhere.com/set_goal?description={goalName}&goalAmount={goalAmount}";
+export const API_GOAL_DELETE =
+  "https://pylicht.pythonanywhere.com/delete_goal?id={goalId}";
 export const API_GOAL_CONTRIBUTE =
   "https://pylicht.pythonanywhere.com/contribute_to_goal?goalid={goalId}&contrabution={contribution}";
 export const API_TRANSACTION_STATS =

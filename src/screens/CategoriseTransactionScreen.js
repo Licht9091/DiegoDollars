@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { STYLESHEET } from "../styles/stylesheet";
 import { Text, View, Dimensions } from "react-native";
 import Colors from "../styles/colors";
@@ -13,6 +13,18 @@ export default function CategoriseTransactionScreen({ navigation, route }) {
   const { cents } = route.params;
 
   const Context = useContext(AppContext);
+
+  const [categories, setCategories] = useState([]);
+  const [loaded, setLoaded] = useState(false);
+
+  const setup = async() => {
+    await setCategories(Context.User.categories);
+    setLoaded(true);
+  }
+
+  useEffect(() => {
+    setup();
+  });
 
   const style = {
     transactionWrapper: {
@@ -86,6 +98,9 @@ export default function CategoriseTransactionScreen({ navigation, route }) {
         </View>
       </View>
       <Text style={style.header}>Categories</Text>
+
+
+      {loaded && categories.map((category) => (
       <View style={style.fundsView}>
         <Text
           style={style.fundView}
@@ -94,27 +109,11 @@ export default function CategoriseTransactionScreen({ navigation, route }) {
             Context.User.removeTransaction(transaction, "expense");
           }}
         >
-          Groceries
+          {category}
         </Text>
-        <Text
-          style={style.fundView}
-          onPress={() => {
-            navigateAndReset(navigation, "Main");
-            Context.User.removeTransaction(transaction, "expense");
-          }}
-        >
-          Entertainment
-        </Text>
-        <Text
-          style={style.fundView}
-          onPress={() => {
-            navigateAndReset(navigation, "Main");
-            Context.User.removeTransaction(transaction, "expense");
-          }}
-        >
-          Category 3
-        </Text>
-      </View>
+        </View>
+      ))}
+
     </View>
   );
 }
