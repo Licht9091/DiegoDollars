@@ -210,7 +210,7 @@ const MainScreen = ({ navigation }) => {
       )}
 
       {/* Bottom Bar */}
-      <BottomBar />
+      <BottomBar navigation = { navigation }/>
     </>
   );
 };

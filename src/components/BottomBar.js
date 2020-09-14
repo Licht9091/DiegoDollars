@@ -11,7 +11,7 @@ import {
   faUserCircle,
 } from '@fortawesome/free-solid-svg-icons';
 
-const BottomBar = () => {
+const BottomBar = ( {navigation} ) => {
   const style = {
     shadowColor: '#000',
     shadowOffset: {
@@ -67,6 +67,9 @@ const BottomBar = () => {
         icon={faUserCircle}
         size={Dimensions.get('window').height * 0.03}
         color={Colors.Primary}
+        onPress={() =>
+          navigation.navigate("Account", { navigatedState : navigation,} )
+        }
       />
       <FontAwesomeIcon
         style={iconStyle}
