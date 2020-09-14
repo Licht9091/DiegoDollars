@@ -150,7 +150,7 @@ export default function TransactionScreen({ route, navigation }) {
           </View>
         </ScrollView>
       )}
-      <BottomBar />
+      <BottomBar navigation = { navigation }/>
     </>
   );
 }

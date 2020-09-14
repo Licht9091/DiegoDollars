@@ -76,7 +76,7 @@ const AddGoal = ({ navigation }) => {
           </View>
         </ScrollView>
       </View>
-      <BottomBar />
+      <BottomBar navigation = { navigation }/>
     </>
   );
 };
