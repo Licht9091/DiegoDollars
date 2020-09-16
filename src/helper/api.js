@@ -40,7 +40,6 @@ export class User {
    * @return {boolean} Returns true if the login suceeded, false otherwise.
    */
   logIn = async (username, password) => {
-    alert(API_LOGIN);
     let formdata = new FormData();
     formdata.append("username", username);
     formdata.append("password", password);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { STYLESHEET } from "../styles/stylesheet";
 import { Text, View, Dimensions } from "react-native";
 import Colors from "../styles/colors";
@@ -11,6 +11,7 @@ import {
   faCog,
   faUserCircle,
 } from '@fortawesome/free-solid-svg-icons';
+import AppContext from "../helper/context";
 
 const style = {
   transactionView: {
@@ -32,13 +33,30 @@ const style = {
 }
 
 export default function AccountScreen( {navigation} ) {
+
+  const Context = useContext(AppContext);
+  const [account, setAccount] = useState(null);
+  const [loaded, setLoaded] = useState(false);
+
+  const setupAccount = async() => {
+    const acc = await Context.User.getAccount();
+    setAccount(acc);
+  }
+  
+  useEffect(() => {
+    if (!loaded) { 
+      setupAccount(); 
+      setLoaded(true);
+    }
+  });
+
   return <View style={STYLESHEET.defaultView}>
     <View style={style.transactionView}>
       <Text style={style.defaultHeader}>
         Total Account Value
       </Text>
       <Text style={style.defaultHeader}>
-        $Value
+        ${account && account.totalBalance}
       </Text>
     </View>
     <View style={style.transactionView}>
