@@ -17,6 +17,7 @@ import { STYLESHEET } from "../../styles/stylesheet";
 import mainStyle from "./MainScreen.style";
 import { round } from "react-native-reanimated";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const MainScreen = ({ navigation }) => {
   // START EDITS
@@ -63,7 +64,7 @@ const MainScreen = ({ navigation }) => {
   });
 
   return (
-    <>
+    <SafeAreaView style={{ backgroundColor: Colors.Primary }}>
       {(!loaded || !data) && (
         <ScrollView style={mainStyle.loadWrapper}>
           <ActivityIndicator size="large" color="white" />
@@ -210,8 +211,8 @@ const MainScreen = ({ navigation }) => {
       )}
 
       {/* Bottom Bar */}
-      <BottomBar navigation = { navigation }/>
-    </>
+      <BottomBar navigation={navigation} />
+    </SafeAreaView>
   );
 };
 
