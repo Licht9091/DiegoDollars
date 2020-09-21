@@ -65,153 +65,157 @@ const MainScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ backgroundColor: Colors.Primary }}>
-      {(!loaded || !data) && (
-        <ScrollView style={mainStyle.loadWrapper}>
-          <ActivityIndicator size="large" color="white" />
-        </ScrollView>
-      )}
-      {data && loaded && (
-        <ScrollView style={mainStyle.mainScreen}>
-          {/* Title */}
-          <View style={mainStyle.logoWrapper}>
-            <Text style={mainStyle.logo}>DIEGO</Text>
-          </View>
-          {/* Hero Content */}
-          <View style={mainStyle.statusContainer}>
-            <View style={mainStyle.availableSpend}>
-              {loaded && (
-                <>
-                  {/* <ActivityIndicator size='large' color='white' /> */}
-                  <Text style={mainStyle.availableSpendDollars}>
-                    {`$${Format.toDollars(data.availableSpending)}`}.
-                  </Text>
-                  <Text style={mainStyle.availableSpendCents}>
-                    {Format.toCents(data.availableSpending)}
-                  </Text>
-                </>
-              )}
+      <View>
+        {(!loaded || !data) && (
+          <ScrollView style={mainStyle.loadWrapper}>
+            <ActivityIndicator size="large" color="white" />
+          </ScrollView>
+        )}
+        {data && loaded && (
+          <ScrollView style={mainStyle.mainScreen}>
+            {/* Title */}
+            <View style={mainStyle.logoWrapper}>
+              <Text style={mainStyle.logo}>DIEGO</Text>
             </View>
-            <Text style={mainStyle.availablelable}>AVAILABLE THIS PERIOD</Text>
+            {/* Hero Content */}
+            <View style={mainStyle.statusContainer}>
+              <View style={mainStyle.availableSpend}>
+                {loaded && (
+                  <>
+                    {/* <ActivityIndicator size='large' color='white' /> */}
+                    <Text style={mainStyle.availableSpendDollars}>
+                      {`$${Format.toDollars(data.availableSpending)}`}.
+                    </Text>
+                    <Text style={mainStyle.availableSpendCents}>
+                      {Format.toCents(data.availableSpending)}
+                    </Text>
+                  </>
+                )}
+              </View>
+              <Text style={mainStyle.availablelable}>
+                AVAILABLE THIS PERIOD
+              </Text>
 
-            <View style={mainStyle.heroUncategorised}>
-              <Pill
-                content={`${data.uncategorisedSpending} Uncategorised Spending`}
-                color={Colors.DarkerGray}
-                backgroundColor={Colors.White}
-                onPress={() =>
-                  navigation.navigate("Transactions", {
-                    navigatedState: "expense",
-                  })
-                } // "expense"
-              />
-            </View>
-            <View style={mainStyle.heroUncategorised}>
-              <Pill
-                content={`${data.uncategorisedIncome} Uncategorised Income`}
-                color={Colors.DarkerGray}
-                backgroundColor={Colors.White}
-                onPress={() =>
-                  navigation.navigate("Transactions", {
-                    navigatedState: "income",
-                  })
-                } // "income"
-              />
+              <View style={mainStyle.heroUncategorised}>
+                <Pill
+                  content={`${data.uncategorisedSpending} Uncategorised Spending`}
+                  color={Colors.DarkerGray}
+                  backgroundColor={Colors.White}
+                  onPress={() =>
+                    navigation.navigate("Transactions", {
+                      navigatedState: "expense",
+                    })
+                  } // "expense"
+                />
+              </View>
+              <View style={[mainStyle.heroUncategorised]}>
+                <Pill
+                  content={`${data.uncategorisedIncome} Uncategorised Income`}
+                  color={Colors.DarkerGray}
+                  backgroundColor={Colors.White}
+                  onPress={() =>
+                    navigation.navigate("Transactions", {
+                      navigatedState: "income",
+                    })
+                  } // "income"
+                />
+              </View>
+
+              <View>
+                <Image
+                  style={mainStyle.chartImg}
+                  source={require("./chart.png")}
+                />
+              </View>
             </View>
 
-            <View>
-              <Image
-                style={mainStyle.chartImg}
-                source={require("./chart.png")}
-              />
-            </View>
-          </View>
-
-          {/* Goals */}
-          <View style={mainStyle.container}>
-            <Text style={mainStyle.title}>Funds</Text>
-            <ScrollView horizontal={true} style={mainStyle.fundsWrapper}>
-              {/* Goals Data loop */}
-              {data.goals.map((goal) => (
+            {/* Goals */}
+            <View style={mainStyle.container}>
+              <Text style={mainStyle.title}>Funds</Text>
+              <ScrollView horizontal={true} style={mainStyle.fundsWrapper}>
+                {/* Goals Data loop */}
+                {data.goals.map((goal) => (
+                  <TouchableOpacity
+                    key={goal.id}
+                    activeOpacity={0.6}
+                    style={{
+                      ...mainStyle.fundWrapper,
+                      ...STYLESHEET.shadowNormal,
+                    }}
+                    onPress={() =>
+                      navigation.navigate("EditGoal", {
+                        goal: goal,
+                      })
+                    }
+                  >
+                    <Text style={mainStyle.subtitle}>{goal.description}</Text>
+                    <View style={mainStyle.fundDetailsWrapper}>
+                      <PieChart value={goal.percent / 100} />
+                      <View style={mainStyle.fundInfo}>
+                        <Text style={mainStyle.fundContribution}>
+                          {`$${Format.toDollars(goal.currentContribution)}`}
+                        </Text>
+                        <Text style={mainStyle.fundCompletion}>
+                          {goal.percent}% Complete
+                        </Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+              {/* Add Goal Button */}
+              <View style={mainStyle.createFundWrapper}>
                 <TouchableOpacity
-                  key={goal.id}
-                  activeOpacity={0.6}
                   style={{
-                    ...mainStyle.fundWrapper,
+                    ...mainStyle.createFundBtn,
                     ...STYLESHEET.shadowNormal,
                   }}
-                  onPress={() =>
-                    navigation.navigate("EditGoal", {
-                      goal: goal,
-                    })
-                  }
+                  onPress={() => navigation.navigate("AddGoal")}
                 >
-                  <Text style={mainStyle.subtitle}>{goal.description}</Text>
-                  <View style={mainStyle.fundDetailsWrapper}>
-                    <PieChart value={goal.percent / 100} />
-                    <View style={mainStyle.fundInfo}>
-                      <Text style={mainStyle.fundContribution}>
-                        {`$${Format.toDollars(goal.currentContribution)}`}
-                      </Text>
-                      <Text style={mainStyle.fundCompletion}>
-                        {goal.percent}% Complete
-                      </Text>
-                    </View>
-                  </View>
+                  <Text // The navigation here should be on the whole button not the text
+                    style={mainStyle.createFundBtnText}
+                  >
+                    Create Fund
+                  </Text>
                 </TouchableOpacity>
-              ))}
-            </ScrollView>
-            {/* Add Goal Button */}
-            <View style={mainStyle.createFundWrapper}>
-              <TouchableOpacity
-                style={{
-                  ...mainStyle.createFundBtn,
-                  ...STYLESHEET.shadowNormal,
-                }}
-                onPress={() => navigation.navigate("AddGoal")}
-              >
-                <Text // The navigation here should be on the whole button not the text
-                  style={mainStyle.createFundBtnText}
-                >
-                  Create Fund
-                </Text>
-              </TouchableOpacity>
+              </View>
             </View>
-          </View>
 
-          {/* Spending */}
-          <View style={mainStyle.container}>
-            <Text style={mainStyle.title}>Spending</Text>
-            <View style={mainStyle.spendsWrapper}>
-              {/* Spending Categories Data loop */}
-              {data.spendingCategories.map((category) => {
-                console.log(category);
-                return (
-                  <View key={category.name} style={mainStyle.spendWrapper}>
-                    <PieChart
-                      value={category.percent}
-                      color="#13629B"
-                      size={85}
-                      showPercentage
-                    />
-                    <View style={mainStyle.spendInfo}>
-                      <Text style={mainStyle.spendAmount}>
-                        {`$${Format.toDollars(category.amount)}`}
-                      </Text>
-                      <Text style={mainStyle.spendCategory}>
-                        {category.name}
-                      </Text>
+            {/* Spending */}
+            <View style={mainStyle.container}>
+              <Text style={mainStyle.title}>Spending</Text>
+              <View style={mainStyle.spendsWrapper}>
+                {/* Spending Categories Data loop */}
+                {data.spendingCategories.map((category) => {
+                  console.log(category);
+                  return (
+                    <View key={category.name} style={mainStyle.spendWrapper}>
+                      <PieChart
+                        value={category.percent}
+                        color="#13629B"
+                        size={85}
+                        showPercentage
+                      />
+                      <View style={mainStyle.spendInfo}>
+                        <Text style={mainStyle.spendAmount}>
+                          {`$${Format.toDollars(category.amount)}`}
+                        </Text>
+                        <Text style={mainStyle.spendCategory}>
+                          {category.name}
+                        </Text>
+                      </View>
                     </View>
-                  </View>
-                );
-              })}
+                  );
+                })}
+              </View>
             </View>
-          </View>
-          <View style={mainStyle.dummy}></View>
-        </ScrollView>
-      )}
+            <View style={mainStyle.dummy}></View>
+          </ScrollView>
+        )}
 
-      {/* Bottom Bar */}
-      <BottomBar navigation={navigation} />
+        {/* Bottom Bar */}
+        <BottomBar navigation={navigation} />
+      </View>
     </SafeAreaView>
   );
 };

@@ -1,19 +1,20 @@
-import React from 'react';
-import { Dimensions, View, Text } from 'react-native';
-import Colors from '../styles/colors';
-import { STYLESHEET } from '../styles/stylesheet';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import React from "react";
+import { Dimensions, View, Text } from "react-native";
+import Colors from "../styles/colors";
+import { STYLESHEET } from "../styles/stylesheet";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
   faTachometerAlt,
   faChartLine,
   faMoneyBillAlt,
   faCog,
   faUserCircle,
-} from '@fortawesome/free-solid-svg-icons';
+} from "@fortawesome/free-solid-svg-icons";
 
-const BottomBar = ( {navigation} ) => {
+const BottomBar = ({ navigation }) => {
+  let barHeight = Dimensions.get("window").height * 0.07;
   const style = {
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 12,
@@ -23,19 +24,21 @@ const BottomBar = ( {navigation} ) => {
 
     elevation: 24,
 
-    position: 'absolute',
-    bottom: 0,
-    height: Dimensions.get('window').height * 0.065,
-    width: Dimensions.get('window').width,
+    position: "absolute",
+    bottom: barHeight - 30,
+    //height: barHeight,
+    width: Dimensions.get("window").width,
     backgroundColor: Colors.White,
     color: Colors.Primary,
 
-    paddingLeft: Dimensions.get('window').width * 0.02,
-    paddingRight: Dimensions.get('window').width * 0.02,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
+    paddingLeft: Dimensions.get("window").width * 0.02,
+    paddingRight: Dimensions.get("window").width * 0.02,
+    paddingBottom: 50,
+    paddingTop: 20,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
   };
 
   const iconStyle = {
@@ -47,34 +50,34 @@ const BottomBar = ( {navigation} ) => {
       <FontAwesomeIcon
         style={{ ...iconStyle, opacity: 1 }}
         icon={faTachometerAlt}
-        size={Dimensions.get('window').height * 0.03}
+        size={Dimensions.get("window").height * 0.03}
         color={Colors.Primary}
       />
       <FontAwesomeIcon
         style={iconStyle}
         icon={faMoneyBillAlt}
-        size={Dimensions.get('window').height * 0.03}
+        size={Dimensions.get("window").height * 0.03}
         color={Colors.Primary}
       />
       <FontAwesomeIcon
         style={iconStyle}
         icon={faChartLine}
-        size={Dimensions.get('window').height * 0.03}
+        size={Dimensions.get("window").height * 0.03}
         color={Colors.Primary}
       />
       <FontAwesomeIcon
         style={iconStyle}
         icon={faUserCircle}
-        size={Dimensions.get('window').height * 0.03}
+        size={Dimensions.get("window").height * 0.03}
         color={Colors.Primary}
         onPress={() =>
-          navigation.navigate("Account", { navigatedState : navigation,} )
+          navigation.navigate("Account", { navigatedState: navigation })
         }
       />
       <FontAwesomeIcon
         style={iconStyle}
         icon={faCog}
-        size={Dimensions.get('window').height * 0.03}
+        size={Dimensions.get("window").height * 0.03}
         color={Colors.Primary}
       />
     </View>

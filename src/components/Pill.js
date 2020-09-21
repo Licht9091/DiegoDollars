@@ -1,43 +1,47 @@
-import React from 'react';
-import { View, Text, Button } from 'react-native';
-import Colors from '../styles/colors';
-import { FONT_FAMILY_SEMIBOLD } from '../styles/typography';
-import { STYLESHEET } from '../styles/stylesheet';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import React from "react";
+import { View, Text, Button } from "react-native";
+import Colors from "../styles/colors";
+import { FONT_FAMILY_SEMIBOLD } from "../styles/typography";
+import { STYLESHEET } from "../styles/stylesheet";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-const Pill = ({
+function Pill(props) {
+  /*
+function Pill({
   content,
   color = Colors.White,
   backgroundColor = Colors.Primary,
-  onPress = () => {},
-}) => {
+  onPress,
+}) {
+  */
   const style = {
     container: {
-      //   margin: 200,
+      borderRadius: 23,
+      height: 40,
+      backgroundColor: props.backgroundColor,
     },
     button: {
-      backgroundColor,
-      color,
-      alignSelf: 'flex-start',
+      color: props.color,
+      alignSelf: "flex-start",
       fontFamily: FONT_FAMILY_SEMIBOLD,
       paddingLeft: 20,
       paddingRight: 20,
       paddingTop: 9,
-      height: 40,
-      borderRadius: 23,
+      paddingBottom: 9,
     },
   };
 
   return (
-    <TouchableOpacity activeOpacity={0.9} style={style.container}>
-      <Text
-        style={{ ...style.button, ...STYLESHEET.shadowNormal }}
-        onPress={onPress}
+    <View style={[style.container, STYLESHEET.shadowNormal]}>
+      <TouchableOpacity
+        activeOpacity={0.9}
+        //style={style.container}
+        onPress={props.onPress}
       >
-        {content}
-      </Text>
-    </TouchableOpacity>
+        <Text style={style.button}>{props.content}</Text>
+      </TouchableOpacity>
+    </View>
   );
-};
+}
 
 export default Pill;
