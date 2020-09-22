@@ -57,6 +57,11 @@ function setValue(set, totalValue, value1, value2, valueToChange) {
   }
 }
 
+const updateCategory = async(transaction, category, tag) => {
+  navigateAndReset(navigation, "Main");
+  Context.User.categoriseTransaction(transaction, category, tag);
+}
+
 export default function CategoriseIncomeScreen({ navigation, route }) {
   const { transaction } = route.params;
   const { dollars } = route.params;
@@ -137,8 +142,7 @@ export default function CategoriseIncomeScreen({ navigation, route }) {
           color={Colors.Primary}
           backgroundColor={Colors.White}
           onPress={() => {
-            navigateAndReset(navigation, "Main");
-            Context.User.removeTransaction(transaction, "income");
+            updateCategory(transaction, null, "income");
           }}
         />
       </View>

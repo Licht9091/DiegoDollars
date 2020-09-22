@@ -22,6 +22,11 @@ export default function CategoriseTransactionScreen({ navigation, route }) {
     setLoaded(true);
   }
 
+  const updateCategory = async(transaction, category, tag) => {
+    navigateAndReset(navigation, "Main");
+    Context.User.categoriseTransaction(transaction, category, tag);
+  }
+
   useEffect(() => {
     setup();
   });
@@ -105,8 +110,7 @@ export default function CategoriseTransactionScreen({ navigation, route }) {
         <Text
           style={style.fundView}
           onPress={() => {
-            navigateAndReset(navigation, "Main");
-            Context.User.removeTransaction(transaction, "expense");
+            updateCategory(transaction, category, "expense");
           }}
         >
           {category}

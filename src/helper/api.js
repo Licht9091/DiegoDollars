@@ -7,6 +7,7 @@ import {
   API_TRANSACTION_LIST,
   API_GOAL_SET,
   API_GOAL_DELETE,
+  API_CATEGORISE_TRANSACTION
 } from "./constants";
 import "./functions";
 
@@ -343,8 +344,26 @@ export class User {
       }
     };
 
-    this.removeTransaction = function (transaction, category) {
-      if (category === "income") {
+    this.categoriseTransaction = async (transaction, category, tag) => {
+      if (tag === "income") {
+        // TODO Implement
+        return;
+      } else if (tag === "expense") {
+        let API_CALL = API_CATEGORISE_TRANSACTION;
+        API_CALL = API_CALL.replace("{transactionId}", transaction.id);
+        API_CALL = API_CALL.replace("{category}", category);
+
+        //alert(API_CALL);
+        const response = await fetch(API_CALL, { method: "GET" });
+        const bodyJson = await response.json();
+
+        if (bodyJson["status"] != "Updated") {
+          alert("Categorise failed.");
+          return;
+        }
+      }
+
+      if (tag === "income") {
         let i = 0;
         while (i < this.account.uncategorisedIncome.length) {
           if (this.account.uncategorisedIncome[i].id == transaction.id) {
@@ -354,7 +373,7 @@ export class User {
           }
           i++;
         }
-      } else if (category === "expense") {
+      } else if (tag === "expense") {
         let i = 0;
         while (i < this.account.uncategorisedExpenses.length) {
           if (this.account.uncategorisedExpenses[i].id == transaction.id) {
@@ -417,6 +436,23 @@ class Account {
   getSpendingBalance = async () => {
     return this.spendingBalance;
   };
+
+  /**
+   * getTransactionsByCategory - async, make sure you wait for this to return.
+   * 
+   * @return {[Transaction]} List of transactions by category
+   */
+  getTransactionsByCategory = async (category) => {
+    returnList = [];
+
+    await this.allTransactions.forEach((obj) => {
+      if (obj.category == category) {
+        returnList.push(obj);
+      }
+    });
+
+    return returnList;
+  }
 }
 
 class Goal {

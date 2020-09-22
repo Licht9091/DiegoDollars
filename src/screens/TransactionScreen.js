@@ -24,6 +24,8 @@ export default function TransactionScreen({ route, navigation }) {
       _data = _account.uncategorisedIncome;
     } else if (navigatedState === "all") {
       _data = _account.allTransactions;
+    } else {
+      _data = await _account.getTransactionsByCategory(navigatedState);
     }
 
     setData(_data);

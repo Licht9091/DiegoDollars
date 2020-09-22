@@ -21,3 +21,4 @@ export const API_GOAL_CONTRIBUTE =
   HOST + "/contribute_to_goal?goalid={goalId}&contrabution={contribution}";
 export const API_TRANSACTION_STATS = HOST + "/transaction_stats";
 export const API_TRANSACTION_LIST = HOST + "/get_transactions";
+export const API_CATEGORISE_TRANSACTION = HOST + "/categorize_transaction?transactionid={transactionId}&category={category}";

@@ -189,7 +189,15 @@ const MainScreen = ({ navigation }) => {
                 {data.spendingCategories.map((category) => {
                   console.log(category);
                   return (
-                    <View key={category.name} style={mainStyle.spendWrapper}>
+                    <TouchableOpacity 
+                    key={category.name} 
+                    style={mainStyle.spendWrapper}
+                    onPress={() =>
+                      navigation.navigate("Transactions", {
+                        navigatedState: category.name,
+                      })
+                    } // "income"
+                    >
                       <PieChart
                         value={category.percent}
                         color="#13629B"
@@ -204,7 +212,7 @@ const MainScreen = ({ navigation }) => {
                           {category.name}
                         </Text>
                       </View>
-                    </View>
+                    </TouchableOpacity>
                   );
                 })}
               </View>
