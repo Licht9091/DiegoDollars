@@ -131,15 +131,15 @@ const MainScreen = ({ navigation }) => {
 
             {/* Goals */}
             <View style={mainStyle.container}>
-              <Text style={mainStyle.title}>Funds</Text>
-              <ScrollView horizontal={true} style={mainStyle.fundsWrapper}>
+              <Text style={mainStyle.title}>Goals</Text>
+              <ScrollView horizontal={true} style={mainStyle.goalsWrapper}>
                 {/* Goals Data loop */}
                 {data.goals.map((goal) => (
                   <TouchableOpacity
                     key={goal.id}
                     activeOpacity={0.6}
                     style={{
-                      ...mainStyle.fundWrapper,
+                      ...mainStyle.goalWrapper,
                       ...STYLESHEET.shadowNormal,
                     }}
                     onPress={() =>
@@ -149,13 +149,13 @@ const MainScreen = ({ navigation }) => {
                     }
                   >
                     <Text style={mainStyle.subtitle}>{goal.description}</Text>
-                    <View style={mainStyle.fundDetailsWrapper}>
+                    <View style={mainStyle.goalDetailsWrapper}>
                       <PieChart value={goal.percent / 100} />
-                      <View style={mainStyle.fundInfo}>
-                        <Text style={mainStyle.fundContribution}>
+                      <View style={mainStyle.goalInfo}>
+                        <Text style={mainStyle.goalContribution}>
                           {`$${Format.toDollars(goal.currentContribution)}`}
                         </Text>
-                        <Text style={mainStyle.fundCompletion}>
+                        <Text style={mainStyle.goalCompletion}>
                           {goal.percent}% Complete
                         </Text>
                       </View>
@@ -164,18 +164,18 @@ const MainScreen = ({ navigation }) => {
                 ))}
               </ScrollView>
               {/* Add Goal Button */}
-              <View style={mainStyle.createFundWrapper}>
+              <View style={mainStyle.createGoalWrapper}>
                 <TouchableOpacity
                   style={{
-                    ...mainStyle.createFundBtn,
+                    ...mainStyle.createGoalBtn,
                     ...STYLESHEET.shadowNormal,
                   }}
                   onPress={() => navigation.navigate("AddGoal")}
                 >
                   <Text // The navigation here should be on the whole button not the text
-                    style={mainStyle.createFundBtnText}
+                    style={mainStyle.createGoalBtnText}
                   >
-                    Create Fund
+                    Create Goal
                   </Text>
                 </TouchableOpacity>
               </View>

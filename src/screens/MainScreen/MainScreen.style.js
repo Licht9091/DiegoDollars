@@ -87,7 +87,7 @@ const mainStyle = {
     paddingBottom: 15,
     paddingLeft: 30,
   },
-  fundsWrapper: {
+  goalsWrapper: {
     paddingTop: 15,
     paddingRight: 100,
     marginLeft: -30,
@@ -95,7 +95,7 @@ const mainStyle = {
     flexDirection: "row",
     height: 160,
   },
-  fundWrapper: {
+  goalWrapper: {
     width: 200,
     height: 120,
     paddingTop: 10,
@@ -105,33 +105,33 @@ const mainStyle = {
     backgroundColor: Colors.White,
     borderRadius: 20,
   },
-  fundDetailsWrapper: {
+  goalDetailsWrapper: {
     flex: 1,
     flexDirection: "row",
   },
-  fundInfo: {
+  goalInfo: {
     flex: 1,
     flexDirection: "column",
     marginLeft: 15,
     marginTop: 13,
   },
-  fundContribution: {
+  goalContribution: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
     fontSize: 28,
     color: Colors.DarkerGray,
   },
-  fundCompletion: {
+  goalCompletion: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
     fontSize: 9,
     color: Colors.DarkerGray,
   },
-  createFundWrapper: {
+  createGoalWrapper: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "flex-end",
     marginRight: 20,
   },
-  createFundBtn: {
+  createGoalBtn: {
     padding: 5,
     paddingLeft: 15,
     paddingRight: 15,
@@ -140,7 +140,7 @@ const mainStyle = {
     color: Colors.White,
     flex: 0,
   },
-  createFundBtnText: {
+  createGoalBtnText: {
     fontSize: 12,
     fontWeight: "bold",
     color: Colors.White,

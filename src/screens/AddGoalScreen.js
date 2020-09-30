@@ -33,8 +33,8 @@ const AddGoal = ({ navigation }) => {
       <View style={STYLESHEET.addGoalView}>
         {/* <Image source={require("../assets/backArrow.png")}/> */}
         <ScrollView>
-          <Text style={STYLESHEET.addGoalHeader}>Create fund</Text>
-          <Text style={STYLESHEET.addGoalSubHeader}>New Fund</Text>
+          <Text style={STYLESHEET.addGoalHeader}>Create Goal</Text>
+          <Text style={STYLESHEET.addGoalSubHeader}>New Goal</Text>
           <TextInput
             style={STYLESHEET.addGoalTextInput}
             placeholder="Enter goal name"
