@@ -53,7 +53,7 @@ const style = {
 
 function setValue(set, totalValue, value1, value2, valueToChange) {
   if (totalValue - value1 - value2 - valueToChange >= 0) {
-    set(valueToChange)
+    set(valueToChange.toFixed(2))
   }
 }
 
