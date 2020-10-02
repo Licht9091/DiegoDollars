@@ -3,14 +3,6 @@ import { STYLESHEET } from "../styles/stylesheet";
 import { Text, View, Dimensions } from "react-native";
 import Colors from "../styles/colors";
 import BottomBar from "../components/BottomBar";
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import {
-  farocket,
-  faChartLine,
-  faMoneyBillAlt,
-  faCog,
-  faUserCircle,
-} from '@fortawesome/free-solid-svg-icons';
 import AppContext from "../helper/context";
 
 const style = {

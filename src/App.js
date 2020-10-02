@@ -19,6 +19,7 @@ import RegisterScreen from "./screens/RegisterScreen";
 import TransactionScreen from "./screens/TransactionScreen";
 import HeaderStyle from "./styles/Header/HeaderStyle";
 import TutorialScreen from "./screens/TutorialScreen";
+import MyBudget from "./screens/MyBudget";
 
 const Stack = createStackNavigator();
 
@@ -98,6 +99,10 @@ function App() {
             <Stack.Screen
               name="CategoriseTransaction"
               component={CategoriseTransactionScreen}
+            />
+            <Stack.Screen
+              name="Budget"
+              component={MyBudget}
             />
             <Stack.Screen name="EditGoal" component={EditGoalScreen} />
           </Stack.Navigator>

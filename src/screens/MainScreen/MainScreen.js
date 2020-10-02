@@ -18,6 +18,14 @@ import mainStyle from "./MainScreen.style";
 import { round } from "react-native-reanimated";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import {
+  faInfoCircle,
+} from "@fortawesome/free-solid-svg-icons";
+
+const iconStyle = {
+  opacity: 0.8,
+};
 
 const MainScreen = ({ navigation }) => {
   // START EDITS
@@ -89,6 +97,15 @@ const MainScreen = ({ navigation }) => {
                     <Text style={mainStyle.availableSpendCents}>
                       {Format.toCents(data.availableSpending)}
                     </Text>
+                    <FontAwesomeIcon
+                      style={iconStyle}
+                      icon={faInfoCircle}
+                      size={Dimensions.get("window").height * 0.03}
+                      color={Colors.White}
+                      onPress={() => {
+                        navigation.navigate("Budget", { navigatedState: navigation })
+                      }}
+                    />
                   </>
                 )}
               </View>

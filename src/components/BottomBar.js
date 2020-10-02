@@ -25,7 +25,7 @@ const BottomBar = ({ navigation }) => {
     elevation: 24,
 
     position: "absolute",
-    bottom: barHeight - 30,
+    bottom: barHeight - 74,
     //height: barHeight,
     width: Dimensions.get("window").width,
     backgroundColor: Colors.White,
