@@ -20,6 +20,7 @@ import TransactionScreen from "./screens/TransactionScreen";
 import HeaderStyle from "./styles/Header/HeaderStyle";
 import TutorialScreen from "./screens/TutorialScreen";
 import MyBudget from "./screens/MyBudget";
+import MyGoalsScreen from "./screens/MyGoalsScreen";
 
 const Stack = createStackNavigator();
 
@@ -91,6 +92,10 @@ function App() {
               name="AddGoal"
               component={AddGoalScreen}
               options={MainScreenOptions}
+            />
+            <Stack.Screen
+              name="MyGoals"
+              component={MyGoalsScreen}
             />
             <Stack.Screen
               name="CategoriseIncome"

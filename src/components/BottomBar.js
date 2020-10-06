@@ -58,6 +58,9 @@ const BottomBar = ({ navigation }) => {
         icon={faMoneyBillAlt}
         size={Dimensions.get("window").height * 0.03}
         color={Colors.Primary}
+        onPress={() =>
+          navigation.navigate("MyGoals", { navigatedState: navigation })
+        }
       />
       <FontAwesomeIcon
         style={iconStyle}
