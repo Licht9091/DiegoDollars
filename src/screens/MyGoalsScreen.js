@@ -22,6 +22,7 @@ const style = {
       whiteBubbleView: {
         backgroundColor: Colors.White,
         width: Dimensions.get("window").width - 40,
+        height: Dimensions.get("window").height - 380,
         marginTop: 10,
         marginLeft: 10,
         marginBottom: 10,
@@ -150,6 +151,11 @@ export default function MyGoals( {navigation} ) {
                     />
                 </View>
             </View>
+            <View style={style.thirdsSectioningViewBlue}>
+                <Text>
+                  Rocket Thing
+                </Text>
+            </View>
         </View>
     </View>
     <View style={style.whiteBubbleView}>
@@ -172,6 +178,96 @@ export default function MyGoals( {navigation} ) {
       </View>
       <Text style={style.defaulthLineBlack}/>
       <ScrollView>
+      <View style={style.incomeView}>
+        <View style={style.incomeNameView}>
+          <Text>
+            XYZ LTD - 44444444444444444
+          </Text>
+          <Text style={style.defaultHeaderDarkerGray}>
+            Grocery Shopping
+          </Text>
+        </View>
+        <View style={style.amountView}>
+            <Text>
+              Money
+            </Text>
+        </View>
+      </View>
+      <View style={style.incomeView}>
+        <View style={style.incomeNameView}>
+          <Text>
+            XYZ LTD - 44444444444444444
+          </Text>
+          <Text style={style.defaultHeaderDarkerGray}>
+            Grocery Shopping
+          </Text>
+        </View>
+        <View style={style.amountView}>
+            <Text>
+              Money
+            </Text>
+        </View>
+      </View>
+      <View style={style.incomeView}>
+        <View style={style.incomeNameView}>
+          <Text>
+            XYZ LTD - 44444444444444444
+          </Text>
+          <Text style={style.defaultHeaderDarkerGray}>
+            Grocery Shopping
+          </Text>
+        </View>
+        <View style={style.amountView}>
+            <Text>
+              Money
+            </Text>
+        </View>
+      </View>
+      <View style={style.incomeView}>
+        <View style={style.incomeNameView}>
+          <Text>
+            XYZ LTD - 44444444444444444
+          </Text>
+          <Text style={style.defaultHeaderDarkerGray}>
+            Grocery Shopping
+          </Text>
+        </View>
+        <View style={style.amountView}>
+            <Text>
+              Money
+            </Text>
+        </View>
+      </View>
+      <View style={style.incomeView}>
+        <View style={style.incomeNameView}>
+          <Text>
+            XYZ LTD - 44444444444444444
+          </Text>
+          <Text style={style.defaultHeaderDarkerGray}>
+            Grocery Shopping
+          </Text>
+        </View>
+        <View style={style.amountView}>
+            <Text>
+              Money
+            </Text>
+        </View>
+      </View>
+      <View style={style.incomeView}>
+        <View style={style.incomeNameView}>
+          <Text>
+            XYZ LTD - 44444444444444444
+          </Text>
+          <Text style={style.defaultHeaderDarkerGray}>
+            Grocery Shopping
+          </Text>
+        </View>
+        <View style={style.amountView}>
+            <Text>
+              Money
+            </Text>
+        </View>
+      </View>
       <View style={style.incomeView}>
         <View style={style.incomeNameView}>
           <Text>
