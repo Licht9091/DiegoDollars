@@ -11,7 +11,7 @@ import {
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
-const BottomBar = ({ navigation }) => {
+const BottomBar = ({ navigation, route }) => {
   let barHeight = Dimensions.get("window").height * 0.07;
   const style = {
     shadowColor: "#000",
@@ -59,7 +59,9 @@ const BottomBar = ({ navigation }) => {
         size={Dimensions.get("window").height * 0.03}
         color={Colors.Primary}
         onPress={() =>
-          navigation.navigate("MyGoals", { navigatedState: navigation })
+          navigation.navigate("MyGoals", {
+            navigatedState: "expense",
+          })
         }
       />
       <FontAwesomeIcon

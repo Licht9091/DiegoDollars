@@ -1,11 +1,20 @@
-import React, { useState } from "react";
-import { ScrollView, TouchableOpacity } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { ScrollView, TouchableOpacity, Text, View, ActivityIndicator, Dimensions } from "react-native";
 import { STYLESHEET } from "../styles/stylesheet";
-import { Text, View, Dimensions } from "react-native";
 import Colors from "../styles/colors";
 import BottomBar from "../components/BottomBar";
 import Pill from "../components/Pill";
+import transactionStyles from "./Transactions/TransactionsScreen.style";
 import { SearchBar } from 'react-native-elements';
+import moment from "moment";
+import AppContext from "../helper/context";
+import Format from "../helper/Format";
+import {
+  FONT_FAMILY_LIGHT,
+  FONT_FAMILY_SEMIBOLD,
+  FONT_FAMILY_REGULAR,
+} from '../styles/typography';
+
 const style = {
     blueBubbleView: {
         backgroundColor: Colors.Primary,
@@ -65,7 +74,7 @@ const style = {
         marginBottom: 10,
       },
       incomeNameView: {
-        width: Dimensions.get("window").width - 140,
+        width: Dimensions.get("window").width - 170,
       },
       sectioningView: {
         width: Dimensions.get("window").width - 40,
@@ -123,14 +132,27 @@ const style = {
         borderBottomColor: Colors.LightGray,
         borderBottomWidth: 1,
         alignSelf: "stretch",
-        paddingVertical: 10,
       },
       defaulthLineBlack: {
         borderBottomColor: Colors.Black,
         borderBottomWidth: 1,
         alignSelf: "stretch",
-        paddingVertical: 10,
-      }
+      },
+      moneyDollars: {
+        fontFamily: FONT_FAMILY_SEMIBOLD,
+        fontWeight: '100',
+        fontSize: 20,
+        color: Colors.DarkerGray,
+        paddingLeft: 10,
+        paddingRight: 0,
+      },
+      moneyCents: {
+        fontFamily: FONT_FAMILY_SEMIBOLD,
+        fontWeight: '100',
+        fontSize: 10,
+        paddingTop: 3,
+        color: Colors.DarkerGray,
+      },
 }
 
 function setButtonValue(value, set) {
@@ -141,7 +163,37 @@ function setButtonValue(value, set) {
   }
 }
 
-export default function MyGoals( {navigation} ) {
+export default function MyGoals( {navigation, route} ) {
+
+  const [data, setData] = useState([]);
+  const [loaded, setLoaded] = useState(false);
+  const { navigatedState } = route.params; // "expense", "income" or "all". Can use this for determining which page we navigated from.
+
+  const Context = useContext(AppContext);
+
+  const updateTransactionList = async () => {
+    _account = await Context.User.getAccount();
+    if (navigatedState === "expense") {
+      _data = _account.uncategorisedExpenses;
+    } else if (navigatedState === "income") {
+      _data = _account.uncategorisedIncome;
+    } else if (navigatedState === "all") {
+      _data = _account.allTransactions;
+    } else {
+      _data = await _account.getTransactionsByCategory(navigatedState);
+    }
+
+    setData(_data);
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (!loaded) {
+        updateTransactionList();
+        setLoaded(true);
+      }
+    }, 1000);
+  });
 
   const [state, setState] = useState("")
   const [expenseButtonPressed, setExpenButton] = useState(false)
@@ -230,141 +282,50 @@ export default function MyGoals( {navigation} ) {
       </View>
       <Text style={style.defaulthLineBlack}/>
       <ScrollView>
-      <View style={style.incomeView}>
-        <View style={style.incomeNameView}>
-          <Text>
-            XYZ LTD - 44444444444444444
-          </Text>
-          <Text style={style.defaultHeaderDarkerGray}>
-            Grocery Shopping
-          </Text>
-        </View>
-        <View width={60}>
-            <Text>
-              Money
-            </Text>
-        </View>
-      </View>
-      <View style={style.incomeView}>
-        <View style={style.incomeNameView}>
-          <Text>
-            XYZ LTD - 44444444444444444
-          </Text>
-          <Text style={style.defaultHeaderDarkerGray}>
-            Grocery Shopping
-          </Text>
-        </View>
-        <View style={style.amountView}>
-            <Text>
-              Money
-            </Text>
-        </View>
-      </View>
-      <View style={style.incomeView}>
-        <View style={style.incomeNameView}>
-          <Text>
-            XYZ LTD - 44444444444444444
-          </Text>
-          <Text style={style.defaultHeaderDarkerGray}>
-            Grocery Shopping
-          </Text>
-        </View>
-        <View style={style.amountView}>
-            <Text>
-              Money
-            </Text>
-        </View>
-      </View>
-      <View style={style.incomeView}>
-        <View style={style.incomeNameView}>
-          <Text>
-            XYZ LTD - 44444444444444444
-          </Text>
-          <Text style={style.defaultHeaderDarkerGray}>
-            Grocery Shopping
-          </Text>
-        </View>
-        <View style={style.amountView}>
-            <Text>
-              Money
-            </Text>
-        </View>
-      </View>
-      <View style={style.incomeView}>
-        <View style={style.incomeNameView}>
-          <Text>
-            XYZ LTD - 44444444444444444
-          </Text>
-          <Text style={style.defaultHeaderDarkerGray}>
-            Grocery Shopping
-          </Text>
-        </View>
-        <View style={style.amountView}>
-            <Text>
-              Money
-            </Text>
-        </View>
-      </View>
-      <View style={style.incomeView}>
-        <View style={style.incomeNameView}>
-          <Text>
-            XYZ LTD - 44444444444444444
-          </Text>
-          <Text style={style.defaultHeaderDarkerGray}>
-            Grocery Shopping
-          </Text>
-        </View>
-        <View style={style.amountView}>
-            <Text>
-              Money
-            </Text>
-        </View>
-      </View>
-      <View style={style.incomeView}>
-        <View style={style.incomeNameView}>
-          <Text>
-            XYZ LTD - 44444444444444444
-          </Text>
-          <Text style={style.defaultHeaderDarkerGray}>
-            Grocery Shopping
-          </Text>
-        </View>
-        <View style={style.amountView}>
-            <Text>
-              Money
-            </Text>
-        </View>
-      </View>
-      <View style={style.incomeView}>
-        <View style={style.incomeNameView}>
-          <Text>
-            XYZ LTD - 44444444444444444
-          </Text>
-          <Text style={style.defaultHeaderDarkerGray}>
-            Grocery Shopping
-          </Text>
-        </View>
-        <View style={style.amountView}>
-            <Text>
-              Money
-            </Text>
-        </View>
-      </View>
-      <View style={style.incomeView}>
-        <View style={style.incomeNameView}>
-          <Text>
-            XYZ LTD - 44444444444444444
-          </Text>
-          <Text style={style.defaultHeaderDarkerGray}>
-            Grocery Shopping
-          </Text>
-        </View>
-        <View style={style.amountView}>
-            <Text>
-              Money
-            </Text>
-        </View>
-      </View>
+      <View style={transactionStyles.transactionsWrapper}>
+            {!loaded && <ActivityIndicator size="large" color="white" />}
+            {data
+              .sort((a, b) => new Date(b.date) - new Date(a.date))
+              .map((transaction) => {
+                const niceDate = moment(transaction.date).format("D MMMM");
+                const dollars = Format.toDollars(
+                  navigatedState === "expense"
+                    ? -1 * transaction.value
+                    : transaction.value
+                );
+                const cents = Format.toCents(transaction.value);
+
+                return (
+                  <View
+                    key={transaction.id}
+                    style={style.incomeView}
+                  >
+                    {/* Line 1 */}
+                    <View style={style.incomeNameView}>
+                      <View style={transactionStyles.topLine}>
+                        <View style={transactionStyles.transactionTextWrapper}>
+                          <Text style={transactionStyles.transactionText}>
+                            {transaction.description}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+
+                    {/* Line 4 */}
+                    <View style={transactionStyles.bottomLine}>
+                      <View style={transactionStyles.moneyText}>
+                        <Text style={style.moneyDollars}>
+                          {`$ ${dollars}.`}
+                        </Text>
+                        <Text style={style.moneyCents}>
+                          {`${cents}`}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                );
+              })}
+          </View>
       </ScrollView>
     </View>
     </ScrollView>
