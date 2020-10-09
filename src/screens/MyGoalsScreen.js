@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ScrollView, TouchableOpacity, Text, View, ActivityIndicator, Dimensions, Alert } from "react-native";
+import { ScrollView, TouchableOpacity, Text, View, ActivityIndicator, Dimensions, Alert, TextInput } from "react-native";
 import { STYLESHEET } from "../styles/stylesheet";
 import Colors from "../styles/colors";
 import BottomBar from "../components/BottomBar";
@@ -211,6 +211,12 @@ export default function MyGoals( {navigation, route} ) {
 
   const { search } = state;
 
+  const [goalName, setGoalName] = useState('Trip to the Moon');
+  const [typeName, setTypeName] = useState('One Off');
+  const [startName, setStartName] = useState('1 January');
+  const [finishName, setFinishName] = useState('25 June');
+
+
   return <View style={STYLESHEET.defaultView}>
     <ScrollView>
     <View style={editGoal?
@@ -218,7 +224,7 @@ export default function MyGoals( {navigation, route} ) {
         {}}>
       <View style={style.blueBubbleView}>
           <Text style={style.defaultHeaderLargeWhite}>
-              Trip to the Moon
+              {goalName}
           </Text>
           <View style={style.sectioningView}>
               <View style={style.thirdsSectioningViewBlue}>
@@ -226,13 +232,13 @@ export default function MyGoals( {navigation, route} ) {
                       Type
                   </Text>
                   <Text style={style.defaultHeaderMediumWhite}>
-                      One Off
+                      {typeName}
                   </Text>
                   <Text style={style.defaultHeaderSmallWhite}>
                       STARTED
                   </Text>
                   <Text style={style.defaultHeaderMediumWhite}>
-                      DATE 1
+                      {startName}
                   </Text>
                   <View width={112} paddingTop={20}>
                       <Pill
@@ -249,7 +255,7 @@ export default function MyGoals( {navigation, route} ) {
                       FINISHING
                   </Text>
                   <Text style={style.defaultHeaderMediumWhite}>
-                      DATE 2
+                      {finishName}
                   </Text>
                   <View width={95} paddingTop={20}>
                       <Pill
@@ -348,23 +354,29 @@ export default function MyGoals( {navigation, route} ) {
         {height: 0, opacity: 0}:
         {}}>
       <View style={style.blackBubbleView}>
-          <Text style={style.defaultHeaderLargeWhite}>
-              Trip to the Moon
-          </Text>
+          <TextInput
+            style={{borderWidth: 1, color: Colors.White, fontSize: 24}}
+            onChangeText={text => setGoalName(text)}
+            value={goalName}
+          />
           <View style={style.sectioningView}>
               <View style={style.thirdsSectioningViewBlue}>
                   <Text style={style.defaultHeaderSmallWhite}>
                       Type
                   </Text>
-                  <Text style={style.defaultHeaderMediumWhite}>
-                      One Off
-                  </Text>
+                  <TextInput
+                    style={{borderWidth: 1, color: Colors.White, fontSize: 18}}
+                    onChangeText={text => setTypeName(text)}
+                    value={typeName}
+                  />
                   <Text style={style.defaultHeaderSmallWhite}>
                       STARTED
                   </Text>
-                  <Text style={style.defaultHeaderMediumWhite}>
-                      DATE 1
-                  </Text>
+                  <TextInput
+                    style={{borderWidth: 1, color: Colors.White, fontSize: 18}}
+                    onChangeText={text => setStartName(text)}
+                    value={startName}
+                  />
                   <View width={95} paddingTop={20}>
                       <Pill
                           content="Cancel"
@@ -379,15 +391,17 @@ export default function MyGoals( {navigation, route} ) {
                   <Text style={style.defaultHeaderSmallWhite}>
                       FINISHING
                   </Text>
-                  <Text style={style.defaultHeaderMediumWhite}>
-                      DATE 2
-                  </Text>
+                  <TextInput
+                    style={{borderWidth: 1, color: Colors.White, fontSize: 18}}
+                    onChangeText={text => setFinishName(text)}
+                    value={finishName}
+                  />
                   <View width={80} paddingTop={20}>
                       <Pill
                           content="Save"
                           color={Colors.White}
                           backgroundColor={Colors.Primary}
-                          onPress={() => {alert("To be developed");}}
+                          onPress = {() => setEditGoal(false)}
                       />
                   </View>
               </View>
