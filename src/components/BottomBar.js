@@ -60,7 +60,7 @@ const BottomBar = ({ navigation, route }) => {
         color={Colors.Primary}
         onPress={() =>
           navigation.navigate("MyGoals", {
-            navigatedState: "expense",
+            navigatedState: "all",
           })
         }
       />
