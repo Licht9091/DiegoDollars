@@ -173,6 +173,14 @@ if (value) {
   }
 }
 
+function setValues(goalName, typeName, startName, finishName, setGoalName, setTypeName, setStartName, setFinishName, setEditGoal) {
+  setGoalName(goalName);
+  setTypeName(typeName);
+  setStartName(startName);
+  setFinishName(finishName);
+  setEditGoal(false);
+}
+
 export default function MyGoals( {navigation, route} ) {
 
   const [data, setData] = useState([]);
@@ -215,6 +223,11 @@ export default function MyGoals( {navigation, route} ) {
   const [typeName, setTypeName] = useState('One Off');
   const [startName, setStartName] = useState('1 January');
   const [finishName, setFinishName] = useState('25 June');
+
+  const [tempGoalName, setTempGoalName] = useState('Trip to the Moon');
+  const [tempTypeName, setTempTypeName] = useState('One Off');
+  const [tempStartName, setTempStartName] = useState('1 January');
+  const [tempFinishName, setTempFinishName] = useState('25 June');
 
 
   return <View style={STYLESHEET.defaultView}>
@@ -356,8 +369,8 @@ export default function MyGoals( {navigation, route} ) {
       <View style={style.blackBubbleView}>
           <TextInput
             style={{borderWidth: 1, color: Colors.White, fontSize: 24}}
-            onChangeText={text => setGoalName(text)}
-            value={goalName}
+            onChangeText={text => setTempGoalName(text)}
+            value={tempGoalName}
           />
           <View style={style.sectioningView}>
               <View style={style.thirdsSectioningViewBlue}>
@@ -366,23 +379,23 @@ export default function MyGoals( {navigation, route} ) {
                   </Text>
                   <TextInput
                     style={{borderWidth: 1, color: Colors.White, fontSize: 18}}
-                    onChangeText={text => setTypeName(text)}
-                    value={typeName}
+                    onChangeText={text => setTempTypeName(text)}
+                    value={tempTypeName}
                   />
                   <Text style={style.defaultHeaderSmallWhite}>
                       STARTED
                   </Text>
                   <TextInput
                     style={{borderWidth: 1, color: Colors.White, fontSize: 18}}
-                    onChangeText={text => setStartName(text)}
-                    value={startName}
+                    onChangeText={text => setTempStartName(text)}
+                    value={tempStartName}
                   />
                   <View width={95} paddingTop={20}>
                       <Pill
                           content="Cancel"
                           color={Colors.White}
                           backgroundColor={Colors.Alert}
-                          onPress = {() => setEditGoal(false)}
+                          onPress = {() => setValues(goalName, typeName, startName, finishName, setTempGoalName, setTempTypeName, setTempStartName, setTempFinishName, setEditGoal)}
                       />
                   </View>
               </View>
@@ -393,15 +406,15 @@ export default function MyGoals( {navigation, route} ) {
                   </Text>
                   <TextInput
                     style={{borderWidth: 1, color: Colors.White, fontSize: 18}}
-                    onChangeText={text => setFinishName(text)}
-                    value={finishName}
+                    onChangeText={text => setTempFinishName(text)}
+                    value={tempFinishName}
                   />
                   <View width={80} paddingTop={20}>
                       <Pill
                           content="Save"
                           color={Colors.White}
                           backgroundColor={Colors.Primary}
-                          onPress = {() => setEditGoal(false)}
+                          onPress = {() => setValues(tempGoalName, tempTypeName, tempStartName, tempFinishName, setGoalName, setTypeName, setStartName, setFinishName, setEditGoal)}
                       />
                   </View>
               </View>
