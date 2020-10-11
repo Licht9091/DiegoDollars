@@ -46,7 +46,7 @@ const PaychecksReceived = ({ onClose }) => {
 
         <View style={paycheckStyle.paycheckWrapper}>
           {paychecks.map((pc) => (
-            <Paycheck transaction={pc} />
+            <Paycheck key={pc.id} transaction={pc} />
           ))}
         </View>
         <View style={paycheckStyle.buttonWrapper}>
