@@ -5,16 +5,44 @@ import { Text, View, Dimensions } from "react-native";
 import Colors from "../styles/colors";
 import BottomBar from "../components/BottomBar";
 import Pill from "../components/Pill";
+import SmallPill from "../components/SmallPill";
+import MediumPill from "../components/MediumPill";
+import { FONT_FAMILY_SEMIBOLD } from "../styles/typography";
 
 const style = {
     whiteBubbleView: {
         backgroundColor: Colors.White,
-        width: Dimensions.get("window").width - 40,
+        width: Dimensions.get("window").width * 0.9,
         marginTop: 10,
         marginLeft: 10,
         marginBottom: 10,
-        borderRadius: 20,
-        padding: 20,
+        borderRadius: 15,
+        padding: 25,
+        flex: 0,
+    
+        ...STYLESHEET.shadowNormal,
+      },
+      whiteBubblePillView: {
+        backgroundColor: Colors.White,
+        width: Dimensions.get("window").width * 0.9,
+        marginTop: 10,
+        marginLeft: 10,
+        marginBottom: 10,
+        borderRadius: 15,
+        padding: 15,
+        flex: 0,
+    
+        ...STYLESHEET.shadowNormal,
+      },
+      greyBubbleView: {
+        backgroundColor: "#232323",
+        width: Dimensions.get("window").width * 0.9,
+        marginTop: 10,
+        marginLeft: 10,
+        marginBottom: 10,
+        borderRadius: 15,
+        padding: 15,
+
         flex: 0,
     
         ...STYLESHEET.shadowNormal,
@@ -32,7 +60,7 @@ const style = {
         ...STYLESHEET.shadowNormal,
       },
       doublePillView: {
-        backgroundColor: Colors.Primary,
+        backgroundColor: Colors.White,
         width: Dimensions.get("window").width,
         marginTop: 10,
         marginLeft: 10,
@@ -41,8 +69,11 @@ const style = {
         flexDirection: 'row',
       },
       sideBySidePillView: {
-        backgroundColor: Colors.Primary,
-        marginRight: 80
+        backgroundColor: Colors.White,
+        width: Dimensions.get("window").width * 0.4,
+        marginRight: 20,
+        marginLeft: -5,
+        paddingRight: 5,
       },
       pillAndTextView: {
         backgroundColor: Colors.White,
@@ -65,11 +96,17 @@ const style = {
         color: Colors.DarkGray,
       },
       defaultHeaderDarkerGray: {
-        fontSize: 14,
+        fontSize: 13,
         color: Colors.DarkerGray,
+        fontFamily: FONT_FAMILY_SEMIBOLD,
       },
       defaultHeaderWhite: {
-        fontSize: 14,
+        fontSize: 13,
+        color: Colors.White,
+        fontFamily: FONT_FAMILY_SEMIBOLD,
+      },
+      secondaryHeaderWhite: {
+        fontSize: 11,
         color: Colors.White,
       },
       defaulthLine: {
@@ -82,7 +119,6 @@ const style = {
         borderBottomColor: Colors.Black,
         borderBottomWidth: 1,
         alignSelf: "stretch",
-        paddingVertical: 10,
       },
       loadWrapper: {
         backgroundColor: Colors.Primary,
@@ -99,23 +135,27 @@ export default function MyBudget( {navigation} ) {
     <Text style={STYLESHEET.defaultHeader}>
         My Budget
     </Text>
+
     <View style={style.whiteBubbleView}>
         <Text>
             Provide an estimate on your fornightly Income and Recurring Costs adjusted for how Diego calculates your available spendings each pay period.
         </Text>
     </View>
-    <Text style={STYLESHEET.defaultHeader}>
+
+    <Text style={STYLESHEET.defaultSecondaryHeader}>
         Fortnightly Breakdown
     </Text>
-    <View style={style.blackBubbleView}>
+
+    <View style={style.greyBubbleView}>
         <Text style={style.defaultHeaderWhite}>
             Monthly Start Dates
         </Text>
-        <Text style={style.defaultHeaderWhite}>
+        <Text style={style.secondaryHeaderWhite}>
             Fortnight start days each month
         </Text>
     </View>
-    <View style={style.whiteBubbleView}>
+
+    <View style={style.whiteBubblePillView}>
         <View style={style.pillAndTextView}>
             <View style={style.textView}>
                 <Text style={style.defaultHeaderDarkerGray}>
@@ -123,7 +163,7 @@ export default function MyBudget( {navigation} ) {
                 </Text>
             </View>
             <View style={style.pillView}>
-                <Pill
+                <SmallPill
                     content="Add"
                     color={Colors.White}
                     backgroundColor={Colors.Black}
@@ -132,12 +172,12 @@ export default function MyBudget( {navigation} ) {
         </View>
         <View style={style.pillAndTextView}>
             <View style={style.textView}>
-                <Text style={style.defaultHeaderDarkerGray}>
+                <Text style={style.defaultHeaderDarkGray}>
                     Income 1                           Number Here
                 </Text>
             </View>
             <View style={style.pillView}>
-                <Pill
+                <SmallPill
                     content="Edit"
                     color={Colors.White}
                     backgroundColor={Colors.Primary}
@@ -158,7 +198,8 @@ export default function MyBudget( {navigation} ) {
             </View>
         </View>
     </View>
-    <View style={style.whiteBubbleView}>
+
+    <View style={style.whiteBubblePillView}>
         <View style={style.pillAndTextView}>
             <View style={style.textView}>
                 <Text style={style.defaultHeaderDarkerGray}>
@@ -166,7 +207,7 @@ export default function MyBudget( {navigation} ) {
                 </Text>
             </View>
             <View style={style.pillView}>
-                <Pill
+                <SmallPill
                     content="Add"
                     color={Colors.White}
                     backgroundColor={Colors.Black}
@@ -175,12 +216,12 @@ export default function MyBudget( {navigation} ) {
         </View>
         <View style={style.pillAndTextView}>
             <View style={style.textView}>
-                <Text style={style.defaultHeaderDarkerGray}>
+                <Text style={style.defaultHeaderDarkGray}>
                     Recurring Costs 1           Number Here
                 </Text>
             </View>
             <View style={style.pillView}>
-                <Pill
+                <SmallPill
                     content="Edit"
                     color={Colors.White}
                     backgroundColor={Colors.Primary}
@@ -201,6 +242,47 @@ export default function MyBudget( {navigation} ) {
             </View>
         </View>
     </View>
+
+    <View style={style.whiteBubblePillView}>
+        <View style={style.pillAndTextView}>
+            <View style={style.textView}>
+                <Text style={style.defaultHeaderDarkerGray}>
+                    My Goals
+                </Text>
+            </View>
+            <View style={style.pillView}>
+                <MediumPill
+                    content="View Goal"
+                    color={Colors.White}
+                    backgroundColor={Colors.Black}
+                />
+            </View>
+        </View>
+        <View style={style.pillAndTextView}>
+            <View style={style.textView}>
+                <Text style={style.defaultHeaderDarkGray}>
+                    Goal 1                            Number Here
+                </Text>
+            </View>
+            <View style={style.pillView}>
+                <SmallPill
+                    content="Edit"
+                    color={Colors.White}
+                    backgroundColor={Colors.Primary}
+                />
+            </View>
+        </View>
+    </View>
+
+    <View style={style.greyBubbleView}>
+        <Text style={style.defaultHeaderWhite}>
+            Available Spending
+        </Text>
+        <Text style={style.secondaryHeaderWhite}>
+            Per Fornight
+        </Text>
+    </View>
+
     <Text style={style.defaulthLineBlack}/>
     <View style={style.doublePillView}>
         <View style={style.sideBySidePillView}>
@@ -215,9 +297,10 @@ export default function MyBudget( {navigation} ) {
                 content="Save Changes"
                 color={Colors.White}
                 backgroundColor={Colors.Primary}
-            />
+            /> 
         </View>
     </View>
+
     </ScrollView>
     <BottomBar navigation = { navigation }/>
   </View>;

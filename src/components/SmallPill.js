@@ -1,11 +1,11 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, Dimensions } from "react-native";
 import Colors from "../styles/colors";
 import { FONT_FAMILY_SEMIBOLD } from "../styles/typography";
 import { STYLESHEET } from "../styles/stylesheet";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-function Pill(props) {
+function SmallPill(props) {
   /*
 function Pill({
   content,
@@ -16,18 +16,20 @@ function Pill({
   */
   const style = {
     container: {
-      borderRadius: 11,
-      height: 40,
+      borderRadius: 20,
+      height: 20,
+      width: 45,
       backgroundColor: props.backgroundColor,
+      marginLeft: 27,
     },
     button: {
       color: props.color,
       alignSelf: "center",
+      fontSize: 10,
       fontFamily: FONT_FAMILY_SEMIBOLD,
-      paddingLeft: 20,
-      paddingRight: 20,
-      paddingTop: 9,
-      paddingBottom: 9,
+      paddingLeft: 5,
+      paddingRight: 5,
+      paddingTop: 3,
     },
   };
 
@@ -44,4 +46,4 @@ function Pill({
   );
 }
 
-export default Pill;
+export default SmallPill;

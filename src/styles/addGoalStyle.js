@@ -26,7 +26,6 @@ addGoalView: {
     width: Dimensions.get('window').width,
     paddingVertical: Dimensions.get('window').height/25,
     textAlign: 'center',
-
   },
   addGoalSubHeader: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
