@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Image,
   ScrollView,
@@ -6,22 +6,22 @@ import {
   View,
   Dimensions,
   ActivityIndicator,
-} from "react-native";
-import BottomBar from "../../components/BottomBar";
-import PieChart from "../../components/PieChart";
-import Pill from "../../components/Pill";
-import AppContext from "../../helper/context";
-import Format from "../../helper/Format";
-import Colors from "../../styles/colors";
-import { STYLESHEET } from "../../styles/stylesheet";
-import mainStyle from "./MainScreen.style";
-import { round } from "react-native-reanimated";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import {
-  faInfoCircle,
-} from "@fortawesome/free-solid-svg-icons";
+} from 'react-native';
+import BottomBar from '../../components/BottomBar';
+import PieChart from '../../components/PieChart';
+import Pill from '../../components/Pill';
+import AppContext from '../../helper/context';
+import Format from '../../helper/Format';
+import Colors from '../../styles/colors';
+import { STYLESHEET } from '../../styles/stylesheet';
+import mainStyle from './MainScreen.style';
+import { round } from 'react-native-reanimated';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import PaychecksReceived from '../../components/PaychecksReceived';
+import Modal from 'react-native-modal';
 
 const iconStyle = {
   opacity: 0.8,
@@ -34,6 +34,11 @@ const MainScreen = ({ navigation }) => {
   const [loaded, setLoaded] = useState(false);
   // Empty data useState
   const [data, setData] = useState(undefined);
+  const [showPayChecks, setShowPayChecks] = useState(false);
+
+  const toggleShowPayChecks = () => {
+    setShowPayChecks(!showPayChecks);
+  };
 
   const setupUser = async () => {
     _ucSpending = await Context.User.getUncategorisedSpending();
@@ -74,9 +79,16 @@ const MainScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={{ backgroundColor: Colors.Primary }}>
       <View>
+        {true && (
+          <Modal isVisible={showPayChecks}>
+            <PaychecksReceived
+              onClose={toggleShowPayChecks}
+            ></PaychecksReceived>
+          </Modal>
+        )}
         {(!loaded || !data) && (
           <ScrollView style={mainStyle.loadWrapper}>
-            <ActivityIndicator size="large" color="white" />
+            <ActivityIndicator size='large' color='white' />
           </ScrollView>
         )}
         {data && loaded && (
@@ -100,10 +112,12 @@ const MainScreen = ({ navigation }) => {
                     <FontAwesomeIcon
                       style={iconStyle}
                       icon={faInfoCircle}
-                      size={Dimensions.get("window").height * 0.03}
+                      size={Dimensions.get('window').height * 0.03}
                       color={Colors.White}
                       onPress={() => {
-                        navigation.navigate("Budget", { navigatedState: navigation })
+                        navigation.navigate('Budget', {
+                          navigatedState: navigation,
+                        });
                       }}
                     />
                   </>
@@ -119,8 +133,8 @@ const MainScreen = ({ navigation }) => {
                   color={Colors.DarkerGray}
                   backgroundColor={Colors.White}
                   onPress={() =>
-                    navigation.navigate("Transactions", {
-                      navigatedState: "expense",
+                    navigation.navigate('Transactions', {
+                      navigatedState: 'expense',
                     })
                   } // "expense"
                 />
@@ -130,18 +144,14 @@ const MainScreen = ({ navigation }) => {
                   content={`${data.uncategorisedIncome} Uncategorised Income`}
                   color={Colors.DarkerGray}
                   backgroundColor={Colors.White}
-                  onPress={() =>
-                    navigation.navigate("Transactions", {
-                      navigatedState: "income",
-                    })
-                  } // "income"
+                  onPress={toggleShowPayChecks} // "income"
                 />
               </View>
 
               <View>
                 <Image
                   style={mainStyle.chartImg}
-                  source={require("./chart.png")}
+                  source={require('./chart.png')}
                 />
               </View>
             </View>
@@ -160,7 +170,7 @@ const MainScreen = ({ navigation }) => {
                       ...STYLESHEET.shadowNormal,
                     }}
                     onPress={() =>
-                      navigation.navigate("EditGoal", {
+                      navigation.navigate('EditGoal', {
                         goal: goal,
                       })
                     }
@@ -187,7 +197,7 @@ const MainScreen = ({ navigation }) => {
                     ...mainStyle.createGoalBtn,
                     ...STYLESHEET.shadowNormal,
                   }}
-                  onPress={() => navigation.navigate("AddGoal")}
+                  onPress={() => navigation.navigate('AddGoal')}
                 >
                   <Text // The navigation here should be on the whole button not the text
                     style={mainStyle.createGoalBtnText}
@@ -206,18 +216,18 @@ const MainScreen = ({ navigation }) => {
                 {data.spendingCategories.map((category) => {
                   console.log(category);
                   return (
-                    <TouchableOpacity 
-                    key={category.name} 
-                    style={mainStyle.spendWrapper}
-                    onPress={() =>
-                      navigation.navigate("Transactions", {
-                        navigatedState: category.name,
-                      })
-                    } // "income"
+                    <TouchableOpacity
+                      key={category.name}
+                      style={mainStyle.spendWrapper}
+                      onPress={() =>
+                        navigation.navigate('Transactions', {
+                          navigatedState: category.name,
+                        })
+                      } // "income"
                     >
                       <PieChart
                         value={category.percent}
-                        color="#13629B"
+                        color='#13629B'
                         size={85}
                         showPercentage
                       />
