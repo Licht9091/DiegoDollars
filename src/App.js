@@ -108,6 +108,7 @@ function App() {
             <Stack.Screen
               name="Budget"
               component={MyBudget}
+              options={MainScreenOptions}
             />
             <Stack.Screen name="EditGoal" component={EditGoalScreen} />
           </Stack.Navigator>

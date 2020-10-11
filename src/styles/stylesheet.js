@@ -2,21 +2,39 @@ import React from "react";
 import { StyleSheet, Dimensions } from "react-native";
 import Colors from "./colors";
 import { H_PADDING } from "./spacing";
-import { FONT_FAMILY_LIGHT } from "./typography";
+import { FONT_FAMILY_SEMIBOLD } from "./typography";
 
 export const STYLESHEET = StyleSheet.create({
   // Default main <View />
   defaultView: {
-    backgroundColor: Colors.Primary,
+    backgroundColor: Colors.White,
     minHeight: Dimensions.get("window").height,
     padding: H_PADDING,
   },
+  headerView:{
+    backgroundColor: Colors.Primary,
+    fontSize: Dimensions.get('window').width/20,
+    color: Colors.White,
+    minHeight: Dimensions.get('window').height/12,
+    width: Dimensions.get('window').width,
+    paddingVertical: Dimensions.get('window').height/25,
+    textAlign: 'center',
+  },
   // Default for <Text /> when used as a header
   defaultHeader: {
-    fontSize: 28,
+    fontSize: 18,
     textAlign: "center",
-    fontFamily: FONT_FAMILY_LIGHT,
+    fontFamily: FONT_FAMILY_SEMIBOLD,
     color: Colors.White,
+    paddingTop: 50,
+  },
+  defaultSecondaryHeader: {
+    fontSize: 15,
+    textAlign: "left",
+    paddingLeft: Dimensions.get("window").width * 0.03,
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    color: "#232323",
+    paddingTop: 10,
   },
   defaultSmallHeader: {
     fontSize: 24,
