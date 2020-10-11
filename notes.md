@@ -1,3 +1,46 @@
+Work allocation:
+
+[Jordan Foss]
+-> My Goals page
+-> Edit Goal
+-> Delete Goal
+-> Create Goal
+
+[Jordan Lean]
+-> My Budget
+-> Edit budget
+-> Add budget item
+
+[Justin Robinson]
+-> Transactions (Full List)
+-> Income
+-> Expenses
+-> Home screen
+-> Data from backend
+
+[Bryley]
+-> Single Transaction
+-> Add to goal
+-> Select Category
+-> Create Category (Pop up)
+
+[Darren Fu]
+-> Button Component
+-> Modal Component
+-> New Paychecks Recieved
+-> Fortnight Summary
+-> Fortnight allocation
+
+[Benjamin]
+-> User testing interviews on XD
+-> Backend touchups if needed
+
+Other things to do:
+-> Presentation format?
+-> Code quality?
+-> Animations?
+-> Tutorial?
+
 Individual:
 
 - Keep track of work done each week for individual component
