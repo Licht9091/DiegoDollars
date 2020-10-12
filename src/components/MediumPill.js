@@ -33,7 +33,7 @@ function Pill({
   };
 
   return (
-    <View style={[style.container, STYLESHEET.shadowNormal]}>
+    <View style={[style.container]}>
       <TouchableOpacity
         activeOpacity={0.9}
         //style={style.container}

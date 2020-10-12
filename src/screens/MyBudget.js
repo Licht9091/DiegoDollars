@@ -62,7 +62,6 @@ const style = {
       doublePillView: {
         backgroundColor: Colors.White,
         width: Dimensions.get("window").width,
-        marginTop: 10,
         marginLeft: 10,
         marginBottom: 60,
         padding: 20,
@@ -79,13 +78,12 @@ const style = {
         backgroundColor: Colors.White,
         width: Dimensions.get("window").width - 60,
         flexDirection: 'row',
-        marginBottom: 10,
-        marginTop: 10,
+        marginBottom: 5,
+        marginTop: 8,
       },
       textView: {
         backgroundColor: Colors.White,
-        width: Dimensions.get("window").width - 140,
-        flexDirection: 'row',
+        flex: 1,
       },
       pillView: {
         backgroundColor: Colors.White,
@@ -94,6 +92,13 @@ const style = {
       defaultHeaderDarkGray: {
         fontSize: 14,
         color: Colors.DarkGray,
+        paddingRight: 5,
+      },
+      defaultHeaderDarkGray2: {
+        fontSize: 14,
+        color: Colors.DarkGray,
+        paddingRight: 5,
+        alignSelf: "center",
       },
       defaultHeaderDarkerGray: {
         fontSize: 13,
@@ -113,7 +118,6 @@ const style = {
         borderBottomColor: Colors.LightGray,
         borderBottomWidth: 1,
         alignSelf: "stretch",
-        paddingVertical: 10,
       },
       defaulthLineBlack: {
         borderBottomColor: Colors.Black,
@@ -173,7 +177,12 @@ export default function MyBudget( {navigation} ) {
         <View style={style.pillAndTextView}>
             <View style={style.textView}>
                 <Text style={style.defaultHeaderDarkGray}>
-                    Income 1                           Number Here
+                    Income
+                </Text>
+            </View>
+            <View style={style.textView}>
+                <Text style={style.defaultHeaderDarkGray2}>
+                    Number Here
                 </Text>
             </View>
             <View style={style.pillView}>
@@ -191,10 +200,13 @@ export default function MyBudget( {navigation} ) {
                     Total Income
                 </Text>
             </View>
-            <View style={style.pillView}>
-                <Text>
+            <View style={style.textView}>
+                <Text style={style.defaultHeaderDarkGray2}>
                     Number Here
                 </Text>
+            </View>
+            <View style={style.pillView}>
+                <SmallPill/>
             </View>
         </View>
     </View>
@@ -217,7 +229,12 @@ export default function MyBudget( {navigation} ) {
         <View style={style.pillAndTextView}>
             <View style={style.textView}>
                 <Text style={style.defaultHeaderDarkGray}>
-                    Recurring Costs 1           Number Here
+                    Recurring Costs 1
+                </Text>
+            </View>
+            <View style={style.textView}>
+                <Text style={style.defaultHeaderDarkGray2}>
+                    Number Here
                 </Text>
             </View>
             <View style={style.pillView}>
@@ -235,10 +252,13 @@ export default function MyBudget( {navigation} ) {
                     Total Recurring Costs
                 </Text>
             </View>
-            <View style={style.pillView}>
-                <Text>
+            <View style={style.textView}>
+                <Text style={style.defaultHeaderDarkGray2}>
                     Number Here
                 </Text>
+            </View>
+            <View style={style.pillView}>
+                <SmallPill/>
             </View>
         </View>
     </View>
@@ -261,7 +281,12 @@ export default function MyBudget( {navigation} ) {
         <View style={style.pillAndTextView}>
             <View style={style.textView}>
                 <Text style={style.defaultHeaderDarkGray}>
-                    Goal 1                            Number Here
+                    Goal 1
+                </Text>
+            </View>
+            <View style={style.textView}>
+                <Text style={style.defaultHeaderDarkGray2}>
+                    Number Here
                 </Text>
             </View>
             <View style={style.pillView}>
