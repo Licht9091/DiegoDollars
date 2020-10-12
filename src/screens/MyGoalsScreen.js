@@ -88,7 +88,11 @@ const style = {
         marginBottom: 10,
       },
       incomeNameView: {
-        width: Dimensions.get("window").width - 180,
+        width: Dimensions.get("window").width - 190,
+      },
+      transactionTextWrapper: {
+        flexDirection: 'row',
+        width: 230,
       },
       sectioningView: {
         width: Dimensions.get("window").width - 40,
@@ -102,11 +106,6 @@ const style = {
       thirdsSectioningViewWhite: {
         width: (Dimensions.get("window").width - 100)/3,
         paddingVertical: 0,
-      },
-      textView: {
-        backgroundColor: Colors.Primary,
-        width: Dimensions.get("window").width - 140,
-        flexDirection: 'row',
       },
       deletePillView: {
         width: 95,
@@ -349,7 +348,7 @@ export default function MyGoals( {navigation, route} ) {
                       {/* Line 1 */}
                       <View style={style.incomeNameView}>
                         <View style={transactionStyles.topLine}>
-                          <View style={transactionStyles.transactionTextWrapper}>
+                          <View style={style.transactionTextWrapper}>
                             <Text style={transactionStyles.transactionText}>
                               {transaction.description}
                             </Text>
@@ -488,7 +487,7 @@ export default function MyGoals( {navigation, route} ) {
                       {/* Line 1 */}
                       <View style={style.incomeNameView}>
                         <View style={transactionStyles.topLine}>
-                          <View style={transactionStyles.transactionTextWrapper}>
+                          <View style={style.transactionTextWrapper}>
                             <Text style={transactionStyles.transactionText}>
                               {transaction.description}
                             </Text>
