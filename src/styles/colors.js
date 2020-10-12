@@ -9,6 +9,7 @@ const Colors = {
   White: '#FFFFFF',
   Black: '#000000',
   Red: '#F04444',
+  Teal: '#48d1cc',
 
   // ACTIONS
   Success: '#3adb76',

@@ -21,6 +21,7 @@ import Format from "../helper/Format";
 import { FONT_FAMILY_SEMIBOLD } from "../styles/typography";
 import navigateAndReset from "../helper/functions";
 import TransactionListComponent from "../components/TransactionListComponent";
+import Diego from '../assets/Diego.svg';
 
 const style = {
   blueBubbleView: {
@@ -133,7 +134,8 @@ const style = {
     color: Colors.Black,
   },
   defaulthLine: {
-    borderBottomColor: Colors.LightGray,
+    borderBottomColor: Colors.White,
+    color: Colors.White,
     borderBottomWidth: 1,
     alignSelf: "stretch",
   },
@@ -270,7 +272,40 @@ export default function MyGoals({ navigation, route }) {
                 </View>
               </View>
               <View style={style.thirdsSectioningViewBlue}>
-                <Text>Rocket Thing</Text>
+                <View flexDirection={"row"}>
+                  <View width={(Dimensions.get("window").width - 60) / 3 - 25}>
+                    <View height={50}>
+                      <Text style={{fontSize: 20, color: Colors.White}}>
+                        $5000.00
+                      </Text>
+                      <Text style={{fontSize: 14, color: Colors.White}}>
+                        Goal
+                      </Text>
+                    </View>
+                    <View height={50}>
+                      <Text style={{fontSize: 14, color: Colors.White}}>
+                        SAVED
+                      </Text>
+                      <Text style={style.defaulthLine}>
+                        $3257.21
+                      </Text>
+                    </View>
+                    <View height={50}>
+                      <Text style={{fontSize: 14, color: Colors.White}}>
+                        SPENT
+                      </Text>
+                      <Text style={style.defaulthLine}>
+                        $2256.34
+                      </Text>
+                    </View>
+                  </View>
+                  <View>
+                    <Text style={{borderLeftColor: Colors.DarkGray, borderLeftWidth: 10, borderRadius: 10, height : 90}}></Text>
+                    <Diego style={{position: 'absolute', height: 180, width: 40, left: -15, elevation: 0.1}}></Diego>
+                    <Text style={{borderLeftColor: Colors.PrimaryLight, borderLeftWidth: 10, height : 50}}></Text>
+                    <Text style={{borderLeftColor: Colors.Teal, borderLeftWidth: 10, height : 50}}></Text>
+                  </View>
+                </View>
               </View>
             </View>
           </View>
