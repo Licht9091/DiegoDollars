@@ -12,6 +12,7 @@ import Format from "../helper/Format";
 import {
   FONT_FAMILY_SEMIBOLD,
 } from '../styles/typography';
+import navigateAndReset from "../helper/functions";
 
 const style = {
     blueBubbleView: {
@@ -87,7 +88,7 @@ const style = {
         marginBottom: 10,
       },
       incomeNameView: {
-        width: Dimensions.get("window").width - 170,
+        width: Dimensions.get("window").width - 180,
       },
       sectioningView: {
         width: Dimensions.get("window").width - 40,
@@ -186,6 +187,7 @@ export default function MyGoals( {navigation, route} ) {
   const [data, setData] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const { navigatedState } = route.params; // "expense", "income" or "all". Can use this for determining which page we navigated from.
+  const { goal } = route.params;
 
   const Context = useContext(AppContext);
 
@@ -219,15 +221,25 @@ export default function MyGoals( {navigation, route} ) {
 
   const { search } = state;
 
-  const [goalName, setGoalName] = useState('Trip to the Moon');
-  const [typeName, setTypeName] = useState('One Off');
+  const [goalName, setGoalName] = useState(goal.description);
+  const [typeName, setTypeName] = useState(goal.type);
   const [startName, setStartName] = useState('1 January');
-  const [finishName, setFinishName] = useState('25 June');
+  const [finishName, setFinishName] = useState(goal.completion);
 
-  const [tempGoalName, setTempGoalName] = useState('Trip to the Moon');
-  const [tempTypeName, setTempTypeName] = useState('One Off');
+  const [tempGoalName, setTempGoalName] = useState(goal.description);
+  const [tempTypeName, setTempTypeName] = useState(goal.type);
   const [tempStartName, setTempStartName] = useState('1 January');
   const [tempFinishName, setTempFinishName] = useState('25 June');
+
+  const deleteGoal = async () => {
+    const success = await Context.User.deleteGoal(goal);
+
+    if (success) {
+      navigateAndReset(navigation, "Main");
+    } else {
+      alert("Something went wrong deleting the goal.");
+    }
+  };
 
 
   return <View style={STYLESHEET.defaultView}>
@@ -275,7 +287,7 @@ export default function MyGoals( {navigation, route} ) {
                           content="Delete"
                           color={Colors.White}
                           backgroundColor={Colors.Alert}
-                          onPress={() => {alert("To be developed");}}
+                          onPress={() => deleteGoal()}
                       />
                   </View>
               </View>

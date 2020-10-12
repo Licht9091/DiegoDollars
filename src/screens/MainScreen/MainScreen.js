@@ -170,8 +170,8 @@ const MainScreen = ({ navigation }) => {
                       ...STYLESHEET.shadowNormal,
                     }}
                     onPress={() =>
-                      navigation.navigate('EditGoal', {
-                        goal: goal,
+                      navigation.navigate('MyGoals', {
+                        goal: goal, navigatedState: "income"
                       })
                     }
                   >
