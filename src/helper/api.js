@@ -468,6 +468,11 @@ class Goal {
     this.currentContribution = _currentContribution;
     this.goalAmount = _goalAmount; // float
     this.completion = _completion; // datetime
+    if (_completion == null) {
+      this.type = "Continuous"
+    } else {
+      this.type = "One Off"
+    }
     this.percent =
       Math.round(
         (parseFloat(this.currentContribution) / parseFloat(this.goalAmount)) *

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { ScrollView } from "react-native";
 import { STYLESHEET } from "../styles/stylesheet";
-import { Text, View, Dimensions } from "react-native";
+import { Text, View, Dimensions, TextInput } from "react-native";
 import Colors from "../styles/colors";
 import BottomBar from "../components/BottomBar";
 import Pill from "../components/Pill";
@@ -85,6 +85,13 @@ const style = {
         backgroundColor: Colors.White,
         flex: 1,
       },
+      defaultHeader: {
+        fontSize: 18,
+        textAlign: "center",
+        fontFamily: FONT_FAMILY_SEMIBOLD,
+        color: Colors.Primary,
+        paddingTop: 50,
+      },
       pillView: {
         backgroundColor: Colors.White,
         width: 74,
@@ -134,9 +141,12 @@ const style = {
 
 export default function MyBudget( {navigation} ) {
 
+    const [monthStartDates, setMonthStartDates] = useState("7");
+    const [dayStartDates, setDayStartDates] = useState("21");
+
   return <View style={STYLESHEET.defaultView}>
     <ScrollView>
-    <Text style={STYLESHEET.defaultHeader}>
+    <Text style={style.defaultHeader}>
         My Budget
     </Text>
 
@@ -151,9 +161,23 @@ export default function MyBudget( {navigation} ) {
     </Text>
 
     <View style={style.greyBubbleView}>
-        <Text style={style.defaultHeaderWhite}>
-            Monthly Start Dates
-        </Text>
+        <View flexDirection={'row'} width={Dimensions.get("window").width * 0.9}>
+            <View width={Dimensions.get("window").width * 0.9 - 100}>
+                <Text style={style.defaultHeaderWhite}>
+                    Monthly Start Dates
+                </Text>
+            </View>
+            <TextInput
+                style={{borderWidth: 0, color: Colors.White, fontSize: 24}}
+                onChangeText={text => setMonthStartDates(text)}
+                value={monthStartDates}
+            />
+            <TextInput
+                style={{borderWidth: 0, color: Colors.White, fontSize: 24}}
+                onChangeText={text => setDayStartDates(text)}
+                value={dayStartDates}
+            />
+        </View>
         <Text style={style.secondaryHeaderWhite}>
             Fortnight start days each month
         </Text>
