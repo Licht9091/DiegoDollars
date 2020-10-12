@@ -10,8 +10,21 @@ import SmallPill from "../components/SmallPill";
 import MediumPill from "../components/MediumPill";
 import { FONT_FAMILY_SEMIBOLD } from "../styles/typography";
 import navigateAndReset from "../helper/functions";
+import { LinearGradient } from 'react-native-svg';
 
 const style = {
+    BubbleView: {
+        backgroundColor: Colors.White,
+        width: Dimensions.get("window").width * 0.9,
+        marginTop: 10,
+        marginLeft: 20,
+        marginBottom: 10,
+        borderRadius: 15,
+        padding: 25,
+        position: "relative",
+    
+        ...STYLESHEET.shadowNormal,
+      },
     whiteBubbleView: {
         backgroundColor: Colors.White,
         width: Dimensions.get("window").width * 0.9,
@@ -20,7 +33,6 @@ const style = {
         marginBottom: 10,
         borderRadius: 15,
         padding: 25,
-        flex: 0,
     
         ...STYLESHEET.shadowNormal,
       },
@@ -32,7 +44,6 @@ const style = {
         marginBottom: 10,
         borderRadius: 15,
         padding: 15,
-        flex: 0,
     
         ...STYLESHEET.shadowNormal,
       },
@@ -64,17 +75,14 @@ const style = {
       doublePillView: {
         backgroundColor: Colors.White,
         width: Dimensions.get("window").width,
-        marginLeft: 10,
+        marginLeft: -10,
         marginBottom: 60,
         padding: 20,
         flexDirection: 'row',
       },
       sideBySidePillView: {
-        backgroundColor: Colors.White,
         width: Dimensions.get("window").width * 0.4,
-        marginRight: 20,
-        marginLeft: -5,
-        paddingRight: 5,
+        marginRight: 35,
       },
       pillAndTextView: {
         backgroundColor: Colors.White,
@@ -128,7 +136,7 @@ const style = {
         borderBottomWidth: 1,
         alignSelf: "stretch",
       },
-      defaulthLineBlack: {
+      defaultLineBlack: {
         borderBottomColor: Colors.Black,
         borderBottomWidth: 1,
         alignSelf: "stretch",
@@ -138,7 +146,34 @@ const style = {
         minHeight: window.height,
         paddingBottom: 100,
         paddingTop: 150,
-      }
+      },
+      budgetHeader: {
+        fontSize: Dimensions.get('window').width/20,
+        fontFamily: FONT_FAMILY_SEMIBOLD,
+        backgroundColor: Colors.Primary,
+        color: Colors.White,
+        minHeight: Dimensions.get('window').height/12,
+        width: Dimensions.get('window').width,
+        paddingVertical: Dimensions.get('window').height* 0.03,
+        textAlign: 'center',
+      },
+      budgetView: {
+        backgroundColor: Colors.White,
+        height: Dimensions.get('window').height,
+      },
+
+      container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      linearGradient: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5,
+        height: 200,
+        width: 350,
+      },
 }
 
 export default function MyBudget( {navigation, route} ) {
@@ -172,18 +207,21 @@ export default function MyBudget( {navigation, route} ) {
         }, 0);
       }); 
 
-  return <View style={STYLESHEET.defaultView}>
+  return <View style={style.budgetView}>
     <ScrollView>
-    <Text style={style.defaultHeader}>
+        
+    <Text style={style.budgetHeader}>
         My Budget
     </Text>
-
-    <View style={style.whiteBubbleView}>
-        <Text>
-            Provide an estimate on your fornightly Income and Recurring Costs adjusted for how Diego calculates your available spendings each pay period.
-        </Text>
+    
+    <View style={style.BubbleView}>
+            <Text>
+                Provide an estimate on your fornightly Income and Recurring Costs adjusted for how Diego calculates your available spendings each pay period.
+            </Text>
     </View>
+    <View style={{backgroundColor: Colors.Primary, height: Dimensions.get("window").height*0.1, marginTop: -Dimensions.get("window").height*0.18, marginBottom: Dimensions.get("window").height*0.06}}></View>
 
+    <View style={STYLESHEET.defaultView}>
     <Text style={STYLESHEET.defaultSecondaryHeader}>
         Fortnightly Breakdown
     </Text>
@@ -222,7 +260,7 @@ export default function MyBudget( {navigation, route} ) {
                 <SmallPill
                     content="Add"
                     color={Colors.White}
-                    backgroundColor={Colors.Black}
+                    backgroundColor={"#232323"}
                 />
             </View>
         </View>
@@ -241,7 +279,7 @@ export default function MyBudget( {navigation, route} ) {
                 <SmallPill
                     content="Edit"
                     color={Colors.White}
-                    backgroundColor={Colors.Primary}
+                    backgroundColor={"#2363BC"}
                 />
             </View>
         </View>
@@ -274,7 +312,7 @@ export default function MyBudget( {navigation, route} ) {
                 <SmallPill
                     content="Add"
                     color={Colors.White}
-                    backgroundColor={Colors.Black}
+                    backgroundColor={"#232323"}
                 />
             </View>
         </View>
@@ -293,7 +331,7 @@ export default function MyBudget( {navigation, route} ) {
                 <SmallPill
                     content="Edit"
                     color={Colors.White}
-                    backgroundColor={Colors.Primary}
+                    backgroundColor={"#2363BC"}
                 />
             </View>
         </View>
@@ -326,7 +364,7 @@ export default function MyBudget( {navigation, route} ) {
                 <MediumPill
                     content="View Goal"
                     color={Colors.White}
-                    backgroundColor={Colors.Black}
+                    backgroundColor={"#232323"}
                 />
             </View>
         </View>
@@ -348,7 +386,7 @@ export default function MyBudget( {navigation, route} ) {
                 <SmallPill
                     content="Edit"
                     color={Colors.White}
-                    backgroundColor={Colors.Primary}
+                    backgroundColor={"#2363BC"}
                     onPress={() =>
                         navigation.navigate('MyGoals', {
                           goal: goal, navigatedState: "income"
@@ -377,13 +415,13 @@ export default function MyBudget( {navigation, route} ) {
             </View>
         </View>
     </View>
-    <Text style={style.defaulthLineBlack}/>
+
     <View style={style.doublePillView}>
         <View style={style.sideBySidePillView}>
             <Pill
                 content="Cancel"
                 color={Colors.White}
-                backgroundColor={Colors.DarkGray}
+                backgroundColor={"#848484"}
                 onPress={() => navigateAndReset(navigation, "Main")}
             />
         </View>
@@ -391,14 +429,15 @@ export default function MyBudget( {navigation, route} ) {
             <Pill
                 content="Save Changes"
                 color={Colors.White}
-                backgroundColor={Colors.Primary}
+                backgroundColor={"#2363BC"}
 
                 onPress={() => navigateAndReset(navigation, "Main")}
             /> 
         </View>
     </View>
+    </View>
 
     </ScrollView>
     <BottomBar navigation = { navigation }/>
-  </View>;
+  </View>
 }
