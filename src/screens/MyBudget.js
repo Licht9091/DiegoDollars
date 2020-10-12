@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from 'react';
+import AppContext from '../helper/context';
 import { ScrollView } from "react-native";
 import { STYLESHEET } from "../styles/stylesheet";
 import { Text, View, Dimensions, TextInput } from "react-native";
@@ -8,6 +9,7 @@ import Pill from "../components/Pill";
 import SmallPill from "../components/SmallPill";
 import MediumPill from "../components/MediumPill";
 import { FONT_FAMILY_SEMIBOLD } from "../styles/typography";
+import navigateAndReset from "../helper/functions";
 
 const style = {
     whiteBubbleView: {
@@ -90,7 +92,7 @@ const style = {
         textAlign: "center",
         fontFamily: FONT_FAMILY_SEMIBOLD,
         color: Colors.Primary,
-        paddingTop: 50,
+        padding: 30,
       },
       pillView: {
         backgroundColor: Colors.White,
@@ -105,7 +107,7 @@ const style = {
         fontSize: 14,
         color: Colors.DarkGray,
         paddingRight: 5,
-        alignSelf: "center",
+        alignSelf: "flex-end",
       },
       defaultHeaderDarkerGray: {
         fontSize: 13,
@@ -139,10 +141,36 @@ const style = {
       }
 }
 
-export default function MyBudget( {navigation} ) {
+export default function MyBudget( {navigation, route} ) {
+    const [loaded, setLoaded] = useState(false);
+    const Context = useContext(AppContext);
 
     const [monthStartDates, setMonthStartDates] = useState("7");
     const [dayStartDates, setDayStartDates] = useState("21");
+
+    const { goals } = route.params;
+
+    const [data, setData] = useState("undefined");
+
+    const setupUser = async () => {
+        _account = await Context.User.getAccount();
+        _totalSpending = (await _account.getSpendingBalance()) + 0.57;
+    
+        _data = {
+          availableSpending: _totalSpending,
+        };
+    
+        setData(_data);
+      }; 
+
+      useEffect(() => {
+        setTimeout(() => {
+          if (!loaded) {
+            setupUser();
+            setLoaded(true);
+          }
+        }, 0);
+      }); 
 
   return <View style={STYLESHEET.defaultView}>
     <ScrollView>
@@ -166,6 +194,9 @@ export default function MyBudget( {navigation} ) {
                 <Text style={style.defaultHeaderWhite}>
                     Monthly Start Dates
                 </Text>
+                <Text style={style.secondaryHeaderWhite}>
+                    Fortnight start days each month
+                </Text>
             </View>
             <TextInput
                 style={{borderWidth: 0, color: Colors.White, fontSize: 24}}
@@ -176,11 +207,8 @@ export default function MyBudget( {navigation} ) {
                 style={{borderWidth: 0, color: Colors.White, fontSize: 24}}
                 onChangeText={text => setDayStartDates(text)}
                 value={dayStartDates}
-            />
+            />        
         </View>
-        <Text style={style.secondaryHeaderWhite}>
-            Fortnight start days each month
-        </Text>
     </View>
 
     <View style={style.whiteBubblePillView}>
@@ -206,7 +234,7 @@ export default function MyBudget( {navigation} ) {
             </View>
             <View style={style.textView}>
                 <Text style={style.defaultHeaderDarkGray2}>
-                    Number Here
+                    $
                 </Text>
             </View>
             <View style={style.pillView}>
@@ -226,7 +254,7 @@ export default function MyBudget( {navigation} ) {
             </View>
             <View style={style.textView}>
                 <Text style={style.defaultHeaderDarkGray2}>
-                    Number Here
+                    $
                 </Text>
             </View>
             <View style={style.pillView}>
@@ -258,7 +286,7 @@ export default function MyBudget( {navigation} ) {
             </View>
             <View style={style.textView}>
                 <Text style={style.defaultHeaderDarkGray2}>
-                    Number Here
+                    $
                 </Text>
             </View>
             <View style={style.pillView}>
@@ -278,7 +306,7 @@ export default function MyBudget( {navigation} ) {
             </View>
             <View style={style.textView}>
                 <Text style={style.defaultHeaderDarkGray2}>
-                    Number Here
+                    $
                 </Text>
             </View>
             <View style={style.pillView}>
@@ -302,15 +330,18 @@ export default function MyBudget( {navigation} ) {
                 />
             </View>
         </View>
+        {goals.map((goal) => (
         <View style={style.pillAndTextView}>
             <View style={style.textView}>
-                <Text style={style.defaultHeaderDarkGray}>
-                    Goal 1
-                </Text>
+                <View width={180}>
+                    <Text style={style.defaultHeaderDarkGray}>
+                        {goal.description}
+                    </Text>
+                </View>
             </View>
             <View style={style.textView}>
                 <Text style={style.defaultHeaderDarkGray2}>
-                    Number Here
+                    ${goal.goalAmount}
                 </Text>
             </View>
             <View style={style.pillView}>
@@ -318,20 +349,34 @@ export default function MyBudget( {navigation} ) {
                     content="Edit"
                     color={Colors.White}
                     backgroundColor={Colors.Primary}
+                    onPress={() =>
+                        navigation.navigate('MyGoals', {
+                          goal: goal, navigatedState: "income"
+                        })
+                      }
                 />
             </View>
-        </View>
+        </View>))}
+        
     </View>
 
     <View style={style.greyBubbleView}>
-        <Text style={style.defaultHeaderWhite}>
-            Available Spending
-        </Text>
-        <Text style={style.secondaryHeaderWhite}>
-            Per Fornight
-        </Text>
+        <View flexDirection={'row'} width={Dimensions.get("window").width * 0.9}>
+            <View width={Dimensions.get("window").width * 0.4}>
+                <Text style={style.defaultHeaderWhite}>
+                    Available Spending
+                </Text>
+                <Text style={style.secondaryHeaderWhite}>
+                    Per Fornight
+                </Text>
+            </View>
+            <View style={{flex:0.8}}>
+                <Text style={{borderWidth: 0, color: Colors.White, fontSize: 24, alignSelf: "flex-end"}}>
+                    ${data.availableSpending}
+                </Text>
+            </View>
+        </View>
     </View>
-
     <Text style={style.defaulthLineBlack}/>
     <View style={style.doublePillView}>
         <View style={style.sideBySidePillView}>
@@ -339,6 +384,7 @@ export default function MyBudget( {navigation} ) {
                 content="Cancel"
                 color={Colors.White}
                 backgroundColor={Colors.DarkGray}
+                onPress={() => navigateAndReset(navigation, "Main")}
             />
         </View>
         <View style={style.sideBySidePillView}>
@@ -346,6 +392,8 @@ export default function MyBudget( {navigation} ) {
                 content="Save Changes"
                 color={Colors.White}
                 backgroundColor={Colors.Primary}
+
+                onPress={() => navigateAndReset(navigation, "Main")}
             /> 
         </View>
     </View>
