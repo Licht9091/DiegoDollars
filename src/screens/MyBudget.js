@@ -8,6 +8,7 @@ import Pill from "../components/Pill";
 import SmallPill from "../components/SmallPill";
 import MediumPill from "../components/MediumPill";
 import { FONT_FAMILY_SEMIBOLD } from "../styles/typography";
+import navigateAndReset from "../helper/functions";
 
 const style = {
     whiteBubbleView: {
@@ -135,10 +136,12 @@ const style = {
       }
 }
 
-export default function MyBudget( {navigation} ) {
+export default function MyBudget( {navigation, route} ) {
 
     const [monthStartDates, setMonthStartDates] = useState("7");
     const [dayStartDates, setDayStartDates] = useState("21");
+
+    const { goals } = route.params
 
   return <View style={STYLESHEET.defaultView}>
     <ScrollView>
@@ -292,12 +295,13 @@ export default function MyBudget( {navigation} ) {
                 />
             </View>
         </View>
+        {goals.map((goal) => (
         <View style={style.pillAndTextView}>
             <View style={style.textView}>
-            <View width={180}>
-                    <Text style={style.defaultHeaderDarkGray}>
-                        Goal 1
-                    </Text>
+                <View width={180}>
+                        <Text style={style.defaultHeaderDarkGray}>
+                            {goal.description}
+                        </Text>
                 </View>
                 <Text style={style.defaultHeaderDarkGray}>
                     Number Here
@@ -308,9 +312,15 @@ export default function MyBudget( {navigation} ) {
                     content="Edit"
                     color={Colors.White}
                     backgroundColor={Colors.Primary}
+                    onPress={() =>
+                        navigation.navigate('MyGoals', {
+                          goal: goal, navigatedState: "income"
+                        })
+                      }
                 />
             </View>
-        </View>
+        </View>))}
+        
     </View>
 
     <View style={style.greyBubbleView}>
@@ -329,6 +339,7 @@ export default function MyBudget( {navigation} ) {
                 content="Cancel"
                 color={Colors.White}
                 backgroundColor={Colors.DarkGray}
+                onPress={() => navigateAndReset(navigation, "Main")}
             />
         </View>
         <View style={style.sideBySidePillView}>
@@ -336,6 +347,8 @@ export default function MyBudget( {navigation} ) {
                 content="Save Changes"
                 color={Colors.White}
                 backgroundColor={Colors.Primary}
+
+                onPress={() => navigateAndReset(navigation, "Main")}
             /> 
         </View>
     </View>

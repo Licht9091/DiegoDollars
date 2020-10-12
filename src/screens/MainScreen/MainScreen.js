@@ -116,7 +116,7 @@ const MainScreen = ({ navigation }) => {
                       color={Colors.White}
                       onPress={() => {
                         navigation.navigate('Budget', {
-                          navigatedState: navigation,
+                          navigatedState: navigation, goals : data.goals
                         });
                       }}
                     />
