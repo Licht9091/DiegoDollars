@@ -6,7 +6,7 @@ import Format from '../helper/Format';
 import { FONT_FAMILY_BOLD, FONT_FAMILY_SEMIBOLD } from '../styles/typography';
 import Colors from '../styles/colors';
 
-const Paycheck = ({ transaction }) => {
+const Paycheck = ({ transaction, removePaycheck }) => {
   const style = {
     wrapper: {
       flex: 0,
@@ -37,7 +37,7 @@ const Paycheck = ({ transaction }) => {
       marginBottom: 3,
     },
     description: {
-      fontSize: 12,
+      fontSize: 9,
       fontFamily: FONT_FAMILY_SEMIBOLD,
       color: Colors.DarkGray,
       width: 160,
@@ -60,7 +60,7 @@ const Paycheck = ({ transaction }) => {
     },
     buttonText: {
       fontFamily: FONT_FAMILY_SEMIBOLD,
-      fontSize: 12,
+      fontSize: 10,
       color: 'white',
     },
   };
@@ -81,7 +81,10 @@ const Paycheck = ({ transaction }) => {
       <View style={[style.column, style.right]}>
         <Text style={style.date}>{formatDate(transaction.date)}</Text>
         {/* <Text style={style.}></Text> */}
-        <TouchableOpacity style={style.touchable}>
+        <TouchableOpacity
+          style={style.touchable}
+          onPress={() => removePaycheck(transaction.id)}
+        >
           <View style={style.button}>
             <Text style={style.buttonText}>Not a Paycheck</Text>
           </View>

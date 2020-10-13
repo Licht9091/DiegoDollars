@@ -12,6 +12,7 @@ import Sun from '../assets/sun.svg';
 const PaychecksReceived = ({ onClose }) => {
   const Context = useContext(AppContext);
   const [paychecks, setPaychecks] = useState([]);
+  const [notPaycheck, setNotPaycheck] = useState([]);
 
   const getPaychecks = async () => {
     const Account = await Context.User.getAccount();
@@ -19,8 +20,17 @@ const PaychecksReceived = ({ onClose }) => {
       .filter((t) => t.value > 50)
       .map((t) => ({ ...t, description: t.description.replace(/\s+/g, ' ') }))
       .slice(0, 2);
+
     setPaychecks(paychecks);
     console.log(paychecks);
+  };
+
+  const removePaycheck = (paycheckId) => {
+    if (!notPaycheck.includes(paycheckId)) {
+      const newNotPaycheck = [...notPaycheck];
+      newNotPaycheck.push(paycheckId);
+      setNotPaycheck(newNotPaycheck);
+    }
   };
 
   useEffect(() => {
@@ -45,9 +55,15 @@ const PaychecksReceived = ({ onClose }) => {
         <Text style={paycheckStyle.title}>Paychecks</Text>
 
         <View style={paycheckStyle.paycheckWrapper}>
-          {paychecks.map((pc) => (
-            <Paycheck key={pc.id} transaction={pc} />
-          ))}
+          {paychecks
+            .filter((t) => !notPaycheck.includes(t.id))
+            .map((pc) => (
+              <Paycheck
+                key={pc.id}
+                transaction={pc}
+                removePaycheck={removePaycheck}
+              />
+            ))}
         </View>
         <View style={paycheckStyle.buttonWrapper}>
           <TouchableOpacity style={paycheckStyle.touchable} onPress={onClose}>

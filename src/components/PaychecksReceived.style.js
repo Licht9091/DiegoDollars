@@ -13,7 +13,6 @@ const paycheckStyle = {
     backgroundColor: 'white',
     padding: 0,
     position: 'relative',
-    minHeight: 400,
   },
   header: {
     width: Dimensions.get('window').width - 50,
@@ -28,7 +27,7 @@ const paycheckStyle = {
   },
   headerText: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    fontSize: 20,
+    fontSize: 18,
     color: 'white',
     textAlign: 'center',
   },
@@ -61,7 +60,7 @@ const paycheckStyle = {
   infoText: {
     color: 'white',
     fontFamily: FONT_FAMILY_REGULAR,
-    fontSize: 16,
+    fontSize: 13,
     padding: 20,
   },
   content: {
@@ -101,6 +100,7 @@ const paycheckStyle = {
   },
   buttonText: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
+    fontSize: 12,
     color: 'white',
   },
   cancelButton: {
