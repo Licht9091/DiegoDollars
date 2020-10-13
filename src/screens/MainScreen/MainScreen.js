@@ -22,6 +22,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import PaychecksReceived from '../../components/PaychecksReceived';
 import Modal from 'react-native-modal';
+import PeriodSummary from '../../components/PeriodSummary';
 
 const iconStyle = {
   opacity: 0.8,
@@ -35,6 +36,7 @@ const MainScreen = ({ navigation }) => {
   // Empty data useState
   const [data, setData] = useState(undefined);
   const [showPayChecks, setShowPayChecks] = useState(false);
+  const [periodSummary, setPeriodSummary] = useState(true);
 
   const toggleShowPayChecks = () => {
     setShowPayChecks(!showPayChecks);
@@ -86,6 +88,13 @@ const MainScreen = ({ navigation }) => {
             ></PaychecksReceived>
           </Modal>
         )}
+        {true && (
+          <Modal isVisible={periodSummary}>
+            <PeriodSummary
+            // onClose={toggleShowPayChecks}
+            ></PeriodSummary>
+          </Modal>
+        )}
         {(!loaded || !data) && (
           <ScrollView style={mainStyle.loadWrapper}>
             <ActivityIndicator size='large' color='white' />
@@ -116,7 +125,8 @@ const MainScreen = ({ navigation }) => {
                       color={Colors.White}
                       onPress={() => {
                         navigation.navigate('Budget', {
-                          navigatedState: navigation, goals : data.goals
+                          navigatedState: navigation,
+                          goals: data.goals,
                         });
                       }}
                     />
@@ -171,7 +181,8 @@ const MainScreen = ({ navigation }) => {
                     }}
                     onPress={() =>
                       navigation.navigate('MyGoals', {
-                        goal: goal, navigatedState: "income"
+                        goal: goal,
+                        navigatedState: 'income',
                       })
                     }
                   >
@@ -249,7 +260,7 @@ const MainScreen = ({ navigation }) => {
         )}
 
         {/* Bottom Bar */}
-        <BottomBar navigation={navigation}/>
+        <BottomBar navigation={navigation} />
       </View>
     </SafeAreaView>
   );
