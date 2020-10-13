@@ -7,7 +7,7 @@ import {
   API_TRANSACTION_LIST,
   API_GOAL_SET,
   API_GOAL_DELETE,
-  API_CATEGORISE_TRANSACTION
+  API_CATEGORISE_TRANSACTION,
 } from "./constants";
 import "./functions";
 
@@ -439,7 +439,9 @@ class Account {
 
   /**
    * getTransactionsByCategory - async, make sure you wait for this to return.
-   * 
+   *
+   * @param {string} category - Category to filter by
+   *
    * @return {[Transaction]} List of transactions by category
    */
   getTransactionsByCategory = async (category) => {
@@ -452,7 +454,59 @@ class Account {
     });
 
     return returnList;
-  }
+  };
+
+  /**
+   * getFilteredTransactions - async, make sure you wait for this to return.
+   *
+   * @param {string} type - Type of transaction. ["expense", "income", "all"]
+   * @param {string} searchContents - Search term to search by
+   *
+   * @return {[Transaction]} List of transactions by category
+   */
+  getFilteredTransactions = async (type, searchContents) => {
+    returnList = [];
+
+    if (searchContents == "") {
+      if (type == "expense") {
+        return this.uncategorisedExpenses;
+      } else if (type == "income") {
+        return this.uncategorisedIncome;
+      } else if (type == "all") {
+        return this.allTransactions;
+      } else {
+        alert("Filter passed invalid value");
+        return;
+      }
+    } else {
+      searchTerm = new RegExp(searchContents, "i");
+
+      if (type == "expense") {
+        await this.uncategorisedExpenses.forEach((obj) => {
+          if (obj.description.search(searchTerm) != -1) {
+            returnList.push(obj);
+          }
+        });
+      } else if (type == "income") {
+        await this.uncategorisedIncome.forEach((obj) => {
+          if (obj.description.search(searchTerm) != -1) {
+            returnList.push(obj);
+          }
+        });
+      } else if (type == "all") {
+        await this.allTransactions.forEach((obj) => {
+          if (obj.description.search(searchTerm) != -1) {
+            returnList.push(obj);
+          }
+        });
+      } else {
+        alert("Filter passed invalid value");
+        return;
+      }
+    }
+
+    return returnList;
+  };
 }
 
 class Goal {
@@ -469,9 +523,9 @@ class Goal {
     this.goalAmount = _goalAmount; // float
     this.completion = _completion; // datetime
     if (_completion == null) {
-      this.type = "Continuous"
+      this.type = "Continuous";
     } else {
-      this.type = "One Off"
+      this.type = "One Off";
     }
     this.percent =
       Math.round(
