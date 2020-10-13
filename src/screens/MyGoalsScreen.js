@@ -15,9 +15,7 @@ import BottomBar from "../components/BottomBar";
 import Pill from "../components/Pill";
 import transactionStyles from "./Transactions/TransactionsScreen.style";
 import { SearchBar } from "react-native-elements";
-import moment from "moment";
 import AppContext from "../helper/context";
-import Format from "../helper/Format";
 import { FONT_FAMILY_SEMIBOLD } from "../styles/typography";
 import navigateAndReset from "../helper/functions";
 import TransactionListComponent from "../components/TransactionListComponent";
@@ -27,19 +25,18 @@ const style = {
   blueBubbleView: {
     backgroundColor: Colors.Primary,
     width: Dimensions.get("window").width - 40,
-    marginTop: 10,
     marginLeft: 10,
     marginBottom: 10,
     borderRadius: 20,
     padding: 20,
-    flex: 0,
+    position: "relative",
 
     ...STYLESHEET.shadowNormal,
   },
   blackBubbleView: {
     backgroundColor: Colors.Black,
     width: Dimensions.get("window").width - 40,
-    marginTop: 10,
+    marginTop: 0,
     marginLeft: 10,
     marginBottom: 10,
     borderRadius: 20,
@@ -51,7 +48,7 @@ const style = {
   whiteBubbleView: {
     backgroundColor: Colors.White,
     width: Dimensions.get("window").width - 40,
-    height: Dimensions.get("window").height - 420,
+    height: Dimensions.get("window").height - 490,
     marginTop: 10,
     marginLeft: 10,
     marginBottom: 10,
@@ -96,8 +93,6 @@ const style = {
   },
   thirdsSectioningViewBlue: {
     width: (Dimensions.get("window").width - 60) / 3,
-    marginBottom: 10,
-    marginTop: 10,
   },
   thirdsSectioningViewWhite: {
     width: (Dimensions.get("window").width - 100) / 3,
@@ -143,6 +138,21 @@ const style = {
     borderBottomColor: Colors.Black,
     borderBottomWidth: 1,
     alignSelf: "stretch",
+  },
+  goalHeader: {
+    fontSize: Dimensions.get('window').width/20,
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    backgroundColor: Colors.Primary,
+    color: Colors.White,
+    minHeight: Dimensions.get('window').height/3,
+    width: Dimensions.get('window').width,
+    paddingVertical: Dimensions.get('window').height* 0.03,
+    textAlign: 'center',
+    flexDirection: "row"
+  },
+  goalView: {
+    backgroundColor: Colors.White,
+    height: Dimensions.get('window').height,
   },
 };
 
@@ -214,6 +224,10 @@ export default function MyGoals({ navigation, route }) {
   const [expenseButtonPressed, setExpenButton] = useState(false);
   const [incomeButtonPressed, setIncomeButton] = useState(false);
 
+  const [spentDistance, setSpentDistance] = useState(50);
+  const [savedDistance, setSavedDistance] = useState(50);
+  const [goalDistance, setGoalDistanceDistance] = useState(50);
+
   const { search } = state;
 
   const [goalName, setGoalName] = useState(goal.description);
@@ -237,9 +251,21 @@ export default function MyGoals({ navigation, route }) {
   };
 
   return (
-    <View style={STYLESHEET.defaultView}>
-      <ScrollView>
-        <View style={editGoal ? { height: 0, opacity: 0 } : {}}>
+    <View style={style.goalView}>
+    <ScrollView>
+    <View style={style.goalHeader}>
+      <Text style={{color: Colors.White, fontSize: 24, alignItems: "center", marginLeft: 150, marginRight: 30}}>
+          My Goals
+      </Text>
+      <Pill
+          content="Create New"
+          color={Colors.White}
+          backgroundColor={Colors.DarkGray}
+          onPress={() => navigation.navigate('AddGoal')}
+      />
+    </View>
+    <View style={{backgroundColor: Colors.Primary, height: Dimensions.get("window").height*0.1, marginTop: -Dimensions.get("window").height*0.64, marginBottom: Dimensions.get("window").height*0.33}}></View>
+        <View style={editGoal ? { height: 0, opacity: 0 } : {marginLeft: 10}}>
           <View style={style.blueBubbleView}>
             <Text style={style.defaultHeaderLargeWhite}>{goalName}</Text>
             <View style={style.sectioningView}>
@@ -274,7 +300,7 @@ export default function MyGoals({ navigation, route }) {
               <View style={style.thirdsSectioningViewBlue}>
                 <View flexDirection={"row"}>
                   <View width={(Dimensions.get("window").width - 60) / 3 - 25}>
-                    <View height={50}>
+                    <View height={goalDistance}>
                       <Text style={{fontSize: 20, color: Colors.White}}>
                         $5000.00
                       </Text>
@@ -282,7 +308,7 @@ export default function MyGoals({ navigation, route }) {
                         Goal
                       </Text>
                     </View>
-                    <View height={50}>
+                    <View height={savedDistance}>
                       <Text style={{fontSize: 14, color: Colors.White}}>
                         SAVED
                       </Text>
@@ -290,7 +316,7 @@ export default function MyGoals({ navigation, route }) {
                         $3257.21
                       </Text>
                     </View>
-                    <View height={50}>
+                    <View height={spentDistance}>
                       <Text style={{fontSize: 14, color: Colors.White}}>
                         SPENT
                       </Text>
@@ -375,7 +401,7 @@ export default function MyGoals({ navigation, route }) {
             </ScrollView>
           </View>
         </View>
-        <View style={!editGoal ? { height: 0, opacity: 0 } : {}}>
+        <View style={!editGoal ? { height: 0, opacity: 0 } : {marginLeft: 10}}>
           <View style={style.blackBubbleView}>
             <TextInput
               style={{ borderWidth: 1, color: Colors.White, fontSize: 24 }}
@@ -386,17 +412,17 @@ export default function MyGoals({ navigation, route }) {
               <View style={style.thirdsSectioningViewBlue}>
                 <Text style={style.defaultHeaderSmallWhite}>Type</Text>
                 <TextInput
-                  style={{ borderWidth: 1, color: Colors.White, fontSize: 18 }}
+                  style={{ borderWidth: 0, color: Colors.White, fontSize: 18 }}
                   onChangeText={(text) => setTempTypeName(text)}
                   value={tempTypeName}
                 />
                 <Text style={style.defaultHeaderSmallWhite}>STARTED</Text>
                 <TextInput
-                  style={{ borderWidth: 1, color: Colors.White, fontSize: 18 }}
+                  style={{ borderWidth: 0, color: Colors.White, fontSize: 18 }}
                   onChangeText={(text) => setTempStartName(text)}
                   value={tempStartName}
                 />
-                <View width={95} paddingTop={20}>
+                <View width={95} paddingTop={15}>
                   <Pill
                     content="Cancel"
                     color={Colors.White}
@@ -422,7 +448,7 @@ export default function MyGoals({ navigation, route }) {
                 <Text style={style.defaultHeaderMediumWhite} />
                 <Text style={style.defaultHeaderSmallWhite}>FINISHING</Text>
                 <TextInput
-                  style={{ borderWidth: 1, color: Colors.White, fontSize: 18 }}
+                  style={{ borderWidth: 0, color: Colors.White, fontSize: 18 }}
                   onChangeText={(text) => setTempFinishName(text)}
                   value={tempFinishName}
                 />
@@ -448,7 +474,40 @@ export default function MyGoals({ navigation, route }) {
                 </View>
               </View>
               <View style={style.thirdsSectioningViewBlue}>
-                <Text>Rocket Thing</Text>
+                <View flexDirection={"row"}>
+                  <View width={(Dimensions.get("window").width - 60) / 3 - 25}>
+                    <View height={goalDistance}>
+                      <Text style={{fontSize: 20, color: Colors.White}}>
+                        $5000.00
+                      </Text>
+                      <Text style={{fontSize: 14, color: Colors.White}}>
+                        Goal
+                      </Text>
+                    </View>
+                    <View height={savedDistance}>
+                      <Text style={{fontSize: 14, color: Colors.White}}>
+                        SAVED
+                      </Text>
+                      <Text style={style.defaulthLine}>
+                        $3257.21
+                      </Text>
+                    </View>
+                    <View height={spentDistance}>
+                      <Text style={{fontSize: 14, color: Colors.White}}>
+                        SPENT
+                      </Text>
+                      <Text style={style.defaulthLine}>
+                        $2256.34
+                      </Text>
+                    </View>
+                  </View>
+                  <View>
+                    <Text style={{borderLeftColor: Colors.DarkGray, borderLeftWidth: 10, borderRadius: 10, height : 90}}></Text>
+                    <Diego style={{position: 'absolute', height: 180, width: 40, left: -15, elevation: 0.1}}></Diego>
+                    <Text style={{borderLeftColor: Colors.PrimaryLight, borderLeftWidth: 10, height : 50}}></Text>
+                    <Text style={{borderLeftColor: Colors.Teal, borderLeftWidth: 10, height : 50}}></Text>
+                  </View>
+                </View>
               </View>
             </View>
           </View>

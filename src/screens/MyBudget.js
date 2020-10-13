@@ -161,7 +161,6 @@ const style = {
         backgroundColor: Colors.White,
         height: Dimensions.get('window').height,
       },
-
       container: {
         flex: 1,
         alignItems: 'center',

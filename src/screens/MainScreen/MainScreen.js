@@ -249,7 +249,7 @@ const MainScreen = ({ navigation }) => {
         )}
 
         {/* Bottom Bar */}
-        <BottomBar navigation={navigation} />
+        <BottomBar navigation={navigation}/>
       </View>
     </SafeAreaView>
   );

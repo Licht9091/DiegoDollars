@@ -96,6 +96,7 @@ function App() {
             <Stack.Screen
               name="MyGoals"
               component={MyGoalsScreen}
+              options={MainScreenOptions}
             />
             <Stack.Screen
               name="CategoriseIncome"
