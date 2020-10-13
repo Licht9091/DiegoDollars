@@ -144,7 +144,7 @@ const style = {
     fontFamily: FONT_FAMILY_SEMIBOLD,
     backgroundColor: Colors.Primary,
     color: Colors.White,
-    minHeight: Dimensions.get('window').height/3,
+    minHeight: Dimensions.get('window').height/4,
     width: Dimensions.get('window').width,
     paddingVertical: Dimensions.get('window').height* 0.03,
     textAlign: 'center',
@@ -264,7 +264,7 @@ export default function MyGoals({ navigation, route }) {
           onPress={() => navigation.navigate('AddGoal')}
       />
     </View>
-    <View style={{backgroundColor: Colors.Primary, height: Dimensions.get("window").height*0.1, marginTop: -Dimensions.get("window").height*0.64, marginBottom: Dimensions.get("window").height*0.33}}></View>
+    <View style={{backgroundColor: Colors.Primary, height: Dimensions.get("window").height*0.1, marginTop: -Dimensions.get("window").height*0.59, marginBottom: Dimensions.get("window").height*0.33}}></View>
         <View style={editGoal ? { height: 0, opacity: 0 } : {marginLeft: 10}}>
           <View style={style.blueBubbleView}>
             <Text style={style.defaultHeaderLargeWhite}>{goalName}</Text>
