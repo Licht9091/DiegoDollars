@@ -165,7 +165,8 @@ export class User {
           g["description"],
           g["current-contribution"],
           g["goal-value"],
-          null
+          g["startDate"],
+          g["endDate"]
         )
       );
     });
@@ -515,14 +516,17 @@ class Goal {
     _description,
     _currentContribution,
     _goalAmount,
-    _completion
+    _startDate,
+    _endDate
   ) {
     this.id = _id;
     this.description = _description; // string
     this.currentContribution = _currentContribution;
     this.goalAmount = _goalAmount; // float
-    this.completion = _completion; // datetime
-    if (_completion == null) {
+    this.startDate = _startDate; // datetime
+    this.endDate = _endDate; // datetime
+
+    if (_endDate == null) {
       this.type = "Continuous";
     } else {
       this.type = "One Off";
