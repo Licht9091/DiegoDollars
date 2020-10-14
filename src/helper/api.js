@@ -166,7 +166,8 @@ export class User {
           g["current-contribution"],
           g["goal-value"],
           g["startDate"],
-          g["endDate"]
+          g["endDate"],
+          g["fortnightly-contribution"]
         )
       );
     });
@@ -517,14 +518,20 @@ class Goal {
     _currentContribution,
     _goalAmount,
     _startDate,
-    _endDate
+    _endDate,
+    _fortnightlyContribution
   ) {
     this.id = _id;
     this.description = _description; // string
     this.currentContribution = _currentContribution;
+    this.fortnightlyContribution = parseFloat(_fortnightlyContribution);
     this.goalAmount = _goalAmount; // float
     this.startDate = _startDate; // datetime
     this.endDate = _endDate; // datetime
+
+    if (isNaN(this.fortnightlyContribution)) {
+      this.fortnightlyContribution = 0.0;
+    }
 
     if (_endDate == null) {
       this.type = "Continuous";
