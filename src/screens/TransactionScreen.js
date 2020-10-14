@@ -1,18 +1,18 @@
-import moment from "moment";
-import React, { useContext, useEffect, useState } from "react";
-import { Text, View, ActivityIndicator } from "react-native";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import AppContext from "../helper/context";
-import { STYLESHEET } from "../styles/stylesheet";
-import transactionStyles from "./Transactions/TransactionsScreen.style";
-import BottomBar from "../components/BottomBar";
-import Format from "../helper/Format";
-import TransactionListComponent from "../components/TransactionListComponent";
-import SingleTransactionScreen from "./SingleTransactionScreen";
-import { SearchBar } from "react-native-elements";
-import Pill from "../components/Pill";
-import Colors from "../styles/colors";
-import Modal from "react-native-modal";
+import moment from 'moment';
+import React, { useContext, useEffect, useState } from 'react';
+import { Text, View, ActivityIndicator } from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import AppContext from '../helper/context';
+import { STYLESHEET } from '../styles/stylesheet';
+import transactionStyles from './Transactions/TransactionsScreen.style';
+import BottomBar from '../components/BottomBar';
+import Format from '../helper/Format';
+import TransactionListComponent from '../components/TransactionListComponent';
+import SingleTransactionScreen from './SingleTransactionScreen';
+import { SearchBar } from 'react-native-elements';
+import Pill from '../components/Pill';
+import Colors from '../styles/colors';
+import Modal from 'react-native-modal';
 
 export default function TransactionScreen({ route, navigation }) {
   // "all", "income", "expense"
@@ -20,7 +20,7 @@ export default function TransactionScreen({ route, navigation }) {
   const [loaded, setLoaded] = useState(false);
   const { navigatedState } = route.params; // "expense", "income" or "all". Can use this for determining which page we navigated from.
 
-  const [searchContents, setSearchContents] = useState("");
+  const [searchContents, setSearchContents] = useState('');
   const [filterType, setFilterType] = useState(navigatedState);
 
   const [showSingleTransaction, setSingleTransaction] = useState(false);
@@ -30,11 +30,11 @@ export default function TransactionScreen({ route, navigation }) {
 
   const updateTransactionList = async () => {
     _account = await Context.User.getAccount();
-    if (navigatedState === "expense") {
+    if (navigatedState === 'expense') {
       _data = _account.uncategorisedExpenses;
-    } else if (navigatedState === "income") {
+    } else if (navigatedState === 'income') {
       _data = _account.uncategorisedIncome;
-    } else if (navigatedState === "all") {
+    } else if (navigatedState === 'all') {
       _data = _account.allTransactions;
     } else {
       _data = await _account.getTransactionsByCategory(navigatedState);
@@ -68,15 +68,14 @@ export default function TransactionScreen({ route, navigation }) {
   // Sorry that this is a complete mess :(. Need to make each of these a component probs
   return (
     <>
-      {true && (
-        <Modal isVisible={showSingleTransaction}>
-          <SingleTransactionScreen
-            transaction={currentTransaction}
-            onClose={toggleModal}
-            navigatedState={navigatedState}
-          />
-        </Modal>
-      )}
+      <Modal isVisible={showSingleTransaction}>
+        <SingleTransactionScreen
+          transaction={currentTransaction}
+          onClose={toggleModal}
+          navigatedState={navigatedState}
+        />
+      </Modal>
+
       <View style={transactionStyles.mainView}>
         {/* Header */}
         <View style={transactionStyles.topHeading}>
@@ -86,20 +85,20 @@ export default function TransactionScreen({ route, navigation }) {
         {/* Search bar container */}
         <View style={transactionStyles.searchBarLine}>
           {/* First Button */}
-          <Pill
-            content={"Expenses"}
-            color={Colors.DarkerGray}
-            backgroundColor={Colors.White}
-            onPress={() => setFilterType("Expenses")}
-          />
+          <TouchableOpacity
+            style={transactionStyles.filterButton}
+            onPress={() => setFilterType('Expenses')}
+          >
+            <Text style={transactionStyles.filterButtonText}>EXPENSES</Text>
+          </TouchableOpacity>
 
           {/* Second Button */}
-          <Pill
-            content={"Income"}
-            color={Colors.DarkerGray}
-            backgroundColor={Colors.White}
-            onPress={() => setFilterType("Income")}
-          />
+          <TouchableOpacity
+            style={transactionStyles.filterButton}
+            onPress={() => setFilterType('Income')}
+          >
+            <Text style={transactionStyles.filterButtonText}>INCOME</Text>
+          </TouchableOpacity>
 
           {/* Search bar */}
           <SearchBar
@@ -107,7 +106,7 @@ export default function TransactionScreen({ route, navigation }) {
             containerStyle={transactionStyles.searchBarContainer}
             inputContainerStyle={transactionStyles.searchBarContainer}
             inputStyle={transactionStyles.searchBarInput}
-            placeholder="Search..."
+            placeholder='Search...'
             onChangeText={(searchContents) => setSearchContents(searchContents)}
             onEndEditing={() => filterTransactions()}
             value={searchContents}
@@ -119,7 +118,7 @@ export default function TransactionScreen({ route, navigation }) {
 
         <ScrollView>
           <View style={transactionStyles.transactionView}>
-            {!loaded && <ActivityIndicator size="large" color="white" />}
+            {!loaded && <ActivityIndicator size='large' color='white' />}
             {data
               .sort((a, b) => new Date(b.date) - new Date(a.date))
               .map((transaction) => {
