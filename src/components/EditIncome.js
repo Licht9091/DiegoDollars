@@ -74,7 +74,7 @@ const EditIncome = ({ onClose }) => {
                 <Text style={style.darkGrayHeader}>Fortnightly Income</Text>
             </View>
             <View>
-            <TextInput 
+                <TextInput 
                     style={style.blackHeader}
                     placeholder="Income Name"
                 />
@@ -85,6 +85,7 @@ const EditIncome = ({ onClose }) => {
             <View>
 
             </View>
+            
             <View style={{flexDirection: "row", width: Dimensions.get("window").width}}>
                 <TouchableOpacity onPress={ onClose }>
                     <View style={{width: Dimensions.get("window").width*0.35, marginTop: 20, marginBottom: 10, marginLeft: 10}}>
