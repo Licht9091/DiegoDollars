@@ -42,14 +42,18 @@ const RefreshModal = ({ onClose }) => {
 
       {/* Review Fortnight Summary */}
       {state && state.mode === 'review-period' && (
-        <PeriodSummary
-          onComplete={() => dispatch({ mode: 'init-period' })}
-        ></PeriodSummary>
+        <Modal isVisible>
+          <PeriodSummary
+            onComplete={() => dispatch({ mode: 'init-period' })}
+          ></PeriodSummary>
+        </Modal>
       )}
 
       {/* Initialise New Fortnight */}
       {state && state.mode === 'init-period' && (
-        <NewFortnight onComplete={onClose}></NewFortnight>
+        <Modal isVisible>
+          <NewFortnight onComplete={onClose}></NewFortnight>
+        </Modal>
       )}
     </Modal>
   );
