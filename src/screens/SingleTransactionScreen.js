@@ -17,6 +17,12 @@ import Colors from "../styles/colors";
 import Format from "../helper/Format";
 import AppContext from "../helper/context";
 import { ScrollView } from "react-native-gesture-handler";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+
+import Cloud from "../assets/cloud.svg";
+import Stars from "../assets/stars.svg";
+import Telescope from "../assets/telescope.svg";
 
 export default function SingleTransactionScreen({
   navigatedState,
@@ -31,9 +37,9 @@ export default function SingleTransactionScreen({
 
   const setupData = async () => {
     _goals = await Context.User.getGoals();
-    _categories = await Context.User.getSpendingCategories();
+    //_categories = await Context.User.getSpendingCategories();
 
-    _data = { goals: _goals, categories: _categories };
+    _data = { goals: _goals /*categories: _categories*/ };
 
     console.log(_goals);
 
@@ -43,7 +49,7 @@ export default function SingleTransactionScreen({
   useEffect(() => {
     setTimeout(() => {
       if (data == null) {
-        setupData();
+        setupData().catch(console.log("Failed to read."));
       }
     }, 0);
   });
@@ -87,12 +93,22 @@ export default function SingleTransactionScreen({
   return (
     <View>
       <TouchableOpacity onPress={onClose}>
-        <View style={style.closeButton}>{/* TODO icon */}</View>
+        <View style={style.closeButton}>
+          <FontAwesomeIcon
+            style={style.icon}
+            size={Dimensions.get("window").height * 0.03}
+            icon={faAngleDown}
+          />
+        </View>
       </TouchableOpacity>
 
       {/* Top card */}
       <View style={style.card}>
         <View style={style.header}>
+          <Telescope style={style.telescope} />
+          <Cloud style={style.cloud1} />
+          <Cloud style={style.cloud2} />
+          <Stars style={style.stars} />
           <Text style={style.headerText}>Transaction</Text>
         </View>
         <View style={{ height: 80 }}>
@@ -218,8 +234,8 @@ const style = StyleSheet.create({
   },
   header: {
     width: Dimensions.get("window").width - 50,
-    height: 120,
-    backgroundColor: "#51AAF6",
+    height: 110,
+    backgroundColor: "#4897DB" /*"#51AAF6"*/,
     padding: 20,
     paddingTop: 35,
     flex: 0,
@@ -287,6 +303,8 @@ const style = StyleSheet.create({
     height: 50,
     borderRadius: 100,
     margin: 10,
+    justifyContent: "center",
+    alignItems: "center",
   },
   fontSmall: {
     fontSize: 12,
@@ -312,4 +330,25 @@ const style = StyleSheet.create({
     paddingLeft: 30,
     justifyContent: "space-evenly",
   },
+  telescope: {
+    position: "absolute",
+    right: 5,
+    bottom: 2,
+  },
+  cloud1: {
+    position: "absolute",
+    left: -15,
+    bottom: 30,
+  },
+  cloud2: {
+    position: "absolute",
+    top: -10,
+    right: 50,
+  },
+  stars: {
+    position: "absolute",
+    top: -25,
+    left: 70,
+  },
+  icon: {},
 });
