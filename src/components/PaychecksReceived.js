@@ -1,15 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Image, Text, View, TouchableOpacity } from "react-native";
-import AppContext from "../helper/context";
-import Paycheck from "./Paycheck";
-import paycheckStyle from "./PaychecksReceived.style";
+import React, { useContext, useEffect, useState } from 'react';
+import { Image, Text, View, TouchableOpacity } from 'react-native';
+import AppContext from '../helper/context';
+import Paycheck from './Paycheck';
+import paycheckStyle from './PaychecksReceived.style';
 
 // Icon assets
-import CloudOne from "../assets/cloud.svg";
-import CloudTwo from "../assets/cloud2.svg";
-import Sun from "../assets/sun.svg";
+import CloudOne from '../assets/cloud.svg';
+import CloudTwo from '../assets/cloud2.svg';
+import Sun from '../assets/sun.svg';
 
-const PaychecksReceived = ({ onClose }) => {
+const PaychecksReceived = ({ onClose, onComplete }) => {
   const Context = useContext(AppContext);
   const [paychecks, setPaychecks] = useState([]);
   const [notPaycheck, setNotPaycheck] = useState([]);
@@ -18,7 +18,7 @@ const PaychecksReceived = ({ onClose }) => {
     const Account = await Context.User.getAccount();
     const paychecks = Account.allTransactions
       .filter((t) => t.value > 50)
-      .map((t) => ({ ...t, description: t.description.replace(/\s+/g, " ") }))
+      .map((t) => ({ ...t, description: t.description.replace(/\s+/g, ' ') }))
       .slice(0, 2);
 
     setPaychecks(paychecks);
@@ -72,7 +72,10 @@ const PaychecksReceived = ({ onClose }) => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={paycheckStyle.touchable}>
+          <TouchableOpacity
+            style={paycheckStyle.touchable}
+            onPress={onComplete}
+          >
             <View style={[paycheckStyle.button, paycheckStyle.completeButton]}>
               <Text style={paycheckStyle.buttonText}>Complete Fortnight</Text>
             </View>

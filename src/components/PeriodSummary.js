@@ -1,11 +1,9 @@
 import React from 'react';
-import { Text, ScrollView } from 'react-native';
+import { Text, ScrollView, TouchableOpacity, View } from 'react-native';
 import Format from '../helper/Format';
-
-import { TouchableOpacity, View } from 'react-native';
 const { default: pSummaryStyle } = require('./PeriodSummary.style');
 
-const PeriodSummary = () => {
+const PeriodSummary = ({ onComplete }) => {
   const data = {
     summaryItems: [
       { label: 'Total Income', value: 1251.12 },
@@ -91,7 +89,7 @@ const PeriodSummary = () => {
           ))}
         </View>
 
-        <TouchableOpacity style={pSummaryStyle.touchable}>
+        <TouchableOpacity style={pSummaryStyle.touchable} onPress={onComplete}>
           <View style={pSummaryStyle.button}>
             <Text style={pSummaryStyle.buttonText}>Start Next Fortnight</Text>
           </View>
