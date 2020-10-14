@@ -7,16 +7,7 @@ import {
   FONT_FAMILY_SEMIBOLD,
 } from '../styles/typography';
 
-const pSummaryStyle = {
-  scrollWrapper: {
-    // margin: 0,
-    // padding: 0,
-    // width: Dimensions.get('window').width,
-    // height: Dimensions.get('window').height,
-    // position: 'absolute',
-    flex: 1,
-    flexGrow: 1,
-  },
+const newFortnightStyle = {
   card: {
     width: Dimensions.get('window').width - 50,
     borderRadius: 20,
@@ -29,7 +20,7 @@ const pSummaryStyle = {
   header: {
     width: Dimensions.get('window').width - 50,
     height: 120,
-    backgroundColor: '#2363BC',
+    backgroundColor: '#FFBEBE',
     padding: 20,
     paddingTop: 35,
     flex: 0,
@@ -42,6 +33,22 @@ const pSummaryStyle = {
     fontSize: 18,
     color: 'white',
     textAlign: 'center',
+  },
+  cloudOne: {
+    position: 'absolute',
+    left: -20,
+    top: 40,
+  },
+  cloudTwo: {
+    position: 'absolute',
+    right: -20,
+    top: 45,
+  },
+  sun: {
+    position: 'absolute',
+    bottom: 0,
+    right: 70,
+    fill: 'red',
   },
   info: {
     backgroundColor: Colors.EffectivelyBlack,
@@ -88,36 +95,6 @@ const pSummaryStyle = {
     marginTop: 10,
     marginBottom: 10,
   },
-  summaryWrapper: {
-    flex: 0,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
-  summary: {
-    flex: 0,
-    flexDirection: 'column',
-    marginTop: 10,
-    marginBottom: 10,
-    marginRight: 30,
-    width: 120,
-  },
-  summaryValue: {
-    fontSize: 28,
-    fontFamily: FONT_FAMILY_LIGHT,
-  },
-  summaryLabel: {
-    color: Colors.DarkGray,
-    fontFamily: FONT_FAMILY_SEMIBOLD,
-  },
-  hr: {
-    width: 270,
-    height: 1,
-    backgroundColor: Colors.LightGray,
-    marginTop: 20,
-    marginBottom: 20,
-    alignSelf: 'center',
-  },
   buttonWrapper: {
     flex: 0,
     flexDirection: 'row',
@@ -126,7 +103,7 @@ const pSummaryStyle = {
     borderRadius: 15,
     marginRight: 10,
 
-    backgroundColor: '#2363BC',
+    backgroundColor: '#FC6E2F',
     paddingTop: 15,
     paddingBottom: 15,
     flex: 1,
@@ -136,7 +113,7 @@ const pSummaryStyle = {
     alignSelf: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    bottom: -20,
+    bottom: -50,
     z: 10,
   },
   buttonText: {
@@ -152,4 +129,4 @@ const pSummaryStyle = {
   },
 };
 
-export default pSummaryStyle;
+export default newFortnightStyle;
