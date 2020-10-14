@@ -82,9 +82,6 @@ const EditIncome = ({ onClose }) => {
             <View style={style.greyBubbleView}>
                 <Text style={style.description}>Income that is approximately this amount will be automatically detected as paycheck in the future.</Text>
             </View>
-            <View>
-
-            </View>
             
             <View style={{flexDirection: "row", width: Dimensions.get("window").width}}>
                 <TouchableOpacity onPress={ onClose }>

@@ -74,11 +74,7 @@ const EditRecurringCosts = ({ onClose }) => {
                 <Text style={style.darkGrayHeader}>Fortnightly Income</Text>
             </View>
             <View>
-<<<<<<< HEAD
-            <TextInput 
-=======
                 <TextInput 
->>>>>>> add-goal-screen
                     style={style.blackHeader}
                     placeholder="Cost Name"
                 />
@@ -86,15 +82,7 @@ const EditRecurringCosts = ({ onClose }) => {
             <View style={style.greyBubbleView}>
                 <Text style={style.description}>Recurring costs are deducted from income at the start of the period to calculate available spending amount.</Text>
             </View>
-            <View>
-<<<<<<< HEAD
-                
-            </View>
-=======
-
-            </View>
             
->>>>>>> add-goal-screen
             <View style={{flexDirection: "row", width: Dimensions.get("window").width}}>
                 <TouchableOpacity onPress={ onClose }>
                     <View style={{width: Dimensions.get("window").width*0.35, marginTop: 20, marginBottom: 10, marginLeft: 10}}>
