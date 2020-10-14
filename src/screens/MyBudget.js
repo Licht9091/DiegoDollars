@@ -10,7 +10,11 @@ import SmallPill from "../components/SmallPill";
 import MediumPill from "../components/MediumPill";
 import { FONT_FAMILY_SEMIBOLD } from "../styles/typography";
 import navigateAndReset from "../helper/functions";
-import { LinearGradient } from 'react-native-svg';
+import Modal from 'react-native-modal';
+import AddIncome from '../components/AddIncome';
+import AddRecurringCosts from '../components/AddRecurringCosts';
+import EditIncome from '../components/EditIncome';
+import EditRecurringCosts from '../components/EditRecurringCosts';
 
 const style = {
     BubbleView: {
@@ -136,11 +140,6 @@ const style = {
         borderBottomWidth: 1,
         alignSelf: "stretch",
       },
-      defaultLineBlack: {
-        borderBottomColor: Colors.Black,
-        borderBottomWidth: 1,
-        alignSelf: "stretch",
-      },
       loadWrapper: {
         backgroundColor: Colors.Primary,
         minHeight: window.height,
@@ -186,6 +185,26 @@ export default function MyBudget( {navigation, route} ) {
     const { goals } = route.params;
 
     const [data, setData] = useState("undefined");
+    const [addIncome, setAddIncomes] = useState(false);
+    const [addRecurringCosts, setAddRecurringCosts] = useState(false);
+    const [editIncome, setEditIncome] = useState(false);
+    const [editRecurringCosts, setEditRecurringCosts] = useState(false);
+
+    const toggleAddIncomes = () => {
+        setAddIncomes(!addIncome);
+    };
+
+    const toggleAddRecurringCosts = () => {
+        setAddRecurringCosts(!addRecurringCosts);
+    };
+
+    const toggleEditIncomes = () => {
+        setEditIncome(!editIncome);
+    };
+
+    const toggleEditRecurringCosts = () => {
+        setEditRecurringCosts(!editRecurringCosts);
+    };
 
     const setupUser = async () => {
         _account = await Context.User.getAccount();
@@ -208,6 +227,38 @@ export default function MyBudget( {navigation, route} ) {
       }); 
 
   return <View style={style.budgetView}>
+        {true && (
+          <Modal isVisible={addIncome}>
+            <AddIncome
+              onClose={toggleAddIncomes}
+            ></AddIncome>
+          </Modal>
+        )}
+
+        {true && (
+          <Modal isVisible={addRecurringCosts}>
+            <AddRecurringCosts
+              onClose={toggleAddRecurringCosts}
+            ></AddRecurringCosts>
+          </Modal>
+        )}
+
+        {true && (
+          <Modal isVisible={editIncome}>
+            <EditIncome
+              onClose={toggleEditIncomes}
+            ></EditIncome>
+          </Modal>
+        )}
+
+        {true && (
+          <Modal isVisible={editRecurringCosts}>
+            <EditRecurringCosts
+              onClose={toggleEditRecurringCosts}
+            ></EditRecurringCosts>
+          </Modal>  
+        )}
+
     <ScrollView>
         
     <Text style={style.budgetHeader}>
@@ -261,6 +312,7 @@ export default function MyBudget( {navigation, route} ) {
                     content="Add"
                     color={Colors.White}
                     backgroundColor={"#232323"}
+                    onPress={ toggleAddIncomes }
                 />
             </View>
         </View>
@@ -280,6 +332,7 @@ export default function MyBudget( {navigation, route} ) {
                     content="Edit"
                     color={Colors.White}
                     backgroundColor={"#2363BC"}
+                    onPress={ toggleEditIncomes }
                 />
             </View>
         </View>
@@ -313,6 +366,7 @@ export default function MyBudget( {navigation, route} ) {
                     content="Add"
                     color={Colors.White}
                     backgroundColor={"#232323"}
+                    onPress= { toggleAddRecurringCosts }
                 />
             </View>
         </View>
@@ -332,6 +386,7 @@ export default function MyBudget( {navigation, route} ) {
                     content="Edit"
                     color={Colors.White}
                     backgroundColor={"#2363BC"}
+                    onPress= { toggleEditRecurringCosts }
                 />
             </View>
         </View>
@@ -365,6 +420,10 @@ export default function MyBudget( {navigation, route} ) {
                     content="View Goal"
                     color={Colors.White}
                     backgroundColor={"#232323"}
+                    onPress={() =>
+                        navigation.navigate("MyGoals", {
+                          navigatedState: "all",
+                        })}
                 />
             </View>
         </View>
