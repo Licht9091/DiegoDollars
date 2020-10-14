@@ -8,9 +8,11 @@ import transactionStyles from "./Transactions/TransactionsScreen.style";
 import BottomBar from "../components/BottomBar";
 import Format from "../helper/Format";
 import TransactionListComponent from "../components/TransactionListComponent";
+import SingleTransactionScreen from "./SingleTransactionScreen";
 import { SearchBar } from "react-native-elements";
 import Pill from "../components/Pill";
 import Colors from "../styles/colors";
+import Modal from "react-native-modal";
 
 export default function TransactionScreen({ route, navigation }) {
   // "all", "income", "expense"
@@ -20,6 +22,9 @@ export default function TransactionScreen({ route, navigation }) {
 
   const [searchContents, setSearchContents] = useState("");
   const [filterType, setFilterType] = useState(navigatedState);
+
+  const [showSingleTransaction, setSingleTransaction] = useState(false);
+  const [currentTransaction, setCurrentTransaction] = useState(null);
 
   const Context = useContext(AppContext);
 
@@ -54,11 +59,24 @@ export default function TransactionScreen({ route, navigation }) {
     }, 1000);
   });
 
+  const toggleModal = () => {
+    setSingleTransaction(!showSingleTransaction);
+  };
+
   // Local Styles
 
   // Sorry that this is a complete mess :(. Need to make each of these a component probs
   return (
     <>
+      {true && (
+        <Modal isVisible={showSingleTransaction}>
+          <SingleTransactionScreen
+            transaction={currentTransaction}
+            onClose={toggleModal}
+            navigatedState={navigatedState}
+          />
+        </Modal>
+      )}
       <View style={transactionStyles.mainView}>
         {/* Header */}
         <View style={transactionStyles.topHeading}>
@@ -106,10 +124,17 @@ export default function TransactionScreen({ route, navigation }) {
               .sort((a, b) => new Date(b.date) - new Date(a.date))
               .map((transaction) => {
                 return (
-                  <TransactionListComponent
-                    transaction={transaction}
-                    navigatedState={navigatedState}
-                  />
+                  <TouchableOpacity
+                    onPress={() => {
+                      setSingleTransaction(true);
+                      setCurrentTransaction(transaction);
+                    }}
+                  >
+                    <TransactionListComponent
+                      transaction={transaction}
+                      navigatedState={navigatedState}
+                    />
+                  </TouchableOpacity>
                 );
               })}
           </View>

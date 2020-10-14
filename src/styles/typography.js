@@ -1,12 +1,12 @@
 // FONT FAMILY
-export const FONT_FAMILY_REGULAR = 'montserrat';
-export const FONT_FAMILY_BOLD = 'montserratBold';
-export const FONT_FAMILY_LIGHT = 'montserratLight';
-export const FONT_FAMILY_SEMIBOLD = 'montserratSemiBold';
+export const FONT_FAMILY_REGULAR = "montserrat";
+export const FONT_FAMILY_BOLD = "montserratBold";
+export const FONT_FAMILY_LIGHT = "montserratLight";
+export const FONT_FAMILY_SEMIBOLD = "montserratSemiBold";
 
 // FONT WEIGHT
-export const FONT_WEIGHT_REGULAR = '400';
-export const FONT_WEIGHT_BOLD = '700';
+export const FONT_WEIGHT_REGULAR = "400";
+export const FONT_WEIGHT_BOLD = "700";
 
 // FONT SIZE
 export const FONT_SIZE_HEADER = 14;
