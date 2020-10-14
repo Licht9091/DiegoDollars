@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 import {
   Image,
   ScrollView,
@@ -6,22 +6,23 @@ import {
   View,
   Dimensions,
   ActivityIndicator,
-} from 'react-native';
-import BottomBar from '../../components/BottomBar';
-import PieChart from '../../components/PieChart';
-import Pill from '../../components/Pill';
-import AppContext from '../../helper/context';
-import Format from '../../helper/Format';
-import Colors from '../../styles/colors';
-import { STYLESHEET } from '../../styles/stylesheet';
-import mainStyle from './MainScreen.style';
-import { round } from 'react-native-reanimated';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import PaychecksReceived from '../../components/PaychecksReceived';
-import Modal from 'react-native-modal';
+} from "react-native";
+import BottomBar from "../../components/BottomBar";
+import PieChart from "../../components/PieChart";
+import Pill from "../../components/Pill";
+import AppContext from "../../helper/context";
+import Format from "../../helper/Format";
+import Colors from "../../styles/colors";
+import { STYLESHEET } from "../../styles/stylesheet";
+import mainStyle from "./MainScreen.style";
+import { round } from "react-native-reanimated";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import PaychecksReceived from "../../components/PaychecksReceived";
+import Modal from "react-native-modal";
+import PeriodSummary from "../../components/PeriodSummary";
 
 const iconStyle = {
   opacity: 0.8,
@@ -35,6 +36,7 @@ const MainScreen = ({ navigation }) => {
   // Empty data useState
   const [data, setData] = useState(undefined);
   const [showPayChecks, setShowPayChecks] = useState(false);
+  const [periodSummary, setPeriodSummary] = useState(false);
 
   const toggleShowPayChecks = () => {
     setShowPayChecks(!showPayChecks);
@@ -86,9 +88,16 @@ const MainScreen = ({ navigation }) => {
             ></PaychecksReceived>
           </Modal>
         )}
+        {true && (
+          <Modal isVisible={periodSummary}>
+            <PeriodSummary
+            // onClose={toggleShowPayChecks}
+            ></PeriodSummary>
+          </Modal>
+        )}
         {(!loaded || !data) && (
           <ScrollView style={mainStyle.loadWrapper}>
-            <ActivityIndicator size='large' color='white' />
+            <ActivityIndicator size="large" color="white" />
           </ScrollView>
         )}
         {data && loaded && (
@@ -112,11 +121,12 @@ const MainScreen = ({ navigation }) => {
                     <FontAwesomeIcon
                       style={iconStyle}
                       icon={faInfoCircle}
-                      size={Dimensions.get('window').height * 0.03}
+                      size={Dimensions.get("window").height * 0.03}
                       color={Colors.White}
                       onPress={() => {
-                        navigation.navigate('Budget', {
-                          navigatedState: navigation, goals : data.goals
+                        navigation.navigate("Budget", {
+                          navigatedState: navigation,
+                          goals: data.goals,
                         });
                       }}
                     />
@@ -133,8 +143,8 @@ const MainScreen = ({ navigation }) => {
                   color={Colors.DarkerGray}
                   backgroundColor={Colors.White}
                   onPress={() =>
-                    navigation.navigate('Transactions', {
-                      navigatedState: 'expense',
+                    navigation.navigate("Transactions", {
+                      navigatedState: "expense",
                     })
                   } // "expense"
                 />
@@ -151,7 +161,7 @@ const MainScreen = ({ navigation }) => {
               <View>
                 <Image
                   style={mainStyle.chartImg}
-                  source={require('./chart.png')}
+                  source={require("./chart.png")}
                 />
               </View>
             </View>
@@ -170,8 +180,9 @@ const MainScreen = ({ navigation }) => {
                       ...STYLESHEET.shadowNormal,
                     }}
                     onPress={() =>
-                      navigation.navigate('MyGoals', {
-                        goal: goal, navigatedState: "income"
+                      navigation.navigate("MyGoals", {
+                        goal: goal,
+                        navigatedState: "income",
                       })
                     }
                   >
@@ -197,7 +208,7 @@ const MainScreen = ({ navigation }) => {
                     ...mainStyle.createGoalBtn,
                     ...STYLESHEET.shadowNormal,
                   }}
-                  onPress={() => navigation.navigate('AddGoal')}
+                  onPress={() => navigation.navigate("AddGoal")}
                 >
                   <Text // The navigation here should be on the whole button not the text
                     style={mainStyle.createGoalBtnText}
@@ -220,14 +231,14 @@ const MainScreen = ({ navigation }) => {
                       key={category.name}
                       style={mainStyle.spendWrapper}
                       onPress={() =>
-                        navigation.navigate('Transactions', {
+                        navigation.navigate("Transactions", {
                           navigatedState: category.name,
                         })
                       } // "income"
                     >
                       <PieChart
                         value={category.percent}
-                        color='#13629B'
+                        color="#13629B"
                         size={85}
                         showPercentage
                       />

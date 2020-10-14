@@ -160,7 +160,6 @@ const style = {
         backgroundColor: Colors.White,
         height: Dimensions.get('window').height,
       },
-
       container: {
         flex: 1,
         alignItems: 'center',
@@ -292,8 +291,11 @@ export default function MyBudget( {navigation, route} ) {
                 onChangeText={text => setMonthStartDates(text)}
                 value={monthStartDates}
             />
+            <Text style={{color : Colors.White, fontSize: 24}}>
+                /
+            </Text>
             <TextInput
-                style={{borderWidth: 0, color: Colors.White, fontSize: 24}}
+                style={{borderWidth: 0, color: Colors.White, fontSize: 24, marginLeft: 5}}
                 onChangeText={text => setDayStartDates(text)}
                 value={dayStartDates}
             />        
@@ -438,7 +440,7 @@ export default function MyBudget( {navigation, route} ) {
             </View>
             <View style={style.textView}>
                 <Text style={style.defaultHeaderDarkGray2}>
-                    ${goal.goalAmount}
+                    ${goal.currentContribution}
                 </Text>
             </View>
             <View style={style.pillView}>

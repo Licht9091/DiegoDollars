@@ -9,6 +9,7 @@ const Colors = {
   White: '#FFFFFF',
   Black: '#000000',
   Red: '#F04444',
+  Teal: '#48d1cc',
 
   // ACTIONS
   Success: '#3adb76',
@@ -21,6 +22,7 @@ const Colors = {
   DarkGray: '#8a8a8a',
   DarkerGray: '#565758',
   VeryDarkGray: '#3C3C3C',
+  EffectivelyBlack: '#2F2F2F',
 };
 
 export default Colors;

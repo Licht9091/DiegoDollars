@@ -11,14 +11,14 @@ export const STYLESHEET = StyleSheet.create({
     minHeight: Dimensions.get("window").height,
     padding: H_PADDING,
   },
-  headerView:{
+  headerView: {
     backgroundColor: Colors.Primary,
-    fontSize: Dimensions.get('window').width/20,
+    fontSize: Dimensions.get("window").width / 20,
     color: Colors.White,
-    minHeight: Dimensions.get('window').height/12,
-    width: Dimensions.get('window').width,
-    paddingVertical: Dimensions.get('window').height/25,
-    textAlign: 'center',
+    minHeight: Dimensions.get("window").height / 12,
+    width: Dimensions.get("window").width,
+    paddingVertical: Dimensions.get("window").height / 25,
+    textAlign: "center",
   },
   // Default for <Text /> when used as a header
   defaultHeader: {
