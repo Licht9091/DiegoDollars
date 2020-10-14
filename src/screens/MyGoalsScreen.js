@@ -224,9 +224,10 @@ export default function MyGoals({ navigation, route }) {
   const [expenseButtonPressed, setExpenButton] = useState(false);
   const [incomeButtonPressed, setIncomeButton] = useState(false);
 
-  const [spentDistance, setSpentDistance] = useState(50);
-  const [savedDistance, setSavedDistance] = useState(50);
-  const [goalDistance, setGoalDistanceDistance] = useState(50);
+  //All distances need to add up to 150, so percentages are used
+  const [spentDistance, setSpentDistance] = useState(150*1/3);
+  const [savedDistance, setSavedDistance] = useState(150*1/3);
+  const [goalDistance, setGoalDistanceDistance] = useState(150*1/3);
 
   const { search } = state;
 
@@ -326,10 +327,10 @@ export default function MyGoals({ navigation, route }) {
                     </View>
                   </View>
                   <View>
-                    <Text style={{borderLeftColor: Colors.DarkGray, borderLeftWidth: 10, borderRadius: 10, height : 90}}></Text>
-                    <Diego style={{position: 'absolute', height: 180, width: 40, left: -15, elevation: 0.1}}></Diego>
-                    <Text style={{borderLeftColor: Colors.PrimaryLight, borderLeftWidth: 10, height : 50}}></Text>
-                    <Text style={{borderLeftColor: Colors.Teal, borderLeftWidth: 10, height : 50}}></Text>
+                    <Text style={{borderLeftColor: Colors.DarkGray, borderLeftWidth: 10, borderRadius: 10, height : goalDistance + 40}}></Text>
+                    <Diego style={{position: 'absolute', height: 2*(goalDistance + 40), width: 40, left: -15, elevation: 0.1}}></Diego>
+                    <Text style={{borderLeftColor: Colors.PrimaryLight, borderLeftWidth: 10, height : savedDistance}}></Text>
+                    <Text style={{borderLeftColor: Colors.Teal, borderLeftWidth: 10, height : spentDistance}}></Text>
                   </View>
                 </View>
               </View>
