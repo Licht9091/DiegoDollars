@@ -1,17 +1,17 @@
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import React from "react";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 
-import FONT_FAMILY_SEMIBOLD from '../styles/typography';
-import Colors from '../styles/colors';
-import transactionStyles from '../screens/Transactions/TransactionsScreen.style';
-import Format from '../helper/Format';
+import FONT_FAMILY_SEMIBOLD from "../styles/typography";
+import Colors from "../styles/colors";
+import transactionStyles from "../screens/Transactions/TransactionsScreen.style";
+import Format from "../helper/Format";
 
 export default function TransactionListComponent(props) {
   let transaction = props.transaction;
   let navigatedState = props.navigatedState;
   //const niceDate = moment(transaction.date).format("D MMMM");
   const dollars = Format.toDollars(
-    navigatedState === 'expense' ? -1 * transaction.value : transaction.value
+    transaction.isIncome ? transaction.value : transaction.value * -1
   );
   const cents = Format.toCents(transaction.value);
 
@@ -41,19 +41,19 @@ export default function TransactionListComponent(props) {
 
 const style = StyleSheet.create({
   incomeView: {
-    width: '100%',
-    flexDirection: 'row',
+    width: "100%",
+    flexDirection: "row",
     marginTop: 10,
     marginBottom: 10,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   incomeNameView: {
-    width: Dimensions.get('window').width - 180,
+    width: Dimensions.get("window").width - 180,
     flex: 0,
   },
   moneyDollars: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    fontWeight: '100',
+    fontWeight: "100",
     fontSize: 20,
     color: Colors.DarkerGray,
     paddingLeft: 10,
@@ -61,7 +61,7 @@ const style = StyleSheet.create({
   },
   moneyCents: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    fontWeight: '100',
+    fontWeight: "100",
     fontSize: 10,
     paddingTop: 3,
     color: Colors.DarkerGray,

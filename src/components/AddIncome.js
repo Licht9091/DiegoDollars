@@ -1,10 +1,9 @@
 import React from 'react';
 import { View, Text, Dimensions, TextInput, TouchableOpacity } from 'react-native';
 import { STYLESHEET } from '../styles/stylesheet';
-import { FONT_FAMILY_BOLD, FONT_FAMILY_LIGHT, FONT_FAMILY_SEMIBOLD } from '../styles/typography';
+import { FONT_FAMILY_LIGHT, FONT_FAMILY_SEMIBOLD } from '../styles/typography';
 import Colors from '../styles/colors';
 import Pill from './Pill';
-import AppContext from '../helper/context';
 
 const AddIncome = ({ onClose }) => {
     const style = {
@@ -80,7 +79,7 @@ const AddIncome = ({ onClose }) => {
                 <Text style={style.description}>Income that is approximately this amount will be automatically detected as paycheck in the future.</Text>
             </View>
             <View>
-
+                
             </View>
             <View>
                 <TextInput 

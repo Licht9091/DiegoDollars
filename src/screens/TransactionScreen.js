@@ -1,27 +1,30 @@
-import moment from 'moment';
-import React, { useContext, useEffect, useState } from 'react';
-import { Text, View, ActivityIndicator } from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import AppContext from '../helper/context';
-import { STYLESHEET } from '../styles/stylesheet';
-import transactionStyles from './Transactions/TransactionsScreen.style';
-import BottomBar from '../components/BottomBar';
-import Format from '../helper/Format';
-import TransactionListComponent from '../components/TransactionListComponent';
-import SingleTransactionScreen from './SingleTransactionScreen';
-import { SearchBar } from 'react-native-elements';
-import Pill from '../components/Pill';
-import Colors from '../styles/colors';
-import Modal from 'react-native-modal';
+import moment from "moment";
+import React, { useContext, useEffect, useState } from "react";
+import { Text, View, ActivityIndicator } from "react-native";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import AppContext from "../helper/context";
+import { STYLESHEET } from "../styles/stylesheet";
+import transactionStyles from "./Transactions/TransactionsScreen.style";
+import BottomBar from "../components/BottomBar";
+import Format from "../helper/Format";
+import TransactionListComponent from "../components/TransactionListComponent";
+import SingleTransactionScreen from "./SingleTransactionScreen";
+import { SearchBar } from "react-native-elements";
+import Pill from "../components/Pill";
+import Colors from "../styles/colors";
+import Modal from "react-native-modal";
 
 export default function TransactionScreen({ route, navigation }) {
   // "all", "income", "expense"
   const [data, setData] = useState([]);
   const [loaded, setLoaded] = useState(false);
+  const [incomeToggled, setIncomeToggled] = useState(true);
+  const [expensesToggled, setExpensesToggled] = useState(true);
+
   const { navigatedState } = route.params; // "expense", "income" or "all". Can use this for determining which page we navigated from.
 
-  const [searchContents, setSearchContents] = useState('');
-  const [filterType, setFilterType] = useState(navigatedState);
+  const [searchContents, setSearchContents] = useState("");
+  const [filterType, setFilterType] = useState("");
 
   const [showSingleTransaction, setSingleTransaction] = useState(false);
   const [currentTransaction, setCurrentTransaction] = useState(null);
@@ -30,21 +33,60 @@ export default function TransactionScreen({ route, navigation }) {
 
   const updateTransactionList = async () => {
     _account = await Context.User.getAccount();
-    if (navigatedState === 'expense') {
+    if (navigatedState === "expense") {
       _data = _account.uncategorisedExpenses;
-    } else if (navigatedState === 'income') {
+      setExpensesToggled(true);
+    } else if (navigatedState === "income") {
       _data = _account.uncategorisedIncome;
-    } else if (navigatedState === 'all') {
+      setIncomeToggled(true);
+    } else if (navigatedState === "all") {
       _data = _account.allTransactions;
+      setExpensesToggled(true);
+      setIncomeToggled(true);
     } else {
+      setExpensesToggled(true);
+      setIncomeToggled(true);
+      setSearchContents(navigatedState);
       _data = await _account.getTransactionsByCategory(navigatedState);
     }
 
     setData(_data);
   };
 
+  const updateFilterType = (type) => {
+    console.log("TYPE: " + type);
+    if (type == "income") {
+      setIncomeToggled(!incomeToggled);
+    } else if (type == "expense") {
+      setExpensesToggled(!expensesToggled);
+    }
+  };
+
+  const correctFilterType = () => {
+    if (incomeToggled && expensesToggled) {
+      setFilterType("all");
+    } else if (!incomeToggled && !expensesToggled) {
+      setFilterType("");
+    } else if (incomeToggled) {
+      setFilterType("income");
+    } else if (expensesToggled) {
+      setFilterType("expense");
+    }
+  };
+
+  // This one waits for income or expense to toggle
+  useEffect(() => {
+    correctFilterType();
+  }, [incomeToggled, expensesToggled]);
+
+  // Then this waits for filter type to change
+  useEffect(() => {
+    filterTransactions();
+  }, [filterType]);
+
   const filterTransactions = async () => {
     _account = await Context.User.getAccount();
+
     _data = await _account.getFilteredTransactions(filterType, searchContents);
 
     setData(_data);
@@ -86,16 +128,28 @@ export default function TransactionScreen({ route, navigation }) {
         <View style={transactionStyles.searchBarLine}>
           {/* First Button */}
           <TouchableOpacity
-            style={transactionStyles.filterButton}
-            onPress={() => setFilterType('Expenses')}
+            style={
+              expensesToggled
+                ? transactionStyles.filterButtonPressed
+                : transactionStyles.filterButton
+            }
+            onPress={() => {
+              updateFilterType("expense");
+            }}
           >
             <Text style={transactionStyles.filterButtonText}>EXPENSES</Text>
           </TouchableOpacity>
 
           {/* Second Button */}
           <TouchableOpacity
-            style={transactionStyles.filterButton}
-            onPress={() => setFilterType('Income')}
+            style={
+              incomeToggled
+                ? transactionStyles.filterButtonPressed
+                : transactionStyles.filterButton
+            }
+            onPress={() => {
+              updateFilterType("income");
+            }}
           >
             <Text style={transactionStyles.filterButtonText}>INCOME</Text>
           </TouchableOpacity>
@@ -106,7 +160,7 @@ export default function TransactionScreen({ route, navigation }) {
             containerStyle={transactionStyles.searchBarContainer}
             inputContainerStyle={transactionStyles.searchBarContainer}
             inputStyle={transactionStyles.searchBarInput}
-            placeholder='Search...'
+            placeholder="Search..."
             onChangeText={(searchContents) => setSearchContents(searchContents)}
             onEndEditing={() => filterTransactions()}
             value={searchContents}
@@ -118,7 +172,7 @@ export default function TransactionScreen({ route, navigation }) {
 
         <ScrollView>
           <View style={transactionStyles.transactionView}>
-            {!loaded && <ActivityIndicator size='large' color='white' />}
+            {!loaded && <ActivityIndicator size="large" color="white" />}
             {data
               .sort((a, b) => new Date(b.date) - new Date(a.date))
               .map((transaction) => {
