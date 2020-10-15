@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Image, Text, View, TouchableOpacity, Picker} from 'react-native';
-import AppContext from '../helper/context';
-import Paycheck from './Paycheck';
+import React, { useContext, useEffect, useState } from "react";
+import { Image, Text, View, TouchableOpacity, Picker } from "react-native";
+import AppContext from "../helper/context";
+import Paycheck from "./Paycheck";
 import { Dimensions } from "react-native";
 import Colors from "../styles/colors";
 import { STYLESHEET } from "../styles/stylesheet";
@@ -11,14 +11,14 @@ import {
 } from "../styles/typography";
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import paycheckStyle from './PaychecksReceived.style';
+import paycheckStyle from "./PaychecksReceived.style";
 import navigateAndReset from "../helper/functions";
-import DatePicker from 'react-native-datepicker'
+import DatePicker from "react-native-datepicker";
 
-import PlanetOne from '../assets/planet1.svg';
-import PlanetTwo from '../assets/planet2.svg';
-import PlanetRing from '../assets/planetRing.svg';
-import { TextInput } from 'react-native-gesture-handler';
+import PlanetOne from "../assets/planet1.svg";
+import PlanetTwo from "../assets/planet2.svg";
+import PlanetRing from "../assets/planetRing.svg";
+import { TextInput } from "react-native-gesture-handler";
 
 const newGoalStyle = {
   header: {
@@ -84,11 +84,11 @@ const newGoalStyle = {
   },
   completeButton: {
     backgroundColor: Colors.Black,
-  }
-}
-  const iconStyle = {
-    opacity: 0.8,
-  };
+  },
+};
+const iconStyle = {
+  opacity: 0.8,
+};
 
 const NewGoal = ({ onClose, goal, navigation }) => {
   const Context = useContext(AppContext);
@@ -106,7 +106,12 @@ const NewGoal = ({ onClose, goal, navigation }) => {
 
   const createGoal = async () => {
     // Add spinny here
-    success = await Context.User.setGoal(goalName, goalAmount);
+    success = await Context.User.setGoal(
+      goalName,
+      goalAmount,
+      fortnightlyGoal,
+      completionDate
+    );
 
     // Stop spinny here
     if (success) {
@@ -127,104 +132,142 @@ const NewGoal = ({ onClose, goal, navigation }) => {
       </View>
       <View style={newGoalStyle.info}>
         <Text style={newGoalStyle.infoText}>
-          Create a goal to start saving towards a new target. 
-          Deigo will allocate money into your goal every fortnight, and track your progress each step of the way
+          Create a goal to start saving towards a new target. Deigo will
+          allocate money into your goal every fortnight, and track your progress
+          each step of the way
         </Text>
       </View>
       <View style={newGoalStyle.content}>
         <View paddingBottom={30}>
-            <Text style={newGoalStyle.optionsText}>
-                Goal name
+          <Text style={newGoalStyle.optionsText}>Goal name</Text>
+          <TextInput
+            style={{
+              color: Colors.Black,
+              fontSize: 16,
+              height: 40,
+              borderBottomWidth: 0.5,
+              borderBottomColor: Colors.MediumGray,
+            }}
+            placeholder="Enter goal name"
+            onChangeText={(goalName) => setGoalName(goalName)}
+            value={goalName}
+          />
+        </View>
+        <View flexDirection={"row"}>
+          <View width={(Dimensions.get("window").width - 50) / 2}>
+            <Text style={newGoalStyle.optionsText}>Target amount</Text>
+          </View>
+          <Text style={newGoalStyle.optionsText}>Type</Text>
+        </View>
+        <View flexDirection={"row"} paddingBottom={20}>
+          <View
+            style={{
+              width: (Dimensions.get("window").width - 70) / 2,
+              flexDirection: "row",
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: FONT_FAMILY_SEMIBOLD,
+                color: Colors.Black,
+                fontSize: 20,
+                paddingRight: 20,
+              }}
+            >
+              $
             </Text>
             <TextInput
-              style={{color: Colors.Black, fontSize: 16, height: 40, borderBottomWidth: 0.5, borderBottomColor: Colors.MediumGray}}
-              placeholder="Enter goal name"
-              onChangeText={(goalName) => setGoalName(goalName)}
-              value={goalName}
-            />
-        </View>
-        <View flexDirection={"row"}>
-            <View width={(Dimensions.get("window").width - 50)/2}>
-                <Text style={newGoalStyle.optionsText}>
-                    Target amount
-                </Text>
-            </View>
-            <Text style={newGoalStyle.optionsText}>
-                Type
-            </Text>
-        </View>
-        <View flexDirection={"row"} paddingBottom={20}>
-            <View style={{width: (Dimensions.get("window").width - 70)/2, flexDirection: "row"}}>
-                <Text style={{fontFamily: FONT_FAMILY_SEMIBOLD, color: Colors.Black, fontSize: 20, paddingRight: 20}}>$</Text>
-                <TextInput
-                  placeholder="2500.0"
-                  style={{fontFamily: FONT_FAMILY_SEMIBOLD, color: Colors.MediumGray, height: 30, width: 100}}
-                  onChangeText={(goalAmount) => setGoalAmount(goalAmount)}
-                  value={goalAmount}
-                />
-            </View>
-            <Picker
-              selectedValue={selected}
-              style={{ height: 30, width: 150 }}
-              onValueChange={(itemValue) => setSelected(itemValue)}
-            >
-              <Picker.Item label="One-Off" value="one-off" />
-              <Picker.Item label="Continuous" value="continuous" />
-            </Picker>
-        </View>
-        <View flexDirection={"row"}>
-            <View width={(Dimensions.get("window").width - 50)/2}>
-                <Text style={newGoalStyle.optionsText}>
-                    Allocate per fortnight
-                </Text>
-            </View>
-            <Text style={newGoalStyle.optionsText}>
-                Complete by
-            </Text>
-        </View>
-        <View flexDirection={"row"} paddingBottom={20}>
-            <View width={(Dimensions.get("window").width - 50)/2} flexDirection={"row"}>
-                <Text style={{fontFamily: FONT_FAMILY_SEMIBOLD, color: Colors.Black, fontSize: 20, paddingRight: 20}}>$</Text>
-                <TextInput
-                    placeholder="250.00"
-                    style={{fontFamily: FONT_FAMILY_SEMIBOLD, color: Colors.MediumGray, height: 30, width: 100}}
-                    onChangeText={(fortnightlyGoal) => setFortnightlyGoal(fortnightlyGoal)}
-                    value={fortnightlyGoal}
-                />
-            </View>
-            <DatePicker
-              mode="date"
-              placeholder="Select Date"
-              format="DD-MM-YYYY"
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              date={date}
-              showIcon={false}
-              style={{left: -30 }}
-              customStyles={{
-                dateInput: {
-                  borderWidth: 0,
-                  color: Colors.DarkGray
-                },
-                dateText: {
-                  fontFamily: FONT_FAMILY_SEMIBOLD, 
-                  color: Colors.MediumGray
-                }
+              placeholder="2500.0"
+              style={{
+                fontFamily: FONT_FAMILY_SEMIBOLD,
+                color: Colors.MediumGray,
+                height: 30,
+                width: 100,
               }}
-              onDateChange={(date) => setDate(date)}
+              onChangeText={(goalAmount) => setGoalAmount(goalAmount)}
+              value={goalAmount}
             />
+          </View>
+          <Picker
+            selectedValue={selected}
+            style={{ height: 30, width: 150 }}
+            onValueChange={(itemValue) => setSelected(itemValue)}
+          >
+            <Picker.Item label="One-Off" value="one-off" />
+            <Picker.Item label="Continuous" value="continuous" />
+          </Picker>
         </View>
         <View flexDirection={"row"}>
-            <FontAwesomeIcon
-                style={iconStyle}
-                icon={faExclamationTriangle}
-                size={Dimensions.get("window").height * 0.02}
-                color={Colors.DarkGray}
-                marginRight={10}
-            />
-            <Text style={{fontSize: 12, color: Colors.DarkGray}}>
-                You'll likely need more time to complete this goal
+          <View width={(Dimensions.get("window").width - 50) / 2}>
+            <Text style={newGoalStyle.optionsText}>Allocate per fortnight</Text>
+          </View>
+          <Text style={newGoalStyle.optionsText}>Complete by</Text>
+        </View>
+        <View flexDirection={"row"} paddingBottom={20}>
+          <View
+            width={(Dimensions.get("window").width - 50) / 2}
+            flexDirection={"row"}
+          >
+            <Text
+              style={{
+                fontFamily: FONT_FAMILY_SEMIBOLD,
+                color: Colors.Black,
+                fontSize: 20,
+                paddingRight: 20,
+              }}
+            >
+              $
             </Text>
+            <TextInput
+              placeholder="250.00"
+              style={{
+                fontFamily: FONT_FAMILY_SEMIBOLD,
+                color: Colors.MediumGray,
+                height: 30,
+                width: 100,
+              }}
+              onChangeText={(fortnightlyGoal) =>
+                setFortnightlyGoal(fortnightlyGoal)
+              }
+              value={fortnightlyGoal}
+            />
+          </View>
+          <DatePicker
+            mode="date"
+            placeholder="Select Date"
+            format="DD-MM-YYYY"
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            date={date}
+            showIcon={false}
+            style={{ left: -30 }}
+            customStyles={{
+              dateInput: {
+                borderWidth: 0,
+                color: Colors.DarkGray,
+              },
+              dateText: {
+                fontFamily: FONT_FAMILY_SEMIBOLD,
+                color: Colors.MediumGray,
+              },
+            }}
+            onDateChange={(date) => {
+              setDate(date);
+              setCompletionDate(date);
+            }}
+          />
+        </View>
+        <View flexDirection={"row"}>
+          <FontAwesomeIcon
+            style={iconStyle}
+            icon={faExclamationTriangle}
+            size={Dimensions.get("window").height * 0.02}
+            color={Colors.DarkGray}
+            marginRight={10}
+          />
+          <Text style={{ fontSize: 12, color: Colors.DarkGray }}>
+            You'll likely need more time to complete this goal
+          </Text>
         </View>
         <View style={newGoalStyle.buttonWrapper}>
           <TouchableOpacity style={paycheckStyle.touchable} onPress={onClose}>

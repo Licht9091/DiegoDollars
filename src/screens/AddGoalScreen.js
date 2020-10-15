@@ -10,14 +10,19 @@ import navigateAndReset from "../helper/functions";
 const AddGoal = ({ navigation }) => {
   const [goalName, setGoalName] = useState("");
   const [goalAmount, setGoalAmount] = useState("");
-  const [fornightlyGoal, setFortnightlyGoal] = useState("");
+  const [fortnightlyGoal, setFortnightlyGoal] = useState("");
   const [completionDate, setCompletionDate] = useState("");
 
   const Context = useContext(AppContext);
 
   const createGoal = async () => {
     // Add spinny here
-    success = await Context.User.setGoal(goalName, goalAmount);
+    success = await Context.User.setGoal(
+      goalName,
+      goalAmount,
+      100,
+      "30-10-2020"
+    );
 
     // Stop spinny here
     if (success) {
@@ -50,10 +55,10 @@ const AddGoal = ({ navigation }) => {
           <TextInput
             style={STYLESHEET.addGoalTextInput}
             placeholder="Enter fornightly goal amount"
-            onChangeText={(fornightlyGoal) =>
-              setFortnightlyGoal(fornightlyGoal)
+            onChangeText={(fortnightlyGoal) =>
+              setFortnightlyGoal(fortnightlyGoal)
             }
-            value={fornightlyGoal}
+            value={fortnightlyGoal}
           />
           <Text style={STYLESHEET.addGoalSubHeader}>Completion Date</Text>
           <TextInput
@@ -76,7 +81,7 @@ const AddGoal = ({ navigation }) => {
           </View>
         </ScrollView>
       </View>
-      <BottomBar navigation = { navigation }/>
+      <BottomBar navigation={navigation} />
     </>
   );
 };

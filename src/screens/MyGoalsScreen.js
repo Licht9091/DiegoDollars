@@ -19,9 +19,9 @@ import AppContext from "../helper/context";
 import { FONT_FAMILY_SEMIBOLD } from "../styles/typography";
 import navigateAndReset from "../helper/functions";
 import TransactionListComponent from "../components/TransactionListComponent";
-import Diego from '../assets/Diego.svg';
+import Diego from "../assets/Diego.svg";
 import NewGoal from "../components/NewGoal";
-import Modal from 'react-native-modal';
+import Modal from "react-native-modal";
 
 const style = {
   blueBubbleView: {
@@ -142,19 +142,19 @@ const style = {
     alignSelf: "stretch",
   },
   goalHeader: {
-    fontSize: Dimensions.get('window').width/20,
+    fontSize: Dimensions.get("window").width / 20,
     fontFamily: FONT_FAMILY_SEMIBOLD,
     backgroundColor: Colors.Primary,
     color: Colors.White,
-    minHeight: Dimensions.get('window').height/4,
-    width: Dimensions.get('window').width,
-    paddingVertical: Dimensions.get('window').height* 0.03,
-    textAlign: 'center',
-    flexDirection: "row"
+    minHeight: Dimensions.get("window").height / 4,
+    width: Dimensions.get("window").width,
+    paddingVertical: Dimensions.get("window").height * 0.03,
+    textAlign: "center",
+    flexDirection: "row",
   },
   goalView: {
     backgroundColor: Colors.White,
-    height: Dimensions.get('window').height,
+    height: Dimensions.get("window").height,
   },
 };
 
@@ -229,16 +229,16 @@ export default function MyGoals({ navigation, route }) {
   const [refreshModal, setRefreshModal] = useState(false);
 
   //All distances need to add up to 150, so percentages are used
-  const [spentDistance, setSpentDistance] = useState(150*1/3);
-  const [savedDistance, setSavedDistance] = useState(150*1/3);
-  const [goalDistance, setGoalDistanceDistance] = useState(150*1/3);
+  const [spentDistance, setSpentDistance] = useState((150 * 1) / 3);
+  const [savedDistance, setSavedDistance] = useState((150 * 1) / 3);
+  const [goalDistance, setGoalDistanceDistance] = useState((150 * 1) / 3);
 
   const { search } = state;
 
   const [goalName, setGoalName] = useState(goal.description);
   const [typeName, setTypeName] = useState(goal.type);
   const [startName, setStartName] = useState("1 January");
-  const [finishName, setFinishName] = useState(goal.completion);
+  const [finishName, setFinishName] = useState(goal.endDate);
 
   const [tempGoalName, setTempGoalName] = useState(goal.description);
   const [tempTypeName, setTempTypeName] = useState(goal.type);
@@ -257,23 +257,44 @@ export default function MyGoals({ navigation, route }) {
 
   return (
     <View style={style.goalView}>
-    {refreshModal && (
-        <Modal isVisible onPress={false}><NewGoal onClose={() => setRefreshModal(false)} goal={goalName} navigation={navigation}/></Modal>
+      {refreshModal && (
+        <Modal isVisible onPress={false}>
+          <NewGoal
+            onClose={() => setRefreshModal(false)}
+            goal={goalName}
+            navigation={navigation}
+          />
+        </Modal>
       )}
-    <ScrollView>
-    <View style={style.goalHeader}>
-      <Text style={{color: Colors.White, fontSize: 24, alignItems: "center", marginLeft: 150, marginRight: 30}}>
-          My Goals
-      </Text>
-      <Pill
-          content="Create New"
-          color={Colors.White}
-          backgroundColor={Colors.DarkGray}
-          onPress={() => setRefreshModal(true)}
-      />
-    </View>
-    <View style={{backgroundColor: Colors.Primary, height: Dimensions.get("window").height*0.1, marginTop: -Dimensions.get("window").height*0.59, marginBottom: Dimensions.get("window").height*0.33}}></View>
-        <View style={editGoal ? { height: 0, opacity: 0 } : {marginLeft: 10}}>
+      <ScrollView>
+        <View style={style.goalHeader}>
+          <Text
+            style={{
+              color: Colors.White,
+              fontSize: 24,
+              alignItems: "center",
+              marginLeft: 150,
+              marginRight: 30,
+            }}
+          >
+            My Goals
+          </Text>
+          <Pill
+            content="Create New"
+            color={Colors.White}
+            backgroundColor={Colors.DarkGray}
+            onPress={() => setRefreshModal(true)}
+          />
+        </View>
+        <View
+          style={{
+            backgroundColor: Colors.Primary,
+            height: Dimensions.get("window").height * 0.1,
+            marginTop: -Dimensions.get("window").height * 0.59,
+            marginBottom: Dimensions.get("window").height * 0.33,
+          }}
+        ></View>
+        <View style={editGoal ? { height: 0, opacity: 0 } : { marginLeft: 10 }}>
           <View style={style.blueBubbleView}>
             <Text style={style.defaultHeaderLargeWhite}>{goalName}</Text>
             <View style={style.sectioningView}>
@@ -309,35 +330,58 @@ export default function MyGoals({ navigation, route }) {
                 <View flexDirection={"row"}>
                   <View width={(Dimensions.get("window").width - 60) / 3 - 25}>
                     <View height={goalDistance}>
-                      <Text style={{fontSize: 20, color: Colors.White}}>
+                      <Text style={{ fontSize: 20, color: Colors.White }}>
                         $5000.00
                       </Text>
-                      <Text style={{fontSize: 14, color: Colors.White}}>
+                      <Text style={{ fontSize: 14, color: Colors.White }}>
                         Goal
                       </Text>
                     </View>
                     <View height={savedDistance}>
-                      <Text style={{fontSize: 14, color: Colors.White}}>
+                      <Text style={{ fontSize: 14, color: Colors.White }}>
                         SAVED
                       </Text>
-                      <Text style={style.defaulthLine}>
-                        $3257.21
-                      </Text>
+                      <Text style={style.defaulthLine}>$3257.21</Text>
                     </View>
                     <View height={spentDistance}>
-                      <Text style={{fontSize: 14, color: Colors.White}}>
+                      <Text style={{ fontSize: 14, color: Colors.White }}>
                         SPENT
                       </Text>
-                      <Text style={style.defaulthLine}>
-                        $2256.34
-                      </Text>
+                      <Text style={style.defaulthLine}>$2256.34</Text>
                     </View>
                   </View>
                   <View>
-                    <Text style={{borderLeftColor: Colors.DarkGray, borderLeftWidth: 10, borderRadius: 10, height : goalDistance + 40}}></Text>
-                    <Diego style={{position: 'absolute', height: 2*(goalDistance + 40), width: 40, left: -15, elevation: 0.1}}></Diego>
-                    <Text style={{borderLeftColor: Colors.PrimaryLight, borderLeftWidth: 10, height : savedDistance}}></Text>
-                    <Text style={{borderLeftColor: Colors.Teal, borderLeftWidth: 10, height : spentDistance}}></Text>
+                    <Text
+                      style={{
+                        borderLeftColor: Colors.DarkGray,
+                        borderLeftWidth: 10,
+                        borderRadius: 10,
+                        height: goalDistance + 40,
+                      }}
+                    ></Text>
+                    <Diego
+                      style={{
+                        position: "absolute",
+                        height: 2 * (goalDistance + 40),
+                        width: 40,
+                        left: -15,
+                        elevation: 0.1,
+                      }}
+                    ></Diego>
+                    <Text
+                      style={{
+                        borderLeftColor: Colors.PrimaryLight,
+                        borderLeftWidth: 10,
+                        height: savedDistance,
+                      }}
+                    ></Text>
+                    <Text
+                      style={{
+                        borderLeftColor: Colors.Teal,
+                        borderLeftWidth: 10,
+                        height: spentDistance,
+                      }}
+                    ></Text>
                   </View>
                 </View>
               </View>
@@ -409,7 +453,9 @@ export default function MyGoals({ navigation, route }) {
             </ScrollView>
           </View>
         </View>
-        <View style={!editGoal ? { height: 0, opacity: 0 } : {marginLeft: 10}}>
+        <View
+          style={!editGoal ? { height: 0, opacity: 0 } : { marginLeft: 10 }}
+        >
           <View style={style.blackBubbleView}>
             <TextInput
               style={{ borderWidth: 1, color: Colors.White, fontSize: 24 }}
@@ -485,35 +531,58 @@ export default function MyGoals({ navigation, route }) {
                 <View flexDirection={"row"}>
                   <View width={(Dimensions.get("window").width - 60) / 3 - 25}>
                     <View height={goalDistance}>
-                      <Text style={{fontSize: 20, color: Colors.White}}>
+                      <Text style={{ fontSize: 20, color: Colors.White }}>
                         $5000.00
                       </Text>
-                      <Text style={{fontSize: 14, color: Colors.White}}>
+                      <Text style={{ fontSize: 14, color: Colors.White }}>
                         Goal
                       </Text>
                     </View>
                     <View height={savedDistance}>
-                      <Text style={{fontSize: 14, color: Colors.White}}>
+                      <Text style={{ fontSize: 14, color: Colors.White }}>
                         SAVED
                       </Text>
-                      <Text style={style.defaulthLine}>
-                        $3257.21
-                      </Text>
+                      <Text style={style.defaulthLine}>$3257.21</Text>
                     </View>
                     <View height={spentDistance}>
-                      <Text style={{fontSize: 14, color: Colors.White}}>
+                      <Text style={{ fontSize: 14, color: Colors.White }}>
                         SPENT
                       </Text>
-                      <Text style={style.defaulthLine}>
-                        $2256.34
-                      </Text>
+                      <Text style={style.defaulthLine}>$2256.34</Text>
                     </View>
                   </View>
                   <View>
-                    <Text style={{borderLeftColor: Colors.DarkGray, borderLeftWidth: 10, borderRadius: 10, height : 90}}></Text>
-                    <Diego style={{position: 'absolute', height: 180, width: 40, left: -15, elevation: 0.1}}></Diego>
-                    <Text style={{borderLeftColor: Colors.PrimaryLight, borderLeftWidth: 10, height : 50}}></Text>
-                    <Text style={{borderLeftColor: Colors.Teal, borderLeftWidth: 10, height : 50}}></Text>
+                    <Text
+                      style={{
+                        borderLeftColor: Colors.DarkGray,
+                        borderLeftWidth: 10,
+                        borderRadius: 10,
+                        height: 90,
+                      }}
+                    ></Text>
+                    <Diego
+                      style={{
+                        position: "absolute",
+                        height: 180,
+                        width: 40,
+                        left: -15,
+                        elevation: 0.1,
+                      }}
+                    ></Diego>
+                    <Text
+                      style={{
+                        borderLeftColor: Colors.PrimaryLight,
+                        borderLeftWidth: 10,
+                        height: 50,
+                      }}
+                    ></Text>
+                    <Text
+                      style={{
+                        borderLeftColor: Colors.Teal,
+                        borderLeftWidth: 10,
+                        height: 50,
+                      }}
+                    ></Text>
                   </View>
                 </View>
               </View>

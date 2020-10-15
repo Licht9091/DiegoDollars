@@ -15,10 +15,13 @@ export const API_LOGIN = HOST + "/login";
 // TEMP API CONSTANTS
 export const API_GOALS_STATUS = HOST + "/goal_status";
 export const API_GOAL_SET =
-  HOST + "/set_goal?description={goalName}&goalAmount={goalAmount}";
+  HOST +
+  "/set_goal?description={goalName}&goalAmount={goalAmount}&fortnightlyGoal={fortnightlyGoal}&endDate={endDate}";
 export const API_GOAL_DELETE = HOST + "/delete_goal?id={goalId}";
 export const API_GOAL_CONTRIBUTE =
   HOST + "/contribute_to_goal?goalid={goalId}&contrabution={contribution}";
 export const API_TRANSACTION_STATS = HOST + "/transaction_stats";
 export const API_TRANSACTION_LIST = HOST + "/get_transactions";
-export const API_CATEGORISE_TRANSACTION = HOST + "/categorize_transaction?transactionid={transactionId}&category={category}";
+export const API_CATEGORISE_TRANSACTION =
+  HOST +
+  "/categorize_transaction?transactionid={transactionId}&category={category}";

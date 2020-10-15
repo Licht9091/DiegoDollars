@@ -1,3 +1,5 @@
+import { DateTimeFormat } from "intl";
+import moment from "moment";
 import {
   API_LOGIN,
   API_TEST_LOGGED_IN,
@@ -318,7 +320,24 @@ export class User {
       return a.percent < b.percent;
     });
 
-    this.setGoal = async (goalName, goalAmount) => {
+    /**
+     * setGoal
+     *
+     * @param {string} goalName - Name of the goal
+     * @param {float} goalAmount - Total amount to save for the goal
+     * @param {float} fortnightlyGoal - Fortnightly amount to allocate to the goal
+     * @param {DateTimeFormat} completionDate - Date for the goal to complete by
+     *
+     * @return {boolean} - true if the goal was added, false if something went wrong
+     *
+     * @ensure A new goal will be created if the API call does not fail.
+     */
+    this.setGoal = async (
+      goalName,
+      goalAmount,
+      fortnightlyGoal,
+      completionDate
+    ) => {
       if (goalName === "") {
         return false;
       }
@@ -327,18 +346,37 @@ export class User {
         return false;
       }
 
+      if (isNaN(fortnightlyGoal)) {
+        return false;
+      }
+
+      if (completionDate == "") {
+        return false;
+      }
+
       let API_CALL = API_GOAL_SET;
       API_CALL = API_CALL.replace("{goalName}", goalName);
       API_CALL = API_CALL.replace("{goalAmount}", goalAmount);
+      API_CALL = API_CALL.replace("{fortnightlyGoal}", fortnightlyGoal);
+      API_CALL = API_CALL.replace("{endDate}", completionDate);
 
       const response = await fetch(API_CALL, {
         method: "GET",
       }); // This should be post
       const jsonBody = await response.json();
 
-      if (response.ok) {
+      if (jsonBody["success"] == 200) {
+        console.log(jsonBody);
         this.goals.push(
-          new Goal(jsonBody["id"], goalName, 0, goalAmount, null)
+          new Goal(
+            jsonBody["id"],
+            goalName,
+            0,
+            goalAmount,
+            jsonBody["startDate"],
+            completionDate,
+            fortnightlyGoal
+          )
         );
         return true;
       } else {
