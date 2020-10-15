@@ -100,7 +100,7 @@ const NewGoal = ({ onClose, goal, navigation }) => {
   const goalTypes = ["One-Off", "Continuous"];
   const [selected, setSelected] = useState("One-Off");
 
-  const [goalName, setGoalName] = useState(goal);
+  const [goalName, setGoalName] = useState("");
   const [goalAmount, setGoalAmount] = useState("");
   const [goalType, setGoalType] = useState("");
   const [fortnightlyGoal, setFortnightlyGoal] = useState("");
@@ -140,7 +140,7 @@ const NewGoal = ({ onClose, goal, navigation }) => {
             </Text>
             <TextInput
               style={{color: Colors.Black, fontSize: 16, height: 40, borderBottomWidth: 0.5, borderBottomColor: Colors.MediumGray}}
-              placeholder={goalName}
+              placeholder="Enter goal name"
               onChangeText={(goalName) => setGoalName(goalName)}
               value={goalName}
             />
