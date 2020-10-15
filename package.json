@@ -30,6 +30,7 @@
     "react-moment": "^0.9.7",
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
     "react-native-chart-kit": "^6.6.1",
+    "react-native-dropdown-menu": "^2.0.0",
     "react-native-elements": "^2.3.2",
     "react-native-gesture-handler": "~1.6.0",
     "react-native-modal": "^11.5.6",
