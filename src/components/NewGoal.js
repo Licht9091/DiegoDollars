@@ -12,6 +12,7 @@ import {
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import paycheckStyle from './PaychecksReceived.style';
+import navigateAndReset from "../helper/functions";
 
 // Icon assets
 import CloudOne from '../assets/cloud.svg';
@@ -93,7 +94,7 @@ const newGoalStyle = {
     opacity: 0.8,
   };
 
-const NewGoal = ({ onClose, goal }) => {
+const NewGoal = ({ onClose, goal, navigation }) => {
   const Context = useContext(AppContext);
 
   const goalTypes = ["One-Off", "Continuous"];
@@ -102,7 +103,7 @@ const NewGoal = ({ onClose, goal }) => {
   const [goalName, setGoalName] = useState(goal);
   const [goalAmount, setGoalAmount] = useState("");
   const [goalType, setGoalType] = useState("");
-  const [fornightlyGoal, setFortnightlyGoal] = useState("");
+  const [fortnightlyGoal, setFortnightlyGoal] = useState("");
   const [completionDate, setCompletionDate] = useState("");
 
   const createGoal = async () => {
@@ -140,6 +141,8 @@ const NewGoal = ({ onClose, goal }) => {
             <TextInput
               style={{color: Colors.Black, fontSize: 16, height: 40, borderBottomWidth: 0.5, borderBottomColor: Colors.MediumGray}}
               placeholder={goalName}
+              onChangeText={(goalName) => setGoalName(goalName)}
+              value={goalName}
             />
         </View>
         <View flexDirection={"row"}>
@@ -157,6 +160,8 @@ const NewGoal = ({ onClose, goal }) => {
                 <Text style={{fontFamily: FONT_FAMILY_SEMIBOLD, color: Colors.Black, fontSize: 20, paddingRight: 20}}>$</Text>
                 <TextInput
                   placeholder="2500.0"
+                  onChangeText={(goalAmount) => setGoalAmount(goalAmount)}
+                  value={goalAmount}
                 />
             </View>
             <Picker
@@ -183,10 +188,14 @@ const NewGoal = ({ onClose, goal }) => {
                 <Text style={{fontFamily: FONT_FAMILY_SEMIBOLD, color: Colors.Black, fontSize: 20, paddingRight: 20}}>$</Text>
                 <TextInput
                     placeholder="250.00"
+                    onChangeText={(fortnightlyGoal) => setFortnightlyGoal(fortnightlyGoal)}
+                    value={fortnightlyGoal}
                 />
             </View>
             <TextInput
-                placeholder="Enter goal name"
+                placeholder="Enter completion date"
+                onChangeText={(completionDate) => setCompletionDate(completionDate)}
+                value={completionDate}
             />
         </View>
         <View flexDirection={"row"}>

@@ -258,7 +258,7 @@ export default function MyGoals({ navigation, route }) {
   return (
     <View style={style.goalView}>
     {refreshModal && (
-        <Modal isVisible onPress={false}><NewGoal onClose={() => setRefreshModal(false)} goal={goalName}/></Modal>
+        <Modal isVisible onPress={false}><NewGoal onClose={() => setRefreshModal(false)} goal={goalName} navigation={navigation}/></Modal>
       )}
     <ScrollView>
     <View style={style.goalHeader}>
