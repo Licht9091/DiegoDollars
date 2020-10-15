@@ -477,6 +477,8 @@ class Account {
         return this.uncategorisedIncome;
       } else if (type == "all") {
         return this.allTransactions;
+      } else if (type == "") {
+        return [];
       } else {
         alert("Filter passed invalid value");
         return [];

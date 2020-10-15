@@ -18,8 +18,8 @@ export default function TransactionScreen({ route, navigation }) {
   // "all", "income", "expense"
   const [data, setData] = useState([]);
   const [loaded, setLoaded] = useState(false);
-  const [incomeToggled, setIncomeToggled] = useState(false);
-  const [expensesToggled, setExpensesToggled] = useState(false);
+  const [incomeToggled, setIncomeToggled] = useState(true);
+  const [expensesToggled, setExpensesToggled] = useState(true);
 
   const { navigatedState } = route.params; // "expense", "income" or "all". Can use this for determining which page we navigated from.
 
@@ -57,18 +57,32 @@ export default function TransactionScreen({ route, navigation }) {
     console.log("TYPE: " + type);
     if (type == "income") {
       setIncomeToggled(!incomeToggled);
-      setFilterType("income");
     } else if (type == "expense") {
-      setExpensesToggled(!incomeToggled);
-      setFilterType("expense");
+      setExpensesToggled(!expensesToggled);
     }
+  };
 
+  const correctFilterType = () => {
     if (incomeToggled && expensesToggled) {
       setFilterType("all");
+    } else if (!incomeToggled && !expensesToggled) {
+      setFilterType("");
+    } else if (incomeToggled) {
+      setFilterType("income");
+    } else if (expensesToggled) {
+      setFilterType("expense");
     }
-
-    filterTransactions();
   };
+
+  // This one waits for income or expense to toggle
+  useEffect(() => {
+    correctFilterType();
+  }, [incomeToggled, expensesToggled]);
+
+  // Then this waits for filter type to change
+  useEffect(() => {
+    filterTransactions();
+  }, [filterType]);
 
   const filterTransactions = async () => {
     _account = await Context.User.getAccount();
