@@ -464,11 +464,12 @@ class Account {
    * @param {string} type - Type of transaction. ["expense", "income", "all"]
    * @param {string} searchContents - Search term to search by
    *
-   * @return {[Transaction]} List of transactions by category
+   * @return {[Transaction]} List of filtered transactions
    */
   getFilteredTransactions = async (type, searchContents) => {
     returnList = [];
 
+    console.log("Filtering: " + type + " by " + searchContents);
     if (searchContents == "") {
       if (type == "expense") {
         return this.uncategorisedExpenses;
@@ -476,9 +477,11 @@ class Account {
         return this.uncategorisedIncome;
       } else if (type == "all") {
         return this.allTransactions;
+      } else if (type == "") {
+        return [];
       } else {
         alert("Filter passed invalid value");
-        return;
+        return [];
       }
     } else {
       searchTerm = new RegExp(searchContents, "i");

@@ -18,10 +18,13 @@ export default function TransactionScreen({ route, navigation }) {
   // "all", "income", "expense"
   const [data, setData] = useState([]);
   const [loaded, setLoaded] = useState(false);
+  const [incomeToggled, setIncomeToggled] = useState(true);
+  const [expensesToggled, setExpensesToggled] = useState(true);
+
   const { navigatedState } = route.params; // "expense", "income" or "all". Can use this for determining which page we navigated from.
 
   const [searchContents, setSearchContents] = useState("");
-  const [filterType, setFilterType] = useState(navigatedState);
+  const [filterType, setFilterType] = useState("");
 
   const [showSingleTransaction, setSingleTransaction] = useState(false);
   const [currentTransaction, setCurrentTransaction] = useState(null);
@@ -32,19 +35,58 @@ export default function TransactionScreen({ route, navigation }) {
     _account = await Context.User.getAccount();
     if (navigatedState === "expense") {
       _data = _account.uncategorisedExpenses;
+      setExpensesToggled(true);
     } else if (navigatedState === "income") {
       _data = _account.uncategorisedIncome;
+      setIncomeToggled(true);
     } else if (navigatedState === "all") {
       _data = _account.allTransactions;
+      setExpensesToggled(true);
+      setIncomeToggled(true);
     } else {
+      setExpensesToggled(true);
+      setIncomeToggled(true);
+      setSearchContents(navigatedState);
       _data = await _account.getTransactionsByCategory(navigatedState);
     }
 
     setData(_data);
   };
 
+  const updateFilterType = (type) => {
+    console.log("TYPE: " + type);
+    if (type == "income") {
+      setIncomeToggled(!incomeToggled);
+    } else if (type == "expense") {
+      setExpensesToggled(!expensesToggled);
+    }
+  };
+
+  const correctFilterType = () => {
+    if (incomeToggled && expensesToggled) {
+      setFilterType("all");
+    } else if (!incomeToggled && !expensesToggled) {
+      setFilterType("");
+    } else if (incomeToggled) {
+      setFilterType("income");
+    } else if (expensesToggled) {
+      setFilterType("expense");
+    }
+  };
+
+  // This one waits for income or expense to toggle
+  useEffect(() => {
+    correctFilterType();
+  }, [incomeToggled, expensesToggled]);
+
+  // Then this waits for filter type to change
+  useEffect(() => {
+    filterTransactions();
+  }, [filterType]);
+
   const filterTransactions = async () => {
     _account = await Context.User.getAccount();
+
     _data = await _account.getFilteredTransactions(filterType, searchContents);
 
     setData(_data);
@@ -68,15 +110,14 @@ export default function TransactionScreen({ route, navigation }) {
   // Sorry that this is a complete mess :(. Need to make each of these a component probs
   return (
     <>
-      {true && (
-        <Modal isVisible={showSingleTransaction}>
-          <SingleTransactionScreen
-            transaction={currentTransaction}
-            onClose={toggleModal}
-            navigatedState={navigatedState}
-          />
-        </Modal>
-      )}
+      <Modal isVisible={showSingleTransaction}>
+        <SingleTransactionScreen
+          transaction={currentTransaction}
+          onClose={toggleModal}
+          navigatedState={navigatedState}
+        />
+      </Modal>
+
       <View style={transactionStyles.mainView}>
         {/* Header */}
         <View style={transactionStyles.topHeading}>
@@ -86,20 +127,32 @@ export default function TransactionScreen({ route, navigation }) {
         {/* Search bar container */}
         <View style={transactionStyles.searchBarLine}>
           {/* First Button */}
-          <Pill
-            content={"Expenses"}
-            color={Colors.DarkerGray}
-            backgroundColor={Colors.White}
-            onPress={() => setFilterType("Expenses")}
-          />
+          <TouchableOpacity
+            style={
+              expensesToggled
+                ? transactionStyles.filterButtonPressed
+                : transactionStyles.filterButton
+            }
+            onPress={() => {
+              updateFilterType("expense");
+            }}
+          >
+            <Text style={transactionStyles.filterButtonText}>EXPENSES</Text>
+          </TouchableOpacity>
 
           {/* Second Button */}
-          <Pill
-            content={"Income"}
-            color={Colors.DarkerGray}
-            backgroundColor={Colors.White}
-            onPress={() => setFilterType("Income")}
-          />
+          <TouchableOpacity
+            style={
+              incomeToggled
+                ? transactionStyles.filterButtonPressed
+                : transactionStyles.filterButton
+            }
+            onPress={() => {
+              updateFilterType("income");
+            }}
+          >
+            <Text style={transactionStyles.filterButtonText}>INCOME</Text>
+          </TouchableOpacity>
 
           {/* Search bar */}
           <SearchBar

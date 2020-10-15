@@ -51,7 +51,7 @@ const newFortnightStyle = {
     fill: 'red',
   },
   info: {
-    backgroundColor: Colors.EffectivelyBlack,
+    backgroundColor: 'black',
     position: 'absolute',
     top: 75,
     left: (Dimensions.get('window').width - 50) / 2,
@@ -64,7 +64,8 @@ const newFortnightStyle = {
   infoText: {
     color: 'white',
     fontFamily: FONT_FAMILY_REGULAR,
-    fontSize: 13,
+    fontSize: 11,
+    paddingTop: 10,
     paddingLeft: 20,
     paddingRight: 20,
     marginTop: 10,
@@ -80,8 +81,16 @@ const newFortnightStyle = {
   },
 
   content: {
-    marginTop: 70,
+    marginTop: 40,
     padding: 20,
+    flex: 0,
+    flexDirection: 'column',
+  },
+  row: {
+    flex: 0,
+    flexDirection: 'row',
+  },
+  column: {
     flex: 0,
     flexDirection: 'column',
   },
@@ -95,11 +104,72 @@ const newFortnightStyle = {
     marginTop: 10,
     marginBottom: 10,
   },
+  hr: {
+    width: 270,
+    height: 0.5,
+    backgroundColor: Colors.LightGray,
+    marginBottom: 20,
+    alignSelf: 'center',
+  },
+  //   Goals
+  goalsWrapper: {
+    height: 270,
+    marginTop: 10,
+  },
+  goal: {
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  goalTitleText: {
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+  },
+  goalInfoText: {
+    fontFamily: FONT_FAMILY_LIGHT,
+    fontSize: 11,
+  },
+  valueTool: {
+    flex: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  incrementButton: {
+    borderRadius: 5,
+
+    backgroundColor: Colors.DarkerGray,
+    padding: 2,
+    width: 30,
+    height: 30,
+    flex: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    z: 10,
+  },
+  incrementButtonText: {
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    fontSize: 12,
+    color: 'white',
+  },
+  numberField: {
+    width: 60,
+    borderColor: Colors.MediumGray,
+    borderRadius: 5,
+    borderWidth: 1,
+    padding: 5,
+    flex: 0,
+    marginLeft: 7,
+    marginRight: 7,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  numberFieldText: {
+    fontFamily: FONT_FAMILY_REGULAR,
+  },
+  //   button
   buttonWrapper: {
     flex: 0,
     flexDirection: 'row',
   },
-  touchable: {
+  startButton: {
     borderRadius: 15,
     marginRight: 10,
 

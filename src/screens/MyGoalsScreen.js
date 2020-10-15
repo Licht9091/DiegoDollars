@@ -20,6 +20,8 @@ import { FONT_FAMILY_SEMIBOLD } from "../styles/typography";
 import navigateAndReset from "../helper/functions";
 import TransactionListComponent from "../components/TransactionListComponent";
 import Diego from '../assets/Diego.svg';
+import NewGoal from "../components/NewGoal";
+import Modal from 'react-native-modal';
 
 const style = {
   blueBubbleView: {
@@ -224,6 +226,8 @@ export default function MyGoals({ navigation, route }) {
   const [expenseButtonPressed, setExpenButton] = useState(false);
   const [incomeButtonPressed, setIncomeButton] = useState(false);
 
+  const [refreshModal, setRefreshModal] = useState(false);
+
   //All distances need to add up to 150, so percentages are used
   const [spentDistance, setSpentDistance] = useState(150*1/3);
   const [savedDistance, setSavedDistance] = useState(150*1/3);
@@ -253,6 +257,9 @@ export default function MyGoals({ navigation, route }) {
 
   return (
     <View style={style.goalView}>
+    {refreshModal && (
+        <Modal isVisible onPress={false}><NewGoal onClose={() => setRefreshModal(false)} goal={goalName} navigation={navigation}/></Modal>
+      )}
     <ScrollView>
     <View style={style.goalHeader}>
       <Text style={{color: Colors.White, fontSize: 24, alignItems: "center", marginLeft: 150, marginRight: 30}}>
@@ -262,7 +269,7 @@ export default function MyGoals({ navigation, route }) {
           content="Create New"
           color={Colors.White}
           backgroundColor={Colors.DarkGray}
-          onPress={() => navigation.navigate('AddGoal')}
+          onPress={() => setRefreshModal(true)}
       />
     </View>
     <View style={{backgroundColor: Colors.Primary, height: Dimensions.get("window").height*0.1, marginTop: -Dimensions.get("window").height*0.59, marginBottom: Dimensions.get("window").height*0.33}}></View>

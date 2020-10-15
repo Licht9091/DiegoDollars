@@ -11,7 +11,7 @@ export default function TransactionListComponent(props) {
   let navigatedState = props.navigatedState;
   //const niceDate = moment(transaction.date).format("D MMMM");
   const dollars = Format.toDollars(
-    navigatedState === "expense" ? -1 * transaction.value : transaction.value
+    transaction.isIncome ? transaction.value : transaction.value * -1
   );
   const cents = Format.toCents(transaction.value);
 
@@ -41,13 +41,15 @@ export default function TransactionListComponent(props) {
 
 const style = StyleSheet.create({
   incomeView: {
-    width: Dimensions.get("window").width - 40,
+    width: "100%",
     flexDirection: "row",
     marginTop: 10,
     marginBottom: 10,
+    justifyContent: "space-between",
   },
   incomeNameView: {
     width: Dimensions.get("window").width - 180,
+    flex: 0,
   },
   moneyDollars: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
