@@ -195,7 +195,7 @@ const NewGoal = ({ onClose, goal, navigation }) => {
             <DatePicker
               mode="date"
               placeholder="Select Date"
-              format="YYYY-MM-DD"
+              format="DD-MM-YYYY"
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
               date={date}
