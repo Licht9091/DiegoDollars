@@ -79,13 +79,18 @@ const AddRecurringCosts = ({ onClose }) => {
             <View style={style.greyBubbleView}>
                 <Text style={style.description}>Recurring costs are deducted from income at the start of the period to calculate available spending amount.</Text>
             </View>
-            <View>
-
-            </View>
-            <View>
+            <View style={{paddingTop: 10}}>
                 <TextInput 
                     style={style.inputText}
                     placeholder="Cost Name"
+                />
+                <View style={style.defaultLineBlack}></View>
+            </View>
+            <View style={{paddingTop: 20}}>
+                <TextInput 
+                    style={style.inputText}
+                    placeholder="Cost amount"
+                    keyboardType="number-pad"
                 />
                 <View style={style.defaultLineBlack}></View>
             </View>

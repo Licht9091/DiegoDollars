@@ -73,14 +73,21 @@ const EditRecurringCosts = ({ onClose }) => {
             <View>
                 <Text style={style.darkGrayHeader}>Fortnightly Income</Text>
             </View>
+            <View style={style.greyBubbleView}>
+                <Text style={style.description}>Recurring costs are deducted from income at the start of the period to calculate available spending amount.</Text>
+            </View>
             <View>
                 <TextInput 
                     style={style.blackHeader}
                     placeholder="Cost Name"
                 />
             </View>
-            <View style={style.greyBubbleView}>
-                <Text style={style.description}>Recurring costs are deducted from income at the start of the period to calculate available spending amount.</Text>
+            <View>
+                <TextInput 
+                    style={style.blackHeader}
+                    placeholder="Cost amount"
+                    keyboardType="number-pad"
+                />
             </View>
             
             <View style={{flexDirection: "row", width: Dimensions.get("window").width}}>

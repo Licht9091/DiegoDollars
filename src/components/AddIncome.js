@@ -81,13 +81,24 @@ const AddIncome = ({ onClose }) => {
             <View>
                 
             </View>
-            <View>
+            <View style={{paddingTop: 10}}>
                 <TextInput 
                     style={style.inputText}
                     placeholder="Income Name"
                 />
                 <View style={style.defaultLineBlack}></View>
             </View>
+
+            <View style={{paddingTop: 20}}>
+                <TextInput 
+                    style={style.inputText}
+                    placeholder="Income amount"
+                    keyboardType="number-pad"
+                />
+                <View style={style.defaultLineBlack}></View>
+            </View>
+            
+
             <View style={{flexDirection: "row", width: Dimensions.get("window").width}}>
                 <TouchableOpacity onPress={ onClose }>
                     <View style={{width: Dimensions.get("window").width*0.35, marginTop: 20, marginBottom: 10, marginLeft: 10}}>

@@ -73,15 +73,23 @@ const EditIncome = ({ onClose }) => {
             <View>
                 <Text style={style.darkGrayHeader}>Fortnightly Income</Text>
             </View>
-            <View>
-                <TextInput 
-                    style={style.blackHeader}
-                    placeholder="Income Name"
-                />
-            </View>
             <View style={style.greyBubbleView}>
                 <Text style={style.description}>Income that is approximately this amount will be automatically detected as paycheck in the future.</Text>
             </View>
+            <View>
+                <TextInput 
+                    style={style.blackHeader}
+                    placeholder="Income name"
+                />
+            </View>
+            <View>
+                <TextInput 
+                    style={style.blackHeader}
+                    placeholder="Income amount"
+                    keyboardType="number-pad"
+                />
+            </View>
+            
             
             <View style={{flexDirection: "row", width: Dimensions.get("window").width}}>
                 <TouchableOpacity onPress={ onClose }>
