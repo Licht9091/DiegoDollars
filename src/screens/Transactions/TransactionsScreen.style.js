@@ -1,11 +1,11 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 import {
   FONT_FAMILY_LIGHT,
   FONT_FAMILY_SEMIBOLD,
   FONT_FAMILY_REGULAR,
-} from '../../styles/typography';
-import Colors from '../../styles/colors';
-import { STYLESHEET } from '../../styles/stylesheet';
+} from "../../styles/typography";
+import Colors from "../../styles/colors";
+import { STYLESHEET } from "../../styles/stylesheet";
 
 const transactionStyles = StyleSheet.create({
   mainView: {
@@ -17,10 +17,10 @@ const transactionStyles = StyleSheet.create({
   },
   searchBarLine: {
     flex: 0,
-    flexDirection: 'row',
-    backgroundColor: 'white',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    flexDirection: "row",
+    backgroundColor: "white",
+    justifyContent: "flex-start",
+    alignItems: "center",
     margin: 0,
     height: 50,
     paddingLeft: 15,
@@ -29,8 +29,8 @@ const transactionStyles = StyleSheet.create({
   },
   filterButton: {
     flex: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: Colors.VeryDarkGray,
     paddingLeft: 15,
     paddingRight: 15,
@@ -39,8 +39,20 @@ const transactionStyles = StyleSheet.create({
     borderRadius: 20,
     marginRight: 6,
   },
+  filterButtonPressed: {
+    flex: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: Colors.Primary,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 4,
+    paddingBottom: 4,
+    borderRadius: 20,
+    marginRight: 6,
+  },
   filterButtonText: {
-    color: 'white',
+    color: "white",
     fontFamily: FONT_FAMILY_SEMIBOLD,
     fontSize: 11,
   },
@@ -57,7 +69,7 @@ const transactionStyles = StyleSheet.create({
     fontSize: 12,
   },
   transactionView: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     paddingTop: 0,
     paddingBottom: 10,
     margin: 0,
@@ -68,37 +80,37 @@ const transactionStyles = StyleSheet.create({
   },
   topLine: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   transactionTextWrapper: {
-    flexDirection: 'row',
+    flexDirection: "row",
     width: 250,
   },
   transactionText: {
     fontFamily: FONT_FAMILY_LIGHT,
-    fontWeight: '100',
+    fontWeight: "100",
     fontSize: 12,
-    textAlign: 'left',
-    color: 'black',
+    textAlign: "left",
+    color: "black",
     paddingLeft: 10,
   },
   categoryText: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    fontWeight: '100',
+    fontWeight: "100",
     fontSize: 12,
-    textAlign: 'right',
-    color: 'black',
-    textTransform: 'uppercase',
+    textAlign: "right",
+    color: "black",
+    textTransform: "uppercase",
   },
   dateText: {
     fontFamily: FONT_FAMILY_LIGHT,
-    fontWeight: '100',
+    fontWeight: "100",
     fontSize: 12,
-    textAlign: 'center',
-    color: 'black',
+    textAlign: "center",
+    color: "black",
     paddingLeft: 10,
-    textAlign: 'right',
+    textAlign: "right",
   },
   bottomLine: {
     // flex: 1,
@@ -109,11 +121,11 @@ const transactionStyles = StyleSheet.create({
   },
   moneyText: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   moneyDollars: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    fontWeight: '100',
+    fontWeight: "100",
     fontSize: 30,
     color: Colors.DarkerGray,
     paddingLeft: 10,
@@ -121,15 +133,15 @@ const transactionStyles = StyleSheet.create({
   },
   moneyCents: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    fontWeight: '100',
+    fontWeight: "100",
     fontSize: 20,
     paddingTop: 3,
     color: Colors.DarkerGray,
   },
   buttonContainer: {
     flex: 0,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingTop: 7,
   },
   button: {
