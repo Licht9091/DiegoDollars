@@ -13,11 +13,7 @@ import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import paycheckStyle from './PaychecksReceived.style';
 import navigateAndReset from "../helper/functions";
-
-// Icon assets
-import CloudOne from '../assets/cloud.svg';
-import CloudTwo from '../assets/cloud2.svg';
-import Sun from '../assets/sun.svg';
+import DatePicker from 'react-native-datepicker'
 
 import PlanetOne from '../assets/planet1.svg';
 import PlanetTwo from '../assets/planet2.svg';
@@ -106,6 +102,8 @@ const NewGoal = ({ onClose, goal, navigation }) => {
   const [fortnightlyGoal, setFortnightlyGoal] = useState("");
   const [completionDate, setCompletionDate] = useState("");
 
+  const [date, setDate] = useState("");
+
   const createGoal = async () => {
     // Add spinny here
     success = await Context.User.setGoal(goalName, goalAmount);
@@ -160,13 +158,14 @@ const NewGoal = ({ onClose, goal, navigation }) => {
                 <Text style={{fontFamily: FONT_FAMILY_SEMIBOLD, color: Colors.Black, fontSize: 20, paddingRight: 20}}>$</Text>
                 <TextInput
                   placeholder="2500.0"
+                  style={{fontFamily: FONT_FAMILY_SEMIBOLD, color: Colors.MediumGray, height: 30, width: 100}}
                   onChangeText={(goalAmount) => setGoalAmount(goalAmount)}
                   value={goalAmount}
                 />
             </View>
             <Picker
               selectedValue={selected}
-              style={{ height: 20, width: 150 }}
+              style={{ height: 30, width: 150 }}
               onValueChange={(itemValue) => setSelected(itemValue)}
             >
               <Picker.Item label="One-Off" value="one-off" />
@@ -188,14 +187,31 @@ const NewGoal = ({ onClose, goal, navigation }) => {
                 <Text style={{fontFamily: FONT_FAMILY_SEMIBOLD, color: Colors.Black, fontSize: 20, paddingRight: 20}}>$</Text>
                 <TextInput
                     placeholder="250.00"
+                    style={{fontFamily: FONT_FAMILY_SEMIBOLD, color: Colors.MediumGray, height: 30, width: 100}}
                     onChangeText={(fortnightlyGoal) => setFortnightlyGoal(fortnightlyGoal)}
                     value={fortnightlyGoal}
                 />
             </View>
-            <TextInput
-                placeholder="Enter completion date"
-                onChangeText={(completionDate) => setCompletionDate(completionDate)}
-                value={completionDate}
+            <DatePicker
+              mode="date"
+              placeholder="Select Date"
+              format="DD-MM-YYYY"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              date={date}
+              showIcon={false}
+              style={{left: -30 }}
+              customStyles={{
+                dateInput: {
+                  borderWidth: 0,
+                  color: Colors.DarkGray
+                },
+                dateText: {
+                  fontFamily: FONT_FAMILY_SEMIBOLD, 
+                  color: Colors.MediumGray
+                }
+              }}
+              onDateChange={(date) => setDate(date)}
             />
         </View>
         <View flexDirection={"row"}>
