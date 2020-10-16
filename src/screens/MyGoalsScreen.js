@@ -237,13 +237,13 @@ export default function MyGoals({ navigation, route }) {
 
   const [goalName, setGoalName] = useState(goal.description);
   const [typeName, setTypeName] = useState(goal.type);
-  const [startName, setStartName] = useState("1 January");
+  const [startName, setStartName] = useState(goal.startDate);
   const [finishName, setFinishName] = useState(goal.endDate);
 
   const [tempGoalName, setTempGoalName] = useState(goal.description);
   const [tempTypeName, setTempTypeName] = useState(goal.type);
-  const [tempStartName, setTempStartName] = useState("1 January");
-  const [tempFinishName, setTempFinishName] = useState("25 June");
+  const [tempStartName, setTempStartName] = useState(goal.startDate);
+  const [tempFinishName, setTempFinishName] = useState(goal.endDate);
 
   const deleteGoal = async () => {
     const success = await Context.User.deleteGoal(goal);
