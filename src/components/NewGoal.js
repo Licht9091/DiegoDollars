@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Image, Text, View, TouchableOpacity, Picker } from "react-native";
+import React, { useContext, useState } from "react";
+import { Text, View, TouchableOpacity, Picker } from "react-native";
 import AppContext from "../helper/context";
-import Paycheck from "./Paycheck";
 import { Dimensions } from "react-native";
 import Colors from "../styles/colors";
 import { STYLESHEET } from "../styles/stylesheet";
@@ -90,11 +89,10 @@ const iconStyle = {
   opacity: 0.8,
 };
 
-function changeGoalType (itemValue, setSelected, setContinuous) {
-  if (itemValue == "Continuous") {
-    setContinuous(true);
-  } else {
-    setContinuous(false);
+function setSelectedAndCompletion (itemValue, setSelected, setCompletionDate, setDate) {
+  if (itemValue == "continuous") {
+    setCompletionDate(null);
+    setDate(null);
   }
   return setSelected(itemValue);
 }
@@ -110,9 +108,6 @@ const NewGoal = ({ onClose, goal, navigation }) => {
   const [goalType, setGoalType] = useState("");
   const [fortnightlyGoal, setFortnightlyGoal] = useState("");
   const [completionDate, setCompletionDate] = useState("");
-
-  const [continuous, setContinuous] = useState(false);
-
   const [date, setDate] = useState(null);
 
   const createGoal = async () => {
@@ -202,7 +197,7 @@ const NewGoal = ({ onClose, goal, navigation }) => {
           <Picker
             selectedValue={selected}
             style={{ height: 30, width: 150 }}
-            onValueChange={(itemValue) => setSelected(itemValue)}
+            onValueChange={(itemValue) => setSelectedAndCompletion(itemValue, setSelected, setCompletionDate, setDate)}
           >
             <Picker.Item label="One-Off" value="one-off" />
             <Picker.Item label="Continuous" value="continuous" />
