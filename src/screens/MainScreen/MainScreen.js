@@ -20,6 +20,8 @@ import Format from "../../helper/Format";
 import Colors from "../../styles/colors";
 import { STYLESHEET } from "../../styles/stylesheet";
 import mainStyle from "./MainScreen.style";
+import Modal from "react-native-modal";
+import NewGoal from "../../components/NewGoal";
 
 const iconStyle = {
   opacity: 0.8,
@@ -33,6 +35,7 @@ const MainScreen = ({ navigation }) => {
   // Empty data useState
   const [data, setData] = useState(undefined);
   const [refreshModal, setRefreshModal] = useState(false);
+  const [newGoalModal, setNewGoalModal] = useState(false);
 
   const setupUser = async () => {
     _ucSpending = await Context.User.getUncategorisedSpending();
@@ -76,6 +79,17 @@ const MainScreen = ({ navigation }) => {
         {/* Refresh Modal */}
         {refreshModal && (
           <RefreshModal onClose={() => setRefreshModal(false)}></RefreshModal>
+        )}
+
+        {/* Modal for the creat goal button*/}
+        {newGoalModal && (
+          <Modal isVisible onPress={false}>
+            <NewGoal
+              onClose={() => setNewGoalModal(false)}
+              goal={""}
+              navigation={navigation}
+            />
+          </Modal>
         )}
 
         {(!loaded || !data) && (
@@ -191,7 +205,7 @@ const MainScreen = ({ navigation }) => {
                     ...mainStyle.createGoalBtn,
                     ...STYLESHEET.shadowNormal,
                   }}
-                  onPress={() => navigation.navigate("AddGoal")}
+                  onPress={() => setNewGoalModal(true)}
                 >
                   <Text // The navigation here should be on the whole button not the text
                     style={mainStyle.createGoalBtnText}
