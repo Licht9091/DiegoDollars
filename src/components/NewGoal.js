@@ -90,6 +90,15 @@ const iconStyle = {
   opacity: 0.8,
 };
 
+function changeGoalType (itemValue, setSelected, setContinuous) {
+  if (itemValue == "Continuous") {
+    setContinuous(true);
+  } else {
+    setContinuous(false);
+  }
+  return setSelected(itemValue);
+}
+
 const NewGoal = ({ onClose, goal, navigation }) => {
   const Context = useContext(AppContext);
 
@@ -102,7 +111,9 @@ const NewGoal = ({ onClose, goal, navigation }) => {
   const [fortnightlyGoal, setFortnightlyGoal] = useState("");
   const [completionDate, setCompletionDate] = useState("");
 
-  const [date, setDate] = useState("");
+  const [continuous, setContinuous] = useState(false);
+
+  const [date, setDate] = useState(null);
 
   const createGoal = async () => {
     // Add spinny here
@@ -234,13 +245,14 @@ const NewGoal = ({ onClose, goal, navigation }) => {
           </View>
           <DatePicker
             mode="date"
-            placeholder="Select Date"
+            placeholder={selected == "continuous" ? "Not Decided" : "Select Date"}
             format="DD-MM-YYYY"
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
-            date={date}
+            date={selected == "continuous" ? null : date}
             showIcon={false}
             style={{ left: -30 }}
+            disabled={selected == "continuous"}
             customStyles={{
               dateInput: {
                 borderWidth: 0,
@@ -250,6 +262,9 @@ const NewGoal = ({ onClose, goal, navigation }) => {
                 fontFamily: FONT_FAMILY_SEMIBOLD,
                 color: Colors.MediumGray,
               },
+              disabled: {
+                height: 0
+              }
             }}
             onDateChange={(date) => {
               setDate(date);
