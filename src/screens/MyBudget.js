@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import AppContext from "../helper/context";
-import { ScrollView } from "react-native";
+import { Button, ScrollView } from "react-native";
 import { STYLESHEET } from "../styles/stylesheet";
 import { Text, View, Dimensions, TextInput } from "react-native";
 import Colors from "../styles/colors";
@@ -15,6 +15,7 @@ import AddIncome from "../components/AddIncome";
 import AddRecurringCosts from "../components/AddRecurringCosts";
 import EditIncome from "../components/EditIncome";
 import EditRecurringCosts from "../components/EditRecurringCosts";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const style = {
   BubbleView: {
@@ -212,11 +213,26 @@ export default function MyBudget({ navigation, route }) {
 
     _data = {
       availableSpending: _totalSpending,
+      totalGoalCosts: goals.reduce((a, b) => a + b.fortnightlyContribution, 0),
       recurringBudgetItems: _budgetItems["recurring"],
+      totalReccuringCosts: _budgetItems["totalReccuringCosts"],
       incomeBudgetItems: _budgetItems["income"],
+      totalIncome: _budgetItems["totalIncome"],
     };
     console.log(_budgetItems);
     setData(_data);
+  };
+
+  const deleteItem = async (item) => {
+    const resp = await Context.User.deleteBudgetItem(item);
+
+    if (resp) {
+      await setupUser();
+      return true;
+    } else {
+      alert("Deleting item failed");
+      return false;
+    }
   };
 
   useEffect(() => {
@@ -334,25 +350,31 @@ export default function MyBudget({ navigation, route }) {
                 data.incomeBudgetItems.map((item) => {
                   return (
                     <>
-                    <View style={style.pillAndTextView}>
-                      <View style={style.textView}>
-                        <Text style={style.defaultHeaderDarkGray}>
-                          {item.name}
-                        </Text>
-                      </View>
-                      <View style={style.textView}>
-                        <Text style={style.defaultHeaderDarkGray2}>
-                          ${item.amount}
-                        </Text>
-                      </View>
-                      <View style={style.pillView}>
+                      <View style={style.pillAndTextView}>
+                        <View style={style.textView}>
+                          <Text style={style.defaultHeaderDarkGray}>
+                            {item.name}
+                          </Text>
+                        </View>
+                        <View style={style.textView}>
+                          <Text style={style.defaultHeaderDarkGray2}>
+                            ${item.amount}
+                          </Text>
+                        </View>
                         <SmallPill
-                          content="Edit"
+                          content="Delete"
                           color={Colors.White}
-                          backgroundColor={"#2363BC"}
-                          onPress={toggleEditIncomes}
+                          backgroundColor={"#DB5B3C"}
+                          onPress={() => deleteItem(item)}
                         />
-                      </View>
+                        <View style={style.pillView}>
+                          <SmallPill
+                            content="Edit"
+                            color={Colors.White}
+                            backgroundColor={"#2363BC"}
+                            onPress={toggleEditIncomes}
+                          />
+                        </View>
                       </View>
                     </>
                   );
@@ -364,7 +386,9 @@ export default function MyBudget({ navigation, route }) {
                 <Text style={style.defaultHeaderDarkGray}>Total Income</Text>
               </View>
               <View style={style.textView}>
-                <Text style={style.defaultHeaderDarkGray2}>$</Text>
+                <Text style={style.defaultHeaderDarkGray2}>
+                  $ {data.totalIncome}
+                </Text>
               </View>
               <View style={style.pillView}>
                 <SmallPill />
@@ -388,29 +412,37 @@ export default function MyBudget({ navigation, route }) {
                 />
               </View>
             </View>
-            <View style={style.pillAndTextView}>
+            <View>
               {loaded &&
                 data.recurringBudgetItems &&
                 data.recurringBudgetItems.map((item) => {
                   return (
                     <>
-                      <View style={style.textView}>
-                        <Text style={style.defaultHeaderDarkGray}>
-                          {item.name}
-                        </Text>
-                      </View>
-                      <View style={style.textView}>
-                        <Text style={style.defaultHeaderDarkGray2}>
-                          ${item.amount}
-                        </Text>
-                      </View>
-                      <View style={style.pillView}>
+                      <View style={style.pillAndTextView}>
+                        <View style={style.textView}>
+                          <Text style={style.defaultHeaderDarkGray}>
+                            {item.name}
+                          </Text>
+                        </View>
+                        <View style={style.textView}>
+                          <Text style={style.defaultHeaderDarkGray2}>
+                            ${item.amount}
+                          </Text>
+                        </View>
                         <SmallPill
-                          content="Edit"
+                          content="Delete"
                           color={Colors.White}
-                          backgroundColor={"#2363BC"}
-                          onPress={toggleEditRecurringCosts}
+                          backgroundColor={"#DB5B3C"}
+                          onPress={() => deleteItem(item)}
                         />
+                        <View style={style.pillView}>
+                          <SmallPill
+                            content="Edit"
+                            color={Colors.White}
+                            backgroundColor={"#2363BC"}
+                            onPress={toggleEditRecurringCosts}
+                          />
+                        </View>
                       </View>
                     </>
                   );
@@ -424,7 +456,9 @@ export default function MyBudget({ navigation, route }) {
                 </Text>
               </View>
               <View style={style.textView}>
-                <Text style={style.defaultHeaderDarkGray2}>$</Text>
+                <Text style={style.defaultHeaderDarkGray2}>
+                  $ {data.totalReccuringCosts}
+                </Text>
               </View>
               <View style={style.pillView}>
                 <SmallPill />
@@ -479,6 +513,22 @@ export default function MyBudget({ navigation, route }) {
                 </View>
               </View>
             ))}
+            <Text style={style.defaulthLine} />
+            <View style={style.pillAndTextView}>
+              <View style={style.textView}>
+                <Text style={style.defaultHeaderDarkGray}>
+                  Total Goal Costs
+                </Text>
+              </View>
+              <View style={style.textView}>
+                <Text style={style.defaultHeaderDarkGray2}>
+                  $ {data.totalGoalCosts}
+                </Text>
+              </View>
+              <View style={style.pillView}>
+                <SmallPill />
+              </View>
+            </View>
           </View>
 
           <View style={style.greyBubbleView}>
@@ -487,7 +537,9 @@ export default function MyBudget({ navigation, route }) {
               width={Dimensions.get("window").width * 0.9}
             >
               <View width={Dimensions.get("window").width * 0.4}>
-                <Text style={style.defaultHeaderWhite}>Available Spending</Text>
+                <Text style={style.defaultHeaderWhite}>
+                  Estimated Available Spending
+                </Text>
                 <Text style={style.secondaryHeaderWhite}>Per Fornight</Text>
               </View>
               <View style={{ flex: 0.8 }}>
@@ -499,7 +551,10 @@ export default function MyBudget({ navigation, route }) {
                     alignSelf: "flex-end",
                   }}
                 >
-                  ${data.availableSpending}
+                  ${" "}
+                  {data.totalIncome -
+                    data.totalReccuringCosts -
+                    data.totalGoalCosts}
                 </Text>
               </View>
             </View>

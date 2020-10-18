@@ -86,7 +86,7 @@ export default function SingleTransactionScreen({
   // TODO make the date nicer.
   const niceDate = transaction.date;
   const dollars = Format.toDollars(
-    navigatedState === "expense" ? -1 * transaction.value : transaction.value
+    transaction.isIncome ? transaction.value : transaction.value * -1
   );
   const cents = Format.toCents(transaction.value);
 

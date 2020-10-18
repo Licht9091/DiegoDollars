@@ -440,7 +440,7 @@ export class User {
   /**
    * getBudgetItems - async, make sure you wait for this to return.
    *
-   * @return {[BudgetItem]} - List of budget items
+   * @return {Object} - Object with info about budget items. See keys for info
    */
   getBudgetItems = async () => {
     if (this.budgetItems == null) {
@@ -459,7 +459,12 @@ export class User {
     const response = await fetch(API_GET_BUDGET_ITEMS, { method: "GET" });
     const bodyJson = await response.json();
 
-    this.budgetItems = { recurring: [], income: [] };
+    this.budgetItems = {
+      recurring: [],
+      income: [],
+      totalReccuringCosts: 0,
+      totalIncome: 0,
+    };
 
     console.log("BUDGET ITEMS");
     console.log(bodyJson);
@@ -474,10 +479,12 @@ export class User {
         this.budgetItems["recurring"].push(
           new BudgetItem(g["id"], g["name"], g["fortnightlyAmount"], g["tag"])
         );
+        this.budgetItems["totalReccuringCosts"] += g["fortnightlyAmount"];
       } else if (g["tag"] == "income") {
         this.budgetItems["income"].push(
           new BudgetItem(g["id"], g["name"], g["fortnightlyAmount"], g["tag"])
         );
+        this.budgetItems["totalIncome"] += g["fortnightlyAmount"];
       }
     });
   };
@@ -536,13 +543,26 @@ export class User {
     const response = await fetch(API_CALL, { method: "GET" });
     const bodyJson = await response.json();
 
-    // Remove it locally
-    let i = 0;
-    while (i < this.budgetItems.length) {
-      if (this.budgetItems[i].id == item.id) {
-        this.budgetItems.splice(i, 1);
+    if (item.tag == "income") {
+      // Remove it locally
+      let i = 0;
+      while (i < this.budgetItems.income.length) {
+        if (this.budgetItems.income[i].id == item.id) {
+          this.budgetItems.income.splice(i, 1);
+        }
+        i++;
       }
-      i++;
+      this.budgetItems["totalIncome"] -= item.amount;
+    } else {
+      // Remove it locally
+      let i = 0;
+      while (i < this.budgetItems.recurring.length) {
+        if (this.budgetItems.recurring[i].id == item.id) {
+          this.budgetItems.recurring.splice(i, 1);
+        }
+        i++;
+      }
+      this.budgetItems["totalReccuringCosts"] -= item.amount;
     }
 
     if (response.ok) {
@@ -590,7 +610,11 @@ export class User {
         this.budgetItems[tag].push(
           new BudgetItem(bodyJson["id"], name, amount, tag)
         );
-
+        if (tag == "income") {
+          this.budgetItems["totalIncome"] += amount;
+        } else {
+          this.budgetItems["totalReccuringCosts"] += amount;
+        }
         return true;
       } else {
         return false;
