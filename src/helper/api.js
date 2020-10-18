@@ -10,6 +10,10 @@ import {
   API_GOAL_SET,
   API_GOAL_DELETE,
   API_CATEGORISE_TRANSACTION,
+  API_EDIT_BUDGET_ITEM,
+  API_DELETE_BUDGET_ITEM,
+  API_ADD_BUDGET_ITEM,
+  API_GET_BUDGET_ITEMS,
 } from "./constants";
 import "./functions";
 
@@ -155,8 +159,8 @@ export class User {
     const response = await fetch(API_GOALS_STATUS, { method: "GET" });
     const bodyJson = await response.json();
 
-    console.log("Fetched goals: ");
-    console.log(bodyJson);
+    //console.log("Fetched goals: ");
+    //console.log(bodyJson);
 
     this.goals = [];
 
@@ -261,7 +265,7 @@ export class User {
     const response = await fetch(API_TRANSACTION_STATS, { method: "GET" });
     const bodyJson = await response.json();
 
-    console.log(bodyJson);
+    //console.log(bodyJson);
 
     // Get the transactions list for the user
     transactionData = await this.fetchTransactions();
@@ -295,7 +299,7 @@ export class User {
     spending = bodyJson["spending"];
 
     this.categories = bodyJson["all-categories"];
-    console.log(this.categories);
+    //console.log(this.categories);
 
     let total = Math.abs(parseFloat(spending["total"]).toFixed(2));
     // Append all the categories to the list
@@ -319,112 +323,281 @@ export class User {
     ) {
       return a.percent < b.percent;
     });
+  };
 
-    /**
-     * setGoal
-     *
-     * @param {string} goalName - Name of the goal
-     * @param {float} goalAmount - Total amount to save for the goal
-     * @param {float} fortnightlyGoal - Fortnightly amount to allocate to the goal
-     * @param {DateTimeFormat} completionDate - Date for the goal to complete by
-     *
-     * @return {boolean} - true if the goal was added, false if something went wrong
-     *
-     * @ensure A new goal will be created if the API call does not fail.
-     */
-    this.setGoal = async (
-      goalName,
-      goalAmount,
-      fortnightlyGoal,
-      completionDate
-    ) => {
-      if (goalName === "") {
+  /**
+   * setGoal - async, make sure you wait for this to return.
+   *
+   * @param {string} goalName - Name of the goal
+   * @param {float} goalAmount - Total amount to save for the goal
+   * @param {float} fortnightlyGoal - Fortnightly amount to allocate to the goal
+   * @param {DateTimeFormat} completionDate - Date for the goal to complete by
+   *
+   * @return {boolean} - true if the goal was added, false if something went wrong
+   *
+   * @ensure A new goal will be created if the API call does not fail.
+   */
+  setGoal = async (goalName, goalAmount, fortnightlyGoal, completionDate) => {
+    if (goalName === "") {
+      return false;
+    }
+
+    if (isNaN(goalAmount)) {
+      return false;
+    }
+
+    if (isNaN(fortnightlyGoal)) {
+      return false;
+    }
+
+    if (completionDate == "") {
+      return false;
+    }
+
+    let API_CALL = API_GOAL_SET;
+    API_CALL = API_CALL.replace("{goalName}", goalName);
+    API_CALL = API_CALL.replace("{goalAmount}", goalAmount);
+    API_CALL = API_CALL.replace("{fortnightlyGoal}", fortnightlyGoal);
+    API_CALL = API_CALL.replace("{endDate}", completionDate);
+
+    const response = await fetch(API_CALL, {
+      method: "GET",
+    }); // This should be post
+    const jsonBody = await response.json();
+
+    if (jsonBody["success"] == 200) {
+      //console.log(jsonBody);
+      this.goals.push(
+        new Goal(
+          jsonBody["id"],
+          goalName,
+          0,
+          goalAmount,
+          jsonBody["startDate"],
+          completionDate,
+          fortnightlyGoal
+        )
+      );
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  /**
+   * categoriseTransaction - async, make sure you wait for this to return.
+   *
+   * @param {Transaction} transaction - Transaction object to categorise
+   * @param {string} category - Category name
+   * @param {string} tag - Type of transaction ["income", "expense"]
+   *
+   * @return {boolean} - true if the categorisation succeeds, otherwise false
+   *
+   * @ensure Goal will be categorised if the API call does not fail.
+   */
+  categoriseTransaction = async (transaction, category, tag) => {
+    if (tag === "income") {
+      // TODO Implement
+      return;
+    } else if (tag === "expense") {
+      let API_CALL = API_CATEGORISE_TRANSACTION;
+      API_CALL = API_CALL.replace("{transactionId}", transaction.id);
+      API_CALL = API_CALL.replace("{category}", category);
+
+      //alert(API_CALL);
+      const response = await fetch(API_CALL, { method: "GET" });
+      const bodyJson = await response.json();
+
+      if (bodyJson["status"] != "Updated") {
+        alert("Categorise failed.");
         return false;
       }
+    }
 
-      if (isNaN(goalAmount)) {
-        return false;
+    if (tag === "income") {
+      let i = 0;
+      while (i < this.account.uncategorisedIncome.length) {
+        if (this.account.uncategorisedIncome[i].id == transaction.id) {
+          this.account.uncategorisedIncome.splice(i, 1);
+          this.uncategorisedIncome -= 1;
+          return true;
+        }
+        i++;
       }
-
-      if (isNaN(fortnightlyGoal)) {
-        return false;
+    } else if (tag === "expense") {
+      let i = 0;
+      while (i < this.account.uncategorisedExpenses.length) {
+        if (this.account.uncategorisedExpenses[i].id == transaction.id) {
+          this.account.uncategorisedExpenses.splice(i, 1);
+          this.uncategorisedSpending -= 1;
+          return true;
+        }
+        i++;
       }
+    }
+  };
 
-      if (completionDate == "") {
-        return false;
-      }
+  /**
+   * getBudgetItems - async, make sure you wait for this to return.
+   *
+   * @return {[BudgetItem]} - List of budget items
+   */
+  getBudgetItems = async () => {
+    if (this.budgetItems == null) {
+      this.updateBudgetItems();
+    }
 
-      let API_CALL = API_GOAL_SET;
-      API_CALL = API_CALL.replace("{goalName}", goalName);
-      API_CALL = API_CALL.replace("{goalAmount}", goalAmount);
-      API_CALL = API_CALL.replace("{fortnightlyGoal}", fortnightlyGoal);
-      API_CALL = API_CALL.replace("{endDate}", completionDate);
+    return this.budgetItems;
+  };
 
-      const response = await fetch(API_CALL, {
-        method: "GET",
-      }); // This should be post
-      const jsonBody = await response.json();
+  /**
+   * updateBudgetItems - [PRIVATE]
+   *
+   * @ensure BudgetItems will be updated if the API calls do not fail.
+   */
+  updateBudgetItems = async () => {
+    const response = await fetch(API_GET_BUDGET_ITEMS, { method: "GET" });
+    const bodyJson = await response.json();
 
-      if (jsonBody["success"] == 200) {
-        console.log(jsonBody);
-        this.goals.push(
-          new Goal(
-            jsonBody["id"],
-            goalName,
-            0,
-            goalAmount,
-            jsonBody["startDate"],
-            completionDate,
-            fortnightlyGoal
-          )
+    this.budgetItems = { recurring: [], income: [] };
+
+    console.log("BUDGET ITEMS");
+    console.log(bodyJson);
+
+    if (!bodyJson["all_budgets"]) {
+      alert("Something went wrong updating budgets.");
+      return;
+    }
+
+    await bodyJson["all_budgets"].forEach((g) => {
+      if (g["tag"] == "recurring") {
+        this.budgetItems["recurring"].push(
+          new BudgetItem(g["id"], g["name"], g["fortnightlyAmount"], g["tag"])
         );
+      } else if (g["tag"] == "income") {
+        this.budgetItems["income"].push(
+          new BudgetItem(g["id"], g["name"], g["fortnightlyAmount"], g["tag"])
+        );
+      }
+    });
+  };
+
+  /**
+   * editBudgetItem - async, make sure you wait for this to return.
+   *
+   * @param {BudgetItem} item - Budget item to edit
+   * @param {string} name - (Optional) New name
+   * @param {float} amount - (Optional) New amount
+   *
+   * @return {boolean} - true if succeeds, else false
+   */
+  editBudgetItem = async (item, name = null, amount = null) => {
+    if (this.budgetItems == null) {
+      this.updateBudgetItems();
+    }
+
+    let API_CALL = API_EDIT_BUDGET_ITEM;
+    API_CALL = API_CALL.replace("{id}", item.id);
+    API_CALL = API_CALL.replace("{name}", name == null ? item.name : name);
+    API_CALL = API_CALL.replace(
+      "{fortAmount}",
+      amount == null ? item.amount : amount
+    );
+
+    const response = await fetch(API_CALL, { method: "GET" });
+    const bodyJson = await response.json();
+
+    if (response.ok) {
+      if (bodyJson["status"] == 200) {
         return true;
       } else {
         return false;
       }
-    };
+    } else {
+      return false;
+    }
+  };
 
-    this.categoriseTransaction = async (transaction, category, tag) => {
-      if (tag === "income") {
-        // TODO Implement
-        return;
-      } else if (tag === "expense") {
-        let API_CALL = API_CATEGORISE_TRANSACTION;
-        API_CALL = API_CALL.replace("{transactionId}", transaction.id);
-        API_CALL = API_CALL.replace("{category}", category);
+  /**
+   * deleteBudgetItem - async, make sure you wait for this to return.
+   *
+   * @param {BudgetItem} item - Budget item to edit
+   *
+   * @return {boolean} - true if succeeds, else false
+   */
+  deleteBudgetItem = async (item) => {
+    if (this.budgetItems == null) {
+      this.updateBudgetItems();
+    }
 
-        //alert(API_CALL);
-        const response = await fetch(API_CALL, { method: "GET" });
-        const bodyJson = await response.json();
+    let API_CALL = API_DELETE_BUDGET_ITEM;
+    API_CALL = API_CALL.replace("{id}", item.id);
 
-        if (bodyJson["status"] != "Updated") {
-          alert("Categorise failed.");
-          return;
-        }
+    const response = await fetch(API_CALL, { method: "GET" });
+    const bodyJson = await response.json();
+
+    // Remove it locally
+    let i = 0;
+    while (i < this.budgetItems.length) {
+      if (this.budgetItems[i].id == item.id) {
+        this.budgetItems.splice(i, 1);
       }
+      i++;
+    }
 
-      if (tag === "income") {
-        let i = 0;
-        while (i < this.account.uncategorisedIncome.length) {
-          if (this.account.uncategorisedIncome[i].id == transaction.id) {
-            this.account.uncategorisedIncome.splice(i, 1);
-            this.uncategorisedIncome -= 1;
-            return true;
-          }
-          i++;
-        }
-      } else if (tag === "expense") {
-        let i = 0;
-        while (i < this.account.uncategorisedExpenses.length) {
-          if (this.account.uncategorisedExpenses[i].id == transaction.id) {
-            this.account.uncategorisedExpenses.splice(i, 1);
-            this.uncategorisedSpending -= 1;
-            return true;
-          }
-          i++;
-        }
+    if (response.ok) {
+      if (bodyJson["status"] == 200) {
+        return true;
+      } else {
+        return false;
       }
-    };
+    } else {
+      return false;
+    }
+  };
+
+  /**
+   * addBudgetItem - async, make sure you wait for this to return.
+   *
+   * @param {string} name - Name of item
+   * @param {float} amount - Amount of item
+   * @param {string} tag - Tag of item ["income", "recurring"]
+   *
+   * @return {boolean} - true if succeeds, else false
+   */
+  addBudgetItem = async (name, amount, tag) => {
+    if (this.budgetItems == null) {
+      this.updateBudgetItems();
+    }
+
+    if (tag != "income") {
+      if (tag != "recurring") {
+        return false;
+      }
+    }
+
+    let API_CALL = API_ADD_BUDGET_ITEM;
+    API_CALL = API_CALL.replace("{name}", name);
+    API_CALL = API_CALL.replace("{fortAmount}", amount);
+    API_CALL = API_CALL.replace("{tag}", tag);
+
+    const response = await fetch(API_CALL, { method: "GET" });
+    const bodyJson = await response.json();
+
+    if (response.ok) {
+      if (bodyJson["success"] == 200) {
+        // Add it locally
+        this.budgetItems[tag].push(
+          new BudgetItem(bodyJson["id"], name, amount, tag)
+        );
+
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   };
 
   /**
@@ -440,6 +613,7 @@ export class User {
     this.uncategorisedIncome = null;
     this.uncategorisedSpending = null;
     this.categories = null;
+    this.budgetItems = null;
   }
 }
 
@@ -448,6 +622,15 @@ class SpendingCategory {
     this.name = _name;
     this.amount = _amount;
     this.percent = _percent;
+  }
+}
+
+class BudgetItem {
+  constructor(_id, _name, _amount, _tag) {
+    this.id = _id;
+    this.name = _name;
+    this.amount = parseFloat(_amount);
+    this.tag = _tag;
   }
 }
 

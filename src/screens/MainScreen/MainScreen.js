@@ -57,6 +57,7 @@ const MainScreen = ({ navigation }) => {
 
     // This will background load some more data
     _account = await Context.User.getAccount();
+    _budgetItems = await Context.User.getBudgetItems();
   };
 
   // This "setupUser" needs to be ran before the data will show in the display.
