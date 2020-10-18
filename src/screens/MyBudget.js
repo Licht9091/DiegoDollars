@@ -328,12 +328,13 @@ export default function MyBudget({ navigation, route }) {
                 />
               </View>
             </View>
-            <View style={style.pillAndTextView}>
+            <View>
               {loaded &&
                 data.incomeBudgetItems &&
                 data.incomeBudgetItems.map((item) => {
                   return (
                     <>
+                    <View style={style.pillAndTextView}>
                       <View style={style.textView}>
                         <Text style={style.defaultHeaderDarkGray}>
                           {item.name}
@@ -351,6 +352,7 @@ export default function MyBudget({ navigation, route }) {
                           backgroundColor={"#2363BC"}
                           onPress={toggleEditIncomes}
                         />
+                      </View>
                       </View>
                     </>
                   );
