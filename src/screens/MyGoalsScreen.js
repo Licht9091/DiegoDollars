@@ -229,9 +229,9 @@ export default function MyGoals({ navigation, route }) {
   const [refreshModal, setRefreshModal] = useState(false);
 
   //All distances need to add up to 150, so percentages are used
-  const [spentDistance, setSpentDistance] = useState((150 * 1) / 3);
-  const [savedDistance, setSavedDistance] = useState((150 * 1) / 3);
-  const [goalDistance, setGoalDistanceDistance] = useState((150 * 1) / 3);
+  const [spentDistance, setSpentDistance] = useState(0);
+  const [savedDistance, setSavedDistance] = useState(150 * (goal.percent));
+  const [goalDistance, setGoalDistanceDistance] = useState(150 * (1 - goal.percent));
 
   const { search } = state;
 
@@ -331,7 +331,7 @@ export default function MyGoals({ navigation, route }) {
                   <View width={(Dimensions.get("window").width - 60) / 3 - 25}>
                     <View height={goalDistance}>
                       <Text style={{ fontSize: 20, color: Colors.White }}>
-                        $5000.00
+                        ${goal.goalAmount}
                       </Text>
                       <Text style={{ fontSize: 14, color: Colors.White }}>
                         Goal
@@ -341,13 +341,7 @@ export default function MyGoals({ navigation, route }) {
                       <Text style={{ fontSize: 14, color: Colors.White }}>
                         SAVED
                       </Text>
-                      <Text style={style.defaulthLine}>$3257.21</Text>
-                    </View>
-                    <View height={spentDistance}>
-                      <Text style={{ fontSize: 14, color: Colors.White }}>
-                        SPENT
-                      </Text>
-                      <Text style={style.defaulthLine}>$2256.34</Text>
+                      <Text style={style.defaulthLine}>${goal.currentContribution}</Text>
                     </View>
                   </View>
                   <View>
@@ -532,7 +526,7 @@ export default function MyGoals({ navigation, route }) {
                   <View width={(Dimensions.get("window").width - 60) / 3 - 25}>
                     <View height={goalDistance}>
                       <Text style={{ fontSize: 20, color: Colors.White }}>
-                        $5000.00
+                        ${goal.goalAmount}
                       </Text>
                       <Text style={{ fontSize: 14, color: Colors.White }}>
                         Goal
@@ -542,28 +536,22 @@ export default function MyGoals({ navigation, route }) {
                       <Text style={{ fontSize: 14, color: Colors.White }}>
                         SAVED
                       </Text>
-                      <Text style={style.defaulthLine}>$3257.21</Text>
-                    </View>
-                    <View height={spentDistance}>
-                      <Text style={{ fontSize: 14, color: Colors.White }}>
-                        SPENT
-                      </Text>
-                      <Text style={style.defaulthLine}>$2256.34</Text>
+                      <Text style={style.defaulthLine}>${goal.currentContribution}</Text>
                     </View>
                   </View>
                   <View>
-                    <Text
+                  <Text
                       style={{
                         borderLeftColor: Colors.DarkGray,
                         borderLeftWidth: 10,
                         borderRadius: 10,
-                        height: 90,
+                        height: goalDistance + 40,
                       }}
                     ></Text>
                     <Diego
                       style={{
                         position: "absolute",
-                        height: 180,
+                        height: 2 * (goalDistance + 40),
                         width: 40,
                         left: -15,
                         elevation: 0.1,
@@ -573,14 +561,14 @@ export default function MyGoals({ navigation, route }) {
                       style={{
                         borderLeftColor: Colors.PrimaryLight,
                         borderLeftWidth: 10,
-                        height: 50,
+                        height: savedDistance,
                       }}
                     ></Text>
                     <Text
                       style={{
                         borderLeftColor: Colors.Teal,
                         borderLeftWidth: 10,
-                        height: 50,
+                        height: spentDistance,
                       }}
                     ></Text>
                   </View>
