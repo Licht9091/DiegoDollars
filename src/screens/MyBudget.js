@@ -387,11 +387,14 @@ export default function MyBudget({ navigation, route }) {
               </View>
               <View style={style.textView}>
                 <Text style={style.defaultHeaderDarkGray2}>
-                  $ {data.totalIncome}
+                  ${data.totalIncome}
                 </Text>
               </View>
               <View style={style.pillView}>
-                <SmallPill />
+                <SmallPill/>
+              </View>
+              <View style={style.pillView}>
+                <SmallPill/>
               </View>
             </View>
           </View>
@@ -457,11 +460,14 @@ export default function MyBudget({ navigation, route }) {
               </View>
               <View style={style.textView}>
                 <Text style={style.defaultHeaderDarkGray2}>
-                  $ {data.totalReccuringCosts}
+                  ${data.totalReccuringCosts}
                 </Text>
               </View>
               <View style={style.pillView}>
-                <SmallPill />
+                <SmallPill/>
+              </View>
+              <View style={style.pillView}>
+                <SmallPill/>
               </View>
             </View>
           </View>
@@ -522,11 +528,11 @@ export default function MyBudget({ navigation, route }) {
               </View>
               <View style={style.textView}>
                 <Text style={style.defaultHeaderDarkGray2}>
-                  $ {data.totalGoalCosts}
+                  ${data.totalGoalCosts}
                 </Text>
               </View>
               <View style={style.pillView}>
-                <SmallPill />
+                <SmallPill/>
               </View>
             </View>
           </View>

@@ -22,6 +22,7 @@ import { STYLESHEET } from "../../styles/stylesheet";
 import mainStyle from "./MainScreen.style";
 import Modal from "react-native-modal";
 import NewGoal from "../../components/NewGoal";
+import WavyHeader from "../../components/WavyHeader"
 
 const iconStyle = {
   opacity: 0.8,
@@ -75,7 +76,7 @@ const MainScreen = ({ navigation }) => {
   });
 
   return (
-    <SafeAreaView style={{ backgroundColor: Colors.Primary }}>
+    <SafeAreaView style={{ backgroundColor: Colors.White }}>
       <View>
         {/* Refresh Modal */}
         {refreshModal && (
@@ -101,6 +102,8 @@ const MainScreen = ({ navigation }) => {
         {data && loaded && (
           <ScrollView style={mainStyle.mainScreen}>
             {/* Title */}
+            
+            <WavyHeader/>
             <View style={mainStyle.logoWrapper}>
               <Text style={mainStyle.logo}>DIEGO</Text>
             </View>
@@ -132,14 +135,14 @@ const MainScreen = ({ navigation }) => {
                 )}
               </View>
               <Text style={mainStyle.availablelable}>
-                AVAILABLE THIS PERIOD
+                Available This Fortnight
               </Text>
 
               <View style={mainStyle.heroUncategorised}>
                 <Pill
                   content={`${data.uncategorisedSpending} Uncategorised Spending`}
-                  color={Colors.DarkerGray}
-                  backgroundColor={Colors.White}
+                  color={Colors.White}
+                  backgroundColor={"#FF6A6A"}
                   onPress={() =>
                     navigation.navigate("Transactions", {
                       navigatedState: "expense",
@@ -155,17 +158,11 @@ const MainScreen = ({ navigation }) => {
                   onPress={() => setRefreshModal(true)} // "income"
                 />
               </View>
-
-              <View>
-                <Image
-                  style={mainStyle.chartImg}
-                  source={require("./chart.png")}
-                />
-              </View>
             </View>
+          
 
             {/* Goals */}
-            <View style={mainStyle.container}>
+            <View style={mainStyle.goalContainer}>
               <Text style={mainStyle.title}>Goals</Text>
               <ScrollView horizontal={true} style={mainStyle.goalsWrapper}>
                 {/* Goals Data loop */}

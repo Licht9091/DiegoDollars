@@ -18,7 +18,7 @@ const mainStyle = {
     paddingTop: 150,
   },
   mainScreen: {
-    backgroundColor: Colors.Primary,
+    backgroundColor: Colors.White,
     minHeight: win.height,
     paddingBottom: 100,
   },
@@ -26,18 +26,18 @@ const mainStyle = {
   logoWrapper: {
     marginTop: 40,
     borderBottomColor: Colors.White,
-    borderBottomWidth: 1,
+    borderBottomWidth: 2.5,
     alignSelf: 'center',
   },
   logo: {
-    fontFamily: FONT_FAMILY_LIGHT,
+    fontFamily: FONT_FAMILY_SEMIBOLD,
     marginBottom: 5,
     fontSize: 28,
     color: Colors.White,
   },
   //   statusContainer
   statusContainer: {
-    paddingTop: 90,
+    paddingTop: 50,
     textAlign: 'center',
   },
   availableSpend: {
@@ -46,14 +46,14 @@ const mainStyle = {
     alignSelf: 'center',
   },
   availableSpendDollars: {
-    fontFamily: FONT_FAMILY_LIGHT,
+    fontFamily: FONT_FAMILY_SEMIBOLD,
     fontWeight: '100',
     fontSize: 55,
     textAlign: 'center',
     color: 'white',
   },
   availableSpendCents: {
-    fontFamily: FONT_FAMILY_LIGHT,
+    fontFamily: FONT_FAMILY_SEMIBOLD,
     fontWeight: '100',
     fontSize: 30,
     textAlign: 'center',
@@ -82,15 +82,20 @@ const mainStyle = {
     position: 'relative',
     zIndex: -1,
   },
+  goalContainer: {
+    paddingTop: 50,
+    paddingBottom: 15,
+    paddingLeft: 20,
+  },
   container: {
     paddingTop: 0,
     paddingBottom: 15,
-    paddingLeft: 30,
+    paddingLeft: 20,
   },
   goalsWrapper: {
     paddingTop: 15,
     paddingRight: 100,
-    marginLeft: -30,
+    marginLeft: -20,
     display: 'flex',
     flexDirection: 'row',
     height: 160,
@@ -108,6 +113,8 @@ const mainStyle = {
   goalDetailsWrapper: {
     flex: 1,
     flexDirection: 'row',
+    display: 'flex',
+
   },
   goalInfo: {
     flex: 1,
@@ -147,7 +154,7 @@ const mainStyle = {
   },
   spendsWrapper: {
     paddingTop: 15,
-    marginLeft: -15,
+    marginLeft: -5,
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -183,8 +190,8 @@ const mainStyle = {
   },
   title: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    color: Colors.White,
-    fontSize: 22,
+    color: "#36424C",
+    fontSize: 20,
     opacity: 0.95,
   },
   subtitle: {
@@ -198,6 +205,9 @@ const mainStyle = {
   activityIndicator: {
     color: Colors.White,
   },
+  topHeader:{
+    width: 120,
+  }
 };
 
 export default mainStyle;
