@@ -1,11 +1,11 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 import {
   FONT_FAMILY_LIGHT,
   FONT_FAMILY_SEMIBOLD,
   FONT_FAMILY_REGULAR,
-} from "../../styles/typography";
-import Colors from "../../styles/colors";
-import { STYLESHEET } from "../../styles/stylesheet";
+} from '../../styles/typography';
+import Colors from '../../styles/colors';
+import { STYLESHEET } from '../../styles/stylesheet';
 
 const transactionStyles = StyleSheet.create({
   mainView: {
@@ -17,10 +17,10 @@ const transactionStyles = StyleSheet.create({
   },
   searchBarLine: {
     flex: 0,
-    flexDirection: "row",
-    backgroundColor: "white",
-    justifyContent: "flex-start",
-    alignItems: "center",
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
     margin: 0,
     height: 50,
     paddingLeft: 15,
@@ -29,9 +29,9 @@ const transactionStyles = StyleSheet.create({
   },
   filterButton: {
     flex: 0,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: Colors.VeryDarkGray,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
     paddingLeft: 15,
     paddingRight: 15,
     paddingTop: 4,
@@ -41,9 +41,9 @@ const transactionStyles = StyleSheet.create({
   },
   filterButtonPressed: {
     flex: 0,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: Colors.Primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.VeryDarkGray,
     paddingLeft: 15,
     paddingRight: 15,
     paddingTop: 4,
@@ -52,7 +52,12 @@ const transactionStyles = StyleSheet.create({
     marginRight: 6,
   },
   filterButtonText: {
-    color: "white",
+    color: Colors.VeryDarkGray,
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    fontSize: 11,
+  },
+  filterButtonPressedText: {
+    color: 'white',
     fontFamily: FONT_FAMILY_SEMIBOLD,
     fontSize: 11,
   },
@@ -69,48 +74,54 @@ const transactionStyles = StyleSheet.create({
     fontSize: 12,
   },
   transactionView: {
-    backgroundColor: "white",
-    paddingTop: 0,
-    paddingBottom: 10,
+    backgroundColor: 'white',
     margin: 0,
-    padding: 10,
-    paddingTop: 20,
-    paddingRight: 15,
+    padding: 0,
     ...STYLESHEET.shadowNormal,
   },
   topLine: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  dateHeader: {
+    margin: 0,
+    padding: 7,
+    paddingLeft: 12,
+    backgroundColor: Colors.LightGray,
+  },
+  dateHeaderText: {
+    fontSize: 9,
+    color: Colors.DarkerGray,
   },
   transactionTextWrapper: {
-    flexDirection: "row",
+    flexDirection: 'row',
     width: 250,
   },
   transactionText: {
     fontFamily: FONT_FAMILY_LIGHT,
-    fontWeight: "100",
+    fontWeight: '100',
     fontSize: 12,
-    textAlign: "left",
-    color: "black",
+    textAlign: 'left',
+    color: 'black',
     paddingLeft: 10,
   },
   categoryText: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    fontWeight: "100",
+    fontWeight: '100',
     fontSize: 12,
-    textAlign: "right",
-    color: "black",
-    textTransform: "uppercase",
+    textAlign: 'right',
+    color: 'black',
+    textTransform: 'uppercase',
   },
   dateText: {
     fontFamily: FONT_FAMILY_LIGHT,
-    fontWeight: "100",
+    fontWeight: '100',
     fontSize: 12,
-    textAlign: "center",
-    color: "black",
+    textAlign: 'center',
+    color: 'black',
     paddingLeft: 10,
-    textAlign: "right",
+    textAlign: 'right',
   },
   bottomLine: {
     // flex: 1,
@@ -121,11 +132,11 @@ const transactionStyles = StyleSheet.create({
   },
   moneyText: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   moneyDollars: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    fontWeight: "100",
+    fontWeight: '100',
     fontSize: 30,
     color: Colors.DarkerGray,
     paddingLeft: 10,
@@ -133,15 +144,15 @@ const transactionStyles = StyleSheet.create({
   },
   moneyCents: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    fontWeight: "100",
+    fontWeight: '100',
     fontSize: 20,
     paddingTop: 3,
     color: Colors.DarkerGray,
   },
   buttonContainer: {
     flex: 0,
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingTop: 7,
   },
   button: {

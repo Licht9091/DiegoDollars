@@ -22,7 +22,6 @@ const PaychecksReceived = ({ onClose, onComplete }) => {
       .slice(0, 2);
 
     setPaychecks(paychecks);
-    console.log(paychecks);
   };
 
   const removePaycheck = (paycheckId) => {

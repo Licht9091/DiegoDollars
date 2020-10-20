@@ -1,28 +1,29 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from 'react';
 import {
   StyleSheet,
   View,
   Dimensions,
   Text,
   TouchableOpacity,
-} from "react-native";
-import { STYLESHEET } from "../styles/stylesheet";
+} from 'react-native';
+import { STYLESHEET } from '../styles/stylesheet';
 import {
   FONT_FAMILY_BOLD,
   FONT_FAMILY_REGULAR,
   FONT_FAMILY_SEMIBOLD,
   FONT_REGULAR,
-} from "../styles/typography";
-import Colors from "../styles/colors";
-import Format from "../helper/Format";
-import AppContext from "../helper/context";
-import { ScrollView } from "react-native-gesture-handler";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+} from '../styles/typography';
+import Colors from '../styles/colors';
+import Format from '../helper/Format';
+import AppContext from '../helper/context';
+import { ScrollView } from 'react-native-gesture-handler';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import moment from 'moment';
 
-import Cloud from "../assets/cloud.svg";
-import Stars from "../assets/stars.svg";
-import Telescope from "../assets/telescope.svg";
+import Cloud from '../assets/cloud.svg';
+import Stars from '../assets/stars.svg';
+import Telescope from '../assets/telescope.svg';
 
 export default function SingleTransactionScreen({
   navigatedState,
@@ -41,15 +42,13 @@ export default function SingleTransactionScreen({
 
     _data = { goals: _goals /*categories: _categories*/ };
 
-    console.log(_goals);
-
     setData(_data);
   };
 
   useEffect(() => {
     setTimeout(() => {
       if (data == null) {
-        setupData().catch(console.log("Failed to read."));
+        setupData().catch(console.log('Failed to read.'));
       }
     }, 0);
   });
@@ -60,31 +59,29 @@ export default function SingleTransactionScreen({
     for (let goal of data.goals) {
       goals.push(
         /* TODO make functional */
-        <TouchableOpacity>
+        <TouchableOpacity key={goal.id}>
           <View style={style.goalButton}>
-            <Text style={[style.subtitle, { color: "white" }]}>
+            <Text style={[style.subtitle, { color: 'white' }]}>
               {goal.description}
             </Text>
             <View style={style.price}>
               <Text style={style.priceDollarsGoal}>
-                {"$" + Format.toDollars(goal.goalAmount)}
+                {'$' + Format.toDollars(goal.goalAmount)}
               </Text>
               <Text style={style.priceCentsGoal}>
                 {/* TODO fix the cents */}
-                {"." + "00" /*Format.toCents(goal.goalAmount)*/}
+                {'.' + '00' /*Format.toCents(goal.goalAmount)*/}
               </Text>
             </View>
-            <Text style={[style.fontSmall, { color: "white" }]}>Available</Text>
+            <Text style={[style.fontSmall, { color: 'white' }]}>Available</Text>
           </View>
         </TouchableOpacity>
       );
     }
   }
 
-  /* Finished User setup */
-
   // TODO make the date nicer.
-  const niceDate = transaction.date;
+  const niceDate = moment(transaction.date).format('dddd Do MMMM');
   const dollars = Format.toDollars(transaction.value);
   const cents = Format.toCents(transaction.value);
 
@@ -94,7 +91,7 @@ export default function SingleTransactionScreen({
         <View style={style.closeButton}>
           <FontAwesomeIcon
             style={style.icon}
-            size={Dimensions.get("window").height * 0.03}
+            size={Dimensions.get('window').height * 0.03}
             icon={faAngleDown}
           />
         </View>
@@ -112,19 +109,21 @@ export default function SingleTransactionScreen({
         <View style={{ height: 80 }}>
           <View style={style.priceBox}>
             <View style={style.row}>
-              <Text style={[style.fontSmall, { color: "grey" }]}>
+              <Text style={[style.fontSmall, { color: 'grey' }]}>
                 Transaction
               </Text>
               <Text style={style.fontSmall}>
                 {/* Truncate Text */}
                 {transaction.description.slice(0, 20) +
-                  (transaction.description.length > 20 ? "..." : "")}
+                  (transaction.description.length > 20 ? '...' : '')}
               </Text>
             </View>
             <View style={style.row}>
               <View style={style.price}>
-                <Text style={style.priceDollars}>{"$" + dollars}</Text>
-                <Text style={style.priceCents}>{"." + cents}</Text>
+                <Text style={style.priceDollars}>
+                  {(dollars < 0 ? '-' : '') + '$' + Math.abs(dollars)}
+                </Text>
+                <Text style={style.priceCents}>{'.' + cents}</Text>
               </View>
               <Text style={style.date}>{niceDate}</Text>
             </View>
@@ -138,13 +137,13 @@ export default function SingleTransactionScreen({
           <View
             style={[
               style.button,
-              { backgroundColor: tab == 1 ? "grey" : "white" },
+              { backgroundColor: tab == 1 ? 'grey' : 'white' },
             ]}
           >
             <Text
               style={[
                 style.buttonTxt,
-                { color: tab == 1 ? "#4d4d4d" : "black" },
+                { color: tab == 1 ? '#4d4d4d' : 'black' },
               ]}
             >
               Add a Goal
@@ -156,13 +155,13 @@ export default function SingleTransactionScreen({
             style={[style.button]}
             style={[
               style.button,
-              { backgroundColor: tab == 0 ? "grey" : "white" },
+              { backgroundColor: tab == 0 ? 'grey' : 'white' },
             ]}
           >
             <Text
               style={[
                 style.buttonTxt,
-                { color: tab == 0 ? "#4d4d4d" : "black" },
+                { color: tab == 0 ? '#4d4d4d' : 'black' },
               ]}
             >
               Categorise
@@ -182,7 +181,7 @@ export default function SingleTransactionScreen({
                 {/* TODO finish this */}
                 <TouchableOpacity>
                   <View style={[style.button, { backgroundColor: Colors.Red }]}>
-                    <Text style={[style.buttonTxt, { color: "white" }]}>
+                    <Text style={[style.buttonTxt, { color: 'white' }]}>
                       Create new Goal
                     </Text>
                   </View>
@@ -209,50 +208,55 @@ export default function SingleTransactionScreen({
 const style = StyleSheet.create({
   row: {
     padding: 12,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-end",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
   },
   buttonRow: {
-    flexDirection: "row",
-    width: Dimensions.get("window").width - 50,
+    flexDirection: 'row',
+    width: Dimensions.get('window').width - 50,
     marginTop: 37,
     marginBottom: 10,
   },
+  buttonTxt: {
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    fontSize: 12,
+  },
   card: {
-    width: Dimensions.get("window").width - 50,
+    width: Dimensions.get('window').width - 50,
     borderRadius: 20,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     padding: 0,
-    position: "relative",
+    position: 'relative',
   },
   content: {
-    height: "45%",
+    height: '45%',
     padding: 15,
   },
   header: {
-    width: Dimensions.get("window").width - 50,
+    width: Dimensions.get('window').width - 50,
     height: 110,
-    backgroundColor: "#4897DB" /*"#51AAF6"*/,
+    backgroundColor: '#4897DB' /*"#51AAF6"*/,
     padding: 20,
     paddingTop: 35,
     flex: 0,
-    alignItems: "center",
+    alignItems: 'center',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
   priceBox: {
     height: 120,
-    width: 275,
-    backgroundColor: "white",
-    position: "absolute",
-    left: (Dimensions.get("window").width - 50 - 275) / 2,
+    width: '92%',
+    backgroundColor: 'white',
+    position: 'absolute',
+    // left: (Dimensions.get('window').width - 50 - 275) / 2,
+    left: '4%',
     top: -20,
     borderRadius: 15,
     ...STYLESHEET.shadowNormal,
   },
   price: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   priceDollars: {
     fontFamily: FONT_FAMILY_BOLD,
@@ -268,13 +272,13 @@ const style = StyleSheet.create({
     fontFamily: FONT_FAMILY_BOLD,
     fontSize: 20,
     marginRight: 3,
-    color: "white",
+    color: 'white',
   },
   priceCentsGoal: {
     fontFamily: FONT_FAMILY_BOLD,
     fontSize: 14,
     margin: 3,
-    color: "white",
+    color: 'white',
   },
   date: {
     fontSize: 12,
@@ -283,11 +287,11 @@ const style = StyleSheet.create({
   headerText: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
     fontSize: 18,
-    color: "white",
-    textAlign: "center",
+    color: 'white',
+    textAlign: 'center',
   },
   button: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     paddingLeft: 15,
     paddingRight: 15,
     paddingTop: 6,
@@ -301,8 +305,8 @@ const style = StyleSheet.create({
     height: 50,
     borderRadius: 100,
     margin: 10,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   fontSmall: {
     fontSize: 12,
@@ -313,9 +317,9 @@ const style = StyleSheet.create({
     fontFamily: FONT_FAMILY_SEMIBOLD,
   },
   titleBar: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "baseline",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'baseline',
     padding: 15,
     paddingTop: 0,
   },
@@ -326,25 +330,25 @@ const style = StyleSheet.create({
     borderRadius: 15,
     padding: 13,
     paddingLeft: 30,
-    justifyContent: "space-evenly",
+    justifyContent: 'space-evenly',
   },
   telescope: {
-    position: "absolute",
+    position: 'absolute',
     right: 5,
     bottom: 2,
   },
   cloud1: {
-    position: "absolute",
+    position: 'absolute',
     left: -15,
     bottom: 30,
   },
   cloud2: {
-    position: "absolute",
+    position: 'absolute',
     top: -10,
     right: 50,
   },
   stars: {
-    position: "absolute",
+    position: 'absolute',
     top: -25,
     left: 70,
   },

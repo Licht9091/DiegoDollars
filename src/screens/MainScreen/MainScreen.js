@@ -1,6 +1,6 @@
-import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import React, { useContext, useEffect, useState } from "react";
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Dimensions,
@@ -8,21 +8,21 @@ import {
   ScrollView,
   Text,
   View,
-} from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native-safe-area-context";
-import BottomBar from "../../components/BottomBar";
-import PieChart from "../../components/PieChart";
-import Pill from "../../components/Pill";
-import RefreshModal from "../../components/RefreshModal";
-import AppContext from "../../helper/context";
-import Format from "../../helper/Format";
-import Colors from "../../styles/colors";
-import { STYLESHEET } from "../../styles/stylesheet";
-import mainStyle from "./MainScreen.style";
-import Modal from "react-native-modal";
-import NewGoal from "../../components/NewGoal";
-import WavyHeader from "../../components/WavyHeader";
+} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import BottomBar from '../../components/BottomBar';
+import PieChart from '../../components/PieChart';
+import Pill from '../../components/Pill';
+import RefreshModal from '../../components/RefreshModal';
+import AppContext from '../../helper/context';
+import Format from '../../helper/Format';
+import Colors from '../../styles/colors';
+import { STYLESHEET } from '../../styles/stylesheet';
+import mainStyle from './MainScreen.style';
+import Modal from 'react-native-modal';
+import NewGoal from '../../components/NewGoal';
+import WavyHeader from '../../components/WavyHeader';
 
 const iconStyle = {
   opacity: 0.8,
@@ -88,7 +88,7 @@ const MainScreen = ({ navigation }) => {
           <Modal isVisible onPress={false}>
             <NewGoal
               onClose={() => setNewGoalModal(false)}
-              goal={""}
+              goal={''}
               navigation={navigation}
             />
           </Modal>
@@ -96,7 +96,7 @@ const MainScreen = ({ navigation }) => {
 
         {(!loaded || !data) && (
           <ScrollView style={mainStyle.loadWrapper}>
-            <ActivityIndicator size="large" color="white" />
+            <ActivityIndicator size='large' color='white' />
           </ScrollView>
         )}
         {data && loaded && (
@@ -122,10 +122,10 @@ const MainScreen = ({ navigation }) => {
                     <FontAwesomeIcon
                       style={iconStyle}
                       icon={faInfoCircle}
-                      size={Dimensions.get("window").height * 0.03}
+                      size={Dimensions.get('window').height * 0.03}
                       color={Colors.White}
                       onPress={() => {
-                        navigation.navigate("Budget", {
+                        navigation.navigate('Budget', {
                           navigatedState: navigation,
                           goals: data.goals,
                         });
@@ -142,10 +142,10 @@ const MainScreen = ({ navigation }) => {
                 <Pill
                   content={`${data.uncategorisedSpending} Uncategorised Spending`}
                   color={Colors.White}
-                  backgroundColor={"#FF6A6A"}
+                  backgroundColor={'#FF6A6A'}
                   onPress={() =>
-                    navigation.navigate("Transactions", {
-                      navigatedState: "expense",
+                    navigation.navigate('Transactions', {
+                      navigatedState: 'expense',
                     })
                   } // "expense"
                 />
@@ -174,9 +174,9 @@ const MainScreen = ({ navigation }) => {
                       ...STYLESHEET.shadowNormal,
                     }}
                     onPress={() =>
-                      navigation.navigate("MyGoals", {
+                      navigation.navigate('MyGoals', {
                         goal: goal,
-                        navigatedState: "income",
+                        navigatedState: 'income',
                       })
                     }
                   >
@@ -219,20 +219,19 @@ const MainScreen = ({ navigation }) => {
               <View style={mainStyle.spendsWrapper}>
                 {/* Spending Categories Data loop */}
                 {data.spendingCategories.map((category) => {
-                  console.log(category);
                   return (
                     <TouchableOpacity
                       key={category.name}
                       style={mainStyle.spendWrapper}
                       onPress={() =>
-                        navigation.navigate("Transactions", {
+                        navigation.navigate('Transactions', {
                           navigatedState: category.name,
                         })
                       } // "income"
                     >
                       <PieChart
                         value={category.percent}
-                        color="#13629B"
+                        color='#13629B'
                         size={85}
                         showPercentage
                       />

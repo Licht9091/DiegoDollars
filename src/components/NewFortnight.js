@@ -15,7 +15,6 @@ const NewFortnight = ({ onComplete }) => {
 
   const getGoals = async () => {
     const goals = await Context.User.getGoals();
-    console.log(goals);
 
     // const
     const newGoals = [...goals].sort(
@@ -44,8 +43,6 @@ const NewFortnight = ({ onComplete }) => {
       fortnightlyContribution: newContribution,
       currentContribution: goals[idx].currentContribution + newContribution,
     };
-
-    console.log(newGoals);
 
     setDisplayGoals(newGoals);
   };
