@@ -22,14 +22,14 @@ class Transaction {
     this.id = _obj["id"];
     this.date = _obj["date"];
     this.description = _obj["description"];
-    this.value = _obj["value"];
+    this.value = parseFloat(_obj["value"]);
     this.category = _obj["category"];
     if ("goal" in _obj) {
       this.goalId = _obj["goal"];
     } else {
       this.goalId = null;
     }
-    this.isIncome = parseFloat(this.value) > 0;
+    this.isIncome = this.value > 0;
   }
 }
 
@@ -220,13 +220,17 @@ export class User {
    * @return {int} The number of uncategoried spending transactions.
    */
   getUncategorisedSpending = async () => {
-    if (this.uncategorisedSpending != null) {
-      return this.uncategorisedSpending;
+    if (this.allTransactions != null) {
+      return this.allTransactions;
     }
 
     await this.fetchAccountStatus();
 
-    return this.uncategorisedSpending;
+    return this.account.allTransactions.filter(
+      (transaction) =>
+        transaction.category.toLowerCase() == "uncategorized" &&
+        transaction.isIncome == false
+    ).length;
   };
 
   /**
@@ -235,13 +239,17 @@ export class User {
    * @return {int} The number of uncategoried income transactions.
    */
   getUncategorisedIncome = async () => {
-    if (this.uncategorisedIncome != null) {
-      return this.uncategorisedIncome;
+    if (this.allTransactions != null) {
+      return this.allTransactions;
     }
 
     await this.fetchAccountStatus();
 
-    return this.uncategorisedIncome;
+    return this.account.allTransactions.filter(
+      (transaction) =>
+        transaction.category.toLowerCase() == "uncategorized" &&
+        (transaction.isIncome = true)
+    ).length;
   };
 
   /**
@@ -271,18 +279,9 @@ export class User {
     transactionData = await this.fetchTransactions();
 
     allTransactions = [];
-    incomeTransactions = [];
-    expenseTransactions = [];
 
     await transactionData["all_transactions"].forEach((obj) => {
       allTransactions.push(new Transaction(obj));
-    });
-
-    await transactionData["uncategorized_income"].forEach((obj) => {
-      incomeTransactions.push(new Transaction(obj));
-    });
-    await transactionData["uncategorized_expense"].forEach((obj) => {
-      expenseTransactions.push(new Transaction(obj));
     });
 
     // Set the Account
@@ -290,9 +289,7 @@ export class User {
       bodyJson["spending-amount"],
       bodyJson["total-cash"],
       bodyJson["days-till-pay"],
-      allTransactions,
-      incomeTransactions,
-      expenseTransactions
+      allTransactions
     );
 
     this.spendingCategories = [];
@@ -663,16 +660,12 @@ class Account {
     _spendingBalance,
     _totalBalance,
     _daysUntilPay,
-    _allTransactions,
-    _uncategorisedIncome,
-    _uncategorisedExpenses
+    _allTransactions
   ) {
     this.spendingBalance = _spendingBalance; // float
     this.totalBalance = _totalBalance; // float
     this.daysUntilPay = _daysUntilPay; // int
     this.allTransactions = _allTransactions; // List<Transaction>
-    this.uncategorisedIncome = _uncategorisedIncome; // List<Transaction>
-    this.uncategorisedExpenses = _uncategorisedExpenses; // List<Transaction>
   }
 
   /**
@@ -685,77 +678,12 @@ class Account {
   };
 
   /**
-   * getTransactionsByCategory - async, make sure you wait for this to return.
+   * getTransactions - async, make sure you wait for this to return.
    *
-   * @param {string} category - Category to filter by
-   *
-   * @return {[Transaction]} List of transactions by category
+   * @return {[Transaction]} List of the transactions
    */
-  getTransactionsByCategory = async (category) => {
-    returnList = [];
-
-    await this.allTransactions.forEach((obj) => {
-      if (obj.category == category) {
-        returnList.push(obj);
-      }
-    });
-
-    return returnList;
-  };
-
-  /**
-   * getFilteredTransactions - async, make sure you wait for this to return.
-   *
-   * @param {string} type - Type of transaction. ["expense", "income", "all"]
-   * @param {string} searchContents - Search term to search by
-   *
-   * @return {[Transaction]} List of filtered transactions
-   */
-  getFilteredTransactions = async (type, searchContents) => {
-    returnList = [];
-
-    console.log("Filtering: " + type + " by " + searchContents);
-    if (searchContents == "") {
-      if (type == "expense") {
-        return this.uncategorisedExpenses;
-      } else if (type == "income") {
-        return this.uncategorisedIncome;
-      } else if (type == "all") {
-        return this.allTransactions;
-      } else if (type == "") {
-        return [];
-      } else {
-        alert("Filter passed invalid value");
-        return [];
-      }
-    } else {
-      searchTerm = new RegExp(searchContents, "i");
-
-      if (type == "expense") {
-        await this.uncategorisedExpenses.forEach((obj) => {
-          if (obj.description.search(searchTerm) != -1) {
-            returnList.push(obj);
-          }
-        });
-      } else if (type == "income") {
-        await this.uncategorisedIncome.forEach((obj) => {
-          if (obj.description.search(searchTerm) != -1) {
-            returnList.push(obj);
-          }
-        });
-      } else if (type == "all") {
-        await this.allTransactions.forEach((obj) => {
-          if (obj.description.search(searchTerm) != -1) {
-            returnList.push(obj);
-          }
-        });
-      } else {
-        alert("Filter passed invalid value");
-        return;
-      }
-    }
-
-    return returnList;
+  getTransactions = async () => {
+    return this.allTransactions;
   };
 }
 

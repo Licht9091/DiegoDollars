@@ -22,7 +22,7 @@ import { STYLESHEET } from "../../styles/stylesheet";
 import mainStyle from "./MainScreen.style";
 import Modal from "react-native-modal";
 import NewGoal from "../../components/NewGoal";
-import WavyHeader from "../../components/WavyHeader"
+import WavyHeader from "../../components/WavyHeader";
 
 const iconStyle = {
   opacity: 0.8,
@@ -102,8 +102,8 @@ const MainScreen = ({ navigation }) => {
         {data && loaded && (
           <ScrollView style={mainStyle.mainScreen}>
             {/* Title */}
-            
-            <WavyHeader/>
+
+            <WavyHeader />
             <View style={mainStyle.logoWrapper}>
               <Text style={mainStyle.logo}>DIEGO</Text>
             </View>
@@ -159,7 +159,6 @@ const MainScreen = ({ navigation }) => {
                 />
               </View>
             </View>
-          
 
             {/* Goals */}
             <View style={mainStyle.goalContainer}>

@@ -20,11 +20,9 @@ export default function TransactionScreen({ route, navigation }) {
   const [loaded, setLoaded] = useState(false);
   const [incomeToggled, setIncomeToggled] = useState(true);
   const [expensesToggled, setExpensesToggled] = useState(true);
+  const [searchContents, setSearchContents] = useState("");
 
   const { navigatedState } = route.params; // "expense", "income" or "all". Can use this for determining which page we navigated from.
-
-  const [searchContents, setSearchContents] = useState("");
-  const [filterType, setFilterType] = useState("");
 
   const [showSingleTransaction, setSingleTransaction] = useState(false);
   const [currentTransaction, setCurrentTransaction] = useState(null);
@@ -33,64 +31,32 @@ export default function TransactionScreen({ route, navigation }) {
 
   const updateTransactionList = async () => {
     _account = await Context.User.getAccount();
-    if (navigatedState === "expense") {
-      _data = _account.uncategorisedExpenses;
-      setExpensesToggled(true);
-    } else if (navigatedState === "income") {
-      _data = _account.uncategorisedIncome;
-      setIncomeToggled(true);
-    } else if (navigatedState === "all") {
-      _data = _account.allTransactions;
-      setExpensesToggled(true);
-      setIncomeToggled(true);
-    } else {
-      setExpensesToggled(true);
-      setIncomeToggled(true);
-      setSearchContents(navigatedState);
-      _data = await _account.getTransactionsByCategory(navigatedState);
+    _transactions = await _account.getTransactions();
+
+    // Filter Transactions (Chain these because of they are not async?)
+    if (!incomeToggled && !expensesToggled) {
+      setData([]);
+      return;
     }
-
-    setData(_data);
-  };
-
-  const updateFilterType = (type) => {
-    console.log("TYPE: " + type);
-    if (type == "income") {
-      setIncomeToggled(!incomeToggled);
-    } else if (type == "expense") {
-      setExpensesToggled(!expensesToggled);
-    }
-  };
-
-  const correctFilterType = () => {
     if (incomeToggled && expensesToggled) {
-      setFilterType("all");
-    } else if (!incomeToggled && !expensesToggled) {
-      setFilterType("");
     } else if (incomeToggled) {
-      setFilterType("income");
+      _transactions = _transactions.filter((t) => t.isIncome == true);
     } else if (expensesToggled) {
-      setFilterType("expense");
+      _transactions = _transactions.filter((t) => t.isIncome == false);
     }
+
+    if (searchContents != "") {
+      _transactions = _transactions.filter((t) =>
+        t.description.contains(searchContents)
+      );
+    }
+
+    setData(_transactions);
   };
 
-  // This one waits for income or expense to toggle
   useEffect(() => {
-    correctFilterType();
-  }, [incomeToggled, expensesToggled]);
-
-  // Then this waits for filter type to change
-  useEffect(() => {
-    filterTransactions();
-  }, [filterType]);
-
-  const filterTransactions = async () => {
-    _account = await Context.User.getAccount();
-
-    _data = await _account.getFilteredTransactions(filterType, searchContents);
-
-    setData(_data);
-  };
+    updateTransactionList();
+  }, [incomeToggled, expensesToggled, searchContents]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -134,7 +100,7 @@ export default function TransactionScreen({ route, navigation }) {
                 : transactionStyles.filterButton
             }
             onPress={() => {
-              updateFilterType("expense");
+              setExpensesToggled(!expensesToggled);
             }}
           >
             <Text style={transactionStyles.filterButtonText}>EXPENSES</Text>
@@ -148,7 +114,7 @@ export default function TransactionScreen({ route, navigation }) {
                 : transactionStyles.filterButton
             }
             onPress={() => {
-              updateFilterType("income");
+              setIncomeToggled(!incomeToggled);
             }}
           >
             <Text style={transactionStyles.filterButtonText}>INCOME</Text>
@@ -162,7 +128,6 @@ export default function TransactionScreen({ route, navigation }) {
             inputStyle={transactionStyles.searchBarInput}
             placeholder="Search..."
             onChangeText={(searchContents) => setSearchContents(searchContents)}
-            onEndEditing={() => filterTransactions()}
             value={searchContents}
           />
         </View>
