@@ -194,7 +194,6 @@ export class User {
       return this.account;
     }
 
-    console.log('aa');
     await this.fetchAccountStatus();
 
     return this.account;

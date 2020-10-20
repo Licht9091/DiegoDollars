@@ -141,8 +141,8 @@ const MainScreen = ({ navigation }) => {
               <View style={mainStyle.heroUncategorised}>
                 <Pill
                   content={`${data.uncategorisedSpending} Uncategorised Spending`}
-                  color={Colors.White}
-                  backgroundColor={'#FF6A6A'}
+                  color={Colors.DarkerGray}
+                  backgroundColor={Colors.White}
                   onPress={() =>
                     navigation.navigate('Transactions', {
                       navigatedState: 'expense',
@@ -153,8 +153,8 @@ const MainScreen = ({ navigation }) => {
               <View style={[mainStyle.heroUncategorised]}>
                 <Pill
                   content={`${data.uncategorisedIncome} Uncategorised Income`}
-                  color={Colors.DarkerGray}
-                  backgroundColor={Colors.White}
+                  color={Colors.White}
+                  backgroundColor={'#FF6A6A'}
                   onPress={() => setRefreshModal(true)} // "income"
                 />
               </View>

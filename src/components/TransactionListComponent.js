@@ -1,34 +1,30 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
-import FONT_FAMILY_SEMIBOLD from '../styles/typography';
+import FONT_FAMILY_SEMIBOLD, { FONT_FAMILY_LIGHT } from '../styles/typography';
 import Colors from '../styles/colors';
-import transactionStyles from '../screens/Transactions/TransactionsScreen.style';
 import Format from '../helper/Format';
 
 export default function TransactionListComponent(props) {
   let transaction = props.transaction;
-  let navigatedState = props.navigatedState;
   //const niceDate = moment(transaction.date).format("D MMMM");
   const dollars = Format.toDollars(Math.abs(transaction.value));
   const cents = Format.toCents(transaction.value);
 
   return (
     <View key={transaction.id} style={style.incomeView}>
-      {/* Line 1 */}
       <View style={style.incomeNameView}>
-        <View style={transactionStyles.topLine}>
-          <View style={transactionStyles.transactionTextWrapper}>
-            <Text style={transactionStyles.transactionText}>
+        <View style={style.topLine}>
+          <View style={style.transactionTextWrapper}>
+            <Text style={style.transactionText}>
               {transaction.description.substring(0, 50)}
             </Text>
           </View>
         </View>
       </View>
 
-      {/* Line 4 */}
-      <View style={transactionStyles.bottomLine}>
-        <View style={transactionStyles.moneyText}>
+      <View style={style.bottomLine}>
+        <View style={style.moneyText}>
           <Text style={style.moneyDollars}>
             {`${transaction.value < 0 ? '-' : ''}$${dollars}.`}
           </Text>
@@ -48,9 +44,26 @@ const style = StyleSheet.create({
     paddingRight: 10,
     justifyContent: 'space-between',
   },
+  transactionTextWrapper: {
+    flexDirection: 'row',
+    width: 250,
+  },
+  transactionText: {
+    fontFamily: FONT_FAMILY_LIGHT,
+    fontWeight: '100',
+    fontSize: 12,
+    textAlign: 'left',
+    color: 'black',
+    paddingLeft: 10,
+  },
   incomeNameView: {
     width: Dimensions.get('window').width - 180,
     flex: 0,
+  },
+  topLine: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   moneyDollars: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
