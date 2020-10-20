@@ -119,12 +119,12 @@ const mainStyle = {
   goalInfo: {
     flex: 1,
     flexDirection: 'column',
-    marginLeft: 15,
-    marginTop: 13,
+    marginLeft: 20,
+    marginTop: 25,
   },
   goalContribution: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    fontSize: 28,
+    fontSize: 19,
     color: Colors.DarkerGray,
   },
   goalCompletion: {
@@ -155,9 +155,6 @@ const mainStyle = {
   spendsWrapper: {
     paddingTop: 15,
     marginLeft: -5,
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
   },
   spendWrapper: {
     ...STYLESHEET.shadowNormal,
@@ -191,7 +188,7 @@ const mainStyle = {
   title: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
     color: "#36424C",
-    fontSize: 20,
+    fontSize: 16,
     opacity: 0.95,
   },
   subtitle: {

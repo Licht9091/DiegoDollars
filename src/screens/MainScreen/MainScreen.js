@@ -162,7 +162,7 @@ const MainScreen = ({ navigation }) => {
 
             {/* Goals */}
             <View style={mainStyle.goalContainer}>
-              <Text style={mainStyle.title}>Goals</Text>
+              <Text style={mainStyle.title}>My Goals</Text>
               <ScrollView horizontal={true} style={mainStyle.goalsWrapper}>
                 {/* Goals Data loop */}
                 {data.goals.map((goal) => (
@@ -196,7 +196,7 @@ const MainScreen = ({ navigation }) => {
                 ))}
               </ScrollView>
               {/* Add Goal Button */}
-              <View style={mainStyle.createGoalWrapper}>
+              {/* <View style={mainStyle.createGoalWrapper}>
                 <TouchableOpacity
                   style={{
                     ...mainStyle.createGoalBtn,
@@ -210,12 +210,12 @@ const MainScreen = ({ navigation }) => {
                     Create Goal
                   </Text>
                 </TouchableOpacity>
-              </View>
+              </View> */}
             </View>
 
             {/* Spending */}
             <View style={mainStyle.container}>
-              <Text style={mainStyle.title}>Spending</Text>
+              <Text style={mainStyle.title}>This Fortnight's Spending</Text>
               <View style={mainStyle.spendsWrapper}>
                 {/* Spending Categories Data loop */}
                 {data.spendingCategories.map((category) => {

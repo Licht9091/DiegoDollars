@@ -25,10 +25,10 @@ const PieChart = ({
   const PieStyle = {
     width: size,
     height: size,
-    borderWidth: 12,
+    borderWidth: 8,
     borderRadius: 50,
     borderColor: '#228DE9',
-    margin: 10,
+    margin: 8,
     opacity: 0.18,
     position: 'absolute',
     top: 3.5,
@@ -92,7 +92,7 @@ const PieChart = ({
           data={data}
           width={size + 26}
           height={size + 26}
-          strokeWidth={12}
+          strokeWidth={10}
           radius={size / 2}
           chartConfig={chartConfig}
           style={chartStyle}
