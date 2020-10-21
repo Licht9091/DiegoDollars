@@ -207,7 +207,7 @@ export default function MyBudget({ navigation, route }) {
   };
 
   const setupUser = async () => {
-    _account = await Context.User.getAccount();
+    _account = await Context.User.account;
     _totalSpending = (await _account.getSpendingBalance()) + 0.57;
     _budgetItems = await Context.User.getBudgetItems();
 

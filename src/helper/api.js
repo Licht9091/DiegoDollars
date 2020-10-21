@@ -60,6 +60,8 @@ export class User {
     const body = await response.text();
     const loggedIn = body.includes('Successfully logged in!');
 
+    await this.fetchAll();
+
     if (loggedIn) {
       this.username = username;
       return true;
@@ -109,18 +111,29 @@ export class User {
   }
 
   /**
-   * getGoals - async, make sure you wait for this to return.
+   * getUncategorisedSpending - async, make sure you wait for this to return.
    *
-   * @return {[Goal]} Returns a list of goals.
+   * @return {int} The number of uncategoried spending transactions.
    */
-  getGoals = async () => {
-    // if (this.goals != null) {
-    //   return this.goals;
-    // }
+  getUncategorisedSpending = () => {
+    return this.account.allTransactions.filter(
+      (transaction) =>
+        transaction.category.toLowerCase() == 'uncategorized' &&
+        transaction.isIncome == false
+    ).length;
+  };
 
-    await this.fetchGoalsStatus();
-
-    return this.goals;
+  /**
+   * getUncategorisedIncome - async, make sure you wait for this to return.
+   *
+   * @return {int} The number of uncategoried income transactions.
+   */
+  getUncategorisedIncome = () => {
+    return this.account.allTransactions.filter(
+      (transaction) =>
+        transaction.category.toLowerCase() == 'uncategorized' &&
+        (transaction.isIncome = true)
+    ).length;
   };
 
   /**
@@ -151,7 +164,7 @@ export class User {
   };
 
   /**
-   * fetchGoalsStatus [PRIVATE]
+   * fetchGoalsStatus
    *
    * @ensure User.goals will be updated if fetch does not fail.
    */
@@ -182,74 +195,13 @@ export class User {
     this.goals = this.goals.sort(function lambda(a, b) {
       return a.percent < b.percent;
     });
+
+    return this.goals;
   };
 
-  /**
-   * getAccount - async, make sure you wait for this to return.
-   *
-   * @return {Account} The account object of the user.
-   */
-  getAccount = async () => {
-    if (this.account != null) {
-      return this.account;
-    }
-
+  fetchAll = async () => {
     await this.fetchAccountStatus();
-
-    return this.account;
-  };
-
-  /**
-   * getSpendingCategories - async, make sure you wait for this to return.
-   *
-   * @return {[SpendingCategory]} List of SpendingCategory objects.
-   */
-  getSpendingCategories = async () => {
-    if (this.spendingCategories != null) {
-      return this.spendingCategories;
-    }
-
-    await this.fetchAccountStatus();
-
-    return this.spendingCategories;
-  };
-
-  /**
-   * getUncategorisedSpending - async, make sure you wait for this to return.
-   *
-   * @return {int} The number of uncategoried spending transactions.
-   */
-  getUncategorisedSpending = async () => {
-    if (this.allTransactions != null) {
-      return this.allTransactions;
-    }
-
-    await this.fetchAccountStatus();
-
-    return this.account.allTransactions.filter(
-      (transaction) =>
-        transaction.category.toLowerCase() == 'uncategorized' &&
-        transaction.isIncome == false
-    ).length;
-  };
-
-  /**
-   * getUncategorisedIncome - async, make sure you wait for this to return.
-   *
-   * @return {int} The number of uncategoried income transactions.
-   */
-  getUncategorisedIncome = async () => {
-    if (this.allTransactions != null) {
-      return this.allTransactions;
-    }
-
-    await this.fetchAccountStatus();
-
-    return this.account.allTransactions.filter(
-      (transaction) =>
-        transaction.category.toLowerCase() == 'uncategorized' &&
-        (transaction.isIncome = true)
-    ).length;
+    await this.fetchGoalsStatus();
   };
 
   /**
@@ -280,9 +232,11 @@ export class User {
 
     allTransactions = [];
 
-    await transactionData['all_transactions'].forEach((obj) => {
-      allTransactions.push(new Transaction(obj));
-    });
+    await transactionData['all_transactions']
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .forEach((obj) => {
+        allTransactions.push(new Transaction(obj));
+      });
 
     // Set the Account
     this.account = new Account(
@@ -335,6 +289,11 @@ export class User {
    * @ensure A new goal will be created if the API call does not fail.
    */
   setGoal = async (goalName, goalAmount, fortnightlyGoal, completionDate) => {
+    console.log(goalName);
+    console.log(goalAmount);
+    console.log(fortnightlyGoal);
+    console.log(completionDate);
+
     if (goalName === '') {
       return false;
     }
@@ -656,35 +615,12 @@ class BudgetItem {
 }
 
 class Account {
-  constructor(
-    _spendingBalance,
-    _totalBalance,
-    _daysUntilPay,
-    _allTransactions
-  ) {
-    this.spendingBalance = _spendingBalance; // float
-    this.totalBalance = _totalBalance; // float
-    this.daysUntilPay = _daysUntilPay; // int
-    this.allTransactions = _allTransactions; // List<Transaction>
+  constructor(spendingBalance, totalBalance, daysUntilPay, allTransactions) {
+    this.spendingBalance = spendingBalance; // float
+    this.totalBalance = totalBalance; // float
+    this.daysUntilPay = daysUntilPay; // int
+    this.allTransactions = allTransactions; // List<Transaction>
   }
-
-  /**
-   * getSpendingBalance - async, make sure you wait for this to return.
-   *
-   * @return {float} The amount of spending balance for the account.
-   */
-  getSpendingBalance = async () => {
-    return this.spendingBalance;
-  };
-
-  /**
-   * getTransactions - async, make sure you wait for this to return.
-   *
-   * @return {[Transaction]} List of the transactions
-   */
-  getTransactions = async () => {
-    return this.allTransactions;
-  };
 }
 
 class Goal {

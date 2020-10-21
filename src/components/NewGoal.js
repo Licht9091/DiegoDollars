@@ -1,62 +1,62 @@
-import React, { useContext, useState } from "react";
-import { Text, View, TouchableOpacity, Picker } from "react-native";
-import AppContext from "../helper/context";
-import { Dimensions } from "react-native";
-import Colors from "../styles/colors";
-import { STYLESHEET } from "../styles/stylesheet";
+import React, { useContext, useState } from 'react';
+import { Text, View, TouchableOpacity, Picker } from 'react-native';
+import AppContext from '../helper/context';
+import { Dimensions } from 'react-native';
+import Colors from '../styles/colors';
+import { STYLESHEET } from '../styles/stylesheet';
 import {
   FONT_FAMILY_REGULAR,
   FONT_FAMILY_SEMIBOLD,
-} from "../styles/typography";
-import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import paycheckStyle from "./PaychecksReceived.style";
-import navigateAndReset from "../helper/functions";
-import DatePicker from "react-native-datepicker";
+} from '../styles/typography';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import paycheckStyle from './PaychecksReceived.style';
+import navigateAndReset from '../helper/functions';
+import DatePicker from 'react-native-datepicker';
 
-import PlanetOne from "../assets/planet1.svg";
-import PlanetTwo from "../assets/planet2.svg";
-import PlanetRing from "../assets/planetRing.svg";
-import Galaxy from "../assets/galaxy.svg";
-import { TextInput } from "react-native-gesture-handler";
+import PlanetOne from '../assets/planet1.svg';
+import PlanetTwo from '../assets/planet2.svg';
+import PlanetRing from '../assets/planetRing.svg';
+import Galaxy from '../assets/galaxy.svg';
+import { TextInput } from 'react-native-gesture-handler';
 
 const newGoalStyle = {
   header: {
-    width: Dimensions.get("window").width - 50,
+    width: Dimensions.get('window').width - 50,
     height: 120,
     backgroundColor: Colors.Black,
     padding: 20,
     paddingTop: 35,
     flex: 0,
-    alignItems: "center",
+    alignItems: 'center',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
   planetOne: {
-    position: "absolute",
+    position: 'absolute',
     left: 10,
     top: -40,
   },
   planetTwo: {
-    position: "absolute",
+    position: 'absolute',
     right: -20,
     top: 50,
   },
   planetRing: {
-    position: "absolute",
+    position: 'absolute',
     top: -30,
     right: 30,
   },
   galaxy: {
-    position: "absolute",
+    position: 'absolute',
     top: 50,
     left: 10,
   },
   info: {
     backgroundColor: Colors.White,
-    position: "absolute",
+    position: 'absolute',
     top: 75,
-    left: (Dimensions.get("window").width - 50) / 2,
+    left: (Dimensions.get('window').width - 50) / 2,
     width: 320,
     borderRadius: 15,
     marginLeft: -160,
@@ -73,12 +73,12 @@ const newGoalStyle = {
     marginTop: 50,
     padding: 30,
     flex: 0,
-    flexDirection: "column",
+    flexDirection: 'column',
   },
   buttonWrapper: {
     flex: 0,
     paddingTop: 50,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   optionsText: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
@@ -95,8 +95,13 @@ const iconStyle = {
   opacity: 0.8,
 };
 
-function setSelectedAndCompletion (itemValue, setSelected, setCompletionDate, setDate) {
-  if (itemValue == "continuous") {
+function setSelectedAndCompletion(
+  itemValue,
+  setSelected,
+  setCompletionDate,
+  setDate
+) {
+  if (itemValue == 'continuous') {
     setCompletionDate(null);
     setDate(null);
   }
@@ -106,14 +111,14 @@ function setSelectedAndCompletion (itemValue, setSelected, setCompletionDate, se
 const NewGoal = ({ onClose, goal, navigation }) => {
   const Context = useContext(AppContext);
 
-  const goalTypes = ["One-Off", "Continuous"];
-  const [selected, setSelected] = useState("One-Off");
+  const goalTypes = ['One-Off', 'Continuous'];
+  const [selected, setSelected] = useState('One-Off');
 
-  const [goalName, setGoalName] = useState("");
-  const [goalAmount, setGoalAmount] = useState("");
-  const [goalType, setGoalType] = useState("");
-  const [fortnightlyGoal, setFortnightlyGoal] = useState("");
-  const [completionDate, setCompletionDate] = useState("");
+  const [goalName, setGoalName] = useState('');
+  const [goalAmount, setGoalAmount] = useState('');
+  const [goalType, setGoalType] = useState('');
+  const [fortnightlyGoal, setFortnightlyGoal] = useState('');
+  const [completionDate, setCompletionDate] = useState('');
   const [date, setDate] = useState(null);
 
   const createGoal = async () => {
@@ -127,10 +132,10 @@ const NewGoal = ({ onClose, goal, navigation }) => {
 
     // Stop spinny here
     if (success) {
-      navigateAndReset(navigation, "Main");
+      navigateAndReset(navigation, 'Main');
       return;
     } else {
-      alert("There was an error setting the goal.");
+      alert('There was an error setting the goal.');
     }
   };
 
@@ -141,7 +146,7 @@ const NewGoal = ({ onClose, goal, navigation }) => {
         <PlanetOne style={newGoalStyle.planetOne} width={80} height={80} />
         <PlanetTwo style={newGoalStyle.planetTwo} width={80} height={80} />
         <PlanetRing style={newGoalStyle.planetRing} width={60} height={60} />
-        <Galaxy style={newGoalStyle.galaxy} width={40} height={40}/>
+        <Galaxy style={newGoalStyle.galaxy} width={40} height={40} />
       </View>
       <View style={newGoalStyle.info}>
         <Text style={newGoalStyle.infoText}>
@@ -161,22 +166,22 @@ const NewGoal = ({ onClose, goal, navigation }) => {
               borderBottomWidth: 0.5,
               borderBottomColor: Colors.MediumGray,
             }}
-            placeholder="Enter goal name"
+            placeholder='Enter goal name'
             onChangeText={(goalName) => setGoalName(goalName)}
             value={goalName}
           />
         </View>
-        <View flexDirection={"row"}>
-          <View width={(Dimensions.get("window").width - 50) / 2}>
+        <View flexDirection={'row'}>
+          <View width={(Dimensions.get('window').width - 50) / 2}>
             <Text style={newGoalStyle.optionsText}>Target amount</Text>
           </View>
           <Text style={newGoalStyle.optionsText}>Type</Text>
         </View>
-        <View flexDirection={"row"} paddingBottom={20}>
+        <View flexDirection={'row'} paddingBottom={20}>
           <View
             style={{
-              width: (Dimensions.get("window").width - 70) / 2,
-              flexDirection: "row",
+              width: (Dimensions.get('window').width - 70) / 2,
+              flexDirection: 'row',
             }}
           >
             <Text
@@ -190,7 +195,7 @@ const NewGoal = ({ onClose, goal, navigation }) => {
               $
             </Text>
             <TextInput
-              placeholder="2500.0"
+              placeholder='2500.0'
               style={{
                 fontFamily: FONT_FAMILY_SEMIBOLD,
                 color: Colors.MediumGray,
@@ -204,22 +209,29 @@ const NewGoal = ({ onClose, goal, navigation }) => {
           <Picker
             selectedValue={selected}
             style={{ height: 30, width: 150 }}
-            onValueChange={(itemValue) => setSelectedAndCompletion(itemValue, setSelected, setCompletionDate, setDate)}
+            onValueChange={(itemValue) =>
+              setSelectedAndCompletion(
+                itemValue,
+                setSelected,
+                setCompletionDate,
+                setDate
+              )
+            }
           >
-            <Picker.Item label="One-Off" value="one-off" />
-            <Picker.Item label="Continuous" value="continuous" />
+            <Picker.Item label='One-Off' value='one-off' />
+            <Picker.Item label='Continuous' value='continuous' />
           </Picker>
         </View>
-        <View flexDirection={"row"}>
-          <View width={(Dimensions.get("window").width - 50) / 2}>
+        <View flexDirection={'row'}>
+          <View width={(Dimensions.get('window').width - 50) / 2}>
             <Text style={newGoalStyle.optionsText}>Allocate per fortnight</Text>
           </View>
           <Text style={newGoalStyle.optionsText}>Complete by</Text>
         </View>
-        <View flexDirection={"row"} paddingBottom={20}>
+        <View flexDirection={'row'} paddingBottom={20}>
           <View
-            width={(Dimensions.get("window").width - 50) / 2}
-            flexDirection={"row"}
+            width={(Dimensions.get('window').width - 50) / 2}
+            flexDirection={'row'}
           >
             <Text
               style={{
@@ -232,7 +244,7 @@ const NewGoal = ({ onClose, goal, navigation }) => {
               $
             </Text>
             <TextInput
-              placeholder="250.00"
+              placeholder='250.00'
               style={{
                 fontFamily: FONT_FAMILY_SEMIBOLD,
                 color: Colors.MediumGray,
@@ -246,15 +258,17 @@ const NewGoal = ({ onClose, goal, navigation }) => {
             />
           </View>
           <DatePicker
-            mode="date"
-            placeholder={selected == "continuous" ? "Not Decided" : "Select Date"}
-            format="DD-MM-YYYY"
-            confirmBtnText="Confirm"
-            cancelBtnText="Cancel"
-            date={selected == "continuous" ? null : date}
+            mode='date'
+            placeholder={
+              selected == 'continuous' ? 'Not Decided' : 'Select Date'
+            }
+            format='DD-MM-YYYY'
+            confirmBtnText='Confirm'
+            cancelBtnText='Cancel'
+            date={selected == 'continuous' ? null : date}
             showIcon={false}
             style={{ left: -30 }}
-            disabled={selected == "continuous"}
+            disabled={selected == 'continuous'}
             customStyles={{
               dateInput: {
                 borderWidth: 0,
@@ -265,8 +279,8 @@ const NewGoal = ({ onClose, goal, navigation }) => {
                 color: Colors.MediumGray,
               },
               disabled: {
-                height: 0
-              }
+                height: 0,
+              },
             }}
             onDateChange={(date) => {
               setDate(date);
@@ -274,11 +288,11 @@ const NewGoal = ({ onClose, goal, navigation }) => {
             }}
           />
         </View>
-        <View flexDirection={"row"}>
+        <View flexDirection={'row'}>
           <FontAwesomeIcon
             style={iconStyle}
             icon={faExclamationTriangle}
-            size={Dimensions.get("window").height * 0.02}
+            size={Dimensions.get('window').height * 0.02}
             color={Colors.DarkGray}
             marginRight={10}
           />

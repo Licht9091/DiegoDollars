@@ -24,7 +24,8 @@ import mainStyle from './MainScreen.style';
 import Modal from 'react-native-modal';
 import NewGoal from '../../components/NewGoal';
 import WavyHeader from '../../components/WavyHeader';
-import Arrow from '../../assets/forwardArrowBlack.svg'
+import Arrow from '../../assets/forwardArrowBlack.svg';
+import { User } from '../../helper/api';
 
 const iconStyle = {
   opacity: 0.8,
@@ -32,7 +33,7 @@ const iconStyle = {
 
 const MainScreen = ({ navigation }) => {
   // START EDITS
-  const Context = useContext(AppContext);
+  const User = useContext(AppContext).User;
 
   const [loaded, setLoaded] = useState(false);
   // Empty data useState
@@ -40,27 +41,25 @@ const MainScreen = ({ navigation }) => {
   const [refreshModal, setRefreshModal] = useState(false);
   const [newGoalModal, setNewGoalModal] = useState(false);
 
-  const setupUser = async () => {
-    _ucSpending = await Context.User.getUncategorisedSpending();
-    _ucIncome = await Context.User.getUncategorisedIncome();
-    _account = await Context.User.getAccount();
-    _totalSpending = (await _account.getSpendingBalance()) + 0.57;
-    _goals = await Context.User.getGoals();
-    _spendingCategories = await Context.User.getSpendingCategories();
+  const initUser = () => {
+    if (!User.username) {
+      return;
+    }
 
-    _data = {
-      uncategorisedSpending: _ucSpending,
-      uncategorisedIncome: _ucIncome,
-      availableSpending: _totalSpending,
-      goals: _goals,
-      spendingCategories: _spendingCategories,
-    };
+    setData({
+      uncategorisedSpending: User.getUncategorisedSpending(),
+      uncategorisedIncome: User.getUncategorisedIncome(),
+      availableSpending: User.account.spendingBalance,
+      goals: User.goals,
+      spendingCategories: User.spendingCategories,
+    });
 
-    setData(_data);
+    setLoaded(true);
+  };
 
-    // This will background load some more data
-    _account = await Context.User.getAccount();
-    _budgetItems = await Context.User.getBudgetItems();
+  const fetchNewData = async () => {
+    await User.fetchAll();
+    initUser();
   };
 
   // This "setupUser" needs to be ran before the data will show in the display.
@@ -69,13 +68,9 @@ const MainScreen = ({ navigation }) => {
   // need to change this to be different if it wants to call the api every time it
   // loads the page or something.
   useEffect(() => {
-    setTimeout(() => {
-      if (!loaded) {
-        setupUser();
-        setLoaded(true);
-      }
-    }, 0);
-  });
+    initUser();
+    fetchNewData();
+  }, []);
 
   return (
     <SafeAreaView style={{ backgroundColor: Colors.White }}>
@@ -102,7 +97,10 @@ const MainScreen = ({ navigation }) => {
           </ScrollView>
         )}
         {data && loaded && (
-          <ScrollView style={mainStyle.mainScreen} showsVerticalScrollIndicator={false}>
+          <ScrollView
+            style={mainStyle.mainScreen}
+            showsVerticalScrollIndicator={false}
+          >
             {/* Title */}
 
             <WavyHeader />
@@ -142,7 +140,7 @@ const MainScreen = ({ navigation }) => {
               </Text>
               <View style={[mainStyle.heroUncategorised]}>
                 <Pill
-                  content={`${data.uncategorisedIncome} Paycheck Received`}
+                  content={`${data.uncategorisedIncome} Paychecks Received`}
                   color={Colors.White}
                   backgroundColor={'#FF6A6A'}
                   onPress={() => setRefreshModal(true)} // "income"
@@ -164,97 +162,95 @@ const MainScreen = ({ navigation }) => {
 
             {/* Latest Transactions */}
             <View style={mainStyle.goalContainer}>
-              <View style={{flexDirection:"row"}}>
-                <View style={{width:Dimensions.get("window").width*0.87, justifyContent:"flex-end"}}>
+              <View style={{ flexDirection: 'row' }}>
+                <View
+                  style={{
+                    width: Dimensions.get('window').width * 0.87,
+                    justifyContent: 'flex-end',
+                  }}
+                >
                   <Text style={mainStyle.title}>Latest Transactions</Text>
-                </View >
-                <TouchableOpacity 
-                  style={{flex:1, justifyContent:"center"}}
-                  onPress={() =>
-                    navigation.navigate('Transactions')
-                  }>
-                  <Arrow/>
+                </View>
+                <TouchableOpacity
+                  style={{ flex: 1, justifyContent: 'center' }}
+                  onPress={() => navigation.navigate('Transactions')}
+                >
+                  <Arrow />
                 </TouchableOpacity>
               </View>
               <View style={mainStyle.transactionBubblePillView}>
-                <TouchableOpacity
-                  style={mainStyle.pillAndTextView}
-                >
-                    <View style={mainStyle.categoryInfo}>
-                      <Text style={mainStyle.transactionName}>
-                        Transaction Name
-                      </Text>
-                      <Text style={mainStyle.transactionCategory}>
-                        Category Name
-                      </Text>
-                    </View>
-                    <View style={mainStyle.spendInfo}>
-                      <Text style={mainStyle.transactionSpendAmount}>
-                        Amount Spent
-                      </Text>
-                      <Text style={mainStyle.timeAndDate}>
-                        Date and Time
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                  style={mainStyle.pillAndTextView}
-                >
-                    <View style={mainStyle.categoryInfo}>
-                      <Text style={mainStyle.transactionName}>
-                        Hardware 12342324 SYDNEY 
-                      </Text>
-                      <Text style={mainStyle.transactionCategory}>
-                        Computer 
-                      </Text>
-                    </View>
-                    <View style={mainStyle.spendInfo}>
-                      <Text style={mainStyle.transactionSpendAmount}>
-                        $1453
-                      </Text>
-                      <Text style={mainStyle.timeAndDate}>
-                        02-10-2020
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
+                <TouchableOpacity style={mainStyle.pillAndTextView}>
+                  <View style={mainStyle.categoryInfo}>
+                    <Text style={mainStyle.transactionName}>
+                      Transaction Name
+                    </Text>
+                    <Text style={mainStyle.transactionCategory}>
+                      Category Name
+                    </Text>
+                  </View>
+                  <View style={mainStyle.spendInfo}>
+                    <Text style={mainStyle.transactionSpendAmount}>
+                      Amount Spent
+                    </Text>
+                    <Text style={mainStyle.timeAndDate}>Date and Time</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity style={mainStyle.pillAndTextView}>
+                  <View style={mainStyle.categoryInfo}>
+                    <Text style={mainStyle.transactionName}>
+                      Hardware 12342324 SYDNEY
+                    </Text>
+                    <Text style={mainStyle.transactionCategory}>Computer</Text>
+                  </View>
+                  <View style={mainStyle.spendInfo}>
+                    <Text style={mainStyle.transactionSpendAmount}>$1453</Text>
+                    <Text style={mainStyle.timeAndDate}>02-10-2020</Text>
+                  </View>
+                </TouchableOpacity>
               </View>
             </View>
 
             {/* Goals */}
             <View style={mainStyle.container}>
               <Text style={mainStyle.title}>My Goals</Text>
-              <ScrollView horizontal={true} style={mainStyle.goalsWrapper} showsHorizontalScrollIndicator={false}>
-                {/* Goals Data loop */}
-                {data.goals.map((goal) => (
-                  <TouchableOpacity
-                    key={goal.id}
-                    activeOpacity={0.6}
-                    style={{
-                      ...mainStyle.goalWrapper,
-                      ...STYLESHEET.shadowNormal,
-                    }}
-                    onPress={() =>
-                      navigation.navigate('MyGoals', {
-                        goal: goal,
-                        navigatedState: 'income',
-                      })
-                    }
-                  >
-                    <Text style={mainStyle.subtitle}>{goal.description}</Text>
-                    <View style={mainStyle.goalDetailsWrapper}>
-                      <PieChart value={goal.percent / 100} />
-                      <View style={mainStyle.goalInfo}>
-                        <Text style={mainStyle.goalContribution}>
-                          {`$${Format.toDollars(goal.currentContribution)}`}
-                        </Text>
-                        <Text style={mainStyle.goalCompletion}>
-                          {goal.percent}% Complete
-                        </Text>
+              {data.goals && (
+                <ScrollView
+                  horizontal={true}
+                  style={mainStyle.goalsWrapper}
+                  showsHorizontalScrollIndicator={false}
+                >
+                  {/* Goals Data loop */}
+                  {data.goals.map((goal) => (
+                    <TouchableOpacity
+                      key={goal.id}
+                      activeOpacity={0.6}
+                      style={{
+                        ...mainStyle.goalWrapper,
+                        ...STYLESHEET.shadowNormal,
+                      }}
+                      onPress={() =>
+                        navigation.navigate('MyGoals', {
+                          goalId: goal.id,
+                          navigatedState: 'income',
+                        })
+                      }
+                    >
+                      <Text style={mainStyle.subtitle}>{goal.description}</Text>
+                      <View style={mainStyle.goalDetailsWrapper}>
+                        <PieChart value={goal.percent / 100} />
+                        <View style={mainStyle.goalInfo}>
+                          <Text style={mainStyle.goalContribution}>
+                            {`$${Format.toDollars(goal.currentContribution)}`}
+                          </Text>
+                          <Text style={mainStyle.goalCompletion}>
+                            {goal.percent}% Complete
+                          </Text>
+                        </View>
                       </View>
-                    </View>
-                  </TouchableOpacity>
-                ))}
-              </ScrollView>
+                    </TouchableOpacity>
+                  ))}
+                </ScrollView>
+              )}
               {/* Add Goal Button */}
               <View style={mainStyle.createGoalWrapper}>
                 <TouchableOpacity
@@ -292,7 +288,7 @@ const MainScreen = ({ navigation }) => {
                       >
                         <View style={mainStyle.categoryInfo}>
                           <Text style={mainStyle.spendCategory}>
-                              {category.name}
+                            {category.name}
                           </Text>
                           <Text style={mainStyle.transactionCount}>
                             10 Transactions
@@ -308,14 +304,18 @@ const MainScreen = ({ navigation }) => {
                           <Text style={mainStyle.spendAmount}>
                             {`$${Format.toDollars(category.amount)}`}
                           </Text>
-                          
                         </View>
-                        <View style={{width: Dimensions.get("window").width * 0.06, marginRight: -10,justifyContent:"center"}}>
-                          <Arrow/>
+                        <View
+                          style={{
+                            width: Dimensions.get('window').width * 0.06,
+                            marginRight: -10,
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <Arrow />
                         </View>
-                        
                       </TouchableOpacity>
-                      <Text style={mainStyle.defaultLine}/>
+                      <Text style={mainStyle.defaultLine} />
                     </View>
                   );
                 })}

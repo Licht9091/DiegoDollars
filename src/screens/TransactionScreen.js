@@ -9,25 +9,23 @@ import SingleTransactionScreen from './SingleTransactionScreen';
 import transactionStyles from './Transactions/TransactionsScreen.style';
 
 export default function TransactionScreen({ navigation }) {
-  const Context = useContext(AppContext);
+  const User = useContext(AppContext).User;
 
   // transactions
-  const [allTransactions, setAllTransactions] = useState([]);
-  const [loaded, setLoaded] = useState(false);
+  const [allTransactions, setAllTransactions] = useState(
+    User.account.allTransactions.slice(0, 20)
+  );
 
   // single transaction modal
   const [currentTransactionId, setCurrentTransactionId] = useState(null);
 
-  const fetchTransactions = async () => {
-    const Account = await Context.User.getAccount();
-    const loadedTransations = await Account.getTransactions();
-
-    setAllTransactions(loadedTransations);
-    setLoaded(true);
+  const fetchNewTransactions = async () => {
+    await User.fetchTransactions();
+    setAllTransactions(User.account.allTransactions);
   };
 
   useEffect(() => {
-    fetchTransactions();
+    fetchNewTransactions();
   }, []);
 
   return (
@@ -52,12 +50,9 @@ export default function TransactionScreen({ navigation }) {
         {/* Transaction List */}
         <TransactionsFilter
           transactionList={allTransactions}
-          loading={!loaded}
           onSelect={(id) => {
             if (allTransactions.find((t) => t.id === id)) {
               setCurrentTransactionId(id);
-            } else {
-              console.log('a');
             }
           }}
         />

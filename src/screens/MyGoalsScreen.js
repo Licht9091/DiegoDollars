@@ -65,17 +65,16 @@ function setValues(
 export default function MyGoals({ navigation, route }) {
   const [allTransactions, setAllTransactions] = useState([]);
   const [loaded, setLoaded] = useState(false);
-  const { goal } = route.params;
+  const { goalId } = route.params;
 
-  console.log(goal);
+  const User = useContext(AppContext).User;
+  const goals = User.goals;
+  const goal = goals.find((g) => g.id === goalId);
 
-  const Context = useContext(AppContext);
+  const getTransactionList = () => {
+    const loadedTransactions = User.account.allTransactions;
 
-  const getTransactionList = async () => {
-    const Account = await Context.User.getAccount();
-    const loadedTransations = await Account.getTransactions();
-
-    setAllTransactions(loadedTransations.filter((t) => t.id === goal.id));
+    setAllTransactions(loadedTransactions.filter((t) => t.id === goal.id));
     setLoaded(true);
   };
 
@@ -96,16 +95,16 @@ export default function MyGoals({ navigation, route }) {
   // const [state.goal.endDate, setfinishDate] = useState(goal.endDate);
 
   const setGoal = async (newGoal) => {
-    return await Context.User.setGoal(
-      newGoal.name ? newGoal.name : state.goal.name,
-      newGoal.goalAmount ? newGoal.goalAmount : state.goal.goalAmount,
-      state.goal.fortnightlyAmount,
-      newGoal.endDate ? newGoal.endDate : state.goal.endDate
+    return await User.setGoal(
+      newGoal.description ? newGoal.description : goal.description,
+      newGoal.goalAmount ? newGoal.goalAmount : goal.goalAmount,
+      goal.fortnightlyContribution,
+      newGoal.endDate ? newGoal.endDate : goal.endDate
     );
   };
 
   const deleteGoal = async () => {
-    const success = await Context.User.deleteGoal(goal);
+    const success = await User.deleteGoal(goal);
 
     if (success) {
       navigateAndReset(navigation, 'Main');

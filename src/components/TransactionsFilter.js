@@ -7,23 +7,28 @@ import filterStyles from './TransactionsFilter.style';
 import TransactionListComponent from './TransactionListComponent';
 
 const TransactionsFilter = ({ transactionList, onSelect, loading, style }) => {
-  // transactions
-  const [transactions, setTransactions] = useState([]);
-
   // toggles and filters
   const [showIncome, setShowIncome] = useState(true);
   const [showExpenses, setShowExpenses] = useState(true);
   const [searchContents, setSearchContents] = useState('');
 
-  useEffect(() => {
-    const newTransactions = transactionList
+  // filter function
+  const filterTransactions = (transactionList) => {
+    return transactionList
       .filter(
         (t) => (showExpenses && t.value < 0) || (showIncome && t.value >= 0)
       )
       .filter((t) => t.description.includes(searchContents))
       .sort((a, b) => new Date(b.date) - new Date(a.date));
+  };
 
-    setTransactions(newTransactions);
+  // transactions
+  const [transactions, setTransactions] = useState(
+    filterTransactions(transactionList)
+  );
+
+  useEffect(() => {
+    setTransactions(filterTransactions(transactionList));
   }, [transactionList, showIncome, showExpenses, searchContents]);
 
   return (

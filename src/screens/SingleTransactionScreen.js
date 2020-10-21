@@ -33,7 +33,7 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
   const Context = useContext(AppContext);
 
   const setupData = async () => {
-    _goals = await Context.User.getGoals();
+    _goals = Context.User.goals;
     //_categories = await Context.User.getSpendingCategories();
 
     _data = { goals: _goals /*categories: _categories*/ };
@@ -83,26 +83,26 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
 
   return (
     <View>
-      <View style={{flexDirection: "row"}}>
-      <TouchableOpacity onPress={onClose}>
-        <View style={style.closeButton}>
-          <FontAwesomeIcon
-            style={style.icon}
-            size={Dimensions.get('window').height * 0.03}
-            icon={faAngleDown}
-          />
-        </View>
-      </TouchableOpacity>
+      <View style={{ flexDirection: 'row' }}>
+        <TouchableOpacity onPress={onClose}>
+          <View style={style.closeButton}>
+            <FontAwesomeIcon
+              style={style.icon}
+              size={Dimensions.get('window').height * 0.03}
+              icon={faAngleDown}
+            />
+          </View>
+        </TouchableOpacity>
 
-      <TouchableOpacity onPress={onClose}>
-        <View style={style.confirmButton}>
-          <FontAwesomeIcon
-            style={style.icon}
-            size={Dimensions.get('window').height * 0.03}
-            icon={faCheckCircle}
-          />
-        </View>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={onClose}>
+          <View style={style.confirmButton}>
+            <FontAwesomeIcon
+              style={style.icon}
+              size={Dimensions.get('window').height * 0.03}
+              icon={faCheckCircle}
+            />
+          </View>
+        </TouchableOpacity>
       </View>
       {/* Top card */}
       <View style={style.card}>
@@ -187,7 +187,12 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
 
                 {/* TODO finish this */}
                 <TouchableOpacity>
-                  <View style={[style.createGoalButton, { backgroundColor: "#FE5959" }]}>
+                  <View
+                    style={[
+                      style.createGoalButton,
+                      { backgroundColor: '#FE5959' },
+                    ]}
+                  >
                     <Text style={[style.buttonTxt, { color: 'white' }]}>
                       Create new Goal
                     </Text>
@@ -195,7 +200,9 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
                 </TouchableOpacity>
               </View>
               <View style={{ height: 230 }}>
-                <ScrollView showsVerticalScrollIndicator={false}>{goals}</ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                  {goals}
+                </ScrollView>
               </View>
             </>
           ) : (
@@ -334,7 +341,7 @@ const style = StyleSheet.create({
     borderRadius: 100,
     margin: 10,
     marginBottom: 20,
-    marginLeft: Dimensions.get("window").width * 0.62,
+    marginLeft: Dimensions.get('window').width * 0.62,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -356,7 +363,7 @@ const style = StyleSheet.create({
   },
   goalButton: {
     height: 100,
-    backgroundColor: "#5B74A0",
+    backgroundColor: '#5B74A0',
     marginTop: 10,
     borderRadius: 10,
     padding: 15,

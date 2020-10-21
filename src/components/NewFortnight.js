@@ -14,7 +14,7 @@ const NewFortnight = ({ onComplete }) => {
   const [goals, setGoals] = useState([]);
 
   const getGoals = async () => {
-    const goals = await Context.User.getGoals();
+    const goals = await Context.User.goals;
 
     // const
     const newGoals = [...goals].sort(

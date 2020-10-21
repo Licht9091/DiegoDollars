@@ -15,7 +15,7 @@ const PaychecksReceived = ({ onClose, onComplete }) => {
   const [notPaycheck, setNotPaycheck] = useState([]);
 
   const getPaychecks = async () => {
-    const Account = await Context.User.getAccount();
+    const Account = await Context.User.account;
     const paychecks = Account.allTransactions
       .filter((t) => t.value > 50)
       .map((t) => ({ ...t, description: t.description.replace(/\s+/g, ' ') }))
