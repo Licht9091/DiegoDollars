@@ -5,27 +5,23 @@ import { ProgressChart } from 'react-native-chart-kit';
 import { STYLESHEET } from '../styles/stylesheet';
 import { FONT_FAMILY_SEMIBOLD } from '../styles/typography';
 
-const PieChart = ({
+const SmallPieChart = ({
   value = 0.3,
   color = '#228DE9',
   showPercentage = false,
-  size = 65,
+  size = 40,
 }) => {
   const container = {
     width: size,
-    height: size,
-    margin: 0,
-    transform: [
-      {
-        translateX: -10,
-      },
-    ],
+    marginLeft: 0,
+    marginBottom: -10,
+    marginTop: -35,
   };
 
   const PieStyle = {
     width: size,
     height: size,
-    borderWidth: 8,
+    borderWidth: 5,
     borderRadius: 50,
     borderColor: '#228DE9',
     margin: 9,
@@ -37,17 +33,14 @@ const PieChart = ({
 
   const textStyle = {
     position: 'absolute',
-    top: size / 2,
-    left: size / 2,
-    fontSize: 18,
+    left: 18,
+    fontSize: 15,
+    textAlign: "right",
     fontFamily: FONT_FAMILY_SEMIBOLD,
     color: Colors.DarkerGray,
     transform: [
       {
-        translateX: -3,
-      },
-      {
-        translateY: -2,
+        translateY: 55,
       },
     ],
   };
@@ -92,7 +85,7 @@ const PieChart = ({
           data={data}
           width={size + 26}
           height={size + 26}
-          strokeWidth={10}
+          strokeWidth={5}
           radius={size / 2}
           chartConfig={chartConfig}
           style={chartStyle}
@@ -103,4 +96,4 @@ const PieChart = ({
   );
 };
 
-export default PieChart;
+export default SmallPieChart;

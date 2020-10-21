@@ -11,6 +11,54 @@ import { STYLESHEET } from '../../styles/stylesheet';
 const win = Dimensions.get('window');
 
 const mainStyle = {
+  smallPieChart:{
+    paddingTop: -15,
+    alignSelf:"center",
+    width: Dimensions.get("window").width * 0.8/6,
+  },
+  defaultLine: {
+    borderBottomColor: Colors.LightGray,
+    borderBottomWidth: 1,
+    width: Dimensions.get("window").width*0.87,
+    alignSelf: 'stretch',
+    marginTop: -13,
+    marginBottom: 10,
+  },
+  pillAndTextView: {
+    backgroundColor: Colors.White,
+    width: Dimensions.get('window').width * 0.85,
+    flexDirection: 'row',
+    minHeight: Dimensions.get('window').height * 0.1,
+  },
+  whiteBubblePillView: {
+    backgroundColor: Colors.White,
+    width: Dimensions.get('window').width * 0.9,
+    marginTop: 10,
+    borderRadius: 15,
+    padding: 15,
+
+    ...STYLESHEET.shadowNormal,
+  },
+  transactionCount:{
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    fontSize: 12,
+    color: "#A2A2A2",
+    alignSelf: "flex-start",
+  },
+  transactionCategory:{
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    fontSize: 12,
+    color: "#A2A2A2",
+    alignSelf: "flex-start",
+    width: Dimensions.get("window").width * 0.35,
+  },
+  timeAndDate:{
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    fontSize: 12,
+    color: "#A2A2A2",
+    alignSelf:"flex-end",
+    marginRight: 5,
+  },
   loadWrapper: {
     backgroundColor: Colors.Primary,
     minHeight: win.height,
@@ -84,12 +132,11 @@ const mainStyle = {
   },
   goalContainer: {
     paddingTop: 50,
-    paddingBottom: 15,
+    paddingBottom: 20,
     paddingLeft: 20,
   },
   container: {
-    paddingTop: 0,
-    paddingBottom: 15,
+    paddingBottom: 5,
     paddingLeft: 20,
   },
   goalsWrapper: {
@@ -119,12 +166,12 @@ const mainStyle = {
   goalInfo: {
     flex: 1,
     flexDirection: 'column',
-    marginLeft: 15,
-    marginTop: 13,
+    marginLeft: 20,
+    marginTop: 25,
   },
   goalContribution: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    fontSize: 28,
+    fontSize: 19,
     color: Colors.DarkerGray,
   },
   goalCompletion: {
@@ -137,27 +184,26 @@ const mainStyle = {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     marginRight: 20,
+    marginTop: -10,
+    marginBottom: 10,
   },
   createGoalBtn: {
-    padding: 5,
-    paddingLeft: 15,
-    paddingRight: 15,
-    backgroundColor: Colors.DarkerGray,
-    borderRadius: 20,
+    padding: 8,
+    paddingLeft: 12,
+    paddingRight: 12,
+    backgroundColor: "#2B2B2B",
+    borderRadius: 6,
     color: Colors.White,
     flex: 0,
   },
   createGoalBtnText: {
     fontSize: 12,
-    fontWeight: 'bold',
+    fontFamily: FONT_FAMILY_SEMIBOLD,
     color: Colors.White,
   },
   spendsWrapper: {
     paddingTop: 15,
     marginLeft: -5,
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
   },
   spendWrapper: {
     ...STYLESHEET.shadowNormal,
@@ -179,19 +225,48 @@ const mainStyle = {
   },
   spendAmount: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    fontSize: 24,
+    fontSize: 18,
     color: Colors.DarkerGray,
+    textAlign: "right",
+    alignSelf: "flex-end",
+    width: Dimensions.get("window").width*0.25,
+    marginRight: 10,
+  },
+  transactionSpendAmount: {
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    fontSize: 18,
+    color: Colors.DarkerGray,
+    textAlign: "right",
+    alignSelf: "flex-end",
+    marginRight: 5,
+    width: Dimensions.get("window").width*0.45,
   },
   spendCategory: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    fontSize: 10,
+    fontSize: 15,
     color: Colors.DarkerGray,
     textTransform: 'capitalize',
+    alignSelf: "flex-start",
+  },
+  transactionName: {
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    fontSize: 15,
+    color: Colors.DarkerGray,
+    textTransform: 'capitalize',
+    alignSelf: "flex-start",
+    width: Dimensions.get("window").width * 0.4,
+  },
+  categoryInfo: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    width: Dimensions.get("window").width * 0.8/2,
+    marginRight: 10,
   },
   title: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
     color: "#36424C",
-    fontSize: 20,
+    fontSize: 16,
     opacity: 0.95,
   },
   subtitle: {
@@ -200,7 +275,7 @@ const mainStyle = {
   },
   dummy: {
     width: 5,
-    height: 120,
+    height: 100,
   },
   activityIndicator: {
     color: Colors.White,

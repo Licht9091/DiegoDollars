@@ -273,7 +273,7 @@ export default function MyBudget({ navigation, route }) {
         </Modal>
       )}
 
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={style.budgetHeader}>My Budget</Text>
 
         <View style={style.BubbleView}>
