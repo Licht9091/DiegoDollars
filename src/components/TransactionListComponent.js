@@ -60,6 +60,10 @@ const style = StyleSheet.create({
     width: Dimensions.get('window').width - 180,
     flex: 0,
   },
+  moneyText: {
+    flex: 1,
+    flexDirection: 'row',
+  },
   topLine: {
     flex: 1,
     flexDirection: 'row',

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from 'react';
 import {
   ScrollView,
   TouchableOpacity,
@@ -8,166 +8,34 @@ import {
   Dimensions,
   Alert,
   TextInput,
-} from "react-native";
-import { STYLESHEET } from "../styles/stylesheet";
-import Colors from "../styles/colors";
-import BottomBar from "../components/BottomBar";
-import Pill from "../components/Pill";
-import transactionStyles from "./Transactions/TransactionsScreen.style";
-import { SearchBar } from "react-native-elements";
-import AppContext from "../helper/context";
-import { FONT_FAMILY_SEMIBOLD } from "../styles/typography";
-import navigateAndReset from "../helper/functions";
-import TransactionListComponent from "../components/TransactionListComponent";
-import Diego from "../assets/Diego.svg";
-import NewGoal from "../components/NewGoal";
-import Modal from "react-native-modal";
-
-const style = {
-  blueBubbleView: {
-    backgroundColor: Colors.Primary,
-    width: Dimensions.get("window").width - 40,
-    marginLeft: 10,
-    marginBottom: 10,
-    borderRadius: 20,
-    padding: 20,
-    position: "relative",
-
-    ...STYLESHEET.shadowNormal,
-  },
-  blackBubbleView: {
-    backgroundColor: Colors.Black,
-    width: Dimensions.get("window").width - 40,
-    marginTop: 0,
-    marginLeft: 10,
-    marginBottom: 10,
-    borderRadius: 20,
-    padding: 20,
-    flex: 0,
-
-    ...STYLESHEET.shadowNormal,
-  },
-  whiteBubbleView: {
-    backgroundColor: Colors.White,
-    width: Dimensions.get("window").width - 40,
-    height: Dimensions.get("window").height - 490,
-    marginTop: 10,
-    marginLeft: 10,
-    marginBottom: 10,
-    borderRadius: 20,
-    padding: 20,
-    flex: 0,
-
-    ...STYLESHEET.shadowNormal,
-  },
-  editGoalView: {
-    height: 0,
-  },
-  expensesButton: {
-    alignItems: "center",
-    backgroundColor: Colors.Black,
-    padding: 10,
-    borderRadius: 10,
-    marginLeft: 5,
-  },
-  incomeButton: {
-    alignItems: "center",
-    backgroundColor: Colors.White,
-    padding: 10,
-    borderRadius: 10,
-    marginLeft: 5,
-  },
-  searchBarInputStyle: {
-    backgroundColor: Colors.White,
-    fontSize: 16,
-  },
-  searchBarContainerStyle: {
-    backgroundColor: Colors.White,
-    borderBottomColor: Colors.White,
-    borderTopColor: Colors.White,
-    height: 30,
-    paddingVertical: 0,
-    width: 130,
-  },
-  sectioningView: {
-    width: Dimensions.get("window").width - 40,
-    flexDirection: "row",
-  },
-  thirdsSectioningViewBlue: {
-    width: (Dimensions.get("window").width - 60) / 3,
-  },
-  thirdsSectioningViewWhite: {
-    width: (Dimensions.get("window").width - 100) / 3,
-    paddingVertical: 0,
-  },
-  textView: {
-    backgroundColor: Colors.Primary,
-    width: Dimensions.get("window").width - 140,
-    flexDirection: "row",
-  },
-  deletePillView: {
-    width: 95,
-    paddingTop: 20,
-  },
-  defaultHeaderDarkerGray: {
-    fontSize: 10,
-    color: Colors.DarkerGray,
-  },
-  defaultHeaderLargeWhite: {
-    fontSize: 24,
-    color: Colors.White,
-  },
-  defaultHeaderMediumWhite: {
-    fontSize: 18,
-    color: Colors.White,
-  },
-  defaultHeaderSmallWhite: {
-    fontSize: 14,
-    color: Colors.White,
-    paddingTop: 20,
-  },
-  defaultHeaderSmallBlack: {
-    fontSize: 14,
-    color: Colors.Black,
-  },
-  defaulthLine: {
-    borderBottomColor: Colors.White,
-    color: Colors.White,
-    borderBottomWidth: 1,
-    alignSelf: "stretch",
-  },
-  defaulthLineBlack: {
-    borderBottomColor: Colors.Black,
-    borderBottomWidth: 1,
-    alignSelf: "stretch",
-  },
-  goalHeader: {
-    fontSize: Dimensions.get("window").width / 20,
-    fontFamily: FONT_FAMILY_SEMIBOLD,
-    backgroundColor: Colors.Primary,
-    color: Colors.White,
-    minHeight: Dimensions.get("window").height / 4,
-    width: Dimensions.get("window").width,
-    paddingVertical: Dimensions.get("window").height * 0.03,
-    textAlign: "center",
-    flexDirection: "row",
-  },
-  goalView: {
-    backgroundColor: Colors.White,
-    height: Dimensions.get("window").height,
-  },
-};
+} from 'react-native';
+import { STYLESHEET } from '../styles/stylesheet';
+import Colors from '../styles/colors';
+import BottomBar from '../components/BottomBar';
+import Pill from '../components/Pill';
+import transactionStyles from './Transactions/TransactionsScreen.style';
+import { SearchBar } from 'react-native-elements';
+import AppContext from '../helper/context';
+import { FONT_FAMILY_SEMIBOLD } from '../styles/typography';
+import navigateAndReset from '../helper/functions';
+import TransactionListComponent from '../components/TransactionListComponent';
+import Diego from '../assets/Diego.svg';
+import Rocket from '../assets/rocket.svg';
+import NewGoal from '../components/NewGoal';
+import Modal from 'react-native-modal';
+import TransactionsFilter from '../components/TransactionsFilter';
+import s from './MyGoals.style.js';
 
 function setButtonValue(value, set, incomeOrExpense, navigatedState) {
   if (value) {
     set(false);
-    navigatedState = "all";
+    navigatedState = 'all';
   } else {
     set(true);
     if (incomeOrExpense) {
-      navigatedState = "income";
+      navigatedState = 'income';
     } else {
-      navigatedState = "expense";
+      navigatedState = 'expense';
     }
   }
 }
@@ -175,53 +43,65 @@ function setButtonValue(value, set, incomeOrExpense, navigatedState) {
 function setValues(
   goalName,
   typeName,
-  startName,
-  finishName,
+  startDate,
+  finishDate,
   setGoalName,
   setTypeName,
-  setStartName,
-  setFinishName,
+  setstartDate,
+  setfinishDate,
   setEditGoal
 ) {
   setGoalName(goalName);
   setTypeName(typeName);
-  setStartName(startName);
-  setFinishName(finishName);
+  setstartDate(startDate);
+  setfinishDate(finishDate);
   setEditGoal(false);
 }
 
 export default function MyGoals({ navigation, route }) {
-  const [data, setData] = useState([]);
+  const [allTransactions, setAllTransactions] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const { navigatedState } = route.params; // "expense", "income" or "all". Can use this for determining which page we navigated from.
   const { goal } = route.params;
 
   const Context = useContext(AppContext);
 
-  const updateTransactionList = async () => {
-    _account = await Context.User.getAccount();
-    if (navigatedState === "expense") {
-      _data = _account.uncategorisedExpenses;
-    } else if (navigatedState === "income") {
-      _data = _account.uncategorisedIncome;
-    } else if (navigatedState === "all") {
-      _data = _account.allTransactions;
-    } else {
-      _data = await _account.getTransactionsByCategory(navigatedState);
-    }
-    setData(_data);
+  // const updateTransactionList = async () => {
+  //   _account = await Context.User.getAccount();
+  //   if (navigatedState === 'expense') {
+  //     _data = _account.uncategorisedExpenses;
+  //   } else if (navigatedState === 'income') {
+  //     _data = _account.uncategorisedIncome;
+  //   } else if (navigatedState === 'all') {
+  //     _data = _account.allTransactions;
+  //   } else {
+  //     _data = await _account.getTransactionsByCategory(navigatedState);
+  //   }
+  //   setAllTransactions(_data);
+  // };
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     if (!loaded) {
+  //       updateTransactionList();
+  //       setLoaded(true);
+  //     }
+  //   }, 1000);
+  // });
+
+  const getTransactionList = async () => {
+    const Account = await Context.User.getAccount();
+    const loadedTransations = await Account.getTransactions();
+
+    setAllTransactions(loadedTransations.filter((t) => t.id === goal.id));
+    setLoaded(true);
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      if (!loaded) {
-        updateTransactionList();
-        setLoaded(true);
-      }
-    }, 1000);
-  });
+    getTransactionList();
+  }, []);
 
-  const [state, setState] = useState("");
+  const [state, setState] = useState('');
   const [editGoal, setEditGoal] = useState(false);
   const [expenseButtonPressed, setExpenButton] = useState(false);
   const [incomeButtonPressed, setIncomeButton] = useState(false);
@@ -230,33 +110,35 @@ export default function MyGoals({ navigation, route }) {
 
   //All distances need to add up to 150, so percentages are used
   const [spentDistance, setSpentDistance] = useState(0);
-  const [savedDistance, setSavedDistance] = useState(150 * (goal.percent));
-  const [goalDistance, setGoalDistanceDistance] = useState(150 * (1 - goal.percent));
+  const [savedDistance, setSavedDistance] = useState(150 * goal.percent);
+  // const [goalDistance, setGoalDistanceDistance] = useState(
+  //   150 * (1 - goal.percent)
+  // );
 
   const { search } = state;
 
   const [goalName, setGoalName] = useState(goal.description);
   const [typeName, setTypeName] = useState(goal.type);
-  const [startName, setStartName] = useState(goal.startDate);
-  const [finishName, setFinishName] = useState(goal.endDate);
+  const [startDate, setstartDate] = useState(goal.startDate);
+  const [finishDate, setfinishDate] = useState(goal.endDate);
 
   const [tempGoalName, setTempGoalName] = useState(goal.description);
   const [tempTypeName, setTempTypeName] = useState(goal.type);
-  const [tempStartName, setTempStartName] = useState(goal.startDate);
-  const [tempFinishName, setTempFinishName] = useState(goal.endDate);
+  const [tempstartDate, setTempstartDate] = useState(goal.startDate);
+  const [tempfinishDate, setTempfinishDate] = useState(goal.endDate);
 
   const deleteGoal = async () => {
     const success = await Context.User.deleteGoal(goal);
 
     if (success) {
-      navigateAndReset(navigation, "Main");
+      navigateAndReset(navigation, 'Main');
     } else {
-      alert("Something went wrong deleting the goal.");
+      alert('Something went wrong deleting the goal.');
     }
   };
 
   return (
-    <View style={style.goalView}>
+    <View>
       {refreshModal && (
         <Modal isVisible onPress={false}>
           <NewGoal
@@ -266,383 +148,111 @@ export default function MyGoals({ navigation, route }) {
           />
         </Modal>
       )}
-      <ScrollView>
-        <View style={style.goalHeader}>
-          <Text
-            style={{
-              color: Colors.White,
-              fontSize: 24,
-              alignItems: "center",
-              marginLeft: 150,
-              marginRight: 30,
-            }}
-          >
-            My Goals
-          </Text>
-          <Pill
-            content="Create New"
-            color={Colors.White}
-            backgroundColor={Colors.DarkGray}
+
+      <View style={s.goalView}>
+        <View style={s.goalHeader}>
+          <Text style={[s.title]}>My Goals</Text>
+
+          <TouchableOpacity
+            style={s.createButton}
             onPress={() => setRefreshModal(true)}
-          />
+          >
+            <Text style={s.createButtonText}>Create New</Text>
+          </TouchableOpacity>
         </View>
         <View
           style={{
             backgroundColor: Colors.Primary,
-            height: Dimensions.get("window").height * 0.1,
-            marginTop: -Dimensions.get("window").height * 0.59,
-            marginBottom: Dimensions.get("window").height * 0.33,
+            height: Dimensions.get('window').height * 0.1,
+            marginTop: -Dimensions.get('window').height * 0.59,
+            marginBottom: Dimensions.get('window').height * 0.33,
           }}
         ></View>
-        <View style={editGoal ? { height: 0, opacity: 0 } : { marginLeft: 10 }}>
-          <View style={style.blueBubbleView}>
-            <Text style={style.defaultHeaderLargeWhite}>{goalName}</Text>
-            <View style={style.sectioningView}>
-              <View style={style.thirdsSectioningViewBlue}>
-                <Text style={style.defaultHeaderSmallWhite}>Type</Text>
-                <Text style={style.defaultHeaderMediumWhite}>{typeName}</Text>
-                <Text style={style.defaultHeaderSmallWhite}>STARTED</Text>
-                <Text style={style.defaultHeaderMediumWhite}>{startName}</Text>
-                <View width={112} paddingTop={20}>
-                  <Pill
-                    content="Edit Goal"
-                    color={Colors.White}
-                    backgroundColor={Colors.Black}
-                    onPress={() => setEditGoal(true)}
-                  />
-                </View>
-              </View>
-              <View style={style.thirdsSectioningViewBlue}>
-                <Text style={style.defaultHeaderSmallWhite} />
-                <Text style={style.defaultHeaderMediumWhite} />
-                <Text style={style.defaultHeaderSmallWhite}>FINISHING</Text>
-                <Text style={style.defaultHeaderMediumWhite}>{finishName}</Text>
-                <View width={95} paddingTop={20}>
-                  <Pill
-                    content="Delete"
-                    color={Colors.White}
-                    backgroundColor={Colors.Alert}
-                    onPress={() => deleteGoal()}
-                  />
-                </View>
-              </View>
-              <View style={style.thirdsSectioningViewBlue}>
-                <View flexDirection={"row"}>
-                  <View width={(Dimensions.get("window").width - 60) / 3 - 25}>
-                    <View height={goalDistance}>
-                      <Text style={{ fontSize: 20, color: Colors.White }}>
-                        ${goal.goalAmount}
-                      </Text>
-                      <Text style={{ fontSize: 14, color: Colors.White }}>
-                        Goal
-                      </Text>
-                    </View>
-                    <View height={savedDistance}>
-                      <Text style={{ fontSize: 14, color: Colors.White }}>
-                        SAVED
-                      </Text>
-                      <Text style={style.defaulthLine}>${goal.currentContribution}</Text>
-                    </View>
-                  </View>
-                  <View>
-                    <Text
-                      style={{
-                        borderLeftColor: Colors.DarkGray,
-                        borderLeftWidth: 10,
-                        borderRadius: 10,
-                        height: goalDistance + 40,
-                      }}
-                    ></Text>
-                    <Diego
-                      style={{
-                        position: "absolute",
-                        height: 2 * (goalDistance + 40),
-                        width: 40,
-                        left: -15,
-                        elevation: 0.1,
-                      }}
-                    ></Diego>
-                    <Text
-                      style={{
-                        borderLeftColor: Colors.PrimaryLight,
-                        borderLeftWidth: 10,
-                        height: savedDistance,
-                      }}
-                    ></Text>
-                    <Text
-                      style={{
-                        borderLeftColor: Colors.Teal,
-                        borderLeftWidth: 10,
-                        height: spentDistance,
-                      }}
-                    ></Text>
-                  </View>
-                </View>
+
+        <View style={s.goalContainer}>
+          <View style={s.goalSummary}>
+            {/* Title */}
+            <Text style={s.goalTitle}>{goalName}</Text>
+
+            {/* Info Row 1 */}
+            <View style={s.flexRow}>
+              <View style={[s.flexCol]}>
+                <Text style={s.goalLabel}>TYPE</Text>
+                <Text style={s.goalValue}>{typeName}</Text>
               </View>
             </View>
-          </View>
-          <View style={style.whiteBubbleView}>
-            <View style={style.sectioningView}>
-              <View style={style.thirdsSectioningViewWhite}>
-                <TouchableOpacity
-                  style={style.expensesButton}
-                  onPress={(expenseButtonPressed) =>
-                    setButtonValue(
-                      expenseButtonPressed,
-                      setExpenButton,
-                      false,
-                      navigatedState
-                    )
-                  }
-                >
-                  <Text style={{ fontSize: 14, color: Colors.White }}>
-                    EXPENSES
-                  </Text>
-                </TouchableOpacity>
+
+            {/* Info Row 2 */}
+            <View style={[s.flexRow, { marginBottom: 30 }]}>
+              <View style={[s.flexCol, { marginRight: 30 }]}>
+                <Text style={s.goalLabel}>STARTED</Text>
+                <Text style={s.goalValue}>{startDate}</Text>
               </View>
-              <View style={style.thirdsSectioningViewWhite}>
-                <TouchableOpacity
-                  style={style.incomeButton}
-                  onPress={(incomeButtonPressed) =>
-                    setButtonValue(
-                      incomeButtonPressed,
-                      setIncomeButton,
-                      true,
-                      navigatedState
-                    )
-                  }
-                >
-                  <Text style={{ fontSize: 14, color: Colors.Black }}>
-                    INCOME
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={style.thirdsSectioningViewWhite}>
-                <SearchBar
-                  round={true}
-                  containerStyle={style.searchBarContainerStyle}
-                  inputContainerStyle={style.searchBarContainerStyle}
-                  inputStyle={style.searchBarInputStyle}
-                  placeholder="Search..."
-                  onChangeText={(state) => setState({ search })}
-                  value={state}
-                />
+              <View style={[s.flexCol]}>
+                <Text style={s.goalLabel}>FINISHING</Text>
+                <Text style={s.goalValue}>{finishDate}</Text>
               </View>
             </View>
-            <Text style={style.defaulthLineBlack} />
-            <ScrollView>
-              <View style={transactionStyles.transactionsWrapper}>
-                {!loaded && <ActivityIndicator size="large" color="white" />}
-                {data
-                  .sort((a, b) => new Date(b.date) - new Date(a.date))
-                  .map((transaction) => {
-                    return (
-                      <TransactionListComponent
-                        transaction={transaction}
-                        navigatedState={navigatedState}
-                      />
-                    );
-                  })}
-              </View>
-            </ScrollView>
+
+            {/* Button Row */}
+            <View style={[s.flexRow]}>
+              <TouchableOpacity style={[s.button, { marginRight: 7 }]}>
+                <View>
+                  <Text style={[s.buttonText]}>Edit Goal</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity style={[s.button, s.deleteButton]}>
+                <View>
+                  <Text style={[s.buttonText, { color: 'white' }]}>Delete</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+
+            {/* Rocket Ship */}
+            <View style={[s.rocketContainer]}>
+              <View style={[s.progress]}></View>
+              <View
+                style={[
+                  s.progress,
+                  {
+                    opacity: 1,
+                    borderLeftColor: '#0092F2',
+                    height: Math.max(20, goal.percent * 220),
+                  },
+                ]}
+              ></View>
+              {/* <View style={[s.progress, {}]}></View> */}
+              <Rocket
+                style={[s.rocket, { bottom: goal.percent * 220 }]}
+              ></Rocket>
+              <Text
+                style={{
+                  borderLeftColor: Colors.PrimaryLight,
+                  borderLeftWidth: 10,
+                  height: savedDistance,
+                }}
+              ></Text>
+              <Text
+                style={{
+                  borderLeftColor: Colors.Teal,
+                  borderLeftWidth: 10,
+                  height: spentDistance,
+                }}
+              ></Text>
+            </View>
           </View>
-        </View>
-        <View
-          style={!editGoal ? { height: 0, opacity: 0 } : { marginLeft: 10 }}
-        >
-          <View style={style.blackBubbleView}>
-            <TextInput
-              style={{ borderWidth: 1, color: Colors.White, fontSize: 24 }}
-              onChangeText={(text) => setTempGoalName(text)}
-              value={tempGoalName}
+
+          {/* Transactions and filter */}
+          <View style={s.whiteBubbleView}>
+            <TransactionsFilter
+              transactionList={allTransactions}
+              loading={!loaded}
+              onSelect={() => {}}
+              style={s.filterStyle}
             />
-            <View style={style.sectioningView}>
-              <View style={style.thirdsSectioningViewBlue}>
-                <Text style={style.defaultHeaderSmallWhite}>Type</Text>
-                <TextInput
-                  style={{ borderWidth: 0, color: Colors.White, fontSize: 18 }}
-                  onChangeText={(text) => setTempTypeName(text)}
-                  value={tempTypeName}
-                />
-                <Text style={style.defaultHeaderSmallWhite}>STARTED</Text>
-                <TextInput
-                  style={{ borderWidth: 0, color: Colors.White, fontSize: 18 }}
-                  onChangeText={(text) => setTempStartName(text)}
-                  value={tempStartName}
-                />
-                <View width={95} paddingTop={15}>
-                  <Pill
-                    content="Cancel"
-                    color={Colors.White}
-                    backgroundColor={Colors.Alert}
-                    onPress={() =>
-                      setValues(
-                        goalName,
-                        typeName,
-                        startName,
-                        finishName,
-                        setTempGoalName,
-                        setTempTypeName,
-                        setTempStartName,
-                        setTempFinishName,
-                        setEditGoal
-                      )
-                    }
-                  />
-                </View>
-              </View>
-              <View style={style.thirdsSectioningViewBlue}>
-                <Text style={style.defaultHeaderSmallWhite} />
-                <Text style={style.defaultHeaderMediumWhite} />
-                <Text style={style.defaultHeaderSmallWhite}>FINISHING</Text>
-                <TextInput
-                  style={{ borderWidth: 0, color: Colors.White, fontSize: 18 }}
-                  onChangeText={(text) => setTempFinishName(text)}
-                  value={tempFinishName}
-                />
-                <View width={80} paddingTop={20}>
-                  <Pill
-                    content="Save"
-                    color={Colors.White}
-                    backgroundColor={Colors.Primary}
-                    onPress={() =>
-                      setValues(
-                        tempGoalName,
-                        tempTypeName,
-                        tempStartName,
-                        tempFinishName,
-                        setGoalName,
-                        setTypeName,
-                        setStartName,
-                        setFinishName,
-                        setEditGoal
-                      )
-                    }
-                  />
-                </View>
-              </View>
-              <View style={style.thirdsSectioningViewBlue}>
-                <View flexDirection={"row"}>
-                  <View width={(Dimensions.get("window").width - 60) / 3 - 25}>
-                    <View height={goalDistance}>
-                      <Text style={{ fontSize: 20, color: Colors.White }}>
-                        ${goal.goalAmount}
-                      </Text>
-                      <Text style={{ fontSize: 14, color: Colors.White }}>
-                        Goal
-                      </Text>
-                    </View>
-                    <View height={savedDistance}>
-                      <Text style={{ fontSize: 14, color: Colors.White }}>
-                        SAVED
-                      </Text>
-                      <Text style={style.defaulthLine}>${goal.currentContribution}</Text>
-                    </View>
-                  </View>
-                  <View>
-                  <Text
-                      style={{
-                        borderLeftColor: Colors.DarkGray,
-                        borderLeftWidth: 10,
-                        borderRadius: 10,
-                        height: goalDistance + 40,
-                      }}
-                    ></Text>
-                    <Diego
-                      style={{
-                        position: "absolute",
-                        height: 2 * (goalDistance + 40),
-                        width: 40,
-                        left: -15,
-                        elevation: 0.1,
-                      }}
-                    ></Diego>
-                    <Text
-                      style={{
-                        borderLeftColor: Colors.PrimaryLight,
-                        borderLeftWidth: 10,
-                        height: savedDistance,
-                      }}
-                    ></Text>
-                    <Text
-                      style={{
-                        borderLeftColor: Colors.Teal,
-                        borderLeftWidth: 10,
-                        height: spentDistance,
-                      }}
-                    ></Text>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
-          <View style={style.whiteBubbleView}>
-            <View style={style.sectioningView}>
-              <View style={style.thirdsSectioningViewWhite}>
-                <TouchableOpacity
-                  style={style.expensesButton}
-                  onPress={(expenseButtonPressed) =>
-                    setButtonValue(
-                      expenseButtonPressed,
-                      setExpenButton,
-                      false,
-                      navigatedState
-                    )
-                  }
-                >
-                  <Text style={{ fontSize: 14, color: Colors.White }}>
-                    EXPENSES
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={style.thirdsSectioningViewWhite}>
-                <TouchableOpacity
-                  style={style.incomeButton}
-                  onPress={(incomeButtonPressed) =>
-                    setButtonValue(
-                      incomeButtonPressed,
-                      setIncomeButton,
-                      true,
-                      navigatedState
-                    )
-                  }
-                >
-                  <Text style={{ fontSize: 14, color: Colors.Black }}>
-                    INCOME
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={style.thirdsSectioningViewWhite}>
-                <SearchBar
-                  round={true}
-                  containerStyle={style.searchBarContainerStyle}
-                  inputContainerStyle={style.searchBarContainerStyle}
-                  inputStyle={style.searchBarInputStyle}
-                  placeholder="Search..."
-                  onChangeText={(state) => setState({ search })}
-                  value={state}
-                />
-              </View>
-            </View>
-            <Text style={style.defaulthLineBlack} />
-            <ScrollView>
-              <View style={transactionStyles.transactionsWrapper}>
-                {!loaded && <ActivityIndicator size="large" color="white" />}
-                {data
-                  .sort((a, b) => new Date(b.date) - new Date(a.date))
-                  .map((transaction) => {
-                    return (
-                      <TransactionListComponent
-                        transaction={transaction}
-                        navigatedState={navigatedState}
-                      />
-                    );
-                  })}
-              </View>
-            </ScrollView>
           </View>
         </View>
-      </ScrollView>
+      </View>
       <BottomBar navigation={navigation} />
     </View>
   );

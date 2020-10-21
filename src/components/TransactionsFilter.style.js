@@ -67,11 +67,6 @@ const filterStyles = {
     padding: 0,
     ...STYLESHEET.shadowNormal,
   },
-  topLine: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
   dateHeader: {
     margin: 0,
     padding: 7,
@@ -82,18 +77,7 @@ const filterStyles = {
     fontSize: 9,
     color: Colors.DarkerGray,
   },
-  transactionTextWrapper: {
-    flexDirection: 'row',
-    width: 250,
-  },
-  transactionText: {
-    fontFamily: FONT_FAMILY_LIGHT,
-    fontWeight: '100',
-    fontSize: 12,
-    textAlign: 'left',
-    color: 'black',
-    paddingLeft: 10,
-  },
+
   categoryText: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
     fontWeight: '100',
@@ -110,13 +94,6 @@ const filterStyles = {
     color: 'black',
     paddingLeft: 10,
     textAlign: 'right',
-  },
-  bottomLine: {
-    // flex: 1,
-    // flexDirection: 'row',
-    // justifyContent: 'space-between',
-    // marginTop: 10,
-    // marginBottom: 10,
   },
   moneyText: {
     flex: 1,

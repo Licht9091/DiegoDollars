@@ -25,11 +25,7 @@ import Cloud from '../assets/cloud.svg';
 import Stars from '../assets/stars.svg';
 import Telescope from '../assets/telescope.svg';
 
-export default function SingleTransactionScreen({
-  navigatedState,
-  transaction,
-  onClose,
-}) {
+export default function SingleTransactionScreen({ transaction, onClose }) {
   const [tab, setTab] = useState(0);
   const [data, setData] = useState(null);
 

@@ -6,7 +6,7 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import filterStyles from './TransactionsFilter.style';
 import TransactionListComponent from './TransactionListComponent';
 
-const TransactionsFilter = ({ transactionList, onSelect, loading }) => {
+const TransactionsFilter = ({ transactionList, onSelect, loading, style }) => {
   // transactions
   const [transactions, setTransactions] = useState([]);
 
@@ -27,7 +27,7 @@ const TransactionsFilter = ({ transactionList, onSelect, loading }) => {
   }, [transactionList, showIncome, showExpenses, searchContents]);
 
   return (
-    <View style={filterStyles.mainView}>
+    <View style={[filterStyles.mainView, style]}>
       {/* Search bar container */}
       <View style={filterStyles.searchBarLine}>
         {/* First Button */}
