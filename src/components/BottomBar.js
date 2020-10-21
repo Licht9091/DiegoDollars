@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from 'react';
+import AppContext from '../helper/context';
 import { Dimensions, View, Text } from "react-native";
 import Colors from "../styles/colors";
 import { STYLESHEET } from "../styles/stylesheet";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
-  faTachometerAlt,
-  faChartLine,
-  faMoneyBillAlt,
-  faCog,
-  faUserCircle,
+  faFileInvoiceDollar,
+  faMoneyCheckAlt,
+  faHouseUser,
+  faDonate,
+  faCommentsDollar,
 } from "@fortawesome/free-solid-svg-icons";
 
 const BottomBar = ({ navigation, route }) => {
@@ -49,28 +50,35 @@ const BottomBar = ({ navigation, route }) => {
     <View style={style}>
       <FontAwesomeIcon
         style={{ ...iconStyle, opacity: 1 }}
-        icon={faTachometerAlt}
+        icon={faHouseUser}
         size={Dimensions.get("window").height * 0.03}
         color={Colors.Primary}
+        onPress={() => {
+          navigation.navigate("Main")}}
       />
       <FontAwesomeIcon
         style={iconStyle}
-        icon={faMoneyBillAlt}
+        icon={faDonate}
+        size={Dimensions.get("window").height * 0.03}
+        color={Colors.Primary}
+        // onPress={() =>
+        //   navigation.navigate("MyGoals", {
+        //     navigatedState: "all"
+        //   })
+        // }
+      />
+      <FontAwesomeIcon
+        style={iconStyle}
+        icon={faCommentsDollar}
         size={Dimensions.get("window").height * 0.03}
         color={Colors.Primary}
         onPress={() =>
-          navigation.navigate("MyGoals", {
+          navigation.navigate('Transactions', {
             navigatedState: "all"
           })
         }
       />
-      <FontAwesomeIcon
-        style={iconStyle}
-        icon={faChartLine}
-        size={Dimensions.get("window").height * 0.03}
-        color={Colors.Primary}
-      />
-      <FontAwesomeIcon
+      {/* <FontAwesomeIcon
         style={iconStyle}
         icon={faUserCircle}
         size={Dimensions.get("window").height * 0.03}
@@ -78,12 +86,18 @@ const BottomBar = ({ navigation, route }) => {
         onPress={() =>
           navigation.navigate("Account", { navigatedState: navigation })
         }
-      />
+      /> */}
       <FontAwesomeIcon
         style={iconStyle}
-        icon={faCog}
+        icon={faFileInvoiceDollar}
         size={Dimensions.get("window").height * 0.03}
         color={Colors.Primary}
+        onPress={() => {
+          navigation.navigate('Budget', {
+            navigatedState: navigation,
+            goals: _goals,
+          });
+        }}
       />
     </View>
   );

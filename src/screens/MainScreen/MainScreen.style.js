@@ -30,12 +30,26 @@ const mainStyle = {
     flexDirection: 'row',
     minHeight: Dimensions.get('window').height * 0.1,
   },
-  whiteBubblePillView: {
+  spendingsBubblePillView: {
     backgroundColor: Colors.White,
     width: Dimensions.get('window').width * 0.9,
     marginTop: 10,
     borderRadius: 15,
-    padding: 15,
+    paddingTop: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
+
+    ...STYLESHEET.shadowNormal,
+  },
+  transactionBubblePillView: {
+    backgroundColor: Colors.White,
+    width: Dimensions.get('window').width * 0.9,
+    marginTop: 10,
+    borderRadius: 15,
+    paddingTop: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingBottom: 10,
 
     ...STYLESHEET.shadowNormal,
   },

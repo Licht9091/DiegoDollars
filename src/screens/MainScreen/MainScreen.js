@@ -176,27 +176,47 @@ const MainScreen = ({ navigation }) => {
                   <Arrow/>
                 </TouchableOpacity>
               </View>
-              <View style={mainStyle.whiteBubblePillView}>
-              <TouchableOpacity
-                style={mainStyle.pillAndTextView}
-              >
-                  <View style={mainStyle.categoryInfo}>
-                    <Text style={mainStyle.transactionName}>
-                      Transaction Name
-                    </Text>
-                    <Text style={mainStyle.transactionCategory}>
-                      Category Name
-                    </Text>
-                  </View>
-                  <View style={mainStyle.spendInfo}>
-                    <Text style={mainStyle.transactionSpendAmount}>
-                      Amount Spent
-                    </Text>
-                    <Text style={mainStyle.timeAndDate}>
-                      Date and Time
-                    </Text>
-                  </View>
-                </TouchableOpacity>
+              <View style={mainStyle.transactionBubblePillView}>
+                <TouchableOpacity
+                  style={mainStyle.pillAndTextView}
+                >
+                    <View style={mainStyle.categoryInfo}>
+                      <Text style={mainStyle.transactionName}>
+                        Transaction Name
+                      </Text>
+                      <Text style={mainStyle.transactionCategory}>
+                        Category Name
+                      </Text>
+                    </View>
+                    <View style={mainStyle.spendInfo}>
+                      <Text style={mainStyle.transactionSpendAmount}>
+                        Amount Spent
+                      </Text>
+                      <Text style={mainStyle.timeAndDate}>
+                        Date and Time
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                  style={mainStyle.pillAndTextView}
+                >
+                    <View style={mainStyle.categoryInfo}>
+                      <Text style={mainStyle.transactionName}>
+                        Hardware 12342324 SYDNEY 
+                      </Text>
+                      <Text style={mainStyle.transactionCategory}>
+                        Computer 
+                      </Text>
+                    </View>
+                    <View style={mainStyle.spendInfo}>
+                      <Text style={mainStyle.transactionSpendAmount}>
+                        $1453
+                      </Text>
+                      <Text style={mainStyle.timeAndDate}>
+                        02-10-2020
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
               </View>
             </View>
 
@@ -256,7 +276,7 @@ const MainScreen = ({ navigation }) => {
             {/* Spending */}
             <View style={mainStyle.container}>
               <Text style={mainStyle.title}>This Fortnight's Spending</Text>
-              <View style={mainStyle.whiteBubblePillView}>
+              <View style={mainStyle.spendingsBubblePillView}>
                 {/* Spending Categories Data loop */}
                 {data.spendingCategories.map((category) => {
                   return (
@@ -299,7 +319,6 @@ const MainScreen = ({ navigation }) => {
                     </View>
                   );
                 })}
-                
               </View>
             </View>
             <View style={mainStyle.dummy}></View>
