@@ -266,7 +266,7 @@ export default function MyGoals({ navigation, route }) {
           />
         </Modal>
       )}
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={style.goalHeader}>
           <Text
             style={{

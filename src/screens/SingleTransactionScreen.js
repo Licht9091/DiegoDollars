@@ -188,7 +188,7 @@ export default function SingleTransactionScreen({
                 </TouchableOpacity>
               </View>
               <View style={{ height: 230 }}>
-                <ScrollView>{goals}</ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}>{goals}</ScrollView>
               </View>
             </>
           ) : (

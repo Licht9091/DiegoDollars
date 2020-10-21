@@ -9,18 +9,13 @@ const SmallPieChart = ({
   value = 0.3,
   color = '#228DE9',
   showPercentage = false,
-  size = 55,
+  size = 40,
 }) => {
   const container = {
     width: size,
-    marginLeft: 25,
+    marginLeft: 0,
     marginBottom: -10,
-    marginTop: -10,
-    transform: [
-      {
-        translateX: -10,
-      },
-    ],
+    marginTop: -35,
   };
 
   const PieStyle = {
@@ -38,17 +33,14 @@ const SmallPieChart = ({
 
   const textStyle = {
     position: 'absolute',
-    top: size / 2,
-    left: size / 2,
-    fontSize: 18,
+    left: 18,
+    fontSize: 15,
+    textAlign: "right",
     fontFamily: FONT_FAMILY_SEMIBOLD,
     color: Colors.DarkerGray,
     transform: [
       {
-        translateX: -3,
-      },
-      {
-        translateY: -2,
+        translateY: 55,
       },
     ],
   };

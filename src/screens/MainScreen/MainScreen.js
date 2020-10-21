@@ -102,7 +102,7 @@ const MainScreen = ({ navigation }) => {
           </ScrollView>
         )}
         {data && loaded && (
-          <ScrollView style={mainStyle.mainScreen}>
+          <ScrollView style={mainStyle.mainScreen} showsVerticalScrollIndicator={false}>
             {/* Title */}
 
             <WavyHeader />
@@ -126,6 +126,7 @@ const MainScreen = ({ navigation }) => {
                       icon={faInfoCircle}
                       size={Dimensions.get('window').height * 0.03}
                       color={Colors.White}
+                      marginLeft={10}
                       onPress={() => {
                         navigation.navigate('Budget', {
                           navigatedState: navigation,
@@ -180,15 +181,15 @@ const MainScreen = ({ navigation }) => {
                 style={mainStyle.pillAndTextView}
               >
                   <View style={mainStyle.categoryInfo}>
-                    <Text style={mainStyle.spendCategory}>
+                    <Text style={mainStyle.transactionName}>
                       Transaction Name
                     </Text>
-                    <Text style={mainStyle.transactionCount}>
+                    <Text style={mainStyle.transactionCategory}>
                       Category Name
                     </Text>
                   </View>
                   <View style={mainStyle.spendInfo}>
-                    <Text style={mainStyle.spendAmount}>
+                    <Text style={mainStyle.transactionSpendAmount}>
                       Amount Spent
                     </Text>
                     <Text style={mainStyle.timeAndDate}>
@@ -202,7 +203,7 @@ const MainScreen = ({ navigation }) => {
             {/* Goals */}
             <View style={mainStyle.container}>
               <Text style={mainStyle.title}>My Goals</Text>
-              <ScrollView horizontal={true} style={mainStyle.goalsWrapper}>
+              <ScrollView horizontal={true} style={mainStyle.goalsWrapper} showsHorizontalScrollIndicator={false}>
                 {/* Goals Data loop */}
                 {data.goals.map((goal) => (
                   <TouchableOpacity
@@ -278,16 +279,21 @@ const MainScreen = ({ navigation }) => {
                           </Text>
                         </View>
                         <View style={mainStyle.smallPieChart}>
-                        <SmallPieChart
-                          value={category.percent}
-                          showPercentage
-                        />
+                          <SmallPieChart
+                            value={category.percent}
+                            showPercentage
+                          />
                         </View>
                         <View style={mainStyle.spendInfo}>
                           <Text style={mainStyle.spendAmount}>
                             {`$${Format.toDollars(category.amount)}`}
                           </Text>
+                          
                         </View>
+                        <View style={{width: Dimensions.get("window").width * 0.06, marginRight: -10,justifyContent:"center"}}>
+                          <Arrow/>
+                        </View>
+                        
                       </TouchableOpacity>
                       <Text style={mainStyle.defaultLine}/>
                     </View>
