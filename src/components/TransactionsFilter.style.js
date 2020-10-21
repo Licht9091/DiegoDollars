@@ -95,10 +95,6 @@ const filterStyles = {
     paddingLeft: 10,
     textAlign: 'right',
   },
-  moneyText: {
-    flex: 1,
-    flexDirection: 'row',
-  },
   moneyDollars: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
     fontWeight: '100',

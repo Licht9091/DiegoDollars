@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import {
   ScrollView,
   TouchableOpacity,
@@ -8,6 +8,7 @@ import {
   Dimensions,
   Alert,
   TextInput,
+  Picker,
 } from 'react-native';
 import { STYLESHEET } from '../styles/stylesheet';
 import Colors from '../styles/colors';
@@ -16,15 +17,18 @@ import Pill from '../components/Pill';
 import transactionStyles from './Transactions/TransactionsScreen.style';
 import { SearchBar } from 'react-native-elements';
 import AppContext from '../helper/context';
-import { FONT_FAMILY_SEMIBOLD } from '../styles/typography';
+import { FONT_FAMILY_LIGHT, FONT_FAMILY_SEMIBOLD } from '../styles/typography';
 import navigateAndReset from '../helper/functions';
 import TransactionListComponent from '../components/TransactionListComponent';
 import Diego from '../assets/Diego.svg';
 import Rocket from '../assets/rocket.svg';
+import Pencil from '../assets/pencil.svg';
 import NewGoal from '../components/NewGoal';
 import Modal from 'react-native-modal';
 import TransactionsFilter from '../components/TransactionsFilter';
 import s from './MyGoals.style.js';
+import SimpleModal from '../components/SimpleModal';
+import DatePicker from 'react-native-datepicker';
 
 function setButtonValue(value, set, incomeOrExpense, navigatedState) {
   if (value) {
@@ -61,33 +65,11 @@ function setValues(
 export default function MyGoals({ navigation, route }) {
   const [allTransactions, setAllTransactions] = useState([]);
   const [loaded, setLoaded] = useState(false);
-  const { navigatedState } = route.params; // "expense", "income" or "all". Can use this for determining which page we navigated from.
   const { goal } = route.params;
 
+  console.log(goal);
+
   const Context = useContext(AppContext);
-
-  // const updateTransactionList = async () => {
-  //   _account = await Context.User.getAccount();
-  //   if (navigatedState === 'expense') {
-  //     _data = _account.uncategorisedExpenses;
-  //   } else if (navigatedState === 'income') {
-  //     _data = _account.uncategorisedIncome;
-  //   } else if (navigatedState === 'all') {
-  //     _data = _account.allTransactions;
-  //   } else {
-  //     _data = await _account.getTransactionsByCategory(navigatedState);
-  //   }
-  //   setAllTransactions(_data);
-  // };
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     if (!loaded) {
-  //       updateTransactionList();
-  //       setLoaded(true);
-  //     }
-  //   }, 1000);
-  // });
 
   const getTransactionList = async () => {
     const Account = await Context.User.getAccount();
@@ -101,13 +83,6 @@ export default function MyGoals({ navigation, route }) {
     getTransactionList();
   }, []);
 
-  const [state, setState] = useState('');
-  const [editGoal, setEditGoal] = useState(false);
-  const [expenseButtonPressed, setExpenButton] = useState(false);
-  const [incomeButtonPressed, setIncomeButton] = useState(false);
-
-  const [refreshModal, setRefreshModal] = useState(false);
-
   //All distances need to add up to 150, so percentages are used
   const [spentDistance, setSpentDistance] = useState(0);
   const [savedDistance, setSavedDistance] = useState(150 * goal.percent);
@@ -115,17 +90,19 @@ export default function MyGoals({ navigation, route }) {
   //   150 * (1 - goal.percent)
   // );
 
-  const { search } = state;
+  // const [state.goal.description, setGoalName] = useState(goal.description);
+  // const [state.goal.type, setTypeName] = useState(goal.type);
+  // const [state.goal.startDate, setstartDate] = useState(goal.startDate);
+  // const [state.goal.endDate, setfinishDate] = useState(goal.endDate);
 
-  const [goalName, setGoalName] = useState(goal.description);
-  const [typeName, setTypeName] = useState(goal.type);
-  const [startDate, setstartDate] = useState(goal.startDate);
-  const [finishDate, setfinishDate] = useState(goal.endDate);
-
-  const [tempGoalName, setTempGoalName] = useState(goal.description);
-  const [tempTypeName, setTempTypeName] = useState(goal.type);
-  const [tempstartDate, setTempstartDate] = useState(goal.startDate);
-  const [tempfinishDate, setTempfinishDate] = useState(goal.endDate);
+  const setGoal = async (newGoal) => {
+    return await Context.User.setGoal(
+      newGoal.name ? newGoal.name : state.goal.name,
+      newGoal.goalAmount ? newGoal.goalAmount : state.goal.goalAmount,
+      state.goal.fortnightlyAmount,
+      newGoal.endDate ? newGoal.endDate : state.goal.endDate
+    );
+  };
 
   const deleteGoal = async () => {
     const success = await Context.User.deleteGoal(goal);
@@ -137,16 +114,105 @@ export default function MyGoals({ navigation, route }) {
     }
   };
 
+  const reducer = (state, action) => {
+    if (action.type === 'editMode') {
+      return {
+        ...state,
+        mode: 'edit',
+      };
+    } else if (action.type === 'viewMode') {
+      return {
+        ...state,
+        mode: 'view',
+      };
+    } else if (action.type === 'popModal') {
+      return {
+        ...state,
+        modal: action.modal,
+      };
+    } else if (action.type === 'closeModal') {
+      return {
+        ...state,
+        modal: undefined,
+      };
+    } else if (action.type === 'setGoalType') {
+      return {
+        ...state,
+        newGoalType: action.value,
+      };
+    } else if (action.type === 'setGoalEnd') {
+      return {
+        ...state,
+        newGoalEnd: action.endDate,
+      };
+    } else if (action.type === 'deleteGoal') {
+      deleteGoal();
+      return {
+        ...state,
+        modal: undefined,
+      };
+    } else if (action.type === 'saveChanges') {
+      // apply changes
+      const newGoal = {
+        ...state.goal,
+        type: state.newGoalType ? state.newGoalType : state.goal.type,
+        endDate: state.newGoalEnd ? state.newGoalEnd : state.goal.endDate,
+      };
+
+      setGoal(newGoal);
+
+      return {
+        mode: 'view',
+        goal: newGoal,
+      };
+    } else {
+      alert(`invalid action ${action.type} in MyGoalsScreen.js`);
+      return state;
+    }
+  };
+
+  const [state, dispatch] = useReducer(reducer, {
+    mode: 'view',
+    goal,
+  });
+
   return (
     <View>
-      {refreshModal && (
-        <Modal isVisible onPress={false}>
+      {/* New goal modal */}
+      {state.modal === 'createGoal' && (
+        <Modal isVisible>
           <NewGoal
-            onClose={() => setRefreshModal(false)}
-            goal={goalName}
+            onClose={() => dispatch({ type: 'closeModal' })}
+            goal={state.goal.description}
             navigation={navigation}
           />
         </Modal>
+      )}
+
+      {/* Delete goal modal */}
+      {state.modal === 'delete' && (
+        <SimpleModal>
+          <>
+            <Text style={s.modalTitleText}>Delete this goal?</Text>
+            <Text style={s.modalBodyText}>
+              You won't be able to get it back
+            </Text>
+            <View style={s.modalButtonWrapper}>
+              <TouchableOpacity
+                onPress={() => dispatch({ type: 'closeModal' })}
+              >
+                <Text style={s.modalButton}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => dispatch({ type: 'deleteGoal' })}
+              >
+                <Text style={[s.modalButton, { color: '#D02121' }]}>
+                  Delete
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </>
+        </SimpleModal>
       )}
 
       <View style={s.goalView}>
@@ -155,7 +221,7 @@ export default function MyGoals({ navigation, route }) {
 
           <TouchableOpacity
             style={s.createButton}
-            onPress={() => setRefreshModal(true)}
+            onPress={() => dispatch({ type: 'popModal', modal: 'createGoal' })}
           >
             <Text style={s.createButtonText}>Create New</Text>
           </TouchableOpacity>
@@ -172,41 +238,138 @@ export default function MyGoals({ navigation, route }) {
         <View style={s.goalContainer}>
           <View style={s.goalSummary}>
             {/* Title */}
-            <Text style={s.goalTitle}>{goalName}</Text>
+            <Text style={s.goalTitle}>{state.goal.description}</Text>
 
             {/* Info Row 1 */}
             <View style={s.flexRow}>
               <View style={[s.flexCol]}>
+                {/* Label */}
                 <Text style={s.goalLabel}>TYPE</Text>
-                <Text style={s.goalValue}>{typeName}</Text>
+                {/* Picker */}
+                {state.mode === 'view' && (
+                  <Text style={s.goalValue}>{state.goal.type}</Text>
+                )}
+                {state.mode === 'edit' && (
+                  <View style={s.flexRow}>
+                    <Picker
+                      selectedValue={
+                        state.newGoalType ? state.newGoalType : state.goal.type
+                      }
+                      style={s.picker}
+                      itemStyle={s.pickerItem}
+                      text
+                      useNativeAndroidPickerStyle={false}
+                      onValueChange={(value) =>
+                        dispatch({ type: 'setGoalType', value })
+                      }
+                    >
+                      <Picker.Item label='One-Off' value='One Off' />
+                      <Picker.Item label='Continuous' value='Continuous' />
+                    </Picker>
+                  </View>
+                )}
               </View>
             </View>
 
             {/* Info Row 2 */}
             <View style={[s.flexRow, { marginBottom: 30 }]}>
-              <View style={[s.flexCol, { marginRight: 30 }]}>
-                <Text style={s.goalLabel}>STARTED</Text>
-                <Text style={s.goalValue}>{startDate}</Text>
-              </View>
               <View style={[s.flexCol]}>
+                <Text style={s.goalLabel}>STARTED</Text>
+                <Text style={s.goalValue}>{state.goal.startDate}</Text>
+              </View>
+              <View style={[s.flexCol, { marginRight: 30 }]}>
                 <Text style={s.goalLabel}>FINISHING</Text>
-                <Text style={s.goalValue}>{finishDate}</Text>
+                {(state.mode === 'view' || goal.type === 'Continuous') && (
+                  <Text style={s.goalValue}>{state.goal.endDate}</Text>
+                )}
+                {state.mode === 'edit' && goal.type === 'One Off' && (
+                  <View style={s.flexRow}>
+                    <DatePicker
+                      mode='date'
+                      placeholder={'Select Date'}
+                      format='DD-MM-YYYY'
+                      confirmBtnText='Confirm'
+                      cancelBtnText='Cancel'
+                      date={
+                        state.newGoalEnd ? state.newGoalEnd : state.goal.endDate
+                      }
+                      showIcon={false}
+                      style={{ left: -30, top: -9 }}
+                      customStyles={{
+                        dateInput: {
+                          borderWidth: 0,
+                          color: 'white',
+                        },
+                        dateText: {
+                          fontFamily: FONT_FAMILY_LIGHT,
+                          color: 'white',
+                          fontSize: 16,
+                        },
+                        disabled: {
+                          height: 0,
+                        },
+                      }}
+                      onDateChange={(date) =>
+                        dispatch({ type: 'setGoalEnd', endDate: date })
+                      }
+                    />
+                    <Pencil style={s.pencil} />
+                  </View>
+                )}
               </View>
             </View>
 
             {/* Button Row */}
-            <View style={[s.flexRow]}>
-              <TouchableOpacity style={[s.button, { marginRight: 7 }]}>
-                <View>
-                  <Text style={[s.buttonText]}>Edit Goal</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity style={[s.button, s.deleteButton]}>
-                <View>
-                  <Text style={[s.buttonText, { color: 'white' }]}>Delete</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
+            {state.mode === 'view' && (
+              <View style={[s.flexRow]}>
+                <TouchableOpacity
+                  style={[s.button, { marginRight: 7 }]}
+                  onPress={() => dispatch({ type: 'editMode' })}
+                >
+                  <View>
+                    <Text style={[s.buttonText]}>Edit Goal</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[s.button, s.deleteButton]}
+                  onPress={() =>
+                    dispatch({ type: 'popModal', modal: 'delete' })
+                  }
+                >
+                  <View>
+                    <Text style={[s.buttonText, { color: 'white' }]}>
+                      Delete
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            )}
+
+            {state.mode === 'edit' && (
+              <View style={[s.flexRow]}>
+                <TouchableOpacity
+                  style={[
+                    s.button,
+                    { marginRight: 7, backgroundColor: '#FF6A6A' },
+                  ]}
+                  onPress={() => dispatch({ type: 'viewMode' })}
+                >
+                  <View>
+                    <Text style={[s.buttonText, { color: 'white' }]}>
+                      Cancel
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[s.button, { backgroundColor: '#1F79D3' }]}
+                  onPress={() => dispatch({ type: 'saveChanges' })}
+                >
+                  <View>
+                    <Text style={[s.buttonText, { color: 'white' }]}>Save</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            )}
 
             {/* Rocket Ship */}
             <View style={[s.rocketContainer]}>

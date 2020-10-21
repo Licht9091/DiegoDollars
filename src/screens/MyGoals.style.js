@@ -16,7 +16,7 @@ const goalStyle = {
   flexCol: {
     flex: 0,
     flexDirection: 'column',
-    marginRight: 10,
+    marginRight: 20,
   },
   title: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
@@ -42,6 +42,29 @@ const goalStyle = {
     fontFamily: FONT_FAMILY_BOLD,
     color: 'white',
     fontSize: 11,
+  },
+
+  modalTitleText: {
+    fontSize: 16,
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    marginBottom: 15,
+  },
+  modalBodyText: {
+    fontFamily: FONT_FAMILY_LIGHT,
+  },
+  modalButtonWrapper: {
+    position: 'absolute',
+    right: 30,
+    bottom: 20,
+    flex: 0,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  modalButton: {
+    marginLeft: 10,
+    textTransform: 'uppercase',
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    color: Colors.DarkGray,
   },
   goalContainer: {
     backgroundColor: '#376FC8',
@@ -74,6 +97,21 @@ const goalStyle = {
     color: 'white',
     fontFamily: FONT_FAMILY_LIGHT,
     fontSize: 16,
+  },
+  picker: {
+    height: 30,
+    width: 150,
+    paddingLeft: 0,
+    marginLeft: -10,
+    marginBottom: -5,
+    color: 'white',
+    fontFamily: FONT_FAMILY_LIGHT,
+    fontSize: 16,
+  },
+  pickerItem: {},
+  pencil: {
+    marginLeft: -50,
+    marginTop: 5,
   },
   button: {
     width: 90,

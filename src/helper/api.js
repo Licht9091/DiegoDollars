@@ -114,9 +114,9 @@ export class User {
    * @return {[Goal]} Returns a list of goals.
    */
   getGoals = async () => {
-    if (this.goals != null) {
-      return this.goals;
-    }
+    // if (this.goals != null) {
+    //   return this.goals;
+    // }
 
     await this.fetchGoalsStatus();
 
