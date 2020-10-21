@@ -176,7 +176,7 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
 
                 {/* TODO finish this */}
                 <TouchableOpacity>
-                  <View style={[style.button, { backgroundColor: Colors.Red }]}>
+                  <View style={[style.createGoalButton, { backgroundColor: "#FE5959" }]}>
                     <Text style={[style.buttonTxt, { color: 'white' }]}>
                       Create new Goal
                     </Text>
@@ -204,13 +204,15 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
 const style = StyleSheet.create({
   row: {
     padding: 12,
+    paddingTop: 18,
+    paddingBottom: 0,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
   },
   buttonRow: {
     flexDirection: 'row',
-    width: Dimensions.get('window').width - 50,
+    width: Dimensions.get('window').width * 0.9,
     marginTop: 37,
     marginBottom: 10,
   },
@@ -219,7 +221,7 @@ const style = StyleSheet.create({
     fontSize: 12,
   },
   card: {
-    width: Dimensions.get('window').width - 50,
+    width: Dimensions.get('window').width * 0.9,
     borderRadius: 20,
     backgroundColor: 'white',
     padding: 0,
@@ -230,7 +232,7 @@ const style = StyleSheet.create({
     padding: 15,
   },
   header: {
-    width: Dimensions.get('window').width - 50,
+    width: Dimensions.get('window').width * 0.9,
     height: 110,
     backgroundColor: '#4897DB' /*"#51AAF6"*/,
     padding: 20,
@@ -247,7 +249,7 @@ const style = StyleSheet.create({
     position: 'absolute',
     // left: (Dimensions.get('window').width - 50 - 275) / 2,
     left: '4%',
-    top: -20,
+    top: -15,
     borderRadius: 15,
     ...STYLESHEET.shadowNormal,
   },
@@ -255,30 +257,30 @@ const style = StyleSheet.create({
     flexDirection: 'row',
   },
   priceDollars: {
-    fontFamily: FONT_FAMILY_BOLD,
+    fontFamily: FONT_FAMILY_SEMIBOLD,
     fontSize: 38,
     marginRight: 3,
   },
   priceCents: {
-    fontFamily: FONT_FAMILY_BOLD,
+    fontFamily: FONT_FAMILY_SEMIBOLD,
     fontSize: 21,
     margin: 3,
   },
   priceDollarsGoal: {
-    fontFamily: FONT_FAMILY_BOLD,
+    fontFamily: FONT_FAMILY_SEMIBOLD,
     fontSize: 20,
     marginRight: 3,
     color: 'white',
   },
   priceCentsGoal: {
-    fontFamily: FONT_FAMILY_BOLD,
+    fontFamily: FONT_FAMILY_SEMIBOLD,
     fontSize: 14,
     margin: 3,
     color: 'white',
   },
   date: {
     fontSize: 12,
-    fontFamily: FONT_FAMILY_REGULAR,
+    fontFamily: FONT_FAMILY_SEMIBOLD,
   },
   headerText: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
@@ -290,17 +292,27 @@ const style = StyleSheet.create({
     backgroundColor: 'white',
     paddingLeft: 15,
     paddingRight: 15,
+    paddingTop: 8,
+    paddingBottom: 8,
+    borderRadius: 20,
+    marginRight: 15,
+  },
+  createGoalButton: {
+    backgroundColor: 'white',
+    paddingLeft: 10,
+    paddingRight: 10,
     paddingTop: 6,
     paddingBottom: 6,
-    borderRadius: 14,
-    marginRight: 10,
+    borderRadius: 15,
+    marginRight: -10,
   },
   closeButton: {
     backgroundColor: Colors.White,
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
     borderRadius: 100,
     margin: 10,
+    marginBottom: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -315,17 +327,18 @@ const style = StyleSheet.create({
   titleBar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'baseline',
-    padding: 15,
+    alignItems: 'center',
+    padding: 10,
     paddingTop: 0,
+    paddingBottom: 5,
   },
   goalButton: {
-    height: 110,
-    backgroundColor: Colors.PrimaryDark,
+    height: 100,
+    backgroundColor: "#5B74A0",
     marginTop: 10,
-    borderRadius: 15,
-    padding: 13,
-    paddingLeft: 30,
+    borderRadius: 10,
+    padding: 15,
+    paddingLeft: 20,
     justifyContent: 'space-evenly',
   },
   telescope: {
