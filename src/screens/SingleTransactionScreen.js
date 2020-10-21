@@ -18,7 +18,7 @@ import Format from '../helper/Format';
 import AppContext from '../helper/context';
 import { ScrollView } from 'react-native-gesture-handler';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 
 import Cloud from '../assets/cloud.svg';
@@ -83,6 +83,7 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
 
   return (
     <View>
+      <View style={{flexDirection: "row"}}>
       <TouchableOpacity onPress={onClose}>
         <View style={style.closeButton}>
           <FontAwesomeIcon
@@ -93,6 +94,16 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
         </View>
       </TouchableOpacity>
 
+      <TouchableOpacity onPress={onClose}>
+        <View style={style.confirmButton}>
+          <FontAwesomeIcon
+            style={style.icon}
+            size={Dimensions.get('window').height * 0.03}
+            icon={faCheckCircle}
+          />
+        </View>
+      </TouchableOpacity>
+      </View>
       {/* Top card */}
       <View style={style.card}>
         <View style={style.header}>
@@ -313,6 +324,17 @@ const style = StyleSheet.create({
     borderRadius: 100,
     margin: 10,
     marginBottom: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  confirmButton: {
+    backgroundColor: Colors.White,
+    width: 40,
+    height: 40,
+    borderRadius: 100,
+    margin: 10,
+    marginBottom: 20,
+    marginLeft: Dimensions.get("window").width * 0.62,
     justifyContent: 'center',
     alignItems: 'center',
   },
