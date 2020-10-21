@@ -13,6 +13,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BottomBar from '../../components/BottomBar';
 import PieChart from '../../components/PieChart';
+import SmallPieChart from '../../components/SmallPieChart';
 import Pill from '../../components/Pill';
 import RefreshModal from '../../components/RefreshModal';
 import AppContext from '../../helper/context';
@@ -23,6 +24,7 @@ import mainStyle from './MainScreen.style';
 import Modal from 'react-native-modal';
 import NewGoal from '../../components/NewGoal';
 import WavyHeader from '../../components/WavyHeader';
+import Arrow from '../../assets/forwardArrowBlack.svg'
 
 const iconStyle = {
   opacity: 0.8,
@@ -137,10 +139,17 @@ const MainScreen = ({ navigation }) => {
               <Text style={mainStyle.availablelable}>
                 Available This Fortnight
               </Text>
-
+              <View style={[mainStyle.heroUncategorised]}>
+                <Pill
+                  content={`${data.uncategorisedIncome} Paycheck Received`}
+                  color={Colors.White}
+                  backgroundColor={'#FF6A6A'}
+                  onPress={() => setRefreshModal(true)} // "income"
+                />
+              </View>
               <View style={mainStyle.heroUncategorised}>
                 <Pill
-                  content={`${data.uncategorisedSpending} Uncategorised Spending`}
+                  content={`${data.uncategorisedSpending} Uncategorised Expenses`}
                   color={Colors.DarkerGray}
                   backgroundColor={Colors.White}
                   onPress={() =>
@@ -150,18 +159,48 @@ const MainScreen = ({ navigation }) => {
                   } // "expense"
                 />
               </View>
-              <View style={[mainStyle.heroUncategorised]}>
-                <Pill
-                  content={`${data.uncategorisedIncome} Uncategorised Income`}
-                  color={Colors.White}
-                  backgroundColor={'#FF6A6A'}
-                  onPress={() => setRefreshModal(true)} // "income"
-                />
+            </View>
+
+            {/* Latest Transactions */}
+            <View style={mainStyle.goalContainer}>
+              <View style={{flexDirection:"row"}}>
+                <View style={{width:Dimensions.get("window").width*0.87, justifyContent:"flex-end"}}>
+                  <Text style={mainStyle.title}>Latest Transactions</Text>
+                </View >
+                <TouchableOpacity 
+                  style={{flex:1, justifyContent:"center"}}
+                  onPress={() =>
+                    navigation.navigate('Transactions')
+                  }>
+                  <Arrow/>
+                </TouchableOpacity>
+              </View>
+              <View style={mainStyle.whiteBubblePillView}>
+              <TouchableOpacity
+                style={mainStyle.pillAndTextView}
+              >
+                  <View style={mainStyle.categoryInfo}>
+                    <Text style={mainStyle.spendCategory}>
+                      Transaction Name
+                    </Text>
+                    <Text style={mainStyle.transactionCount}>
+                      Category Name
+                    </Text>
+                  </View>
+                  <View style={mainStyle.spendInfo}>
+                    <Text style={mainStyle.spendAmount}>
+                      Amount Spent
+                    </Text>
+                    <Text style={mainStyle.timeAndDate}>
+                      Date and Time
+                    </Text>
+                  </View>
+                </TouchableOpacity>
               </View>
             </View>
 
             {/* Goals */}
-            <View style={mainStyle.goalContainer}>
+            <View style={mainStyle.container}>
               <Text style={mainStyle.title}>My Goals</Text>
               <ScrollView horizontal={true} style={mainStyle.goalsWrapper}>
                 {/* Goals Data loop */}
@@ -196,7 +235,7 @@ const MainScreen = ({ navigation }) => {
                 ))}
               </ScrollView>
               {/* Add Goal Button */}
-              {/* <View style={mainStyle.createGoalWrapper}>
+              <View style={mainStyle.createGoalWrapper}>
                 <TouchableOpacity
                   style={{
                     ...mainStyle.createGoalBtn,
@@ -210,42 +249,51 @@ const MainScreen = ({ navigation }) => {
                     Create Goal
                   </Text>
                 </TouchableOpacity>
-              </View> */}
+              </View>
             </View>
 
             {/* Spending */}
             <View style={mainStyle.container}>
               <Text style={mainStyle.title}>This Fortnight's Spending</Text>
-              <View style={mainStyle.spendsWrapper}>
+              <View style={mainStyle.whiteBubblePillView}>
                 {/* Spending Categories Data loop */}
                 {data.spendingCategories.map((category) => {
                   return (
-                    <TouchableOpacity
-                      key={category.name}
-                      style={mainStyle.spendWrapper}
-                      onPress={() =>
-                        navigation.navigate('Transactions', {
-                          navigatedState: category.name,
-                        })
-                      } // "income"
-                    >
-                      <PieChart
-                        value={category.percent}
-                        color='#13629B'
-                        size={85}
-                        showPercentage
-                      />
-                      <View style={mainStyle.spendInfo}>
-                        <Text style={mainStyle.spendAmount}>
-                          {`$${Format.toDollars(category.amount)}`}
-                        </Text>
-                        <Text style={mainStyle.spendCategory}>
-                          {category.name}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
+                    <View>
+                      <TouchableOpacity
+                        key={category.name}
+                        style={mainStyle.pillAndTextView}
+                        onPress={() =>
+                          navigation.navigate('Transactions', {
+                            navigatedState: category.name,
+                          })
+                        } // "income"
+                      >
+                        <View style={mainStyle.categoryInfo}>
+                          <Text style={mainStyle.spendCategory}>
+                              {category.name}
+                          </Text>
+                          <Text style={mainStyle.transactionCount}>
+                            10 Transactions
+                          </Text>
+                        </View>
+                        <View style={mainStyle.smallPieChart}>
+                        <SmallPieChart
+                          value={category.percent}
+                          showPercentage
+                        />
+                        </View>
+                        <View style={mainStyle.spendInfo}>
+                          <Text style={mainStyle.spendAmount}>
+                            {`$${Format.toDollars(category.amount)}`}
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                      <Text style={mainStyle.defaultLine}/>
+                    </View>
                   );
                 })}
+                
               </View>
             </View>
             <View style={mainStyle.dummy}></View>

@@ -11,6 +11,45 @@ import { STYLESHEET } from '../../styles/stylesheet';
 const win = Dimensions.get('window');
 
 const mainStyle = {
+  smallPieChart:{
+    paddingTop: -15,
+    alignSelf:"center",
+    width: Dimensions.get("window").width * 0.8/6,
+  },
+  defaultLine: {
+    borderBottomColor: Colors.LightGray,
+    borderBottomWidth: 1,
+    width: Dimensions.get("window").width*0.87,
+    alignSelf: 'stretch',
+    marginTop: -13,
+    marginBottom: 10,
+  },
+  pillAndTextView: {
+    backgroundColor: Colors.White,
+    width: Dimensions.get('window').width * 0.8,
+    flexDirection: 'row',
+  },
+  whiteBubblePillView: {
+    backgroundColor: Colors.White,
+    width: Dimensions.get('window').width * 0.9,
+    marginTop: 10,
+    borderRadius: 15,
+    padding: 15,
+
+    ...STYLESHEET.shadowNormal,
+  },
+  transactionCount:{
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    fontSize: 12,
+    color: "#A2A2A2",
+    alignSelf: "flex-start",
+  },
+  timeAndDate:{
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    fontSize: 12,
+    color: "#A2A2A2",
+    alignSelf:"flex-end",
+  },
   loadWrapper: {
     backgroundColor: Colors.Primary,
     minHeight: win.height,
@@ -84,12 +123,11 @@ const mainStyle = {
   },
   goalContainer: {
     paddingTop: 50,
-    paddingBottom: 15,
+    paddingBottom: 20,
     paddingLeft: 20,
   },
   container: {
-    paddingTop: 0,
-    paddingBottom: 15,
+    paddingBottom: 5,
     paddingLeft: 20,
   },
   goalsWrapper: {
@@ -137,13 +175,15 @@ const mainStyle = {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     marginRight: 20,
+    marginTop: -10,
+    marginBottom: 10,
   },
   createGoalBtn: {
     padding: 5,
     paddingLeft: 15,
     paddingRight: 15,
     backgroundColor: Colors.DarkerGray,
-    borderRadius: 20,
+    borderRadius: 6,
     color: Colors.White,
     flex: 0,
   },
@@ -173,17 +213,27 @@ const mainStyle = {
     marginLeft: 15,
     flexDirection: 'column',
     justifyContent: 'center',
+    width: Dimensions.get("window").width * 0.8 / 3,
   },
   spendAmount: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    fontSize: 24,
+    fontSize: 18,
     color: Colors.DarkerGray,
+    alignSelf: "flex-end",
   },
   spendCategory: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    fontSize: 10,
+    fontSize: 15,
     color: Colors.DarkerGray,
     textTransform: 'capitalize',
+    alignSelf: "flex-start",
+  },
+  categoryInfo: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    width: Dimensions.get("window").width * 0.8/2,
+    marginRight: 10,
   },
   title: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
@@ -197,7 +247,7 @@ const mainStyle = {
   },
   dummy: {
     width: 5,
-    height: 120,
+    height: 100,
   },
   activityIndicator: {
     color: Colors.White,
