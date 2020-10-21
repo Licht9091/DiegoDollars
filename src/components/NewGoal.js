@@ -17,6 +17,7 @@ import DatePicker from "react-native-datepicker";
 import PlanetOne from "../assets/planet1.svg";
 import PlanetTwo from "../assets/planet2.svg";
 import PlanetRing from "../assets/planetRing.svg";
+import Galaxy from "../assets/galaxy.svg";
 import { TextInput } from "react-native-gesture-handler";
 
 const newGoalStyle = {
@@ -39,12 +40,17 @@ const newGoalStyle = {
   planetTwo: {
     position: "absolute",
     right: -20,
-    top: 40,
+    top: 50,
   },
   planetRing: {
     position: "absolute",
     top: -30,
     right: 30,
+  },
+  galaxy: {
+    position: "absolute",
+    top: 50,
+    left: 10,
   },
   info: {
     backgroundColor: Colors.White,
@@ -135,6 +141,7 @@ const NewGoal = ({ onClose, goal, navigation }) => {
         <PlanetOne style={newGoalStyle.planetOne} width={80} height={80} />
         <PlanetTwo style={newGoalStyle.planetTwo} width={80} height={80} />
         <PlanetRing style={newGoalStyle.planetRing} width={60} height={60} />
+        <Galaxy style={newGoalStyle.galaxy} width={40} height={40}/>
       </View>
       <View style={newGoalStyle.info}>
         <Text style={newGoalStyle.infoText}>
