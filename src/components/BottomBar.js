@@ -9,6 +9,7 @@ import {
   faMoneyCheckAlt,
   faHouseUser,
   faDonate,
+  faCommentsDollar,
 } from "@fortawesome/free-solid-svg-icons";
 
 const BottomBar = ({ navigation, route }) => {
@@ -68,7 +69,7 @@ const BottomBar = ({ navigation, route }) => {
       />
       <FontAwesomeIcon
         style={iconStyle}
-        icon={faMoneyCheckAlt}
+        icon={faCommentsDollar}
         size={Dimensions.get("window").height * 0.03}
         color={Colors.Primary}
         onPress={() =>
