@@ -1,28 +1,40 @@
 # TODO BEFORE FRIDAY
 
-- We need a main goals page
-- Red/white buttons are swapped on the home screen
+- Find a better search bar?
+- New Fortnight Total avaliable spending on modal
 - Store the start date of the current fortnight somewhere
 - Only show paychecks for the current fortnight
-- Use a better modal library
-- Plug actual data into the fortnight summary (or not)
 - Find way to supress errors in Expo for demo
 - Set new fornight start date when starting the fortnight
 - Check 'Available This Fortnight' calculation on the home screen
-- Home screen should follow redesign
-- My Goals page needs to be restyled
-- Common TransactionList component between transactions page and goal page
-- Create goal assets need to be fixed
-- Why is there a delay to loading transactions on the transactions page?
-- Nav bar should do at least something
-- Fix the search component
-- Transaction page - Expense and Income filters behaviour
-- Transaction page - loading spinner
-- Transaction modal CSS adjustments
-- Transaction modal categorisation
+- Home screen touchups
+  - Fortnight spending number of transactions
+  - Show actual latest transactions
+  - Pull down refresh?
+- My Goals rocket value updates
+- Finish Nav bar?
+  - Highlights
+  - Make sure navigation is consistent
+  - Labels
+  - 2nd Button for goals (Might need goals page first)
 - My budget page state management
-- Confirm goal delete modal
+
+  - Fix strings adding instead of numbers
+
+- Single Transactions
+
+  - Show categories
+  - Update categories (Call API call)
+  - Categorise goal (Call API call)
+  - Create new goal button navigate
+
+- Main screen fortnight spending
+  - 114%??? I think it is counting income
+  - Filter by actual forntight when we have it
 - Work through suggestions from Ben's user testing
+- Plug actual data into the fortnight summary (or not)
+- We need a main goals page
+- Transaction code speed improvements? Maybe thinking indicators?
 
 ---
 

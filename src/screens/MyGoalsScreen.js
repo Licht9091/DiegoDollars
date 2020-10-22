@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from "react";
 import {
   ScrollView,
   TouchableOpacity,
@@ -9,37 +9,37 @@ import {
   Alert,
   TextInput,
   Picker,
-} from 'react-native';
-import { STYLESHEET } from '../styles/stylesheet';
-import Colors from '../styles/colors';
-import BottomBar from '../components/BottomBar';
-import Pill from '../components/Pill';
-import transactionStyles from './Transactions/TransactionsScreen.style';
-import { SearchBar } from 'react-native-elements';
-import AppContext from '../helper/context';
-import { FONT_FAMILY_LIGHT, FONT_FAMILY_SEMIBOLD } from '../styles/typography';
-import navigateAndReset from '../helper/functions';
-import TransactionListComponent from '../components/TransactionListComponent';
-import Diego from '../assets/Diego.svg';
-import Rocket from '../assets/rocket.svg';
-import Pencil from '../assets/pencil.svg';
-import NewGoal from '../components/NewGoal';
-import Modal from 'react-native-modal';
-import TransactionsFilter from '../components/TransactionsFilter';
-import s from './MyGoals.style.js';
-import SimpleModal from '../components/SimpleModal';
-import DatePicker from 'react-native-datepicker';
+} from "react-native";
+import { STYLESHEET } from "../styles/stylesheet";
+import Colors from "../styles/colors";
+import BottomBar from "../components/BottomBar";
+import Pill from "../components/Pill";
+import transactionStyles from "./Transactions/TransactionsScreen.style";
+import { SearchBar } from "react-native-elements";
+import AppContext from "../helper/context";
+import { FONT_FAMILY_LIGHT, FONT_FAMILY_SEMIBOLD } from "../styles/typography";
+import navigateAndReset from "../helper/functions";
+import TransactionListComponent from "../components/TransactionListComponent";
+import Diego from "../assets/Diego.svg";
+import Rocket from "../assets/rocket.svg";
+import Pencil from "../assets/pencil.svg";
+import NewGoal from "../components/NewGoal";
+import Modal from "react-native-modal";
+import TransactionsFilter from "../components/TransactionsFilter";
+import s from "./MyGoals.style.js";
+import SimpleModal from "../components/SimpleModal";
+import DatePicker from "react-native-datepicker";
 
 function setButtonValue(value, set, incomeOrExpense, navigatedState) {
   if (value) {
     set(false);
-    navigatedState = 'all';
+    navigatedState = "all";
   } else {
     set(true);
     if (incomeOrExpense) {
-      navigatedState = 'income';
+      navigatedState = "income";
     } else {
-      navigatedState = 'expense';
+      navigatedState = "expense";
     }
   }
 }
@@ -95,62 +95,64 @@ export default function MyGoals({ navigation, route }) {
   // const [state.goal.endDate, setfinishDate] = useState(goal.endDate);
 
   const setGoal = async (newGoal) => {
-    return await User.setGoal(
-      newGoal.description ? newGoal.description : goal.description,
-      newGoal.goalAmount ? newGoal.goalAmount : goal.goalAmount,
-      goal.fortnightlyContribution,
-      newGoal.endDate ? newGoal.endDate : goal.endDate
-    );
+    // newGoal.description ? newGoal.description : goal.description,
+    // newGoal.goalAmount ? newGoal.goalAmount : goal.goalAmount,
+    // goal.fortnightlyContribution,
+    // newGoal.endDate ? newGoal.endDate : goal.endDate
+
+    const resp = await User.editGoal(newGoal);
+
+    if (!resp) {
+      alert("Something broke");
+    }
   };
 
   const deleteGoal = async () => {
     const success = await User.deleteGoal(goal);
 
     if (success) {
-      navigateAndReset(navigation, 'Main');
-    } else {
-      alert('Something went wrong deleting the goal.');
+      navigateAndReset(navigation, "Main");
     }
   };
 
   const reducer = (state, action) => {
-    if (action.type === 'editMode') {
+    if (action.type === "editMode") {
       return {
         ...state,
-        mode: 'edit',
+        mode: "edit",
       };
-    } else if (action.type === 'viewMode') {
+    } else if (action.type === "viewMode") {
       return {
         ...state,
-        mode: 'view',
+        mode: "view",
       };
-    } else if (action.type === 'popModal') {
+    } else if (action.type === "popModal") {
       return {
         ...state,
         modal: action.modal,
       };
-    } else if (action.type === 'closeModal') {
+    } else if (action.type === "closeModal") {
       return {
         ...state,
         modal: undefined,
       };
-    } else if (action.type === 'setGoalType') {
+    } else if (action.type === "setGoalType") {
       return {
         ...state,
         newGoalType: action.value,
       };
-    } else if (action.type === 'setGoalEnd') {
+    } else if (action.type === "setGoalEnd") {
       return {
         ...state,
         newGoalEnd: action.endDate,
       };
-    } else if (action.type === 'deleteGoal') {
+    } else if (action.type === "deleteGoal") {
       deleteGoal();
       return {
         ...state,
         modal: undefined,
       };
-    } else if (action.type === 'saveChanges') {
+    } else if (action.type === "saveChanges") {
       // apply changes
       const newGoal = {
         ...state.goal,
@@ -161,7 +163,7 @@ export default function MyGoals({ navigation, route }) {
       setGoal(newGoal);
 
       return {
-        mode: 'view',
+        mode: "view",
         goal: newGoal,
       };
     } else {
@@ -171,17 +173,17 @@ export default function MyGoals({ navigation, route }) {
   };
 
   const [state, dispatch] = useReducer(reducer, {
-    mode: 'view',
+    mode: "view",
     goal,
   });
 
   return (
     <View>
       {/* New goal modal */}
-      {state.modal === 'createGoal' && (
+      {state.modal === "createGoal" && (
         <Modal isVisible>
           <NewGoal
-            onClose={() => dispatch({ type: 'closeModal' })}
+            onClose={() => dispatch({ type: "closeModal" })}
             goal={state.goal.description}
             navigation={navigation}
           />
@@ -189,7 +191,7 @@ export default function MyGoals({ navigation, route }) {
       )}
 
       {/* Delete goal modal */}
-      {state.modal === 'delete' && (
+      {state.modal === "delete" && (
         <SimpleModal>
           <>
             <Text style={s.modalTitleText}>Delete this goal?</Text>
@@ -198,14 +200,14 @@ export default function MyGoals({ navigation, route }) {
             </Text>
             <View style={s.modalButtonWrapper}>
               <TouchableOpacity
-                onPress={() => dispatch({ type: 'closeModal' })}
+                onPress={() => dispatch({ type: "closeModal" })}
               >
                 <Text style={s.modalButton}>Cancel</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => dispatch({ type: 'deleteGoal' })}
+                onPress={() => dispatch({ type: "deleteGoal" })}
               >
-                <Text style={[s.modalButton, { color: '#D02121' }]}>
+                <Text style={[s.modalButton, { color: "#D02121" }]}>
                   Delete
                 </Text>
               </TouchableOpacity>
@@ -220,7 +222,7 @@ export default function MyGoals({ navigation, route }) {
 
           <TouchableOpacity
             style={s.createButton}
-            onPress={() => dispatch({ type: 'popModal', modal: 'createGoal' })}
+            onPress={() => dispatch({ type: "popModal", modal: "createGoal" })}
           >
             <Text style={s.createButtonText}>Create New</Text>
           </TouchableOpacity>
@@ -228,9 +230,9 @@ export default function MyGoals({ navigation, route }) {
         <View
           style={{
             backgroundColor: Colors.Primary,
-            height: Dimensions.get('window').height * 0.1,
-            marginTop: -Dimensions.get('window').height * 0.59,
-            marginBottom: Dimensions.get('window').height * 0.33,
+            height: Dimensions.get("window").height * 0.1,
+            marginTop: -Dimensions.get("window").height * 0.59,
+            marginBottom: Dimensions.get("window").height * 0.33,
           }}
         ></View>
 
@@ -245,10 +247,10 @@ export default function MyGoals({ navigation, route }) {
                 {/* Label */}
                 <Text style={s.goalLabel}>TYPE</Text>
                 {/* Picker */}
-                {state.mode === 'view' && (
+                {state.mode === "view" && (
                   <Text style={s.goalValue}>{state.goal.type}</Text>
                 )}
-                {state.mode === 'edit' && (
+                {state.mode === "edit" && (
                   <View style={s.flexRow}>
                     <Picker
                       selectedValue={
@@ -259,11 +261,11 @@ export default function MyGoals({ navigation, route }) {
                       text
                       useNativeAndroidPickerStyle={false}
                       onValueChange={(value) =>
-                        dispatch({ type: 'setGoalType', value })
+                        dispatch({ type: "setGoalType", value })
                       }
                     >
-                      <Picker.Item label='One-Off' value='One Off' />
-                      <Picker.Item label='Continuous' value='Continuous' />
+                      <Picker.Item label="One-Off" value="One Off" />
+                      <Picker.Item label="Continuous" value="Continuous" />
                     </Picker>
                   </View>
                 )}
@@ -278,17 +280,17 @@ export default function MyGoals({ navigation, route }) {
               </View>
               <View style={[s.flexCol, { marginRight: 30 }]}>
                 <Text style={s.goalLabel}>FINISHING</Text>
-                {(state.mode === 'view' || goal.type === 'Continuous') && (
+                {(state.mode === "view" || goal.type === "Continuous") && (
                   <Text style={s.goalValue}>{state.goal.endDate}</Text>
                 )}
-                {state.mode === 'edit' && goal.type === 'One Off' && (
+                {state.mode === "edit" && goal.type === "One Off" && (
                   <View style={s.flexRow}>
                     <DatePicker
-                      mode='date'
-                      placeholder={'Select Date'}
-                      format='DD-MM-YYYY'
-                      confirmBtnText='Confirm'
-                      cancelBtnText='Cancel'
+                      mode="date"
+                      placeholder={"Select Date"}
+                      format="DD-MM-YYYY"
+                      confirmBtnText="Confirm"
+                      cancelBtnText="Cancel"
                       date={
                         state.newGoalEnd ? state.newGoalEnd : state.goal.endDate
                       }
@@ -297,11 +299,11 @@ export default function MyGoals({ navigation, route }) {
                       customStyles={{
                         dateInput: {
                           borderWidth: 0,
-                          color: 'white',
+                          color: "white",
                         },
                         dateText: {
                           fontFamily: FONT_FAMILY_LIGHT,
-                          color: 'white',
+                          color: "white",
                           fontSize: 16,
                         },
                         disabled: {
@@ -309,7 +311,7 @@ export default function MyGoals({ navigation, route }) {
                         },
                       }}
                       onDateChange={(date) =>
-                        dispatch({ type: 'setGoalEnd', endDate: date })
+                        dispatch({ type: "setGoalEnd", endDate: date })
                       }
                     />
                     <Pencil style={s.pencil} />
@@ -319,11 +321,11 @@ export default function MyGoals({ navigation, route }) {
             </View>
 
             {/* Button Row */}
-            {state.mode === 'view' && (
+            {state.mode === "view" && (
               <View style={[s.flexRow]}>
                 <TouchableOpacity
                   style={[s.button, { marginRight: 7 }]}
-                  onPress={() => dispatch({ type: 'editMode' })}
+                  onPress={() => dispatch({ type: "editMode" })}
                 >
                   <View>
                     <Text style={[s.buttonText]}>Edit Goal</Text>
@@ -332,11 +334,11 @@ export default function MyGoals({ navigation, route }) {
                 <TouchableOpacity
                   style={[s.button, s.deleteButton]}
                   onPress={() =>
-                    dispatch({ type: 'popModal', modal: 'delete' })
+                    dispatch({ type: "popModal", modal: "delete" })
                   }
                 >
                   <View>
-                    <Text style={[s.buttonText, { color: 'white' }]}>
+                    <Text style={[s.buttonText, { color: "white" }]}>
                       Delete
                     </Text>
                   </View>
@@ -344,27 +346,27 @@ export default function MyGoals({ navigation, route }) {
               </View>
             )}
 
-            {state.mode === 'edit' && (
+            {state.mode === "edit" && (
               <View style={[s.flexRow]}>
                 <TouchableOpacity
                   style={[
                     s.button,
-                    { marginRight: 7, backgroundColor: '#FF6A6A' },
+                    { marginRight: 7, backgroundColor: "#FF6A6A" },
                   ]}
-                  onPress={() => dispatch({ type: 'viewMode' })}
+                  onPress={() => dispatch({ type: "viewMode" })}
                 >
                   <View>
-                    <Text style={[s.buttonText, { color: 'white' }]}>
+                    <Text style={[s.buttonText, { color: "white" }]}>
                       Cancel
                     </Text>
                   </View>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={[s.button, { backgroundColor: '#1F79D3' }]}
-                  onPress={() => dispatch({ type: 'saveChanges' })}
+                  style={[s.button, { backgroundColor: "#1F79D3" }]}
+                  onPress={() => dispatch({ type: "saveChanges" })}
                 >
                   <View>
-                    <Text style={[s.buttonText, { color: 'white' }]}>Save</Text>
+                    <Text style={[s.buttonText, { color: "white" }]}>Save</Text>
                   </View>
                 </TouchableOpacity>
               </View>
@@ -378,7 +380,7 @@ export default function MyGoals({ navigation, route }) {
                   s.progress,
                   {
                     opacity: 1,
-                    borderLeftColor: '#0092F2',
+                    borderLeftColor: "#0092F2",
                     height: Math.max(20, goal.percent * 220),
                   },
                 ]}

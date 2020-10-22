@@ -1,6 +1,6 @@
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import React, { useContext, useEffect, useState } from 'react';
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import React, { useContext, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Dimensions,
@@ -8,24 +8,24 @@ import {
   ScrollView,
   Text,
   View,
-} from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import BottomBar from '../../components/BottomBar';
-import PieChart from '../../components/PieChart';
-import SmallPieChart from '../../components/SmallPieChart';
-import Pill from '../../components/Pill';
-import RefreshModal from '../../components/RefreshModal';
-import AppContext from '../../helper/context';
-import Format from '../../helper/Format';
-import Colors from '../../styles/colors';
-import { STYLESHEET } from '../../styles/stylesheet';
-import mainStyle from './MainScreen.style';
-import Modal from 'react-native-modal';
-import NewGoal from '../../components/NewGoal';
-import WavyHeader from '../../components/WavyHeader';
-import Arrow from '../../assets/forwardArrowBlack.svg';
-import { User } from '../../helper/api';
+} from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
+import BottomBar from "../../components/BottomBar";
+import PieChart from "../../components/PieChart";
+import SmallPieChart from "../../components/SmallPieChart";
+import Pill from "../../components/Pill";
+import RefreshModal from "../../components/RefreshModal";
+import AppContext from "../../helper/context";
+import Format from "../../helper/Format";
+import Colors from "../../styles/colors";
+import { STYLESHEET } from "../../styles/stylesheet";
+import mainStyle from "./MainScreen.style";
+import Modal from "react-native-modal";
+import NewGoal from "../../components/NewGoal";
+import WavyHeader from "../../components/WavyHeader";
+import Arrow from "../../assets/forwardArrowBlack.svg";
+import { User } from "../../helper/api";
 
 const iconStyle = {
   opacity: 0.8,
@@ -52,6 +52,7 @@ const MainScreen = ({ navigation }) => {
       availableSpending: User.account.spendingBalance,
       goals: User.goals,
       spendingCategories: User.spendingCategories,
+      transactions: User.account.allTransactions,
     });
 
     setLoaded(true);
@@ -85,7 +86,7 @@ const MainScreen = ({ navigation }) => {
           <Modal isVisible onPress={false}>
             <NewGoal
               onClose={() => setNewGoalModal(false)}
-              goal={''}
+              goal={""}
               navigation={navigation}
             />
           </Modal>
@@ -93,7 +94,7 @@ const MainScreen = ({ navigation }) => {
 
         {(!loaded || !data) && (
           <ScrollView style={mainStyle.loadWrapper}>
-            <ActivityIndicator size='large' color='white' />
+            <ActivityIndicator size="large" color="white" />
           </ScrollView>
         )}
         {data && loaded && (
@@ -122,11 +123,11 @@ const MainScreen = ({ navigation }) => {
                     <FontAwesomeIcon
                       style={iconStyle}
                       icon={faInfoCircle}
-                      size={Dimensions.get('window').height * 0.03}
+                      size={Dimensions.get("window").height * 0.03}
                       color={Colors.White}
                       marginLeft={10}
                       onPress={() => {
-                        navigation.navigate('Budget', {
+                        navigation.navigate("Budget", {
                           navigatedState: navigation,
                           goals: data.goals,
                         });
@@ -142,7 +143,7 @@ const MainScreen = ({ navigation }) => {
                 <Pill
                   content={`${data.uncategorisedIncome} Paychecks Received`}
                   color={Colors.White}
-                  backgroundColor={'#FF6A6A'}
+                  backgroundColor={"#FF6A6A"}
                   onPress={() => setRefreshModal(true)} // "income"
                 />
               </View>
@@ -152,8 +153,8 @@ const MainScreen = ({ navigation }) => {
                   color={Colors.DarkerGray}
                   backgroundColor={Colors.White}
                   onPress={() =>
-                    navigation.navigate('Transactions', {
-                      navigatedState: 'expense',
+                    navigation.navigate("Transactions", {
+                      navigatedState: "expense",
                     })
                   } // "expense"
                 />
@@ -162,18 +163,18 @@ const MainScreen = ({ navigation }) => {
 
             {/* Latest Transactions */}
             <View style={mainStyle.goalContainer}>
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{ flexDirection: "row" }}>
                 <View
                   style={{
-                    width: Dimensions.get('window').width * 0.87,
-                    justifyContent: 'flex-end',
+                    width: Dimensions.get("window").width * 0.87,
+                    justifyContent: "flex-end",
                   }}
                 >
                   <Text style={mainStyle.title}>Latest Transactions</Text>
                 </View>
                 <TouchableOpacity
-                  style={{ flex: 1, justifyContent: 'center' }}
-                  onPress={() => navigation.navigate('Transactions')}
+                  style={{ flex: 1, justifyContent: "center" }}
+                  onPress={() => navigation.navigate("Transactions")}
                 >
                   <Arrow />
                 </TouchableOpacity>
@@ -229,9 +230,9 @@ const MainScreen = ({ navigation }) => {
                         ...STYLESHEET.shadowNormal,
                       }}
                       onPress={() =>
-                        navigation.navigate('MyGoals', {
+                        navigation.navigate("MyGoals", {
                           goalId: goal.id,
-                          navigatedState: 'income',
+                          navigatedState: "income",
                         })
                       }
                     >
@@ -281,7 +282,7 @@ const MainScreen = ({ navigation }) => {
                         key={category.name}
                         style={mainStyle.pillAndTextView}
                         onPress={() =>
-                          navigation.navigate('Transactions', {
+                          navigation.navigate("Transactions", {
                             navigatedState: category.name,
                           })
                         } // "income"
@@ -291,7 +292,12 @@ const MainScreen = ({ navigation }) => {
                             {category.name}
                           </Text>
                           <Text style={mainStyle.transactionCount}>
-                            10 Transactions
+                            {
+                              data.transactions.filter(
+                                (t) => t.category == category.name
+                              ).length
+                            }{" "}
+                            Transactions
                           </Text>
                         </View>
                         <View style={mainStyle.smallPieChart}>
@@ -307,9 +313,9 @@ const MainScreen = ({ navigation }) => {
                         </View>
                         <View
                           style={{
-                            width: Dimensions.get('window').width * 0.06,
+                            width: Dimensions.get("window").width * 0.06,
                             marginRight: -10,
-                            justifyContent: 'center',
+                            justifyContent: "center",
                           }}
                         >
                           <Arrow />

@@ -1,5 +1,5 @@
-import { DateTimeFormat } from 'intl';
-import moment from 'moment';
+import { DateTimeFormat } from "intl";
+import moment from "moment";
 import {
   API_LOGIN,
   API_TEST_LOGGED_IN,
@@ -14,18 +14,19 @@ import {
   API_DELETE_BUDGET_ITEM,
   API_ADD_BUDGET_ITEM,
   API_GET_BUDGET_ITEMS,
-} from './constants';
-import './functions';
+  API_GOAL_EDIT,
+} from "./constants";
+import "./functions";
 
 class Transaction {
   constructor(_obj) {
-    this.id = _obj['id'];
-    this.date = _obj['date'];
-    this.description = _obj['description'];
-    this.value = parseFloat(_obj['value']);
-    this.category = _obj['category'];
-    if ('goal' in _obj) {
-      this.goalId = _obj['goal'];
+    this.id = _obj["id"];
+    this.date = _obj["date"];
+    this.description = _obj["description"];
+    this.value = parseFloat(_obj["value"]);
+    this.category = _obj["category"];
+    if ("goal" in _obj) {
+      this.goalId = _obj["goal"];
     } else {
       this.goalId = null;
     }
@@ -48,17 +49,17 @@ export class User {
    */
   logIn = async (username, password) => {
     let formdata = new FormData();
-    formdata.append('username', username);
-    formdata.append('password', password);
+    formdata.append("username", username);
+    formdata.append("password", password);
 
     const response = await fetch(API_LOGIN, {
-      method: 'POST',
-      headers: { 'Content-Type': 'multipart/form-data' },
+      method: "POST",
+      headers: { "Content-Type": "multipart/form-data" },
       body: formdata,
     });
 
     const body = await response.text();
-    const loggedIn = body.includes('Successfully logged in!');
+    const loggedIn = body.includes("Successfully logged in!");
 
     await this.fetchAll();
 
@@ -76,10 +77,10 @@ export class User {
    * @return {boolean}  Returns true if logout was successful.
    */
   logOut = async () => {
-    const response = await fetch(API_LOGOUT, { method: 'GET' });
+    const response = await fetch(API_LOGOUT, { method: "GET" });
 
     const body = await response.text();
-    const loggedOut = body.includes('Successfully logged out!');
+    const loggedOut = body.includes("Successfully logged out!");
 
     if (loggedOut) {
       this.resetUserState();
@@ -95,7 +96,7 @@ export class User {
    * @return {string} Returns the API call body which gives some information of whether the user is logged in.
    */
   testLoggedIn = async () => {
-    const response = await fetch(API_TEST_LOGGED_IN, { method: 'GET' });
+    const response = await fetch(API_TEST_LOGGED_IN, { method: "GET" });
     const body = await response.text();
 
     return body;
@@ -118,7 +119,7 @@ export class User {
   getUncategorisedSpending = () => {
     return this.account.allTransactions.filter(
       (transaction) =>
-        transaction.category.toLowerCase() == 'uncategorized' &&
+        transaction.category.toLowerCase() == "uncategorized" &&
         transaction.isIncome == false
     ).length;
   };
@@ -131,7 +132,7 @@ export class User {
   getUncategorisedIncome = () => {
     return this.account.allTransactions.filter(
       (transaction) =>
-        transaction.category.toLowerCase() == 'uncategorized' &&
+        transaction.category.toLowerCase() == "uncategorized" &&
         (transaction.isIncome = true)
     ).length;
   };
@@ -143,12 +144,12 @@ export class User {
    */
   deleteGoal = async (goal) => {
     let API_CALL = API_GOAL_DELETE;
-    API_CALL = API_CALL.replace('{goalId}', goal.id);
+    API_CALL = API_CALL.replace("{goalId}", goal.id);
 
-    const response = await fetch(API_CALL, { method: 'GET' });
+    const response = await fetch(API_CALL, { method: "GET" });
     const bodyJson = await response.json();
 
-    if (bodyJson['message'] == 'Success') {
+    if (bodyJson["message"] == "Success") {
       let i = 0;
       while (i < this.goals.length) {
         if (this.goals[i].id == goal.id) {
@@ -158,7 +159,7 @@ export class User {
         i++;
       }
     } else {
-      alert(bodyJson['message']);
+      alert(bodyJson["message"]);
       return false;
     }
   };
@@ -169,7 +170,7 @@ export class User {
    * @ensure User.goals will be updated if fetch does not fail.
    */
   fetchGoalsStatus = async () => {
-    const response = await fetch(API_GOALS_STATUS, { method: 'GET' });
+    const response = await fetch(API_GOALS_STATUS, { method: "GET" });
     const bodyJson = await response.json();
 
     //console.log("Fetched goals: ");
@@ -177,16 +178,16 @@ export class User {
 
     this.goals = [];
 
-    await bodyJson['goals'].forEach((g) => {
+    await bodyJson["goals"].forEach((g) => {
       this.goals.push(
         new Goal(
-          g['id'],
-          g['description'],
-          g['current-contribution'],
-          g['goal-value'],
-          g['startDate'],
-          g['endDate'],
-          g['fortnightly-contribution']
+          g["id"],
+          g["description"],
+          g["current-contribution"],
+          g["goal-value"],
+          g["startDate"],
+          g["endDate"],
+          g["fortnightly-contribution"]
         )
       );
     });
@@ -202,6 +203,7 @@ export class User {
   fetchAll = async () => {
     await this.fetchAccountStatus();
     await this.fetchGoalsStatus();
+    await this.fetchBudgetItems();
   };
 
   /**
@@ -210,7 +212,7 @@ export class User {
    * @return {Object} Transaction data object belonging to the account
    */
   fetchTransactions = async () => {
-    const response = await fetch(API_TRANSACTION_LIST, { method: 'GET' });
+    const response = await fetch(API_TRANSACTION_LIST, { method: "GET" });
     const bodyJson = await response.json();
 
     return bodyJson;
@@ -222,7 +224,7 @@ export class User {
    * @ensure User.account and User.spendingCategories will be updated if fetch does not fail.
    */
   fetchAccountStatus = async () => {
-    const response = await fetch(API_TRANSACTION_STATS, { method: 'GET' });
+    const response = await fetch(API_TRANSACTION_STATS, { method: "GET" });
     const bodyJson = await response.json();
 
     //console.log(bodyJson);
@@ -232,7 +234,7 @@ export class User {
 
     allTransactions = [];
 
-    await transactionData['all_transactions']
+    await transactionData["all_transactions"]
       .sort((a, b) => new Date(b.date) - new Date(a.date))
       .forEach((obj) => {
         allTransactions.push(new Transaction(obj));
@@ -240,23 +242,23 @@ export class User {
 
     // Set the Account
     this.account = new Account(
-      bodyJson['spending-amount'],
-      bodyJson['total-cash'],
-      bodyJson['days-till-pay'],
+      bodyJson["spending-amount"],
+      bodyJson["total-cash"],
+      bodyJson["days-till-pay"],
       allTransactions
     );
 
     this.spendingCategories = [];
-    spending = bodyJson['spending'];
+    spending = bodyJson["spending"];
 
-    this.categories = bodyJson['all-categories'];
+    this.categories = bodyJson["all-categories"];
     //console.log(this.categories);
 
-    let total = Math.abs(parseFloat(spending['total']).toFixed(2));
+    let total = Math.abs(parseFloat(spending["total"]).toFixed(2));
     // Append all the categories to the list
     for (const [key, value] of Object.entries(spending)) {
       // Skip this one
-      if (key == 'total') {
+      if (key == "total") {
         continue;
       }
 
@@ -264,8 +266,8 @@ export class User {
       this.spendingCategories.push(new SpendingCategory(key, v, v / total));
     }
 
-    this.uncategorisedIncome = bodyJson['uncategorised']['income'];
-    this.uncategorisedSpending = bodyJson['uncategorised']['spending'];
+    this.uncategorisedIncome = bodyJson["uncategorised"]["income"];
+    this.uncategorisedSpending = bodyJson["uncategorised"]["spending"];
 
     // Sorting
     this.spendingCategories = this.spendingCategories.sort(function lambda(
@@ -294,7 +296,7 @@ export class User {
     console.log(fortnightlyGoal);
     console.log(completionDate);
 
-    if (goalName === '') {
+    if (goalName === "") {
       return false;
     }
 
@@ -306,34 +308,75 @@ export class User {
       return false;
     }
 
-    if (completionDate == '') {
+    if (completionDate == "") {
       return false;
     }
 
     let API_CALL = API_GOAL_SET;
-    API_CALL = API_CALL.replace('{goalName}', goalName);
-    API_CALL = API_CALL.replace('{goalAmount}', goalAmount);
-    API_CALL = API_CALL.replace('{fortnightlyGoal}', fortnightlyGoal);
-    API_CALL = API_CALL.replace('{endDate}', completionDate);
+    API_CALL = API_CALL.replace("{goalName}", goalName);
+    API_CALL = API_CALL.replace("{goalAmount}", goalAmount);
+    API_CALL = API_CALL.replace("{fortnightlyGoal}", fortnightlyGoal);
+    API_CALL = API_CALL.replace("{endDate}", completionDate);
 
     const response = await fetch(API_CALL, {
-      method: 'GET',
+      method: "GET",
     }); // This should be post
     const jsonBody = await response.json();
 
-    if (jsonBody['success'] == 200) {
+    if (jsonBody["success"] == 200) {
       //console.log(jsonBody);
       this.goals.push(
         new Goal(
-          jsonBody['id'],
+          jsonBody["id"],
           goalName,
           0,
           goalAmount,
-          jsonBody['startDate'],
+          jsonBody["startDate"],
           completionDate,
           fortnightlyGoal
         )
       );
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  /**
+   * editGoal - async, make sure you wait for this to return.
+   *
+   * @param {Goal} goal - The edited goal
+   *
+   * @return {boolean} - true if the goal was edited, false if something went wrong
+   *
+   * @ensure The goal will be edited if the API call does not fail.
+   */
+  editGoal = async (goal) => {
+    let API_CALL = API_GOAL_EDIT;
+    API_CALL = API_CALL.replace("{goalId}", goal.id);
+    API_CALL = API_CALL.replace("{goalName}", goal.description);
+    API_CALL = API_CALL.replace("{goalAmount}", goal.goalAmount);
+    API_CALL = API_CALL.replace(
+      "{fortnightlyGoal}",
+      goal.fortnightlyContribution
+    );
+    API_CALL = API_CALL.replace("{endDate}", goal.endDate);
+
+    const response = await fetch(API_CALL, {
+      method: "GET",
+    }); // This should be post
+    const jsonBody = await response.json();
+
+    if (jsonBody["success"] == 200) {
+      // Edit it in place
+      index = this.goals.findIndex((g) => g.id == goal.id);
+      if (index != -1) {
+        this.goals[index] = goal;
+      } else {
+        // Internals out of sync, re fetching
+        await fetchGoalsStatus();
+      }
+
       return true;
     } else {
       return false;
@@ -352,25 +395,25 @@ export class User {
    * @ensure Goal will be categorised if the API call does not fail.
    */
   categoriseTransaction = async (transaction, category, tag) => {
-    if (tag === 'income') {
+    if (tag === "income") {
       // TODO Implement
       return;
-    } else if (tag === 'expense') {
+    } else if (tag === "expense") {
       let API_CALL = API_CATEGORISE_TRANSACTION;
-      API_CALL = API_CALL.replace('{transactionId}', transaction.id);
-      API_CALL = API_CALL.replace('{category}', category);
+      API_CALL = API_CALL.replace("{transactionId}", transaction.id);
+      API_CALL = API_CALL.replace("{category}", category);
 
       //alert(API_CALL);
-      const response = await fetch(API_CALL, { method: 'GET' });
+      const response = await fetch(API_CALL, { method: "GET" });
       const bodyJson = await response.json();
 
-      if (bodyJson['status'] != 'Updated') {
-        alert('Categorise failed.');
+      if (bodyJson["status"] != "Updated") {
+        alert("Categorise failed.");
         return false;
       }
     }
 
-    if (tag === 'income') {
+    if (tag === "income") {
       let i = 0;
       while (i < this.account.uncategorisedIncome.length) {
         if (this.account.uncategorisedIncome[i].id == transaction.id) {
@@ -380,7 +423,7 @@ export class User {
         }
         i++;
       }
-    } else if (tag === 'expense') {
+    } else if (tag === "expense") {
       let i = 0;
       while (i < this.account.uncategorisedExpenses.length) {
         if (this.account.uncategorisedExpenses[i].id == transaction.id) {
@@ -400,19 +443,19 @@ export class User {
    */
   getBudgetItems = async () => {
     if (this.budgetItems == null) {
-      this.updateBudgetItems();
+      this.fetchBudgetItems();
     }
 
     return this.budgetItems;
   };
 
   /**
-   * updateBudgetItems - [PRIVATE]
+   * fetchBudgetItems - [PRIVATE]
    *
    * @ensure BudgetItems will be updated if the API calls do not fail.
    */
-  updateBudgetItems = async () => {
-    const response = await fetch(API_GET_BUDGET_ITEMS, { method: 'GET' });
+  fetchBudgetItems = async () => {
+    const response = await fetch(API_GET_BUDGET_ITEMS, { method: "GET" });
     const bodyJson = await response.json();
 
     this.budgetItems = {
@@ -422,25 +465,25 @@ export class User {
       totalIncome: 0,
     };
 
-    console.log('BUDGET ITEMS');
+    console.log("BUDGET ITEMS");
     console.log(bodyJson);
 
-    if (!bodyJson['all_budgets']) {
-      alert('Something went wrong updating budgets.');
+    if (!bodyJson["all_budgets"]) {
+      alert("Something went wrong updating budgets.");
       return;
     }
 
-    await bodyJson['all_budgets'].forEach((g) => {
-      if (g['tag'] == 'recurring') {
-        this.budgetItems['recurring'].push(
-          new BudgetItem(g['id'], g['name'], g['fortnightlyAmount'], g['tag'])
+    await bodyJson["all_budgets"].forEach((g) => {
+      if (g["tag"] == "recurring") {
+        this.budgetItems["recurring"].push(
+          new BudgetItem(g["id"], g["name"], g["fortnightlyAmount"], g["tag"])
         );
-        this.budgetItems['totalReccuringCosts'] += g['fortnightlyAmount'];
-      } else if (g['tag'] == 'income') {
-        this.budgetItems['income'].push(
-          new BudgetItem(g['id'], g['name'], g['fortnightlyAmount'], g['tag'])
+        this.budgetItems["totalReccuringCosts"] += g["fortnightlyAmount"];
+      } else if (g["tag"] == "income") {
+        this.budgetItems["income"].push(
+          new BudgetItem(g["id"], g["name"], g["fortnightlyAmount"], g["tag"])
         );
-        this.budgetItems['totalIncome'] += g['fortnightlyAmount'];
+        this.budgetItems["totalIncome"] += g["fortnightlyAmount"];
       }
     });
   };
@@ -456,22 +499,22 @@ export class User {
    */
   editBudgetItem = async (item, name = null, amount = null) => {
     if (this.budgetItems == null) {
-      this.updateBudgetItems();
+      this.fetchBudgetItems();
     }
 
     let API_CALL = API_EDIT_BUDGET_ITEM;
-    API_CALL = API_CALL.replace('{id}', item.id);
-    API_CALL = API_CALL.replace('{name}', name == null ? item.name : name);
+    API_CALL = API_CALL.replace("{id}", item.id);
+    API_CALL = API_CALL.replace("{name}", name == null ? item.name : name);
     API_CALL = API_CALL.replace(
-      '{fortAmount}',
+      "{fortAmount}",
       amount == null ? item.amount : amount
     );
 
-    const response = await fetch(API_CALL, { method: 'GET' });
+    const response = await fetch(API_CALL, { method: "GET" });
     const bodyJson = await response.json();
 
     if (response.ok) {
-      if (bodyJson['status'] == 200) {
+      if (bodyJson["status"] == 200) {
         return true;
       } else {
         return false;
@@ -490,16 +533,16 @@ export class User {
    */
   deleteBudgetItem = async (item) => {
     if (this.budgetItems == null) {
-      this.updateBudgetItems();
+      this.fetchBudgetItems();
     }
 
     let API_CALL = API_DELETE_BUDGET_ITEM;
-    API_CALL = API_CALL.replace('{id}', item.id);
+    API_CALL = API_CALL.replace("{id}", item.id);
 
-    const response = await fetch(API_CALL, { method: 'GET' });
+    const response = await fetch(API_CALL, { method: "GET" });
     const bodyJson = await response.json();
 
-    if (item.tag == 'income') {
+    if (item.tag == "income") {
       // Remove it locally
       let i = 0;
       while (i < this.budgetItems.income.length) {
@@ -508,7 +551,7 @@ export class User {
         }
         i++;
       }
-      this.budgetItems['totalIncome'] -= item.amount;
+      this.budgetItems["totalIncome"] -= item.amount;
     } else {
       // Remove it locally
       let i = 0;
@@ -518,11 +561,11 @@ export class User {
         }
         i++;
       }
-      this.budgetItems['totalReccuringCosts'] -= item.amount;
+      this.budgetItems["totalReccuringCosts"] -= item.amount;
     }
 
     if (response.ok) {
-      if (bodyJson['status'] == 200) {
+      if (bodyJson["status"] == 200) {
         return true;
       } else {
         return false;
@@ -543,33 +586,33 @@ export class User {
    */
   addBudgetItem = async (name, amount, tag) => {
     if (this.budgetItems == null) {
-      this.updateBudgetItems();
+      this.fetchBudgetItems();
     }
 
-    if (tag != 'income') {
-      if (tag != 'recurring') {
+    if (tag != "income") {
+      if (tag != "recurring") {
         return false;
       }
     }
 
     let API_CALL = API_ADD_BUDGET_ITEM;
-    API_CALL = API_CALL.replace('{name}', name);
-    API_CALL = API_CALL.replace('{fortAmount}', amount);
-    API_CALL = API_CALL.replace('{tag}', tag);
+    API_CALL = API_CALL.replace("{name}", name);
+    API_CALL = API_CALL.replace("{fortAmount}", amount);
+    API_CALL = API_CALL.replace("{tag}", tag);
 
-    const response = await fetch(API_CALL, { method: 'GET' });
+    const response = await fetch(API_CALL, { method: "GET" });
     const bodyJson = await response.json();
 
     if (response.ok) {
-      if (bodyJson['success'] == 200) {
+      if (bodyJson["success"] == 200) {
         // Add it locally
         this.budgetItems[tag].push(
-          new BudgetItem(bodyJson['id'], name, amount, tag)
+          new BudgetItem(bodyJson["id"], name, amount, tag)
         );
-        if (tag == 'income') {
-          this.budgetItems['totalIncome'] += amount;
+        if (tag == "income") {
+          this.budgetItems["totalIncome"] += amount;
         } else {
-          this.budgetItems['totalReccuringCosts'] += amount;
+          this.budgetItems["totalReccuringCosts"] += amount;
         }
         return true;
       } else {
@@ -646,9 +689,9 @@ class Goal {
     }
 
     if (_endDate == null) {
-      this.type = 'Continuous';
+      this.type = "Continuous";
     } else {
-      this.type = 'One Off';
+      this.type = "One Off";
     }
     this.percent =
       Math.round(

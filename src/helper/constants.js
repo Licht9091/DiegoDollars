@@ -20,6 +20,9 @@ export const API_GOAL_SET =
 export const API_GOAL_DELETE = HOST + "/delete_goal?id={goalId}";
 export const API_GOAL_CONTRIBUTE =
   HOST + "/contribute_to_goal?goalid={goalId}&contrabution={contribution}";
+export const API_GOAL_EDIT =
+  HOST +
+  "/edit_goal?id={goalId}&description={goalName}&goalAmount={goalAmount}&fortnightlyGoal={fortnightlyGoal}&endDate={endDate}";
 
 // TRANSACTIONS API
 export const API_TRANSACTION_STATS = HOST + "/transaction_stats";
