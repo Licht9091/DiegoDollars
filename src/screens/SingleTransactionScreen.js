@@ -36,7 +36,7 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
     _goals = Context.User.goals;
     //_categories = await Context.User.getSpendingCategories();
 
-    _data = { goals: _goals /*categories: _categories*/ };
+    _data = { goals: _goals/*, categories: _categories*/ };
 
     setData(_data);
   };
@@ -50,6 +50,7 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
   });
 
   let goals = [];
+  let categories = [];
 
   if (data != null) {
     for (let goal of data.goals) {
@@ -70,6 +71,21 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
               </Text>
             </View>
             <Text style={[style.fontSmall, { color: 'white' }]}>Available</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    }
+    for (let goal of data.goals) {
+      categories.push(
+        /* TODO make functional */
+        <TouchableOpacity key={goal.id}>
+          <View style={style.categoryButton}>
+            <View style={style.categoryCenter} >
+              <Text style={[style.subtitle, { color: 'white', textAlign: "center"}]}>
+                {goal.description}
+              </Text>
+              <Text style={[style.fontSmall, { color: 'white', textAlign: "center"}]}>(25% of Spendings)</Text>
+            </View>
           </View>
         </TouchableOpacity>
       );
@@ -194,7 +210,7 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
                     ]}
                   >
                     <Text style={[style.buttonTxt, { color: 'white' }]}>
-                      Create new Goal
+                      Create new goal
                     </Text>
                   </View>
                 </TouchableOpacity>
@@ -209,8 +225,26 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
             <>
               <View style={style.titleBar}>
                 <Text style={style.subtitle}>Select Category</Text>
+                <TouchableOpacity>
+                  <View
+                    style={[
+                      style.createGoalButton,
+                      { backgroundColor: '#FE5959' },
+                    ]}
+                  >
+                    <Text style={[style.buttonTxt, { color: 'white' }]}>
+                      Create new category
+                    </Text>
+                  </View>
+                </TouchableOpacity>
               </View>
-              <ScrollView></ScrollView>
+              <View style={{ height: 230 }}>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                  <View style={style.categoryContents}>
+                    {categories}
+                  </View>
+                </ScrollView>
+              </View>
             </>
           )}
         </View>
@@ -220,6 +254,17 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
 }
 
 const style = StyleSheet.create({
+  categoryCenter:{
+    flex:1, 
+    justifyContent: "center",
+  },
+  categoryContents: {
+    flexDirection:"row", 
+    flexWrap: "wrap", 
+    marginLeft: -5,
+    width: Dimensions.get("window").width * 0.85,
+    justifyContent: 'space-evenly',
+  },
   row: {
     padding: 12,
     paddingTop: 18,
@@ -369,6 +414,15 @@ const style = StyleSheet.create({
     padding: 15,
     paddingLeft: 20,
     justifyContent: 'space-evenly',
+  },
+  categoryButton: {
+    minHeight: Dimensions.get("window").height * 0.1,
+    width: Dimensions.get("window").width * 0.4,
+    backgroundColor: '#5B74A0',
+    marginTop: 10,
+    borderRadius: 10,
+    padding: 15,
+    flex: 1,
   },
   telescope: {
     position: 'absolute',
