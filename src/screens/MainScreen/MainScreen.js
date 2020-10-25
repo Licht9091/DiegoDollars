@@ -25,6 +25,7 @@ import Modal from "react-native-modal";
 import NewGoal from "../../components/NewGoal";
 import WavyHeader from "../../components/WavyHeader";
 import Arrow from "../../assets/forwardArrowBlack.svg";
+import moment from "moment";
 import { User } from "../../helper/api";
 
 const iconStyle = {
@@ -179,35 +180,34 @@ const MainScreen = ({ navigation }) => {
                   <Arrow />
                 </TouchableOpacity>
               </View>
+
               <View style={mainStyle.transactionBubblePillView}>
-                <TouchableOpacity style={mainStyle.pillAndTextView}>
-                  <View style={mainStyle.categoryInfo}>
-                    <Text style={mainStyle.transactionName}>
-                      Transaction Name
-                    </Text>
-                    <Text style={mainStyle.transactionCategory}>
-                      Category Name
-                    </Text>
-                  </View>
-                  <View style={mainStyle.spendInfo}>
-                    <Text style={mainStyle.transactionSpendAmount}>
-                      Amount Spent
-                    </Text>
-                    <Text style={mainStyle.timeAndDate}>Date and Time</Text>
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={mainStyle.pillAndTextView}>
-                  <View style={mainStyle.categoryInfo}>
-                    <Text style={mainStyle.transactionName}>
-                      Hardware 12342324 SYDNEY
-                    </Text>
-                    <Text style={mainStyle.transactionCategory}>Computer</Text>
-                  </View>
-                  <View style={mainStyle.spendInfo}>
-                    <Text style={mainStyle.transactionSpendAmount}>$1453</Text>
-                    <Text style={mainStyle.timeAndDate}>02-10-2020</Text>
-                  </View>
-                </TouchableOpacity>
+                {data.transactions
+                  .slice(
+                    0,
+                    data.transactions.length >= 5 ? 5 : data.transactions.length
+                  )
+                  .map((t) => (
+                    <TouchableOpacity style={mainStyle.pillAndTextView}>
+                      <View style={mainStyle.categoryInfo}>
+                        <Text style={mainStyle.transactionName}>
+                          {t.description}
+                        </Text>
+                        <Text style={mainStyle.transactionCategory}>
+                          {t.category}
+                        </Text>
+                      </View>
+                      <View style={mainStyle.spendInfo}>
+                        <Text style={mainStyle.transactionSpendAmount}>
+                          {`$${Format.toDollars(t.value)}`}.
+                          {Format.toCents(t.value)}
+                        </Text>
+                        <Text style={mainStyle.timeAndDate}>
+                          {moment(t.date).format("dddd Do MMMM").toUpperCase()}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  ))}
               </View>
             </View>
 
