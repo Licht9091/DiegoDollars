@@ -154,8 +154,7 @@ export const STYLESHEET = StyleSheet.create({
             width: 0,
             height: 5,
           },
-          shadowOpacity: 0.5,
-          shadowRadius: 1,
-          elevation: 11,
+          shadowRadius: 0,
+          elevation: 6,
         },
 });
