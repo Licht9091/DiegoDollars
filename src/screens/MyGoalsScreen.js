@@ -404,6 +404,9 @@ export default function MyGoals({ navigation, route }) {
                 }}
               ></Text>
             </View>
+            <Text>Goal Amount: {goal.goalAmount} </Text>
+            <Text>Total Contributed: {goal.currentContribution} </Text>
+            <Text>Total Spent: {goal.totalSpent} </Text>
           </View>
 
           {/* Transactions and filter */}

@@ -19,7 +19,8 @@ export const API_GOAL_SET =
   "/set_goal?description={goalName}&goalAmount={goalAmount}&fortnightlyGoal={fortnightlyGoal}&endDate={endDate}";
 export const API_GOAL_DELETE = HOST + "/delete_goal?id={goalId}";
 export const API_GOAL_CONTRIBUTE =
-  HOST + "/contribute_to_goal?goalid={goalId}&contrabution={contribution}";
+  HOST + "/contribute_to_goal?goalid={goalId}&contribution={contribution}";
+export const API_GOAL_ALLOCATE = HOST + "/allocate_transaction";
 export const API_GOAL_EDIT =
   HOST +
   "/edit_goal?id={goalId}&description={goalName}&goalAmount={goalAmount}&fortnightlyGoal={fortnightlyGoal}&endDate={endDate}";

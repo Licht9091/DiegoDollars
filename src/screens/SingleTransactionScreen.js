@@ -46,6 +46,10 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
     await Context.User.categoriseTransaction(transaction, category.name);
   };
 
+  const allocateTransactionToGoal = async (goal) => {
+    await Context.User.allocateTransactionToGoal(goal, transaction);
+  };
+
   useEffect(() => {
     setTimeout(() => {
       if (data == null) {
@@ -61,7 +65,13 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
     for (let goal of data.goals) {
       goals.push(
         /* TODO make functional */
-        <TouchableOpacity key={goal.id}>
+        <TouchableOpacity
+          key={goal.id}
+          onPress={() => {
+            allocateTransactionToGoal(goal);
+            onClose();
+          }}
+        >
           <View
             style={
               transaction.goalId == goal.id
@@ -252,7 +262,10 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
               </View>
               <View style={{ height: 230 }}>
                 <ScrollView showsVerticalScrollIndicator={false}>
-                  {goals}
+                  {!transaction.isIncome && goals}
+                  {transaction.isIncome && (
+                    <Text> Not avaliable for income. </Text>
+                  )}
                 </ScrollView>
               </View>
             </>

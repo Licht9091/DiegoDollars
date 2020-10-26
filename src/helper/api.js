@@ -15,6 +15,8 @@ import {
   API_ADD_BUDGET_ITEM,
   API_GET_BUDGET_ITEMS,
   API_GOAL_EDIT,
+  API_GOAL_CONTRIBUTE,
+  API_GOAL_ALLOCATE,
 } from "./constants";
 import "./functions";
 
@@ -27,6 +29,9 @@ class Transaction {
     this.category = _obj["category"];
     if ("goal" in _obj) {
       this.goalId = _obj["goal"];
+      if (this.goalId != null) {
+        console.log("HERE: " + this.description + "  " + this.goalId);
+      }
     } else {
       this.goalId = null;
     }
@@ -185,6 +190,7 @@ export class User {
           g["description"],
           g["current-contribution"],
           g["goal-value"],
+          g["total-spent"],
           g["startDate"],
           g["endDate"],
           g["fortnightly-contribution"]
@@ -333,6 +339,7 @@ export class User {
           goalName,
           0,
           goalAmount,
+          0,
           jsonBody["startDate"],
           completionDate,
           fortnightlyGoal
@@ -366,7 +373,7 @@ export class User {
 
     const response = await fetch(API_CALL, {
       method: "GET",
-    }); // This should be post
+    });
     const jsonBody = await response.json();
 
     if (jsonBody["success"] == 200) {
@@ -385,6 +392,103 @@ export class User {
     }
   };
 
+  /**
+   * contributeToGoal - async, make sure you wait for this to return.
+   *
+   * @param {Goal} goal - The edited goal
+   * @param {float} contribution - The amount to contribute
+   *
+   * @return {boolean} - true if the goal was edited, false if something went wrong
+   *
+   * @ensure The goal will be edited if the API call does not fail.
+   */
+  contributeToGoal = async (goal, contribution) => {
+    let API_CALL = API_GOAL_CONTRIBUTE;
+    API_CALL = API_CALL.replace("{goalId}", goal.id);
+    API_CALL = API_CALL.replace("{contribution}", contribution);
+
+    const response = await fetch(API_CALL, {
+      method: "GET",
+    });
+    const jsonBody = await response.json();
+
+    if (jsonBody["success"] == 200) {
+      index = this.goals.findIndex((g) => g.id == goal.id);
+
+      if (index != -1) {
+        this.goals[index].currentContribution += contribution;
+      } else {
+        // Something went wrong internally
+        console.log("Something went wrong internally contributing to goal.");
+        await this.fetchGoalsStatus();
+      }
+
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  /**
+   * allocateTransactionToGoal - async, make sure you wait for this to return.
+   *
+   * @param {Goal} goal - The edited goal
+   * @param {Transation} transaction - The transaction to assign
+   *
+   * @return {boolean} - true if the goal was edited, false if something went wrong
+   *
+   * @ensure The goal will be edited if the API call does not fail.
+   */
+  allocateTransactionToGoal = async (goal, transaction) => {
+    if (transaction.isIncome) {
+      alert("You cannot allocate income as an a expendature.");
+      return false;
+    }
+
+    let API_CALL = API_GOAL_ALLOCATE;
+    let postBody = {
+      transId: transaction.id,
+      goals_arr: [[goal.id, transaction.value]],
+    };
+    const response = await fetch(API_CALL, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(postBody),
+    });
+    const jsonBody = await response.json();
+
+    if (jsonBody["success"] == 200) {
+      goalIndex = this.goals.findIndex((g) => g.id == goal.id);
+      transIndex = this.account.allTransactions.findIndex(
+        (t) => t.id == transaction.id
+      );
+
+      if (goalIndex != -1 && transIndex != -1) {
+        this.goals[goalIndex].totalSpent += transaction.value; // Add the amount
+        oldGoalId = this.account.allTransactions[transIndex].goalId;
+        if (oldGoalId != null) {
+          // Remove amount from old goal
+          oldGoalIndex = this.goals.findIndex((g) => g.id == oldGoalId);
+          if (oldGoalIndex != -1) {
+            this.goals[oldGoalIndex].totalSpent -= transaction.value;
+          }
+        }
+        this.account.allTransactions[transIndex].goalId = goal.id;
+      } else {
+        // Something went wrong internally
+        console.log("Something went wrong internally contributing to goal.");
+        await this.fetchGoalsStatus();
+      }
+
+      return true;
+    } else {
+      alert("Allocation failed");
+      return false;
+    }
+  };
   /**
    * categoriseTransaction - async, make sure you wait for this to return.
    *
@@ -668,20 +772,34 @@ class Goal {
     _description,
     _currentContribution,
     _goalAmount,
+    _totalSpent,
     _startDate,
     _endDate,
     _fortnightlyContribution
   ) {
     this.id = _id;
     this.description = _description; // string
-    this.currentContribution = _currentContribution;
+    this.currentContribution = parseFloat(_currentContribution);
     this.fortnightlyContribution = parseFloat(_fortnightlyContribution);
-    this.goalAmount = _goalAmount; // float
+    this.goalAmount = parseFloat(_goalAmount); // float
+    this.totalSpent = parseFloat(_totalSpent);
     this.startDate = _startDate; // datetime
     this.endDate = _endDate; // datetime
 
     if (isNaN(this.fortnightlyContribution)) {
       this.fortnightlyContribution = 0.0;
+    }
+
+    if (isNaN(this.currentContribution)) {
+      this.currentContribution = 0.0;
+    }
+
+    if (isNaN(this.goalAmount)) {
+      this.goalAmount = 0.0;
+    }
+
+    if (isNaN(this.totalSpent)) {
+      this.totalSpent = 0.0;
     }
 
     if (_endDate == null) {
@@ -690,9 +808,6 @@ class Goal {
       this.type = "One Off";
     }
     this.percent =
-      Math.round(
-        (parseFloat(this.currentContribution) / parseFloat(this.goalAmount)) *
-          10000
-      ) / 100;
+      Math.round((this.currentContribution / this.goalAmount) * 10000) / 100;
   }
 }
