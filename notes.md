@@ -43,14 +43,31 @@
 Portfolio Sections:
 
 - Project background: what is our problem and who are we trying to help?
-- Initial research: what solutions currently exist and why are they no good?
-- What we set out to do:
-  - Things we trying to improve over existing solutions (fun fortnightly funds)
-  - DECO3800 report and suggestions we had
-  - Testing/survey that we did
 - Our team
   - Brief description of everyone's role and background/experience
+- Initial research: what solutions currently exist and why are they no good?
+  - YNAB requires you to categorise everything manually
+  - ANZ has goals but doesn't allow you to plan a budget
+  - N26 app is nice but doesn't work in australia
+  - Other apps have tiring looking UIs that make bugeting a chore
+  - There's massive potential for disruption in this area, there's massive potential for money to be made in this area as well
+- What we set out to do:
+  - Things we're trying to improve over existing solutions (fun fortnightly funds)
+  - Help users manage their spending habits so they can get to their saving goals faster
+  - DECO3800 report and suggestions we had
+  - Testing/survey that we did
+- Working process: brief summary of this semester
+  - Agile cycles and iterations to hone in on the perfect solution for our target market
+  - We are a part of our target market and have an understanding of our users
+  - Show brief prototypes of our design iterations done in XD
+  - Testing and feedback gathered in studio session and through surveys/interviews
 - Improvements for the future
+
+  - Bank integration through CDR
+  - Securing our database and backend
+  - Biometric authentication
+  - Notifications
+  - Further transaction analytics
 
 - Narrated demonstration video (covering every screen)
 
