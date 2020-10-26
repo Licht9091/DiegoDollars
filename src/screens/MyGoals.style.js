@@ -12,7 +12,8 @@ const goalStyle = {
   backButton: {
     backgroundColor: Colors.Primary,
     paddingLeft: 20,
-    marginTop: 10,
+    marginTop: 6,
+    width: 30,
   },
   flexRow: {
     flex: 0,
@@ -25,18 +26,14 @@ const goalStyle = {
     marginRight: 20,
   },
   title: {
-    fontSize: Dimensions.get('window').width / 20,
+    fontSize: 18,
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    backgroundColor: Colors.Primary,
     color: Colors.White,
-    minHeight: Dimensions.get('window').height / 12,
-    width: Dimensions.get('window').width,
-    textAlign: 'center',
+    marginLeft: 60,
   },
   createButton: {
-    position: 'absolute',
-    right: 20,
-    top: 20,
+    position: 'relative',
+    right: 10,
     padding: 0,
     height: 35,
     borderRadius: 11,
@@ -82,7 +79,7 @@ const goalStyle = {
     marginTop: 40,
     borderRadius: 20,
     flex: 0,
-    ...STYLESHEET.shadowNormal,
+    ...STYLESHEET.shadowLight,
   },
   goalSummary: {
     padding: 25,
@@ -157,12 +154,21 @@ const goalStyle = {
     right: 0,
   },
   filterStyle: {
-    height: 200,
+    height: '100%',
   },
   rocket: {
     position: 'absolute',
-    transform: [{ scale: 1.2 }],
+    transform: [{ scale: 1.2 }, { translateY: 20 }],
     right: -44,
+    zIndex: 1000,
+  },
+  loadingBar: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    borderRadius: 5,
+    // left: 0,
+    // opacity: 0,
   },
   rocketAmountContainer: {
     flex: 0,
@@ -227,8 +233,6 @@ const goalStyle = {
     height: Dimensions.get('window').height - 450,
     borderRadius: 20,
     flex: 0,
-
-    ...STYLESHEET.shadowNormal,
   },
   blackBubbleView: {
     backgroundColor: Colors.Black,
@@ -239,8 +243,6 @@ const goalStyle = {
     borderRadius: 20,
     padding: 20,
     flex: 0,
-
-    ...STYLESHEET.shadowNormal,
   },
   editGoalView: {
     height: 0,
@@ -301,10 +303,12 @@ const goalStyle = {
   goalHeader: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
     backgroundColor: Colors.Primary,
-    minHeight: Dimensions.get('window').height / 4,
-    width: Dimensions.get('window').width,
-    paddingVertical: Dimensions.get('window').height * 0.03,
-    textAlign: 'center',
+    minHeight: 160,
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    flex: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   goalView: {
     backgroundColor: Colors.White,
