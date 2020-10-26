@@ -266,8 +266,10 @@ export class User {
       this.spendingCategories.push(new SpendingCategory(key, v, v / total));
     }
 
-    this.uncategorisedIncome = bodyJson["uncategorised"]["income"];
-    this.uncategorisedSpending = bodyJson["uncategorised"]["spending"];
+    this.uncategorisedIncome = parseFloat(bodyJson["uncategorised"]["income"]);
+    this.uncategorisedSpending = parseFloat(
+      bodyJson["uncategorised"]["spending"]
+    );
 
     // Sorting
     this.spendingCategories = this.spendingCategories.sort(function lambda(
@@ -388,52 +390,46 @@ export class User {
    *
    * @param {Transaction} transaction - Transaction object to categorise
    * @param {string} category - Category name
-   * @param {string} tag - Type of transaction ["income", "expense"]
    *
    * @return {boolean} - true if the categorisation succeeds, otherwise false
    *
    * @ensure Goal will be categorised if the API call does not fail.
    */
-  categoriseTransaction = async (transaction, category, tag) => {
-    if (tag === "income") {
-      // TODO Implement
-      return;
-    } else if (tag === "expense") {
-      let API_CALL = API_CATEGORISE_TRANSACTION;
-      API_CALL = API_CALL.replace("{transactionId}", transaction.id);
-      API_CALL = API_CALL.replace("{category}", category);
+  categoriseTransaction = async (transaction, category) => {
+    let API_CALL = API_CATEGORISE_TRANSACTION;
+    API_CALL = API_CALL.replace("{transactionId}", transaction.id);
+    API_CALL = API_CALL.replace("{category}", category);
 
-      //alert(API_CALL);
-      const response = await fetch(API_CALL, { method: "GET" });
-      const bodyJson = await response.json();
+    const response = await fetch(API_CALL, { method: "GET" });
+    const bodyJson = await response.json();
 
-      if (bodyJson["status"] != "Updated") {
-        alert("Categorise failed.");
-        return false;
-      }
+    if (bodyJson["status"] != "Updated") {
+      alert("Categorise failed.");
+      return false;
     }
 
-    if (tag === "income") {
-      let i = 0;
-      while (i < this.account.uncategorisedIncome.length) {
-        if (this.account.uncategorisedIncome[i].id == transaction.id) {
-          this.account.uncategorisedIncome.splice(i, 1);
-          this.uncategorisedIncome -= 1;
-          return true;
-        }
-        i++;
+    index = this.account.allTransactions.findIndex(
+      (t) => t.id == transaction.id
+    );
+    if (index != -1) {
+      if (this.account.allTransactions[index].category == "Uncategorized") {
+        this.uncategorisedSpending -= 1;
+        console.log(this.uncategorisedSpending);
       }
-    } else if (tag === "expense") {
-      let i = 0;
-      while (i < this.account.uncategorisedExpenses.length) {
-        if (this.account.uncategorisedExpenses[i].id == transaction.id) {
-          this.account.uncategorisedExpenses.splice(i, 1);
-          this.uncategorisedSpending -= 1;
-          return true;
-        }
-        i++;
+
+      if (category == "Uncategorized") {
+        this.uncategorisedSpending += 1;
+        console.log(this.uncategorisedSpending);
       }
+
+      this.account.allTransactions[index].category = category;
+    } else {
+      // SOmething went wrong locally
+      console.log("Something went wrong locally");
+      await this.fetchTransactions();
     }
+
+    return true;
   };
 
   /**

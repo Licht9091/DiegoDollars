@@ -1,6 +1,7 @@
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import React, { useContext, useEffect, useState } from "react";
+import { useIsFocused } from "@react-navigation/native";
 import {
   ActivityIndicator,
   Dimensions,
@@ -37,6 +38,8 @@ const MainScreen = ({ navigation }) => {
   const User = useContext(AppContext).User;
 
   const [loaded, setLoaded] = useState(false);
+  const isFocused = useIsFocused();
+
   // Empty data useState
   const [data, setData] = useState(undefined);
   const [refreshModal, setRefreshModal] = useState(false);
@@ -47,13 +50,20 @@ const MainScreen = ({ navigation }) => {
       return;
     }
 
+    _allTransactions = User.account.allTransactions;
+    // How many to transactions to show
+    _numTransactions =
+      _allTransactions.length >= 5 ? 5 : _allTransactions.length;
+    _recentTransactions = _allTransactions.slice(0, _numTransactions);
+
     setData({
-      uncategorisedSpending: User.getUncategorisedSpending(),
-      uncategorisedIncome: User.getUncategorisedIncome(),
+      uncategorisedSpending: User.uncategorisedSpending,
+      uncategorisedIncome: User.uncategorisedIncome,
       availableSpending: User.account.spendingBalance,
       goals: User.goals,
       spendingCategories: User.spendingCategories,
-      transactions: User.account.allTransactions,
+      transactions: _allTransactions,
+      recentTransactions: _recentTransactions,
     });
 
     setLoaded(true);
@@ -64,15 +74,19 @@ const MainScreen = ({ navigation }) => {
     initUser();
   };
 
-  // This "setupUser" needs to be ran before the data will show in the display.
-  // It will keep running over and over since it is a useEffect.
-  // At the moment it only queries the API once then caches it anyway but we may
-  // need to change this to be different if it wants to call the api every time it
-  // loads the page or something.
+  // Initial load
   useEffect(() => {
     initUser();
     fetchNewData();
   }, []);
+
+  // This is called when the page is re focused to update any data that may have changed.
+  useEffect(() => {
+    if (isFocused) {
+      console.log("called");
+      initUser();
+    }
+  }, [isFocused]);
 
   return (
     <SafeAreaView style={{ backgroundColor: Colors.White }}>
@@ -182,32 +196,27 @@ const MainScreen = ({ navigation }) => {
               </View>
 
               <View style={mainStyle.transactionBubblePillView}>
-                {data.transactions
-                  .slice(
-                    0,
-                    data.transactions.length >= 5 ? 5 : data.transactions.length
-                  )
-                  .map((t) => (
-                    <TouchableOpacity style={mainStyle.pillAndTextView}>
-                      <View style={mainStyle.categoryInfo}>
-                        <Text style={mainStyle.transactionName}>
-                          {t.description}
-                        </Text>
-                        <Text style={mainStyle.transactionCategory}>
-                          {t.category}
-                        </Text>
-                      </View>
-                      <View style={mainStyle.spendInfo}>
-                        <Text style={mainStyle.transactionSpendAmount}>
-                          {`$${Format.toDollars(t.value)}`}.
-                          {Format.toCents(t.value)}
-                        </Text>
-                        <Text style={mainStyle.timeAndDate}>
-                          {moment(t.date).format("dddd Do MMMM").toUpperCase()}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  ))}
+                {data.recentTransactions.map((t) => (
+                  <TouchableOpacity style={mainStyle.pillAndTextView}>
+                    <View style={mainStyle.categoryInfo}>
+                      <Text style={mainStyle.transactionName}>
+                        {t.description}
+                      </Text>
+                      <Text style={mainStyle.transactionCategory}>
+                        {t.category}
+                      </Text>
+                    </View>
+                    <View style={mainStyle.spendInfo}>
+                      <Text style={mainStyle.transactionSpendAmount}>
+                        {`$${Format.toDollars(t.value)}`}.
+                        {Format.toCents(t.value)}
+                      </Text>
+                      <Text style={mainStyle.timeAndDate}>
+                        {moment(t.date).format("dddd Do MMMM").toUpperCase()}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                ))}
               </View>
             </View>
 
@@ -294,7 +303,8 @@ const MainScreen = ({ navigation }) => {
                           <Text style={mainStyle.transactionCount}>
                             {
                               data.transactions.filter(
-                                (t) => t.category == category.name
+                                (t) =>
+                                  t.category == category.name && !t.isIncome
                               ).length
                             }{" "}
                             Transactions
