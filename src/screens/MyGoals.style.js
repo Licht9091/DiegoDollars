@@ -161,8 +161,17 @@ const goalStyle = {
   },
   rocket: {
     position: 'absolute',
-    transform: [{ scale: 1.2 }],
+    transform: [{ scale: 1.2 }, { translateY: 20 }],
     right: -44,
+    zIndex: 1000,
+  },
+  loadingBar: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    borderRadius: 5,
+    // left: 0,
+    // opacity: 0,
   },
   rocketAmountContainer: {
     flex: 0,

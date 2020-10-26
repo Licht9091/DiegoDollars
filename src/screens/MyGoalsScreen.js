@@ -57,6 +57,8 @@ export default function MyGoals({ navigation, route }) {
   const goals = User.goals;
   const goal = goals.find((g) => g.id === goalId);
 
+  console.log(goal);
+
   const getTransactionList = () => {
     const loadedTransactions = User.account.allTransactions;
 
@@ -69,8 +71,12 @@ export default function MyGoals({ navigation, route }) {
   }, []);
 
   //All distances need to add up to 150, so percentages are used
-  const [spentDistance, setSpentDistance] = useState(0);
-  const [savedDistance, setSavedDistance] = useState(150 * goal.percent);
+  const [spentDistance, setSpentDistance] = useState(
+    220 * (goal.totalSpent / goal.goalAmount)
+  );
+  const [savedDistance, setSavedDistance] = useState(
+    (220 * goal.percent) / 100
+  );
   // const [goalDistance, setGoalDistanceDistance] = useState(
   //   150 * (1 - goal.percent)
   // );
@@ -375,27 +381,33 @@ export default function MyGoals({ navigation, route }) {
                   {
                     opacity: 1,
                     borderLeftColor: '#0092F2',
-                    height: Math.max(20, goal.percent * 220),
+                    height: Math.max(20, (goal.percent / 100) * 220),
                   },
                 ]}
               ></View>
               {/* <View style={[s.progress, {}]}></View> */}
               <Rocket
-                style={[s.rocket, { bottom: goal.percent * 220 }]}
+                style={[s.rocket, { bottom: (goal.percent / 100) * 200 }]}
               ></Rocket>
               <Text
-                style={{
-                  borderLeftColor: Colors.PrimaryLight,
-                  borderLeftWidth: 10,
-                  height: savedDistance,
-                }}
+                style={[
+                  s.loadingBar,
+                  {
+                    borderLeftColor: Colors.PrimaryLight,
+                    borderLeftWidth: 10,
+                    height: savedDistance,
+                  },
+                ]}
               ></Text>
               <Text
-                style={{
-                  borderLeftColor: Colors.Teal,
-                  borderLeftWidth: 10,
-                  height: spentDistance,
-                }}
+                style={[
+                  s.loadingBar,
+                  {
+                    borderLeftColor: Colors.Teal,
+                    borderLeftWidth: 10,
+                    height: spentDistance,
+                  },
+                ]}
               ></Text>
               {/* {EDITME} */}
               <View style={s.rocketValueContainer}>
@@ -408,14 +420,17 @@ export default function MyGoals({ navigation, route }) {
               <View style={s.rocketSavedContainer}>
                 <Text style={s.rocketValueLabel}>SAVED</Text>
                 <Text style={s.rocketValue}>
-                  ${Format.toDollars(goal.currentGoalContribution)}.
-                  {Format.toCents(goal.currentGoalContribution)}
+                  ${Format.toDollars(goal.currentContribution)}.
+                  {Format.toCents(goal.currentContribution)}
                 </Text>
                 <View style={s.thinLine} />
               </View>
               <View style={s.rocketSpentContainer}>
                 <Text style={s.rocketValueLabel}>SPENT</Text>
-                <Text style={s.rocketValue}>${goal.totalSpent}</Text>
+                <Text style={s.rocketValue}>
+                  ${Format.toDollars(Math.abs(goal.totalSpent))}.
+                  {Format.toCents(goal.totalSpent)}
+                </Text>
                 <View style={s.thinLine} />
               </View>
             </View>
