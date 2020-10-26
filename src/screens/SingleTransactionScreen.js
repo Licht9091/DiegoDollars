@@ -58,7 +58,7 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
       goals.push(
         /* TODO make functional */
         <TouchableOpacity key={goal.id}>
-          <View style={goal.description == transaction.goal ?  style.goalButtonPressed : style.goalButton}>
+          <View style={ transaction.goalId == goal.id ?  style.goalButtonPressed : style.goalButton  }>
             <Text style={[style.subtitle, { color: "white" }]}>
               {goal.description}
             </Text>
