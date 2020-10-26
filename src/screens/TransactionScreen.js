@@ -13,8 +13,10 @@ import BackArrow from '../assets/forwardArrowWhite';
 export default function TransactionScreen({ navigation, route }) {
   const User = useContext(AppContext).User;
 
-  const { filterString } = route.params;
-  console.log(filterString);
+  let filterString = '';
+  if (route.params && route.params.filterString) {
+    filterString = route.params.filterString;
+  }
 
   // transactions
   const [allTransactions, setAllTransactions] = useState(
@@ -34,7 +36,7 @@ export default function TransactionScreen({ navigation, route }) {
   }, []);
 
   return (
-    <>
+    <View style={transactionStyles.page}>
       {currentTransactionId !== null && (
         <Modal isVisible>
           <SingleTransactionScreen
@@ -71,7 +73,7 @@ export default function TransactionScreen({ navigation, route }) {
           filterString={filterString}
         />
       </View>
-      <BottomBar navigation={navigation} />
-    </>
+      <BottomBar navigation={navigation} route={route} />
+    </View>
   );
 }

@@ -25,7 +25,7 @@ const style = {
   },
 };
 
-export default function AccountScreen({ navigation }) {
+export default function AccountScreen({ navigation, route }) {
   const Context = useContext(AppContext);
   const [account, setAccount] = useState(null);
   const [loaded, setLoaded] = useState(false);
@@ -53,7 +53,7 @@ export default function AccountScreen({ navigation }) {
       <View style={style.transactionView}>
         <Text style={style.defaultHeader}>Graph goes here</Text>
       </View>
-      <BottomBar navigation={navigation} />
+      <BottomBar navigation={navigation} route={route} />
     </View>
   );
 }

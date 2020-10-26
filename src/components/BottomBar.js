@@ -11,8 +11,11 @@ import {
   faDonate,
   faCommentsDollar,
 } from '@fortawesome/free-solid-svg-icons';
+import { FONT_FAMILY_LIGHT } from '../styles/typography';
 
 const BottomBar = ({ navigation, route }) => {
+  const page = route.name;
+
   let barHeight = Dimensions.get('window').height * 0.07;
   const style = {
     shadowColor: '#000',
@@ -34,8 +37,8 @@ const BottomBar = ({ navigation, route }) => {
 
     paddingLeft: Dimensions.get('window').width * 0.02,
     paddingRight: Dimensions.get('window').width * 0.02,
-    paddingBottom: 50,
-    paddingTop: 20,
+    paddingBottom: 40,
+    paddingTop: 15,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -46,39 +49,56 @@ const BottomBar = ({ navigation, route }) => {
     opacity: 0.8,
   };
 
+  const buttonStyle = {
+    flex: 0,
+    flexDirection: 'column',
+    alignItems: 'center',
+  };
+
+  const labelStyle = {
+    fontFamily: FONT_FAMILY_LIGHT,
+    marginTop: 4,
+    fontSize: 11,
+  };
+
   return (
     <View style={style}>
-      <FontAwesomeIcon
-        style={{ ...iconStyle, opacity: 1 }}
-        icon={faHouseUser}
-        size={Dimensions.get('window').height * 0.03}
-        color={Colors.Primary}
-        onPress={() => {
-          navigation.navigate('Main');
-        }}
-      />
-      <FontAwesomeIcon
-        style={iconStyle}
-        icon={faDonate}
-        size={Dimensions.get('window').height * 0.03}
-        color={Colors.Primary}
-        // onPress={() =>
-        //   navigation.navigate("MyGoals", {
-        //     navigatedState: "all"
-        //   })
-        // }
-      />
-      <FontAwesomeIcon
-        style={iconStyle}
-        icon={faCommentsDollar}
-        size={Dimensions.get('window').height * 0.03}
-        color={Colors.Primary}
-        onPress={() =>
-          navigation.navigate('Transactions', {
-            navigatedState: 'all',
-          })
-        }
-      />
+      <View style={buttonStyle}>
+        <FontAwesomeIcon
+          style={{ ...iconStyle, opacity: page == 'Main' ? 1 : 0.8 }}
+          icon={faHouseUser}
+          size={Dimensions.get('window').height * 0.03}
+          color={Colors.Primary}
+          onPress={() => {
+            navigation.navigate('Main');
+          }}
+        />
+        <Text style={labelStyle}>Home</Text>
+      </View>
+      <View style={buttonStyle}>
+        <FontAwesomeIcon
+          style={[iconStyle, { opacity: page == 'Goals' ? 1 : 0.8 }]}
+          icon={faDonate}
+          size={Dimensions.get('window').height * 0.03}
+          color={Colors.Primary}
+          onPress={() => navigation.navigate('Goals', {})}
+        />
+        <Text style={labelStyle}>Goals</Text>
+      </View>
+      <View style={buttonStyle}>
+        <FontAwesomeIcon
+          style={[iconStyle, { opacity: page == 'Transactions' ? 1 : 0.8 }]}
+          icon={faCommentsDollar}
+          size={Dimensions.get('window').height * 0.03}
+          color={Colors.Primary}
+          onPress={() =>
+            navigation.navigate('Transactions', {
+              navigatedState: 'all',
+            })
+          }
+        />
+        <Text style={labelStyle}>Transactions</Text>
+      </View>
       {/* <FontAwesomeIcon
         style={iconStyle}
         icon={faUserCircle}
@@ -88,18 +108,20 @@ const BottomBar = ({ navigation, route }) => {
           navigation.navigate("Account", { navigatedState: navigation })
         }
       /> */}
-      <FontAwesomeIcon
-        style={iconStyle}
-        icon={faFileInvoiceDollar}
-        size={Dimensions.get('window').height * 0.03}
-        color={Colors.Primary}
-        onPress={() => {
-          navigation.navigate('Budget', {
-            navigatedState: navigation,
-            goals: _goals,
-          });
-        }}
-      />
+      <View style={buttonStyle}>
+        <FontAwesomeIcon
+          style={[iconStyle, { opacity: page == 'Budget' ? 1 : 0.8 }]}
+          icon={faFileInvoiceDollar}
+          size={Dimensions.get('window').height * 0.03}
+          color={Colors.Primary}
+          onPress={() => {
+            navigation.navigate('Budget', {
+              navigatedState: navigation,
+            });
+          }}
+        />
+        <Text style={labelStyle}>Budget</Text>
+      </View>
     </View>
   );
 };

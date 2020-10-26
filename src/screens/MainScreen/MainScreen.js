@@ -33,7 +33,7 @@ const iconStyle = {
   opacity: 0.8,
 };
 
-const MainScreen = ({ navigation }) => {
+const MainScreen = ({ navigation, route }) => {
   // START EDITS
   const User = useContext(AppContext).User;
 
@@ -90,7 +90,7 @@ const MainScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ backgroundColor: Colors.White }}>
-      <View>
+      <View style={{ height: Dimensions.get('window').height }}>
         {/* Refresh Modal */}
         {refreshModal && (
           <RefreshModal onClose={() => setRefreshModal(false)}></RefreshModal>
@@ -170,6 +170,7 @@ const MainScreen = ({ navigation }) => {
                   onPress={() =>
                     navigation.navigate('Transactions', {
                       navigatedState: 'expense',
+                      filterString: 'Uncategorized',
                     })
                   } // "expense"
                 />
@@ -343,7 +344,7 @@ const MainScreen = ({ navigation }) => {
         )}
 
         {/* Bottom Bar */}
-        <BottomBar navigation={navigation} />
+        <BottomBar navigation={navigation} route={route} />
       </View>
     </SafeAreaView>
   );
