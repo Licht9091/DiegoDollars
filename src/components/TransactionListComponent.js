@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
-import FONT_FAMILY_SEMIBOLD, { FONT_FAMILY_LIGHT } from '../styles/typography';
+import FONT_FAMILY_SEMIBOLD, { FONT_FAMILY_LIGHT, FONT_FAMILY_REGULAR } from '../styles/typography';
 import Colors from '../styles/colors';
 import Format from '../helper/Format';
 
@@ -49,7 +49,7 @@ const style = StyleSheet.create({
     width: 250,
   },
   transactionText: {
-    fontFamily: FONT_FAMILY_LIGHT,
+    fontFamily: FONT_FAMILY_REGULAR,
     fontWeight: '100',
     fontSize: 12,
     textAlign: 'left',
@@ -72,8 +72,8 @@ const style = StyleSheet.create({
   moneyDollars: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
     fontWeight: '100',
-    fontSize: 20,
-    color: Colors.DarkerGray,
+    fontSize: 18,
+    color: Colors.Black,
     paddingRight: 0,
   },
   moneyCents: {
@@ -81,6 +81,6 @@ const style = StyleSheet.create({
     fontWeight: '100',
     fontSize: 10,
     paddingTop: 3,
-    color: Colors.DarkerGray,
+    color: Colors.Black,
   },
 });
