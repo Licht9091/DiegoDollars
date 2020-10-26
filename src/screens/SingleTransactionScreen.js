@@ -42,6 +42,10 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
     setData(_data);
   };
 
+  const categoriseTransaction = async (category) => {
+    await Context.User.categoriseTransaction(transaction, category.name);
+  };
+
   useEffect(() => {
     setTimeout(() => {
       if (data == null) {
@@ -58,7 +62,13 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
       goals.push(
         /* TODO make functional */
         <TouchableOpacity key={goal.id}>
-          <View style={ transaction.goalId == goal.id ?  style.goalButtonPressed : style.goalButton  }>
+          <View
+            style={
+              transaction.goalId == goal.id
+                ? style.goalButtonPressed
+                : style.goalButton
+            }
+          >
             <Text style={[style.subtitle, { color: "white" }]}>
               {goal.description}
             </Text>
@@ -79,8 +89,20 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
     for (let category of data.categories) {
       categories.push(
         /* TODO make functional */
-        <TouchableOpacity key={category.id}>
-          <View style={category.name == transaction.category ?  style.categoryButtonPressed : style.categoryButton}>
+        <TouchableOpacity
+          key={category.id}
+          onPress={() => {
+            categoriseTransaction(category);
+            onClose();
+          }}
+        >
+          <View
+            style={
+              category.name == transaction.category
+                ? style.categoryButtonPressed
+                : style.categoryButton
+            }
+          >
             <View style={style.categoryCenter}>
               <Text
                 style={[
@@ -253,9 +275,7 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
               </View>
               <View style={{ height: 230 }}>
                 <ScrollView showsVerticalScrollIndicator={false}>
-                  <View style={style.categoryContents}>
-                    {categories}
-                  </View>
+                  <View style={style.categoryContents}>{categories}</View>
                 </ScrollView>
               </View>
             </>
