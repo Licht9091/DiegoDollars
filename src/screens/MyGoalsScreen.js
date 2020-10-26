@@ -168,7 +168,7 @@ export default function MyGoals({ navigation, route }) {
   });
 
   return (
-    <View>
+    <View style={{ height: Dimensions.get('window').height }}>
       {/* New goal modal */}
       {state.modal === 'createGoal' && (
         <Modal isVisible>
@@ -445,7 +445,7 @@ export default function MyGoals({ navigation, route }) {
           </View>
         </View>
       </View>
-      <BottomBar navigation={navigation} />
+      <BottomBar navigation={navigation} route={route} />
     </View>
   );
 }

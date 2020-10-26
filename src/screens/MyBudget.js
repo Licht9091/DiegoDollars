@@ -1,39 +1,42 @@
-import React, { useContext, useEffect, useState } from "react";
-import AppContext from "../helper/context";
-import { Button, ScrollView } from "react-native";
-import { STYLESHEET } from "../styles/stylesheet";
-import { Text, View, Dimensions, TextInput } from "react-native";
-import Colors from "../styles/colors";
-import BottomBar from "../components/BottomBar";
-import Pill from "../components/Pill";
-import SmallPill from "../components/SmallPill";
-import MediumPill from "../components/MediumPill";
-import { FONT_FAMILY_SEMIBOLD } from "../styles/typography";
-import navigateAndReset from "../helper/functions";
-import Modal from "react-native-modal";
-import AddIncome from "../components/AddIncome";
-import AddRecurringCosts from "../components/AddRecurringCosts";
-import EditIncome from "../components/EditIncome";
-import EditRecurringCosts from "../components/EditRecurringCosts";
-import { TouchableNativeFeedback, TouchableOpacity } from "react-native-gesture-handler";
-import BackArrow from "../assets/forwardArrowWhite";
+import React, { useContext, useEffect, useState } from 'react';
+import AppContext from '../helper/context';
+import { Button, ScrollView } from 'react-native';
+import { STYLESHEET } from '../styles/stylesheet';
+import { Text, View, Dimensions, TextInput } from 'react-native';
+import Colors from '../styles/colors';
+import BottomBar from '../components/BottomBar';
+import Pill from '../components/Pill';
+import SmallPill from '../components/SmallPill';
+import MediumPill from '../components/MediumPill';
+import { FONT_FAMILY_SEMIBOLD } from '../styles/typography';
+import navigateAndReset from '../helper/functions';
+import Modal from 'react-native-modal';
+import AddIncome from '../components/AddIncome';
+import AddRecurringCosts from '../components/AddRecurringCosts';
+import EditIncome from '../components/EditIncome';
+import EditRecurringCosts from '../components/EditRecurringCosts';
+import {
+  TouchableNativeFeedback,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
+import BackArrow from '../assets/forwardArrowWhite';
 
 const style = {
   BubbleView: {
     backgroundColor: Colors.White,
-    width: Dimensions.get("window").width * 0.9,
+    width: Dimensions.get('window').width * 0.9,
     marginTop: 10,
     marginLeft: 20,
     marginBottom: 10,
     borderRadius: 15,
     padding: 25,
-    position: "relative",
+    position: 'relative',
 
     ...STYLESHEET.shadowNormal,
   },
   whiteBubbleView: {
     backgroundColor: Colors.White,
-    width: Dimensions.get("window").width * 0.9,
+    width: Dimensions.get('window').width * 0.9,
     marginTop: 10,
     marginLeft: 10,
     marginBottom: 10,
@@ -44,7 +47,7 @@ const style = {
   },
   whiteBubblePillView: {
     backgroundColor: Colors.White,
-    width: Dimensions.get("window").width * 0.9,
+    width: Dimensions.get('window').width * 0.9,
     marginTop: 10,
     marginLeft: 10,
     marginBottom: 10,
@@ -54,8 +57,8 @@ const style = {
     ...STYLESHEET.shadowNormal,
   },
   greyBubbleView: {
-    backgroundColor: "#232323",
-    width: Dimensions.get("window").width * 0.9,
+    backgroundColor: '#232323',
+    width: Dimensions.get('window').width * 0.9,
     marginTop: 10,
     marginLeft: 10,
     marginBottom: 10,
@@ -68,7 +71,7 @@ const style = {
   },
   blackBubbleView: {
     backgroundColor: Colors.Black,
-    width: Dimensions.get("window").width - 40,
+    width: Dimensions.get('window').width - 40,
     marginTop: 10,
     marginLeft: 10,
     marginBottom: 10,
@@ -80,20 +83,20 @@ const style = {
   },
   doublePillView: {
     backgroundColor: Colors.White,
-    width: Dimensions.get("window").width,
+    width: Dimensions.get('window').width,
     marginLeft: -10,
     marginBottom: 60,
     padding: 20,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   sideBySidePillView: {
-    width: Dimensions.get("window").width * 0.4,
+    width: Dimensions.get('window').width * 0.4,
     marginRight: 35,
   },
   pillAndTextView: {
     backgroundColor: Colors.White,
-    width: Dimensions.get("window").width - 60,
-    flexDirection: "row",
+    width: Dimensions.get('window').width - 60,
+    flexDirection: 'row',
     marginBottom: 5,
     marginTop: 8,
   },
@@ -103,7 +106,7 @@ const style = {
   },
   defaultHeader: {
     fontSize: 18,
-    textAlign: "center",
+    textAlign: 'center',
     fontFamily: FONT_FAMILY_SEMIBOLD,
     color: Colors.Primary,
     padding: 30,
@@ -121,7 +124,7 @@ const style = {
     fontSize: 14,
     color: Colors.DarkGray,
     paddingRight: 5,
-    alignSelf: "flex-end",
+    alignSelf: 'flex-end',
   },
   defaultHeaderDarkerGray: {
     fontSize: 13,
@@ -140,7 +143,7 @@ const style = {
   defaulthLine: {
     borderBottomColor: Colors.LightGray,
     borderBottomWidth: 1,
-    alignSelf: "stretch",
+    alignSelf: 'stretch',
   },
   loadWrapper: {
     backgroundColor: Colors.Primary,
@@ -149,41 +152,41 @@ const style = {
     paddingTop: 150,
   },
   budgetHeader: {
-    fontSize: Dimensions.get("window").width / 20,
+    fontSize: Dimensions.get('window').width / 20,
     fontFamily: FONT_FAMILY_SEMIBOLD,
     backgroundColor: Colors.Primary,
     color: Colors.White,
-    minHeight: Dimensions.get("window").height / 12,
-    width: Dimensions.get("window").width,
-    paddingVertical: Dimensions.get("window").height * 0.03,
-    textAlign: "center",
+    minHeight: Dimensions.get('window').height / 12,
+    width: Dimensions.get('window').width,
+    paddingVertical: Dimensions.get('window').height * 0.03,
+    textAlign: 'center',
   },
   budgetView: {
     backgroundColor: Colors.White,
-    height: Dimensions.get("window").height,
+    height: Dimensions.get('window').height,
   },
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   linearGradient: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 5,
     height: 200,
     width: 350,
   },
   backButton: {
     backgroundColor: Colors.Primary,
-    paddingLeft: 20, 
+    paddingLeft: 20,
     marginTop: 10,
   },
   backgroundOverlay: {
     backgroundColor: Colors.Primary,
-    height: Dimensions.get("window").height * 0.1,
-    marginTop: -Dimensions.get("window").height * 0.18,
-    marginBottom: Dimensions.get("window").height * 0.06,
+    height: Dimensions.get('window').height * 0.1,
+    marginTop: -Dimensions.get('window').height * 0.18,
+    marginBottom: Dimensions.get('window').height * 0.06,
   },
 };
 
@@ -191,12 +194,12 @@ export default function MyBudget({ navigation, route }) {
   const [loaded, setLoaded] = useState(false);
   const Context = useContext(AppContext);
 
-  const [monthStartDates, setMonthStartDates] = useState("7");
-  const [dayStartDates, setDayStartDates] = useState("21");
+  const [monthStartDates, setMonthStartDates] = useState('7');
+  const [dayStartDates, setDayStartDates] = useState('21');
 
-  const { goals } = route.params;
+  const goals = Context.User.goals;
 
-  const [data, setData] = useState("undefined");
+  const [data, setData] = useState('undefined');
   const [addIncome, setAddIncomes] = useState(false);
   const [addRecurringCosts, setAddRecurringCosts] = useState(false);
   const [editIncome, setEditIncome] = useState(false);
@@ -228,10 +231,10 @@ export default function MyBudget({ navigation, route }) {
     _data = {
       availableSpending: _totalSpending,
       totalGoalCosts: goals.reduce((a, b) => a + b.fortnightlyContribution, 0),
-      recurringBudgetItems: _budgetItems["recurring"],
-      totalReccuringCosts: _budgetItems["totalReccuringCosts"],
-      incomeBudgetItems: _budgetItems["income"],
-      totalIncome: _budgetItems["totalIncome"],
+      recurringBudgetItems: _budgetItems['recurring'],
+      totalReccuringCosts: _budgetItems['totalReccuringCosts'],
+      incomeBudgetItems: _budgetItems['income'],
+      totalIncome: _budgetItems['totalIncome'],
     };
     setData(_data);
   };
@@ -243,7 +246,7 @@ export default function MyBudget({ navigation, route }) {
       await setupUser();
       return true;
     } else {
-      alert("Deleting item failed");
+      alert('Deleting item failed');
       return false;
     }
   };
@@ -289,12 +292,15 @@ export default function MyBudget({ navigation, route }) {
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <View backgroundColor={Colors.Primary}>
-          <TouchableOpacity style={style.backButton} onPress={() =>{ navigation.pop()}}>
-            <BackArrow/>
+          <TouchableOpacity
+            style={style.backButton}
+            onPress={() => {
+              navigation.pop();
+            }}
+          >
+            <BackArrow />
           </TouchableOpacity>
-          <Text style={style.budgetHeader}>
-            My Budget
-          </Text>
+          <Text style={style.budgetHeader}>My Budget</Text>
         </View>
         <View style={style.BubbleView}>
           <Text>
@@ -312,10 +318,10 @@ export default function MyBudget({ navigation, route }) {
 
           <View style={style.greyBubbleView}>
             <View
-              flexDirection={"row"}
-              width={Dimensions.get("window").width * 0.9}
+              flexDirection={'row'}
+              width={Dimensions.get('window').width * 0.9}
             >
-              <View width={Dimensions.get("window").width * 0.9 - 100}>
+              <View width={Dimensions.get('window').width * 0.9 - 100}>
                 <Text style={style.defaultHeaderWhite}>
                   Monthly Start Dates
                 </Text>
@@ -349,9 +355,9 @@ export default function MyBudget({ navigation, route }) {
               </View>
               <View style={style.pillView}>
                 <SmallPill
-                  content="Add"
+                  content='Add'
                   color={Colors.White}
-                  backgroundColor={"#232323"}
+                  backgroundColor={'#232323'}
                   onPress={toggleAddIncomes}
                 />
               </View>
@@ -374,16 +380,16 @@ export default function MyBudget({ navigation, route }) {
                           </Text>
                         </View>
                         <SmallPill
-                          content="Delete"
+                          content='Delete'
                           color={Colors.White}
-                          backgroundColor={"#DB5B3C"}
+                          backgroundColor={'#DB5B3C'}
                           onPress={() => deleteItem(item)}
                         />
                         <View style={style.pillView}>
                           <SmallPill
-                            content="Edit"
+                            content='Edit'
                             color={Colors.White}
-                            backgroundColor={"#2363BC"}
+                            backgroundColor={'#2363BC'}
                             onPress={toggleEditIncomes}
                           />
                         </View>
@@ -420,9 +426,9 @@ export default function MyBudget({ navigation, route }) {
               </View>
               <View style={style.pillView}>
                 <SmallPill
-                  content="Add"
+                  content='Add'
                   color={Colors.White}
-                  backgroundColor={"#232323"}
+                  backgroundColor={'#232323'}
                   onPress={toggleAddRecurringCosts}
                 />
               </View>
@@ -445,16 +451,16 @@ export default function MyBudget({ navigation, route }) {
                           </Text>
                         </View>
                         <SmallPill
-                          content="Delete"
+                          content='Delete'
                           color={Colors.White}
-                          backgroundColor={"#DB5B3C"}
+                          backgroundColor={'#DB5B3C'}
                           onPress={() => deleteItem(item)}
                         />
                         <View style={style.pillView}>
                           <SmallPill
-                            content="Edit"
+                            content='Edit'
                             color={Colors.White}
-                            backgroundColor={"#2363BC"}
+                            backgroundColor={'#2363BC'}
                             onPress={toggleEditRecurringCosts}
                           />
                         </View>
@@ -491,12 +497,12 @@ export default function MyBudget({ navigation, route }) {
               </View>
               <View style={style.pillView}>
                 <MediumPill
-                  content="View Goal"
+                  content='View Goal'
                   color={Colors.White}
-                  backgroundColor={"#232323"}
+                  backgroundColor={'#232323'}
                   onPress={() =>
-                    navigation.navigate("MyGoals", {
-                      navigatedState: "all",
+                    navigation.navigate('MyGoals', {
+                      navigatedState: 'all',
                     })
                   }
                 />
@@ -518,13 +524,13 @@ export default function MyBudget({ navigation, route }) {
                 </View>
                 <View style={style.pillView}>
                   <SmallPill
-                    content="Edit"
+                    content='Edit'
                     color={Colors.White}
-                    backgroundColor={"#2363BC"}
+                    backgroundColor={'#2363BC'}
                     onPress={() =>
-                      navigation.navigate("MyGoals", {
+                      navigation.navigate('MyGoals', {
                         goal: goal,
-                        navigatedState: "income",
+                        navigatedState: 'income',
                       })
                     }
                   />
@@ -551,10 +557,10 @@ export default function MyBudget({ navigation, route }) {
 
           <View style={style.greyBubbleView}>
             <View
-              flexDirection={"row"}
-              width={Dimensions.get("window").width * 0.9}
+              flexDirection={'row'}
+              width={Dimensions.get('window').width * 0.9}
             >
-              <View width={Dimensions.get("window").width * 0.4}>
+              <View width={Dimensions.get('window').width * 0.4}>
                 <Text style={style.defaultHeaderWhite}>
                   Estimated Available Spending
                 </Text>
@@ -566,10 +572,10 @@ export default function MyBudget({ navigation, route }) {
                     borderWidth: 0,
                     color: Colors.White,
                     fontSize: 24,
-                    alignSelf: "flex-end",
+                    alignSelf: 'flex-end',
                   }}
                 >
-                  ${" "}
+                  ${' '}
                   {data.totalIncome -
                     data.totalReccuringCosts -
                     data.totalGoalCosts}
@@ -581,24 +587,24 @@ export default function MyBudget({ navigation, route }) {
           <View style={style.doublePillView}>
             <View style={style.sideBySidePillView}>
               <Pill
-                content="Cancel"
+                content='Cancel'
                 color={Colors.White}
-                backgroundColor={"#848484"}
-                onPress={() => navigateAndReset(navigation, "Main")}
+                backgroundColor={'#848484'}
+                onPress={() => navigateAndReset(navigation, 'Main')}
               />
             </View>
             <View style={style.sideBySidePillView}>
               <Pill
-                content="Save Changes"
+                content='Save Changes'
                 color={Colors.White}
-                backgroundColor={"#2363BC"}
-                onPress={() => navigateAndReset(navigation, "Main")}
+                backgroundColor={'#2363BC'}
+                onPress={() => navigateAndReset(navigation, 'Main')}
               />
             </View>
           </View>
         </View>
       </ScrollView>
-      <BottomBar navigation={navigation} />
+      <BottomBar navigation={navigation} route={route} />
     </View>
   );
 }
