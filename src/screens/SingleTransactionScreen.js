@@ -58,7 +58,7 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
       goals.push(
         /* TODO make functional */
         <TouchableOpacity key={goal.id}>
-          <View style={style.goalButton}>
+          <View style={goal.description == transaction.goal ?  style.goalButtonPressed : style.goalButton}>
             <Text style={[style.subtitle, { color: "white" }]}>
               {goal.description}
             </Text>
@@ -80,7 +80,7 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
       categories.push(
         /* TODO make functional */
         <TouchableOpacity key={category.id}>
-          <View style={style.categoryButton}>
+          <View style={category.name == transaction.category ?  style.categoryButtonPressed : style.categoryButton}>
             <View style={style.categoryCenter}>
               <Text
                 style={[
@@ -253,7 +253,9 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
               </View>
               <View style={{ height: 230 }}>
                 <ScrollView showsVerticalScrollIndicator={false}>
-                  <View style={style.categoryContents}>{categories}</View>
+                  <View style={style.categoryContents}>
+                    {categories}
+                  </View>
                 </ScrollView>
               </View>
             </>
@@ -426,10 +428,28 @@ const style = StyleSheet.create({
     paddingLeft: 20,
     justifyContent: "space-evenly",
   },
+  goalButtonPressed: {
+    height: 100,
+    backgroundColor: "#172C52",
+    marginTop: 10,
+    borderRadius: 10,
+    padding: 15,
+    paddingLeft: 20,
+    justifyContent: "space-evenly",
+  },
   categoryButton: {
     minHeight: Dimensions.get("window").height * 0.1,
     width: Dimensions.get("window").width * 0.4,
     backgroundColor: "#5B74A0",
+    marginTop: 10,
+    borderRadius: 10,
+    padding: 15,
+    flex: 1,
+  },
+  categoryButtonPressed: {
+    minHeight: Dimensions.get("window").height * 0.1,
+    width: Dimensions.get("window").width * 0.4,
+    backgroundColor: "#172C52",
     marginTop: 10,
     borderRadius: 10,
     padding: 15,
