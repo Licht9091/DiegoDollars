@@ -61,6 +61,12 @@ Portfolio Sections:
   - We are a part of our target market and have an understanding of our users
   - Show brief prototypes of our design iterations done in XD
   - Testing and feedback gathered in studio session and through surveys/interviews
+- Tech Stack
+  - Frontend with react native
+    - Platform agnostic, android and iOS
+    - Finance is a lot more secure, trustworthy and convenient on a personal device
+    - Easy to move to web
+  - Backend with flask
 - Improvements for the future
 
   - Bank integration through CDR
