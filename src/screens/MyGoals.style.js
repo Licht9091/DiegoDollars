@@ -5,12 +5,13 @@ import {
   FONT_FAMILY_SEMIBOLD,
   FONT_FAMILY_BOLD,
   FONT_FAMILY_LIGHT,
+  FONT_FAMILY_REGULAR,
 } from '../styles/typography';
 
 const goalStyle = {
   backButton: {
     backgroundColor: Colors.Primary,
-    paddingLeft: 20, 
+    paddingLeft: 20,
     marginTop: 10,
   },
   flexRow: {
@@ -24,13 +25,13 @@ const goalStyle = {
     marginRight: 20,
   },
   title: {
-    fontSize: Dimensions.get("window").width / 20,
+    fontSize: Dimensions.get('window').width / 20,
     fontFamily: FONT_FAMILY_SEMIBOLD,
     backgroundColor: Colors.Primary,
     color: Colors.White,
-    minHeight: Dimensions.get("window").height / 12,
-    width: Dimensions.get("window").width,
-    textAlign: "center",
+    minHeight: Dimensions.get('window').height / 12,
+    width: Dimensions.get('window').width,
+    textAlign: 'center',
   },
   createButton: {
     position: 'absolute',
@@ -139,9 +140,11 @@ const goalStyle = {
     color: 'white',
   },
   rocketContainer: {
+    top: 10,
     position: 'absolute',
     right: 30,
     bottom: 30,
+    width: 100,
   },
   progress: {
     position: 'absolute',
@@ -151,6 +154,7 @@ const goalStyle = {
     borderLeftWidth: 10,
     borderRadius: 10,
     height: 220,
+    right: 0,
   },
   filterStyle: {
     height: 200,
@@ -158,7 +162,65 @@ const goalStyle = {
   rocket: {
     position: 'absolute',
     transform: [{ scale: 1.2 }],
-    left: -44,
+    right: -44,
+  },
+  rocketAmountContainer: {
+    flex: 0,
+    flexDirection: 'column',
+    position: 'absolute',
+    top: 30,
+    right: 80,
+    // right: 30,
+    // width: 100,
+  },
+  rocketValueContainer: {
+    flex: 0,
+    position: 'absolute',
+    top: 20,
+    right: 30,
+    width: 120,
+  },
+  rocketSavedContainer: {
+    flex: 0,
+    position: 'absolute',
+    top: '50%', // TODO: dynamic this
+    right: 40,
+    width: 120,
+    borderBottomColor: 'white',
+  },
+  rocketSpentContainer: {
+    flex: 0,
+    position: 'absolute',
+    top: '80%', // TODO: dynamic this
+    right: 40,
+    width: 120,
+  },
+  rocketValueLabel: {
+    fontSize: 11,
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    textAlign: 'right',
+    color: 'white',
+  },
+  goalAmount: {
+    color: 'white',
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    fontSize: 22,
+    textAlign: 'right',
+  },
+  rocketValue: {
+    color: 'white',
+    fontFamily: FONT_FAMILY_REGULAR,
+    fontSize: 18,
+    textAlign: 'right',
+  },
+  thinLine: {
+    borderBottomColor: 'white',
+    borderBottomWidth: 1,
+    width: 80,
+    position: 'absolute',
+    bottom: -7,
+    right: -30,
+    opacity: 0.3,
   },
   whiteBubbleView: {
     backgroundColor: Colors.White,
