@@ -38,6 +38,48 @@
 
 ---
 
+- Justin will do the Thursday screencap
+
+Portfolio Sections:
+
+- Project background: what is our problem and who are we trying to help?
+- Initial research: what solutions currently exist and why are they no good?
+- What we set out to do:
+  - Things we trying to improve over existing solutions (fun fortnightly funds)
+  - DECO3800 report and suggestions we had
+  - Testing/survey that we did
+- Our team
+  - Brief description of everyone's role and background/experience
+- Improvements for the future
+
+- Narrated demonstration video (covering every screen)
+
+- Use case demonstration video (basically)
+- Fairbarn films style
+- Story 1: Creating a goal to buy textbooks
+  - Walk through
+- [3 DAYS LATER]
+- Story 2: Getting paid, and allocating money into the goal
+- [2 MICROSECONDS LATER]
+- Story 3: Processing a transaction, allocating to goal
+  - Look at their avaialble spending amount
+  - Then they go to buy a textbook
+  - Buy something
+  - 'Tap'
+  - Show transaction showing on the main screen (automatically categorised)
+  - Go into the transaction and allocate it to a goal
+  - Go back to the goal page to look at it
+
+Expo:
+
+- Problem statement
+- Very brief process with through a single slide
+- Demo (with slides showing progression of each page/feature)
+- Ask judges questions, so they think about what you're doing
+- Get confirmation from judges for each thing that you're showing
+
+---
+
 Work allocation:
 
 [Jordan Foss]
