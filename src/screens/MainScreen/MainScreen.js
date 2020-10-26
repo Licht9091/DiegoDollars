@@ -5,7 +5,6 @@ import { useIsFocused } from '@react-navigation/native';
 import {
   ActivityIndicator,
   Dimensions,
-  Image,
   ScrollView,
   Text,
   View,
@@ -27,7 +26,6 @@ import NewGoal from '../../components/NewGoal';
 import WavyHeader from '../../components/WavyHeader';
 import Arrow from '../../assets/forwardArrowBlack.svg';
 import moment from 'moment';
-import { User } from '../../helper/api';
 
 const iconStyle = {
   opacity: 0.8,
@@ -96,7 +94,7 @@ const MainScreen = ({ navigation, route }) => {
           <RefreshModal onClose={() => setRefreshModal(false)}></RefreshModal>
         )}
 
-        {/* Modal for the creat goal button*/}
+        {/* Modal for the create goal button*/}
         {newGoalModal && (
           <Modal isVisible onPress={false}>
             <NewGoal

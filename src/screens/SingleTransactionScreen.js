@@ -8,8 +8,6 @@ import {
 } from 'react-native';
 import { STYLESHEET } from '../styles/stylesheet';
 import {
-  FONT_FAMILY_BOLD,
-  FONT_FAMILY_REGULAR,
   FONT_FAMILY_SEMIBOLD,
   FONT_REGULAR,
 } from '../styles/typography';
@@ -20,14 +18,18 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faAngleDown, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
-
+import Modal from 'react-native-modal';
+import NewGoal from "../components/NewGoal";
 import Cloud from '../assets/cloud.svg';
 import Stars from '../assets/stars.svg';
 import Telescope from '../assets/telescope.svg';
+import AddCategory from '../components/AddCategory';
 
-export default function SingleTransactionScreen({ transaction, onClose }) {
+export default function SingleTransactionScreen({ transaction, navigation, onClose }) {
   const [tab, setTab] = useState(transaction.value < 0 ? 0 : 1);
   const [data, setData] = useState(null);
+  const [newGoalModal, setNewGoalModal] = useState(false);
+  const [addCategory, setAddCategory] = useState(false);
 
   /* User setup */
   const Context = useContext(AppContext);
@@ -48,6 +50,10 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
 
   const allocateTransactionToGoal = async (goal) => {
     await Context.User.allocateTransactionToGoal(goal, transaction);
+  };
+
+  const toggleAddCategory = () => {
+    setAddCategory(!addCategory);
   };
 
   useEffect(() => {
@@ -144,6 +150,24 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
 
   return (
     <View>
+
+      {newGoalModal && (
+          <Modal isVisible onPress={false}>
+            <NewGoal
+              onClose={() => setNewGoalModal(false)}
+              goal={''}
+              navigation={navigation}
+            />
+          </Modal>
+        )}
+      {true && (
+        <Modal isVisible={addCategory}>
+          <AddCategory
+            onClose={toggleAddCategory}
+          ></AddCategory>
+        </Modal>
+      )}
+
       <View style={{ flexDirection: 'row' }}>
         <TouchableOpacity onPress={onClose}>
           <View style={style.closeButton}>
@@ -256,7 +280,10 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
                       { backgroundColor: '#FE5959' },
                     ]}
                   >
-                    <Text style={[style.buttonTxt, { color: 'white' }]}>
+                    <Text 
+                    style={[style.buttonTxt, { color: 'white' }]} 
+                    onPress={() => setNewGoalModal(true)}
+                    >
                       Create new goal
                     </Text>
                   </View>
@@ -283,7 +310,10 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
                       { backgroundColor: '#FE5959' },
                     ]}
                   >
-                    <Text style={[style.buttonTxt, { color: 'white' }]}>
+                    <Text 
+                    style={[style.buttonTxt, { color: 'white' }]}
+                    onPress={toggleAddCategory}
+                    >
                       Create new category
                     </Text>
                   </View>
