@@ -1,26 +1,16 @@
 import React, { useContext, useEffect, useReducer, useState } from "react";
 import {
-  ScrollView,
   TouchableOpacity,
   Text,
   View,
-  ActivityIndicator,
   Dimensions,
-  Alert,
-  TextInput,
   Picker,
 } from "react-native";
-import { STYLESHEET } from "../styles/stylesheet";
 import Colors from "../styles/colors";
 import BottomBar from "../components/BottomBar";
-import Pill from "../components/Pill";
-import transactionStyles from "./Transactions/TransactionsScreen.style";
-import { SearchBar } from "react-native-elements";
 import AppContext from "../helper/context";
 import { FONT_FAMILY_LIGHT, FONT_FAMILY_SEMIBOLD } from "../styles/typography";
 import navigateAndReset from "../helper/functions";
-import TransactionListComponent from "../components/TransactionListComponent";
-import Diego from "../assets/Diego.svg";
 import Rocket from "../assets/rocket.svg";
 import Pencil from "../assets/pencil.svg";
 import NewGoal from "../components/NewGoal";
@@ -29,6 +19,7 @@ import TransactionsFilter from "../components/TransactionsFilter";
 import s from "./MyGoals.style.js";
 import SimpleModal from "../components/SimpleModal";
 import DatePicker from "react-native-datepicker";
+import BackArrow from "../assets/forwardArrowWhite";
 
 function setButtonValue(value, set, incomeOrExpense, navigatedState) {
   if (value) {
@@ -218,6 +209,9 @@ export default function MyGoals({ navigation, route }) {
 
       <View style={s.goalView}>
         <View style={s.goalHeader}>
+          <TouchableOpacity style={s.backButton} onPress={() =>{ navigation.pop()}}>
+            <BackArrow/>
+          </TouchableOpacity>
           <Text style={[s.title]}>My Goals</Text>
 
           <TouchableOpacity

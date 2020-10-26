@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import BottomBar from '../components/BottomBar';
 import TransactionsFilter from '../components/TransactionsFilter';
@@ -7,6 +8,7 @@ import AppContext from '../helper/context';
 import { STYLESHEET } from '../styles/stylesheet';
 import SingleTransactionScreen from './SingleTransactionScreen';
 import transactionStyles from './Transactions/TransactionsScreen.style';
+import BackArrow from "../assets/forwardArrowWhite";
 
 export default function TransactionScreen({ navigation }) {
   const User = useContext(AppContext).User;
@@ -44,7 +46,10 @@ export default function TransactionScreen({ navigation }) {
       <View style={transactionStyles.mainView}>
         {/* Header */}
         <View style={transactionStyles.topHeading}>
-          <Text style={STYLESHEET.defaultHeader}>Transactions</Text>
+          <TouchableOpacity style={transactionStyles.backButton} onPress={() =>{ navigation.pop()}}>
+            <BackArrow/>
+          </TouchableOpacity>
+          <Text style={transactionStyles.transactionHeader}>Transactions</Text>
         </View>
 
         {/* Transaction List */}

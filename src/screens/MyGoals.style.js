@@ -8,6 +8,11 @@ import {
 } from '../styles/typography';
 
 const goalStyle = {
+  backButton: {
+    backgroundColor: Colors.Primary,
+    paddingLeft: 20, 
+    marginTop: 10,
+  },
   flexRow: {
     flex: 0,
     flexDirection: 'row',
@@ -19,12 +24,13 @@ const goalStyle = {
     marginRight: 20,
   },
   title: {
+    fontSize: Dimensions.get("window").width / 20,
     fontFamily: FONT_FAMILY_SEMIBOLD,
+    backgroundColor: Colors.Primary,
     color: Colors.White,
-    fontSize: 16,
-    alignItems: 'center',
-    marginLeft: 150,
-    marginRight: 30,
+    minHeight: Dimensions.get("window").height / 12,
+    width: Dimensions.get("window").width,
+    textAlign: "center",
   },
   createButton: {
     position: 'absolute',
@@ -72,6 +78,7 @@ const goalStyle = {
     // minHeight: Dimensions.get('window').height,
     marginLeft: 10,
     marginBottom: 10,
+    marginTop: 40,
     borderRadius: 20,
     flex: 0,
     ...STYLESHEET.shadowNormal,

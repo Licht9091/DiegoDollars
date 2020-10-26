@@ -15,7 +15,8 @@ import AddIncome from "../components/AddIncome";
 import AddRecurringCosts from "../components/AddRecurringCosts";
 import EditIncome from "../components/EditIncome";
 import EditRecurringCosts from "../components/EditRecurringCosts";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableNativeFeedback, TouchableOpacity } from "react-native-gesture-handler";
+import BackArrow from "../assets/forwardArrowWhite";
 
 const style = {
   BubbleView: {
@@ -173,6 +174,17 @@ const style = {
     height: 200,
     width: 350,
   },
+  backButton: {
+    backgroundColor: Colors.Primary,
+    paddingLeft: 20, 
+    marginTop: 10,
+  },
+  backgroundOverlay: {
+    backgroundColor: Colors.Primary,
+    height: Dimensions.get("window").height * 0.1,
+    marginTop: -Dimensions.get("window").height * 0.18,
+    marginBottom: Dimensions.get("window").height * 0.06,
+  },
 };
 
 export default function MyBudget({ navigation, route }) {
@@ -276,8 +288,14 @@ export default function MyBudget({ navigation, route }) {
       )}
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Text style={style.budgetHeader}>My Budget</Text>
-
+        <View backgroundColor={Colors.Primary}>
+          <TouchableOpacity style={style.backButton} onPress={() =>{ navigation.pop()}}>
+            <BackArrow/>
+          </TouchableOpacity>
+          <Text style={style.budgetHeader}>
+            My Budget
+          </Text>
+        </View>
         <View style={style.BubbleView}>
           <Text>
             Provide an estimate on your fornightly Income and Recurring Costs
@@ -285,14 +303,7 @@ export default function MyBudget({ navigation, route }) {
             period.
           </Text>
         </View>
-        <View
-          style={{
-            backgroundColor: Colors.Primary,
-            height: Dimensions.get("window").height * 0.1,
-            marginTop: -Dimensions.get("window").height * 0.18,
-            marginBottom: Dimensions.get("window").height * 0.06,
-          }}
-        ></View>
+        <View style={style.backgroundOverlay}></View>
 
         <View style={STYLESHEET.defaultView}>
           <Text style={STYLESHEET.defaultSecondaryHeader}>
