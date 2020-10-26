@@ -10,10 +10,11 @@ const filterStyles = {
     justifyContent: 'flex-start',
     alignItems: 'center',
     margin: 0,
+    marginBottom: -2,
     height: 50,
     paddingLeft: 15,
     paddingRight: 15,
-    ...STYLESHEET.shadowNormal,
+    ...STYLESHEET.shadowLight,
   },
   filterButton: {
     flex: 0,

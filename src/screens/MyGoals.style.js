@@ -157,7 +157,7 @@ const goalStyle = {
     right: 0,
   },
   filterStyle: {
-    height: 200,
+    height: '100%',
   },
   rocket: {
     position: 'absolute',

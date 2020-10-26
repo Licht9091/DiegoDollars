@@ -57,12 +57,10 @@ export default function MyGoals({ navigation, route }) {
   const goals = User.goals;
   const goal = goals.find((g) => g.id === goalId);
 
-  console.log(goal);
-
   const getTransactionList = () => {
     const loadedTransactions = User.account.allTransactions;
 
-    setAllTransactions(loadedTransactions.filter((t) => t.id === goal.id));
+    setAllTransactions(loadedTransactions.filter((t) => t.goalId === goal.id));
     setLoaded(true);
   };
 
