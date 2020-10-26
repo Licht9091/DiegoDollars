@@ -8,10 +8,13 @@ import AppContext from '../helper/context';
 import { STYLESHEET } from '../styles/stylesheet';
 import SingleTransactionScreen from './SingleTransactionScreen';
 import transactionStyles from './Transactions/TransactionsScreen.style';
-import BackArrow from "../assets/forwardArrowWhite";
+import BackArrow from '../assets/forwardArrowWhite';
 
-export default function TransactionScreen({ navigation }) {
+export default function TransactionScreen({ navigation, route }) {
   const User = useContext(AppContext).User;
+
+  const { filterString } = route.params;
+  console.log(filterString);
 
   // transactions
   const [allTransactions, setAllTransactions] = useState(
@@ -46,8 +49,13 @@ export default function TransactionScreen({ navigation }) {
       <View style={transactionStyles.mainView}>
         {/* Header */}
         <View style={transactionStyles.topHeading}>
-          <TouchableOpacity style={transactionStyles.backButton} onPress={() =>{ navigation.pop()}}>
-            <BackArrow/>
+          <TouchableOpacity
+            style={transactionStyles.backButton}
+            onPress={() => {
+              navigation.pop();
+            }}
+          >
+            <BackArrow />
           </TouchableOpacity>
           <Text style={transactionStyles.transactionHeader}>Transactions</Text>
         </View>
@@ -60,6 +68,7 @@ export default function TransactionScreen({ navigation }) {
               setCurrentTransactionId(id);
             }
           }}
+          filterString={filterString}
         />
       </View>
       <BottomBar navigation={navigation} />

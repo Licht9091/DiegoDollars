@@ -6,11 +6,19 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import filterStyles from './TransactionsFilter.style';
 import TransactionListComponent from './TransactionListComponent';
 
-const TransactionsFilter = ({ transactionList, onSelect, loading, style }) => {
+const TransactionsFilter = ({
+  transactionList,
+  onSelect,
+  loading,
+  style,
+  filterString,
+}) => {
   // toggles and filters
   const [showIncome, setShowIncome] = useState(true);
   const [showExpenses, setShowExpenses] = useState(true);
-  const [searchContents, setSearchContents] = useState('');
+  const [searchContents, setSearchContents] = useState(
+    filterString ? filterString : ''
+  );
 
   // filter function
   const filterTransactions = (transactionList) => {
@@ -18,7 +26,11 @@ const TransactionsFilter = ({ transactionList, onSelect, loading, style }) => {
       .filter(
         (t) => (showExpenses && t.value < 0) || (showIncome && t.value >= 0)
       )
-      .filter((t) => t.description.includes(searchContents))
+      .filter(
+        (t) =>
+          t.description.includes(searchContents) ||
+          t.category.includes(searchContents)
+      )
       .sort((a, b) => new Date(b.date) - new Date(a.date));
   };
 
