@@ -1,21 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react';
 import AppContext from '../helper/context';
-import { Dimensions, View, Text } from "react-native";
-import Colors from "../styles/colors";
-import { STYLESHEET } from "../styles/stylesheet";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { Dimensions, View, Text } from 'react-native';
+import Colors from '../styles/colors';
+import { STYLESHEET } from '../styles/stylesheet';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import {
   faFileInvoiceDollar,
   faMoneyCheckAlt,
   faHouseUser,
   faDonate,
   faCommentsDollar,
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons';
 
 const BottomBar = ({ navigation, route }) => {
-  let barHeight = Dimensions.get("window").height * 0.07;
+  let barHeight = Dimensions.get('window').height * 0.07;
   const style = {
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 12,
@@ -25,21 +25,21 @@ const BottomBar = ({ navigation, route }) => {
 
     elevation: 24,
 
-    position: "absolute",
-    bottom: barHeight - 74,
+    position: 'absolute',
+    bottom: 0,
     //height: barHeight,
-    width: Dimensions.get("window").width,
+    width: Dimensions.get('window').width,
     backgroundColor: Colors.White,
     color: Colors.Primary,
 
-    paddingLeft: Dimensions.get("window").width * 0.02,
-    paddingRight: Dimensions.get("window").width * 0.02,
+    paddingLeft: Dimensions.get('window').width * 0.02,
+    paddingRight: Dimensions.get('window').width * 0.02,
     paddingBottom: 50,
     paddingTop: 20,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
   };
 
   const iconStyle = {
@@ -51,15 +51,16 @@ const BottomBar = ({ navigation, route }) => {
       <FontAwesomeIcon
         style={{ ...iconStyle, opacity: 1 }}
         icon={faHouseUser}
-        size={Dimensions.get("window").height * 0.03}
+        size={Dimensions.get('window').height * 0.03}
         color={Colors.Primary}
         onPress={() => {
-          navigation.navigate("Main")}}
+          navigation.navigate('Main');
+        }}
       />
       <FontAwesomeIcon
         style={iconStyle}
         icon={faDonate}
-        size={Dimensions.get("window").height * 0.03}
+        size={Dimensions.get('window').height * 0.03}
         color={Colors.Primary}
         // onPress={() =>
         //   navigation.navigate("MyGoals", {
@@ -70,11 +71,11 @@ const BottomBar = ({ navigation, route }) => {
       <FontAwesomeIcon
         style={iconStyle}
         icon={faCommentsDollar}
-        size={Dimensions.get("window").height * 0.03}
+        size={Dimensions.get('window').height * 0.03}
         color={Colors.Primary}
         onPress={() =>
           navigation.navigate('Transactions', {
-            navigatedState: "all"
+            navigatedState: 'all',
           })
         }
       />
@@ -90,7 +91,7 @@ const BottomBar = ({ navigation, route }) => {
       <FontAwesomeIcon
         style={iconStyle}
         icon={faFileInvoiceDollar}
-        size={Dimensions.get("window").height * 0.03}
+        size={Dimensions.get('window').height * 0.03}
         color={Colors.Primary}
         onPress={() => {
           navigation.navigate('Budget', {
