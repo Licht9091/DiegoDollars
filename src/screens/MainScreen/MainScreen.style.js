@@ -11,15 +11,15 @@ import { STYLESHEET } from '../../styles/stylesheet';
 const win = Dimensions.get('window');
 
 const mainStyle = {
-  smallPieChart:{
+  smallPieChart: {
     paddingTop: -15,
-    alignSelf:"center",
-    width: Dimensions.get("window").width * 0.8/6,
+    alignSelf: 'center',
+    width: (Dimensions.get('window').width * 0.8) / 6,
   },
   defaultLine: {
     borderBottomColor: Colors.LightGray,
     borderBottomWidth: 1,
-    width: Dimensions.get("window").width*0.87,
+    width: Dimensions.get('window').width * 0.87,
     alignSelf: 'stretch',
     marginTop: -13,
     marginBottom: 10,
@@ -53,24 +53,24 @@ const mainStyle = {
 
     ...STYLESHEET.shadowNormal,
   },
-  transactionCount:{
+  transactionCount: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
     fontSize: 12,
-    color: "#A2A2A2",
-    alignSelf: "flex-start",
+    color: '#A2A2A2',
+    alignSelf: 'flex-start',
   },
-  transactionCategory:{
+  transactionCategory: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
     fontSize: 12,
-    color: "#A2A2A2",
-    alignSelf: "flex-start",
-    width: Dimensions.get("window").width * 0.35,
+    color: '#A2A2A2',
+    alignSelf: 'flex-start',
+    width: Dimensions.get('window').width * 0.35,
   },
-  timeAndDate:{
+  timeAndDate: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
     fontSize: 12,
-    color: "#A2A2A2",
-    alignSelf:"flex-end",
+    color: '#A2A2A2',
+    alignSelf: 'flex-end',
     marginRight: 5,
   },
   loadWrapper: {
@@ -101,6 +101,7 @@ const mainStyle = {
   statusContainer: {
     paddingTop: 50,
     textAlign: 'center',
+    paddingBottom: 45,
   },
   availableSpend: {
     display: 'flex',
@@ -175,7 +176,6 @@ const mainStyle = {
     flex: 1,
     flexDirection: 'row',
     display: 'flex',
-
   },
   goalInfo: {
     flex: 1,
@@ -205,7 +205,7 @@ const mainStyle = {
     padding: 8,
     paddingLeft: 12,
     paddingRight: 12,
-    backgroundColor: "#2B2B2B",
+    backgroundColor: '#2B2B2B',
     borderRadius: 6,
     color: Colors.White,
     flex: 0,
@@ -241,47 +241,48 @@ const mainStyle = {
     fontFamily: FONT_FAMILY_SEMIBOLD,
     fontSize: 18,
     color: Colors.DarkerGray,
-    textAlign: "right",
-    alignSelf: "flex-end",
-    width: Dimensions.get("window").width*0.25,
+    textAlign: 'right',
+    alignSelf: 'flex-end',
+    width: Dimensions.get('window').width * 0.25,
     marginRight: 10,
   },
   transactionSpendAmount: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
     fontSize: 18,
     color: Colors.DarkerGray,
-    textAlign: "right",
-    alignSelf: "flex-end",
+    textAlign: 'right',
+    alignSelf: 'flex-end',
     marginRight: 5,
-    width: Dimensions.get("window").width*0.45,
+    width: Dimensions.get('window').width * 0.45,
   },
   spendCategory: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
     fontSize: 15,
     color: Colors.DarkerGray,
     textTransform: 'capitalize',
-    alignSelf: "flex-start",
+    alignSelf: 'flex-start',
   },
   transactionName: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
     fontSize: 15,
     color: Colors.DarkerGray,
     textTransform: 'capitalize',
-    alignSelf: "flex-start",
-    width: Dimensions.get("window").width * 0.4,
+    alignSelf: 'flex-start',
+    width: Dimensions.get('window').width * 0.4,
   },
   categoryInfo: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    width: Dimensions.get("window").width * 0.8/2,
+    width: (Dimensions.get('window').width * 0.8) / 2,
     marginRight: 10,
   },
   title: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
-    color: "#36424C",
+    color: '#36424C',
     fontSize: 16,
     opacity: 0.95,
+    marginBottom: 10,
   },
   subtitle: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
@@ -294,9 +295,9 @@ const mainStyle = {
   activityIndicator: {
     color: Colors.White,
   },
-  topHeader:{
+  topHeader: {
     width: 120,
-  }
+  },
 };
 
 export default mainStyle;
