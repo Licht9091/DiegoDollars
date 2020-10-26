@@ -262,6 +262,7 @@ export default function SingleTransactionScreen({ transaction, onClose }) {
               </View>
               <View style={{ height: 230 }}>
                 <ScrollView showsVerticalScrollIndicator={false}>
+                  {/* {EDITME} */}
                   {!transaction.isIncome && goals}
                   {transaction.isIncome && (
                     <Text> Not avaliable for income. </Text>
