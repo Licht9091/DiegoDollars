@@ -1,34 +1,31 @@
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import React, { useContext, useEffect, useState } from 'react';
 import { useIsFocused } from '@react-navigation/native';
+import moment from 'moment';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Dimensions,
-  Image,
   ScrollView,
   Text,
   View,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import Modal from 'react-native-modal';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Arrow from '../../assets/forwardArrowBlack.svg';
 import BottomBar from '../../components/BottomBar';
-import PieChart from '../../components/PieChart';
-import SmallPieChart from '../../components/SmallPieChart';
+import Goal from '../../components/Goal';
+import NewGoal from '../../components/NewGoal';
 import Pill from '../../components/Pill';
 import RefreshModal from '../../components/RefreshModal';
+import SmallPieChart from '../../components/SmallPieChart';
+import WavyHeader from '../../components/WavyHeader';
 import AppContext from '../../helper/context';
 import Format from '../../helper/Format';
 import Colors from '../../styles/colors';
 import { STYLESHEET } from '../../styles/stylesheet';
 import mainStyle from './MainScreen.style';
-import Modal from 'react-native-modal';
-import NewGoal from '../../components/NewGoal';
-import WavyHeader from '../../components/WavyHeader';
-import Arrow from '../../assets/forwardArrowBlack.svg';
-import moment from 'moment';
-import { User } from '../../helper/api';
-import Goal from '../../components/Goal';
 
 const iconStyle = {
   opacity: 0.8,
@@ -97,7 +94,7 @@ const MainScreen = ({ navigation, route }) => {
           <RefreshModal onClose={() => setRefreshModal(false)}></RefreshModal>
         )}
 
-        {/* Modal for the creat goal button*/}
+        {/* Modal for the create goal button*/}
         {newGoalModal && (
           <Modal isVisible onPress={false}>
             <NewGoal

@@ -1,8 +1,12 @@
+import { Dimensions } from 'react-native';
 import Colors from '../styles/colors';
 import { STYLESHEET } from '../styles/stylesheet';
 import { FONT_FAMILY_LIGHT, FONT_FAMILY_SEMIBOLD } from '../styles/typography';
 
 const filterStyles = {
+  dummy: {
+    height: Dimensions.get("window").height*0.55,
+  },
   searchBarLine: {
     flex: 0,
     flexDirection: 'row',

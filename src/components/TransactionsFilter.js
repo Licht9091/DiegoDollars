@@ -103,7 +103,7 @@ const TransactionsFilter = ({
         />
       </View>
 
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={filterStyles.transactionView}>
           {loading && <ActivityIndicator size='large' color='gray' />}
           {!loading &&
@@ -130,6 +130,7 @@ const TransactionsFilter = ({
               </>
             ))}
         </View>
+        <View style={filterStyles.dummy}></View>
       </ScrollView>
     </View>
   );
