@@ -269,7 +269,7 @@ const MainScreen = ({ navigation, route }) => {
             </View>
 
             {/* Spending */}
-            <View style={mainStyle.container}>
+            <View style={[mainStyle.container, { marginTop: 15 }]}>
               <Text style={mainStyle.title}>This Fortnight's Spending</Text>
               <View style={mainStyle.spendingsBubblePillView}>
                 {/* Spending Categories Data loop */}
