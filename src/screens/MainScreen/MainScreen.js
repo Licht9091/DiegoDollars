@@ -211,7 +211,7 @@ const MainScreen = ({ navigation, route }) => {
                         {Format.toCents(t.value)}
                       </Text>
                       <Text style={mainStyle.timeAndDate}>
-                        {moment(t.date).format('dddd').toUpperCase()}
+                        {moment(t.date).format('dddd')}
                       </Text>
                     </View>
                   </TouchableOpacity>
