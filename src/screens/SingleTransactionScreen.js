@@ -7,10 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { STYLESHEET } from '../styles/stylesheet';
-import {
-  FONT_FAMILY_SEMIBOLD,
-  FONT_REGULAR,
-} from '../styles/typography';
+import { FONT_FAMILY_SEMIBOLD, FONT_REGULAR } from '../styles/typography';
 import Colors from '../styles/colors';
 import Format from '../helper/Format';
 import AppContext from '../helper/context';
@@ -19,13 +16,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faAngleDown, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 import Modal from 'react-native-modal';
-import NewGoal from "../components/NewGoal";
+import NewGoal from '../components/NewGoal';
 import Cloud from '../assets/cloud.svg';
 import Stars from '../assets/stars.svg';
 import Telescope from '../assets/telescope.svg';
 import AddCategory from '../components/AddCategory';
 
-export default function SingleTransactionScreen({ transaction, navigation, onClose }) {
+export default function SingleTransactionScreen({
+  transaction,
+  navigation,
+  onClose,
+}) {
   const [tab, setTab] = useState(transaction.value < 0 ? 0 : 1);
   const [data, setData] = useState(null);
   const [newGoalModal, setNewGoalModal] = useState(false);
@@ -150,21 +151,18 @@ export default function SingleTransactionScreen({ transaction, navigation, onClo
 
   return (
     <View>
-
       {newGoalModal && (
-          <Modal isVisible onPress={false}>
-            <NewGoal
-              onClose={() => setNewGoalModal(false)}
-              goal={''}
-              navigation={navigation}
-            />
-          </Modal>
-        )}
+        <Modal isVisible onPress={false}>
+          <NewGoal
+            onClose={() => setNewGoalModal(false)}
+            goal={''}
+            navigation={navigation}
+          />
+        </Modal>
+      )}
       {true && (
         <Modal isVisible={addCategory}>
-          <AddCategory
-            onClose={toggleAddCategory}
-          ></AddCategory>
+          <AddCategory onClose={toggleAddCategory}></AddCategory>
         </Modal>
       )}
 
@@ -179,7 +177,7 @@ export default function SingleTransactionScreen({ transaction, navigation, onClo
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={onClose}>
+        {/* <TouchableOpacity onPress={onClose}>
           <View style={style.confirmButton}>
             <FontAwesomeIcon
               style={style.icon}
@@ -187,7 +185,7 @@ export default function SingleTransactionScreen({ transaction, navigation, onClo
               icon={faCheckCircle}
             />
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       {/* Top card */}
       <View style={style.card}>
@@ -280,9 +278,9 @@ export default function SingleTransactionScreen({ transaction, navigation, onClo
                       { backgroundColor: '#FE5959' },
                     ]}
                   >
-                    <Text 
-                    style={[style.buttonTxt, { color: 'white' }]} 
-                    onPress={() => setNewGoalModal(true)}
+                    <Text
+                      style={[style.buttonTxt, { color: 'white' }]}
+                      onPress={() => setNewGoalModal(true)}
                     >
                       Create new goal
                     </Text>
@@ -310,9 +308,9 @@ export default function SingleTransactionScreen({ transaction, navigation, onClo
                       { backgroundColor: '#FE5959' },
                     ]}
                   >
-                    <Text 
-                    style={[style.buttonTxt, { color: 'white' }]}
-                    onPress={toggleAddCategory}
+                    <Text
+                      style={[style.buttonTxt, { color: 'white' }]}
+                      onPress={toggleAddCategory}
                     >
                       Create new category
                     </Text>
