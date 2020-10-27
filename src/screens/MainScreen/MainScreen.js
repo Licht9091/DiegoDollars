@@ -6,6 +6,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Dimensions,
+  RefreshControl,
   ScrollView,
   Text,
   View,
@@ -69,6 +70,7 @@ const MainScreen = ({ navigation, route }) => {
   };
 
   const fetchNewData = async () => {
+    // setLoaded(false);
     await User.fetchAll();
     initUser();
   };
@@ -115,6 +117,9 @@ const MainScreen = ({ navigation, route }) => {
           <ScrollView
             style={mainStyle.mainScreen}
             showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={!loaded} onRefresh={fetchNewData} />
+            }
           >
             {/* Title */}
 
