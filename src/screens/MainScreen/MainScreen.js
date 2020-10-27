@@ -10,6 +10,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import { Tooltip } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -133,19 +134,27 @@ const MainScreen = ({ navigation, route }) => {
                     <Text style={mainStyle.availableSpendCents}>
                       {Format.toCents(data.availableSpending)}
                     </Text>
-                    <FontAwesomeIcon
-                      style={iconStyle}
-                      icon={faInfoCircle}
-                      size={Dimensions.get('window').height * 0.03}
-                      color={Colors.White}
-                      marginLeft={10}
-                      onPress={() => {
-                        navigation.navigate('Budget', {
-                          navigatedState: navigation,
-                          goals: data.goals,
-                        });
-                      }}
-                    />
+                    <Tooltip
+                      popover={
+                        <Text>
+                          This is how much you have left to spend after taking
+                          into account goals and recurring expenses.
+                        </Text>
+                      }
+                      backgroundColor='white'
+                      overlayColor='rgba(250, 250, 250, 0)'
+                      height={150}
+                      width={170}
+                      withPointer={false}
+                    >
+                      <FontAwesomeIcon
+                        style={iconStyle}
+                        icon={faInfoCircle}
+                        size={Dimensions.get('window').height * 0.03}
+                        color={Colors.White}
+                        marginLeft={10}
+                      />
+                    </Tooltip>
                   </>
                 )}
               </View>
