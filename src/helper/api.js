@@ -17,6 +17,7 @@ import {
   API_GOAL_EDIT,
   API_GOAL_CONTRIBUTE,
   API_GOAL_ALLOCATE,
+  API_START_PERIOD,
 } from "./constants";
 import "./functions";
 
@@ -664,6 +665,31 @@ export class User {
 
     if (response.ok) {
       if (bodyJson["status"] == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
+
+  /**
+   * startNewPeriod - async, make sure you wait for this to return.
+   *
+   * @return {boolean} - true if succeeds, else false
+   *
+   * @ensure New period will be set in the user account
+   */
+  startNewPeriod = async () => {
+    let API_CALL = API_START_PERIOD;
+
+    const response = await fetch(API_CALL, { method: "GET" });
+    const bodyJson = await response.json();
+
+    if (response.ok) {
+      if (bodyJson["status"] == 200) {
+        this.account.periodStart = jsonBody["periodStart"];
         return true;
       } else {
         return false;

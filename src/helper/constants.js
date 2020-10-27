@@ -12,6 +12,9 @@ export const API_LOGOUT = HOST + "/logout";
 export const API_TEST_LOGGED_IN = HOST + "/testloggedin";
 export const API_LOGIN = HOST + "/login";
 
+// ACCOUNT API
+export const API_START_PERIOD = HOST + "/start_period";
+
 // GOALS API
 export const API_GOALS_STATUS = HOST + "/goal_status";
 export const API_GOAL_SET =
