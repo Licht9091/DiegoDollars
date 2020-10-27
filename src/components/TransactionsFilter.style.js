@@ -5,7 +5,7 @@ import { FONT_FAMILY_LIGHT, FONT_FAMILY_SEMIBOLD } from '../styles/typography';
 
 const filterStyles = {
   dummy: {
-    height: Dimensions.get("window").height*0.55,
+    height: Dimensions.get('window').height * 0.55,
   },
   searchBarLine: {
     flex: 0,
@@ -76,11 +76,11 @@ const filterStyles = {
     margin: 0,
     padding: 7,
     paddingLeft: 12,
-    backgroundColor: Colors.LightGray,
+    backgroundColor: '#FAFAFA',
   },
   dateHeaderText: {
     fontSize: 9,
-    color: Colors.DarkerGray,
+    color: Colors.DarkGray,
   },
 
   categoryText: {

@@ -124,4 +124,6 @@ function App() {
   );
 }
 
+console.disableYellowBox = true;
+
 export default registerRootComponent(App);
