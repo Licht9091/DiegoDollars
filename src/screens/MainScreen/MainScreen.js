@@ -221,8 +221,9 @@ const MainScreen = ({ navigation, route }) => {
                     </View>
                     <View style={mainStyle.spendInfo}>
                       <Text style={mainStyle.transactionSpendAmount}>
-                        {`$${Format.toDollars(t.value)}`}.
-                        {Format.toCents(t.value)}
+                        {`${Format.toDollarsDisplay(t.value)}`}
+                        {/* {`$${Format.toDollars(t.value)}`}.
+                        {Format.toCents(t.value)} */}
                       </Text>
                       <Text style={mainStyle.timeAndDate}>
                         {moment(t.date).format('dddd')}
