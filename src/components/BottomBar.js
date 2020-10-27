@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import AppContext from '../helper/context';
-import { Dimensions, View, Text } from 'react-native';
+import { Dimensions, View, Text, TouchableOpacity } from 'react-native';
 import Colors from '../styles/colors';
 import { STYLESHEET } from '../styles/stylesheet';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -53,6 +53,8 @@ const BottomBar = ({ navigation, route }) => {
     flex: 0,
     flexDirection: 'column',
     alignItems: 'center',
+    minWidth: 40,
+    minHeight: 30,
   };
 
   const labelStyle = {
@@ -63,19 +65,24 @@ const BottomBar = ({ navigation, route }) => {
 
   return (
     <View style={style}>
-      <View style={buttonStyle}>
+      <TouchableOpacity
+        style={buttonStyle}
+        onPress={() => {
+          navigation.navigate('Main');
+        }}
+      >
         <FontAwesomeIcon
           style={{ ...iconStyle, opacity: page == 'Main' ? 1 : 0.8 }}
           icon={faHouseUser}
           size={Dimensions.get('window').height * 0.03}
           color={Colors.Primary}
-          onPress={() => {
-            navigation.navigate('Main');
-          }}
         />
         <Text style={labelStyle}>Home</Text>
-      </View>
-      <View style={buttonStyle}>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={buttonStyle}
+        onPress={() => navigation.navigate('Goals', {})}
+      >
         <FontAwesomeIcon
           style={[iconStyle, { opacity: page == 'Goals' ? 1 : 0.8 }]}
           icon={faDonate}
@@ -84,21 +91,23 @@ const BottomBar = ({ navigation, route }) => {
           onPress={() => navigation.navigate('Goals', {})}
         />
         <Text style={labelStyle}>Goals</Text>
-      </View>
-      <View style={buttonStyle}>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={buttonStyle}
+        onPress={() =>
+          navigation.navigate('Transactions', {
+            navigatedState: 'all',
+          })
+        }
+      >
         <FontAwesomeIcon
           style={[iconStyle, { opacity: page == 'Transactions' ? 1 : 0.8 }]}
           icon={faCommentsDollar}
           size={Dimensions.get('window').height * 0.03}
           color={Colors.Primary}
-          onPress={() =>
-            navigation.navigate('Transactions', {
-              navigatedState: 'all',
-            })
-          }
         />
         <Text style={labelStyle}>Transactions</Text>
-      </View>
+      </TouchableOpacity>
       {/* <FontAwesomeIcon
         style={iconStyle}
         icon={faUserCircle}
@@ -108,20 +117,22 @@ const BottomBar = ({ navigation, route }) => {
           navigation.navigate("Account", { navigatedState: navigation })
         }
       /> */}
-      <View style={buttonStyle}>
+      <TouchableOpacity
+        style={buttonStyle}
+        onPress={() => {
+          navigation.navigate('Budget', {
+            navigatedState: navigation,
+          });
+        }}
+      >
         <FontAwesomeIcon
           style={[iconStyle, { opacity: page == 'Budget' ? 1 : 0.8 }]}
           icon={faFileInvoiceDollar}
           size={Dimensions.get('window').height * 0.03}
           color={Colors.Primary}
-          onPress={() => {
-            navigation.navigate('Budget', {
-              navigatedState: navigation,
-            });
-          }}
         />
         <Text style={labelStyle}>Budget</Text>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };

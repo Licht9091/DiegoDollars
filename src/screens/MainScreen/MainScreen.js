@@ -28,6 +28,7 @@ import WavyHeader from '../../components/WavyHeader';
 import Arrow from '../../assets/forwardArrowBlack.svg';
 import moment from 'moment';
 import { User } from '../../helper/api';
+import Goal from '../../components/Goal';
 
 const iconStyle = {
   opacity: 0.8,
@@ -223,7 +224,22 @@ const MainScreen = ({ navigation, route }) => {
 
             {/* Goals */}
             <View style={mainStyle.container}>
-              <Text style={mainStyle.title}>My Goals</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <View
+                  style={{
+                    width: Dimensions.get('window').width * 0.87,
+                    justifyContent: 'flex-end',
+                  }}
+                >
+                  <Text style={mainStyle.title}>Goals</Text>
+                </View>
+                <TouchableOpacity
+                  style={{ flex: 1, justifyContent: 'center' }}
+                  onPress={() => navigation.navigate('Goals')}
+                >
+                  <Arrow />
+                </TouchableOpacity>
+              </View>
               {data.goals && (
                 <ScrollView
                   horizontal={true}
@@ -232,33 +248,7 @@ const MainScreen = ({ navigation, route }) => {
                 >
                   {/* Goals Data loop */}
                   {data.goals.map((goal) => (
-                    <TouchableOpacity
-                      key={goal.id}
-                      activeOpacity={0.6}
-                      style={{
-                        ...mainStyle.goalWrapper,
-                        ...STYLESHEET.shadowNormal,
-                      }}
-                      onPress={() =>
-                        navigation.navigate('MyGoals', {
-                          goalId: goal.id,
-                          navigatedState: 'income',
-                        })
-                      }
-                    >
-                      <Text style={mainStyle.subtitle}>{goal.description}</Text>
-                      <View style={mainStyle.goalDetailsWrapper}>
-                        <PieChart value={goal.percent / 100} />
-                        <View style={mainStyle.goalInfo}>
-                          <Text style={mainStyle.goalContribution}>
-                            {`$${Format.toDollars(goal.currentContribution)}`}
-                          </Text>
-                          <Text style={mainStyle.goalCompletion}>
-                            {goal.percent}% Complete
-                          </Text>
-                        </View>
-                      </View>
-                    </TouchableOpacity>
+                    <Goal navigation={navigation} goal={goal} />
                   ))}
                 </ScrollView>
               )}

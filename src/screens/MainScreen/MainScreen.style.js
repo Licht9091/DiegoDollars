@@ -162,37 +162,6 @@ const mainStyle = {
     flexDirection: 'row',
     height: 160,
   },
-  goalWrapper: {
-    width: 200,
-    height: 120,
-    paddingTop: 10,
-    paddingLeft: 15,
-    marginLeft: 10,
-    paddingRight: 10,
-    backgroundColor: Colors.White,
-    borderRadius: 20,
-  },
-  goalDetailsWrapper: {
-    flex: 1,
-    flexDirection: 'row',
-    display: 'flex',
-  },
-  goalInfo: {
-    flex: 1,
-    flexDirection: 'column',
-    marginLeft: 20,
-    marginTop: 25,
-  },
-  goalContribution: {
-    fontFamily: FONT_FAMILY_SEMIBOLD,
-    fontSize: 19,
-    color: Colors.DarkerGray,
-  },
-  goalCompletion: {
-    fontFamily: FONT_FAMILY_SEMIBOLD,
-    fontSize: 9,
-    color: Colors.DarkerGray,
-  },
   createGoalWrapper: {
     flex: 1,
     flexDirection: 'row',
