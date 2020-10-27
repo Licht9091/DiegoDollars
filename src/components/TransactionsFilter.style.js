@@ -70,7 +70,7 @@ const filterStyles = {
     backgroundColor: 'white',
     margin: 0,
     padding: 0,
-    ...STYLESHEET.shadowNormal,
+    // ...STYLESHEET.shadowNormal,
   },
   dateHeader: {
     margin: 0,

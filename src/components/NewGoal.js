@@ -71,7 +71,10 @@ const newGoalStyle = {
   },
   content: {
     marginTop: 50,
-    padding: 30,
+    paddingTop: 30,
+    paddingLeft: 20,
+    paddingBottom: 30,
+    paddingRight: 30,
     flex: 0,
     flexDirection: 'column',
   },
