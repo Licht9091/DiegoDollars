@@ -71,7 +71,7 @@ const mainStyle = {
     fontSize: 12,
     color: '#A2A2A2',
     alignSelf: 'flex-end',
-    marginRight: 5,
+    marginRight: 15,
   },
   loadWrapper: {
     backgroundColor: Colors.Primary,
@@ -174,8 +174,8 @@ const mainStyle = {
     padding: 8,
     paddingLeft: 12,
     paddingRight: 12,
-    backgroundColor: '#2B2B2B',
-    borderRadius: 6,
+    backgroundColor: '#555555',
+    borderRadius: 15,
     color: Colors.White,
     flex: 0,
   },
@@ -221,7 +221,7 @@ const mainStyle = {
     color: Colors.DarkerGray,
     textAlign: 'right',
     alignSelf: 'flex-end',
-    marginRight: 5,
+    marginRight: 15,
     width: Dimensions.get('window').width * 0.45,
   },
   spendCategory: {
@@ -266,6 +266,9 @@ const mainStyle = {
   },
   topHeader: {
     width: 120,
+  },
+  arrow: {
+    transform: [{ scale: 0.7 }],
   },
 };
 

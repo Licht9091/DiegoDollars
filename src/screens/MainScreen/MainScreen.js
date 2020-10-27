@@ -177,22 +177,22 @@ const MainScreen = ({ navigation, route }) => {
 
             {/* Latest Transactions */}
             <View style={mainStyle.goalContainer}>
-              <View style={{ flexDirection: 'row' }}>
+              <TouchableOpacity
+                style={{ flex: 1, justifyContent: 'center' }}
+                onPress={() => navigation.navigate('Transactions')}
+              >
                 <View
                   style={{
-                    width: Dimensions.get('window').width * 0.87,
-                    justifyContent: 'flex-end',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    paddingRight: 20,
                   }}
                 >
                   <Text style={mainStyle.title}>Latest Transactions</Text>
+                  <Arrow style={[mainStyle.arrow, { top: -5 }]} />
                 </View>
-                <TouchableOpacity
-                  style={{ flex: 1, justifyContent: 'center' }}
-                  onPress={() => navigation.navigate('Transactions')}
-                >
-                  <Arrow />
-                </TouchableOpacity>
-              </View>
+              </TouchableOpacity>
 
               <View style={mainStyle.transactionBubblePillView}>
                 {data.recentTransactions.map((t) => (
@@ -211,7 +211,7 @@ const MainScreen = ({ navigation, route }) => {
                         {Format.toCents(t.value)}
                       </Text>
                       <Text style={mainStyle.timeAndDate}>
-                        {moment(t.date).format('dddd Do MMMM').toUpperCase()}
+                        {moment(t.date).format('dddd').toUpperCase()}
                       </Text>
                     </View>
                   </TouchableOpacity>
@@ -221,22 +221,23 @@ const MainScreen = ({ navigation, route }) => {
 
             {/* Goals */}
             <View style={mainStyle.container}>
-              <View style={{ flexDirection: 'row' }}>
-                <View
-                  style={{
-                    width: Dimensions.get('window').width * 0.87,
-                    justifyContent: 'flex-end',
-                  }}
-                >
-                  <Text style={mainStyle.title}>Goals</Text>
+              <TouchableOpacity
+                style={{ flex: 1, justifyContent: 'center' }}
+                onPress={() => navigation.navigate('Goals')}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <View
+                    style={{
+                      marginTop: 20,
+                      width: Dimensions.get('window').width * 0.87,
+                      justifyContent: 'flex-end',
+                    }}
+                  >
+                    <Text style={mainStyle.title}>Goals</Text>
+                  </View>
+                  <Arrow style={mainStyle.arrow} />
                 </View>
-                <TouchableOpacity
-                  style={{ flex: 1, justifyContent: 'center' }}
-                  onPress={() => navigation.navigate('Goals')}
-                >
-                  <Arrow />
-                </TouchableOpacity>
-              </View>
+              </TouchableOpacity>
               {data.goals && (
                 <ScrollView
                   horizontal={true}
