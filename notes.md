@@ -1,40 +1,45 @@
 # TODO BEFORE FRIDAY
 
-- Find a better search bar?
-- New Fortnight Total avaliable spending on modal
-- Store the start date of the current fortnight somewhere
 - Only show paychecks for the current fortnight
-- Find way to supress errors in Expo for demo
 - Set new fornight start date when starting the fortnight
 - Check 'Available This Fortnight' calculation on the home screen
-- Home screen touchups
-  - Fortnight spending number of transactions
-  - Show actual latest transactions
-  - Pull down refresh?
-- My Goals rocket value updates
-- Finish Nav bar?
-  - Highlights
-  - Make sure navigation is consistent
-  - Labels
-  - 2nd Button for goals (Might need goals page first)
 - My budget page state management
-
-  - Fix strings adding instead of numbers
-
-- Single Transactions
-
-  - Show categories
-  - Update categories (Call API call)
-  - Categorise goal (Call API call)
-  - Create new goal button navigate
+- Fix strings adding instead of numbers on my budget screen
+- Work through suggestions from Ben's user testing
+- Hide paycheck received and uncategorised expenses buttons when they don't need to be shown
 
 - Main screen fortnight spending
+
   - 114%??? I think it is counting income
   - Filter by actual forntight when we have it
-- Work through suggestions from Ben's user testing
+
+- Create new category API
+
+WON'T DO:
+
+- Find a better search bar?
+
+- New Fortnight Total avaliable spending on modal
 - Plug actual data into the fortnight summary (or not)
-- We need a main goals page
 - Transaction code speed improvements? Maybe thinking indicators?
+
+DONE:
+
+- Store the start date of the current fortnight somewhere
+- Home screen touchups
+  - Pull down refresh?
+- Find way to supress errors in Expo for demo
+- Categories cards on main page should prefill the search box and search by category on the Transaction screen
+- "Uncategorized Transactions" button on main screen should filter by "expenses" only and also prefill the search bar with "Uncategorized" and filter by that as a category
+- My Goals page should filter by (goal.id == transaction.goalId) as well
+- My Goals rocket value updates (search for EDITME)
+- Update the "Not avaliable for income" on SingleTransaction to look nice (search for EDITME)
+- We need a main goals page
+- Finish Nav bar?
+  - Highlights
+  - Make sure navigation is consistent (I think done?)
+  - Labels
+  - 2nd Button for goals (Might need goals page first)
 
 ---
 
@@ -100,6 +105,12 @@ Expo:
 - Demo (with slides showing progression of each page/feature)
 - Ask judges questions, so they think about what you're doing
 - Get confirmation from judges for each thing that you're showing
+- Do we need to bring a display?
+- Detailed plan and practice it at least twice
+- Bring a phone charger
+- Deactivate phone notifications
+- Bring laptop charger
+- Slides with screens and people's comments from user testing
 
 ---
 
