@@ -62,7 +62,7 @@ const Goal = ({ navigation, goal }) => {
     >
       <Text style={style.subtitle}>{goal.description}</Text>
       <View style={style.goalDetailsWrapper}>
-        <PieChart value={goal.percent / 100} />
+      <PieChart value={goal.percent / 100} />
         <View style={style.goalInfo}>
           <Text style={style.goalContribution}>
             {`$${Format.toDollars(goal.currentContribution)}`}

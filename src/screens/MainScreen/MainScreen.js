@@ -118,7 +118,7 @@ const MainScreen = ({ navigation, route }) => {
           >
             {/* Title */}
 
-            <WavyHeader />
+            <WavyHeader/>
             <View style={mainStyle.logoWrapper}>
               <Text style={mainStyle.logo}>DIEGO</Text>
             </View>
@@ -136,16 +136,18 @@ const MainScreen = ({ navigation, route }) => {
                     </Text>
                     <Tooltip
                       popover={
-                        <Text>
+                        <Text style={mainStyle.toolTipText}>
                           This is how much you have left to spend after taking
                           into account goals and recurring expenses.
                         </Text>
                       }
                       backgroundColor='white'
                       overlayColor='rgba(250, 250, 250, 0)'
-                      height={150}
+                      height={120}
                       width={170}
                       withPointer={false}
+                      skipAndroidStatusBar={true}
+                      containerStyle={{marginTop: -50}}
                     >
                       <FontAwesomeIcon
                         style={iconStyle}
