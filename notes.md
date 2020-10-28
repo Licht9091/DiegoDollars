@@ -1,30 +1,34 @@
 # TODO BEFORE FRIDAY
 
-- Only show paychecks for the current fortnight
-- Set new fornight start date when starting the fortnight
+- Finish new fortnight flow
+  - Switch Fortnight Summary and Goal Assignment
+  - Pass along data between the 3 screens
+  - Backend Stuff
 - Check 'Available This Fortnight' calculation on the home screen
-- My budget page state management
-- Fix strings adding instead of numbers on my budget screen
+- Fix Contribute to Goals
+- Test My Budget
+- Default Income to off in transaction Lists
+- Filter category cards by User.account.periodStart
 - Work through suggestions from Ben's user testing
-- Hide paycheck received and uncategorised expenses buttons when they don't need to be shown
-
-- Main screen fortnight spending
-
-  - 114%??? I think it is counting income
-  - Filter by actual forntight when we have it
-
-- Create new category API
+- Create new category API + Check Categories
 
 WON'T DO:
 
 - Find a better search bar?
-
 - New Fortnight Total avaliable spending on modal
 - Plug actual data into the fortnight summary (or not)
 - Transaction code speed improvements? Maybe thinking indicators?
 
 DONE:
 
+- Main screen fortnight spending
+  - 114%??? I think it is counting income
+  - Filter by actual forntight when we have it
+- Hide paycheck received and uncategorised expenses buttons when they don't need to be shown
+- Fix strings adding instead of numbers on my budget screen
+- My budget page state management
+- Set new fornight start date when starting the fortnight
+- Only show paychecks for the current fortnight
 - Store the start date of the current fortnight somewhere
 - Home screen touchups
   - Pull down refresh?
