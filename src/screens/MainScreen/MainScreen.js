@@ -196,7 +196,11 @@ const MainScreen = ({ navigation, route }) => {
               <View style={mainStyle.heroUncategorised}>
                 {data.uncategorisedSpending.length > 0 && (
                   <Pill
-                    content={`${data.uncategorisedSpending.length} Uncategorised Expenses`}
+                    content={`${
+                      data.uncategorisedSpending.length
+                    } Uncategorised Expense${
+                      data.uncategorisedSpending.length > 1 ? 's' : ''
+                    }`}
                     color={Colors.DarkerGray}
                     backgroundColor={Colors.White}
                     onPress={() =>
