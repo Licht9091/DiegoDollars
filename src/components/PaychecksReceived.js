@@ -1,13 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Image, Text, View, TouchableOpacity } from 'react-native';
-import AppContext from '../helper/context';
-import Paycheck from './Paycheck';
-import paycheckStyle from './PaychecksReceived.style';
+import React, { useContext, useEffect, useState } from "react";
+import { Image, Text, View, TouchableOpacity } from "react-native";
+import AppContext from "../helper/context";
+import Paycheck from "./Paycheck";
+import paycheckStyle from "./PaychecksReceived.style";
+import moment from "moment";
 
 // Icon assets
-import CloudOne from '../assets/cloud.svg';
-import CloudTwo from '../assets/cloud2.svg';
-import Sun from '../assets/sun.svg';
+import CloudOne from "../assets/cloud.svg";
+import CloudTwo from "../assets/cloud2.svg";
+import Sun from "../assets/sun.svg";
+import { User } from "../helper/api";
 
 const PaychecksReceived = ({ onClose, onComplete }) => {
   const Context = useContext(AppContext);
@@ -15,10 +17,10 @@ const PaychecksReceived = ({ onClose, onComplete }) => {
   const [notPaycheck, setNotPaycheck] = useState([]);
 
   const getPaychecks = async () => {
-    const Account = await Context.User.account;
-    const paychecks = Account.allTransactions
-      .filter((t) => t.value > 50)
-      .map((t) => ({ ...t, description: t.description.replace(/\s+/g, ' ') }))
+    const account = await Context.User.account;
+    const paychecks = account.allTransactions
+      .filter((t) => t.isIncome && moment(t.date) > moment(account.periodStart))
+      .map((t) => ({ ...t, description: t.description.replace(/\s+/g, " ") }))
       .slice(0, 2);
 
     setPaychecks(paychecks);

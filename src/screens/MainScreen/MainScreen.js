@@ -55,16 +55,19 @@ const MainScreen = ({ navigation, route }) => {
     _numTransactions =
       _allTransactions.length >= 5 ? 5 : _allTransactions.length;
     _recentTransactions = _allTransactions.slice(0, _numTransactions);
+    _periodStart = moment(User.account.periodStart);
 
     setData({
       uncategorisedSpending: User.uncategorisedSpending,
-      uncategorisedIncome: User.uncategorisedIncome,
+      uncategorisedIncome: _allTransactions.filter(
+        (t) => t.isIncome && moment(t.date) > _periodStart
+      ).length,
       availableSpending: User.account.spendingBalance,
       goals: User.goals,
       spendingCategories: User.spendingCategories,
       transactions: _allTransactions,
       recentTransactions: _recentTransactions,
-      periodStart: User.account.periodStart,
+      periodStart: _periodStart,
     });
 
     setLoaded(true);
@@ -169,25 +172,29 @@ const MainScreen = ({ navigation, route }) => {
                 Available This Period
               </Text>
               <View style={[mainStyle.heroUncategorised]}>
-                <Pill
-                  content={`${data.uncategorisedIncome} Paychecks Received`}
-                  color={Colors.White}
-                  backgroundColor={"#FF6A6A"}
-                  onPress={() => setRefreshModal(true)} // "income"
-                />
+                {data.uncategorisedIncome > 0 && (
+                  <Pill
+                    content={`${data.uncategorisedIncome} Paycheck(s) Received`}
+                    color={Colors.White}
+                    backgroundColor={"#FF6A6A"}
+                    onPress={() => setRefreshModal(true)} // "income"
+                  />
+                )}
               </View>
               <View style={mainStyle.heroUncategorised}>
-                <Pill
-                  content={`${data.uncategorisedSpending} Uncategorised Expenses`}
-                  color={Colors.DarkerGray}
-                  backgroundColor={Colors.White}
-                  onPress={() =>
-                    navigation.navigate("Transactions", {
-                      navigatedState: "expense",
-                      filterString: "Uncategorized",
-                    })
-                  } // "expense"
-                />
+                {data.uncategorisedSpending > 0 && (
+                  <Pill
+                    content={`${data.uncategorisedSpending} Uncategorised Expenses`}
+                    color={Colors.DarkerGray}
+                    backgroundColor={Colors.White}
+                    onPress={() =>
+                      navigation.navigate("Transactions", {
+                        navigatedState: "expense",
+                        filterString: "Uncategorized",
+                      })
+                    } // "expense"
+                  />
+                )}
               </View>
             </View>
 
