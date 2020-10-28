@@ -61,7 +61,7 @@ const mainStyle = {
   },
   toolTipText: {
     fontFamily: FONT_FAMILY_REGULAR,
-    textAlign: "center",
+    textAlign: 'center',
   },
   transactionCategory: {
     fontFamily: FONT_FAMILY_SEMIBOLD,

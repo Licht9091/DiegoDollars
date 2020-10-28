@@ -347,7 +347,12 @@ const MainScreen = ({ navigation, route }) => {
                           />
                         </View>
                         <View style={mainStyle.spendInfo}>
-                          <Text style={mainStyle.spendAmount}>
+                          <Text
+                            style={[
+                              mainStyle.spendAmount,
+                              { transform: [{ translateX: -10 }] },
+                            ]}
+                          >
                             {`$${Format.toDollars(category.amount)}`}
                           </Text>
                         </View>
@@ -356,6 +361,7 @@ const MainScreen = ({ navigation, route }) => {
                             width: Dimensions.get('window').width * 0.06,
                             marginRight: -10,
                             justifyContent: 'center',
+                            transform: [{ translateX: -10 }],
                           }}
                         >
                           <Arrow />
