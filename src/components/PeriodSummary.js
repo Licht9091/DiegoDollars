@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Text, ScrollView, TouchableOpacity, View } from "react-native";
-import AppContext from "../helper/context";
-import Format from "../helper/Format";
-import moment from "moment";
-const { default: pSummaryStyle } = require("./PeriodSummary.style");
+import React, { useContext, useEffect, useState } from 'react';
+import { Text, ScrollView, TouchableOpacity, View } from 'react-native';
+import AppContext from '../helper/context';
+import Format from '../helper/Format';
+import moment from 'moment';
+const { default: pSummaryStyle } = require('./PeriodSummary.style');
 
-const PeriodSummary = ({ onComplete }) => {
+const PeriodSummary = ({ onComplete, paycheckIds = [] }) => {
   const Context = useContext(AppContext);
   const [loaded, setLoaded] = useState(false);
   const [data, setData] = useState({});
@@ -13,9 +13,9 @@ const PeriodSummary = ({ onComplete }) => {
   const loadData = async () => {
     setData({
       summaryItems: [
-        { label: "Total Income", value: 1251.12 },
+        { label: 'Total Income', value: 1251.12 },
         {
-          label: "Total Spendings",
+          label: 'Total Spendings',
           value: Math.abs(
             Context.User.account.allTransactions
               .filter(
@@ -26,21 +26,21 @@ const PeriodSummary = ({ onComplete }) => {
               .reduce((a, b) => a + b.value, 0)
           ),
         },
-        { label: "Allocated to Goals", value: 300 },
-        { label: "Spent Per Day", value: 55.2 },
+        { label: 'Allocated to Goals', value: 300 },
+        { label: 'Spent Per Day', value: 55.2 },
       ],
       rolloverSpending: 10.5,
       topSpendingCategories: [
-        { categoryName: "Groceries", amount: 103.5 },
-        { categoryName: "Transport", amount: 52.35 },
-        { categoryName: "Groceries", amount: 71.3 },
-        { categoryName: "Groceries", amount: 21.6 },
+        { categoryName: 'Groceries', amount: 103.5 },
+        { categoryName: 'Transport', amount: 52.35 },
+        { categoryName: 'Groceries', amount: 71.3 },
+        { categoryName: 'Groceries', amount: 21.6 },
       ],
       largestTransactions: [
-        { description: "Groceries", amount: 103.5 },
-        { description: "Transport", amount: 52.35 },
-        { description: "Groceries", amount: 71.3 },
-        { description: "Groceries", amount: 21.6 },
+        { description: 'Groceries', amount: 103.5 },
+        { description: 'Transport', amount: 52.35 },
+        { description: 'Groceries', amount: 71.3 },
+        { description: 'Groceries', amount: 21.6 },
       ],
     });
 
@@ -64,15 +64,16 @@ const PeriodSummary = ({ onComplete }) => {
           <View style={pSummaryStyle.card}>
             <View style={pSummaryStyle.header}>
               <Text style={pSummaryStyle.headerText}>
-                Summary for this Fortnight
+                Summary for last Fortnight
               </Text>
             </View>
             <View style={pSummaryStyle.info}>
               <Text style={pSummaryStyle.infoTextBold}>
                 Congratulations on finishing a budgeted fortnight!
               </Text>
+
               <Text style={pSummaryStyle.infoText}>
-                Here's a quick sumary of how you did over the period.
+                Here's a quick sumary of how you did over the last period.
               </Text>
             </View>
             <View style={pSummaryStyle.content}>
@@ -96,7 +97,7 @@ const PeriodSummary = ({ onComplete }) => {
                 Rolled Over From Last Fornight
               </Text>
               <SummaryLine
-                label="Available Spending"
+                label='Available Spending'
                 value={Format.toDollarsDisplay(data.rolloverSpending)}
               />
 
@@ -126,9 +127,7 @@ const PeriodSummary = ({ onComplete }) => {
               onPress={onComplete}
             >
               <View style={pSummaryStyle.button}>
-                <Text style={pSummaryStyle.buttonText}>
-                  Start Next Fortnight
-                </Text>
+                <Text style={pSummaryStyle.buttonText}>Close</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -142,11 +141,11 @@ const SummaryLine = ({ label, value }) => {
   const style = {
     wrapper: {
       flex: 0,
-      flexDirection: "row",
+      flexDirection: 'row',
       marginTop: 5,
       marginBottom: 5,
       width: 290,
-      justifyContent: "space-between",
+      justifyContent: 'space-between',
     },
     labelText: {
       flex: 0,

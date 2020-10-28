@@ -18,9 +18,21 @@ export default function TransactionScreen({ navigation, route }) {
     filterString = route.params.filterString;
   }
 
+  const thisPeriod = route.params && route.params.thisPeriod;
+  console.log(User.account.allTransactions);
+  console.log('period start');
+  console.log(User.account.periodStart);
+  console.log('this period');
+  console.log(thisPeriod);
+
   // transactions
   const [allTransactions, setAllTransactions] = useState(
-    User.account.allTransactions.slice(0, 20)
+    User.account.allTransactions
+      .slice(0, 60)
+      .filter(
+        (t) =>
+          !thisPeriod || new Date(t.date) >= new Date(User.account.periodStart)
+      )
   );
 
   // single transaction modal
@@ -28,7 +40,12 @@ export default function TransactionScreen({ navigation, route }) {
 
   const fetchNewTransactions = async () => {
     await User.fetchTransactions();
-    setAllTransactions(User.account.allTransactions);
+    setAllTransactions(
+      User.account.allTransactions.filter(
+        (t) =>
+          !thisPeriod || new Date(t.date) >= new Date(User.account.periodStart)
+      )
+    );
   };
 
   useEffect(() => {

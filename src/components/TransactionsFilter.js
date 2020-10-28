@@ -14,8 +14,8 @@ const TransactionsFilter = ({
   filterString,
 }) => {
   // toggles and filters
-  const [showIncome, setShowIncome] = useState(true);
   const [showExpenses, setShowExpenses] = useState(true);
+  const [showIncome, setShowIncome] = useState(false);
   const [searchContents, setSearchContents] = useState(
     filterString ? filterString : ''
   );

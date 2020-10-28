@@ -1,14 +1,12 @@
 # TODO BEFORE FRIDAY
 
 - Finish new fortnight flow
-  - Switch Fortnight Summary and Goal Assignment
   - Pass along data between the 3 screens
   - Backend Stuff
 - Check 'Available This Fortnight' calculation on the home screen
+
 - Fix Contribute to Goals
 - Test My Budget
-- Default Income to off in transaction Lists
-- Filter category cards by User.account.periodStart
 - Work through suggestions from Ben's user testing
 - Create new category API + Check Categories
 
@@ -21,6 +19,9 @@ WON'T DO:
 
 DONE:
 
+- Switch Fortnight Summary and Goal Assignment
+- Filter category cards by User.account.periodStart
+- Default Income to off in transaction Lists
 - Main screen fortnight spending
   - 114%??? I think it is counting income
   - Filter by actual forntight when we have it

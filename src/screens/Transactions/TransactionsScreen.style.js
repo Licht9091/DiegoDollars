@@ -10,11 +10,11 @@ import { STYLESHEET } from '../../styles/stylesheet';
 const transactionStyles = StyleSheet.create({
   page: {
     height: Dimensions.get('window').height,
+    backgroundColor: 'white',
   },
-  mainView: {
-    backgroundColor: Colors.Primary,
-  },
+  mainView: {},
   topHeading: {
+    backgroundColor: Colors.Primary,
     paddingBottom: 40,
     margin: 0,
   },
