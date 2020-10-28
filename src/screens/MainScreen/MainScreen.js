@@ -1,8 +1,8 @@
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { useIsFocused } from '@react-navigation/native';
-import moment from 'moment';
-import React, { useContext, useEffect, useState } from 'react';
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { useIsFocused } from "@react-navigation/native";
+import moment from "moment";
+import React, { useContext, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Dimensions,
@@ -10,24 +10,24 @@ import {
   ScrollView,
   Text,
   View,
-} from 'react-native';
-import { Tooltip } from 'react-native-elements';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import Modal from 'react-native-modal';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Arrow from '../../assets/forwardArrowBlack.svg';
-import BottomBar from '../../components/BottomBar';
-import Goal from '../../components/Goal';
-import NewGoal from '../../components/NewGoal';
-import Pill from '../../components/Pill';
-import RefreshModal from '../../components/RefreshModal';
-import SmallPieChart from '../../components/SmallPieChart';
-import WavyHeader from '../../components/WavyHeader';
-import AppContext from '../../helper/context';
-import Format from '../../helper/Format';
-import Colors from '../../styles/colors';
-import { STYLESHEET } from '../../styles/stylesheet';
-import mainStyle from './MainScreen.style';
+} from "react-native";
+import { Tooltip } from "react-native-elements";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import Modal from "react-native-modal";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Arrow from "../../assets/forwardArrowBlack.svg";
+import BottomBar from "../../components/BottomBar";
+import Goal from "../../components/Goal";
+import NewGoal from "../../components/NewGoal";
+import Pill from "../../components/Pill";
+import RefreshModal from "../../components/RefreshModal";
+import SmallPieChart from "../../components/SmallPieChart";
+import WavyHeader from "../../components/WavyHeader";
+import AppContext from "../../helper/context";
+import Format from "../../helper/Format";
+import Colors from "../../styles/colors";
+import { STYLESHEET } from "../../styles/stylesheet";
+import mainStyle from "./MainScreen.style";
 
 const iconStyle = {
   opacity: 0.8,
@@ -55,15 +55,19 @@ const MainScreen = ({ navigation, route }) => {
     _numTransactions =
       _allTransactions.length >= 5 ? 5 : _allTransactions.length;
     _recentTransactions = _allTransactions.slice(0, _numTransactions);
+    _periodStart = moment(User.account.periodStart);
 
     setData({
       uncategorisedSpending: User.uncategorisedSpending,
-      uncategorisedIncome: User.uncategorisedIncome,
+      uncategorisedIncome: _allTransactions.filter(
+        (t) => t.isIncome && moment(t.date) > _periodStart
+      ).length,
       availableSpending: User.account.spendingBalance,
       goals: User.goals,
       spendingCategories: User.spendingCategories,
       transactions: _allTransactions,
       recentTransactions: _recentTransactions,
+      periodStart: _periodStart,
     });
 
     setLoaded(true);
@@ -90,7 +94,7 @@ const MainScreen = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={{ backgroundColor: Colors.White }}>
-      <View style={{ height: Dimensions.get('window').height }}>
+      <View style={{ height: Dimensions.get("window").height }}>
         {/* Refresh Modal */}
         {refreshModal && (
           <RefreshModal onClose={() => setRefreshModal(false)}></RefreshModal>
@@ -101,7 +105,7 @@ const MainScreen = ({ navigation, route }) => {
           <Modal isVisible onPress={false}>
             <NewGoal
               onClose={() => setNewGoalModal(false)}
-              goal={''}
+              goal={""}
               navigation={navigation}
             />
           </Modal>
@@ -109,7 +113,7 @@ const MainScreen = ({ navigation, route }) => {
 
         {(!loaded || !data) && (
           <ScrollView style={mainStyle.loadWrapper}>
-            <ActivityIndicator size='large' color='white' />
+            <ActivityIndicator size="large" color="white" />
           </ScrollView>
         )}
         {data && loaded && (
@@ -122,7 +126,7 @@ const MainScreen = ({ navigation, route }) => {
           >
             {/* Title */}
 
-            <WavyHeader/>
+            <WavyHeader />
             <View style={mainStyle.logoWrapper}>
               <Text style={mainStyle.logo}>DIEGO</Text>
             </View>
@@ -145,18 +149,18 @@ const MainScreen = ({ navigation, route }) => {
                           into account goals and recurring expenses.
                         </Text>
                       }
-                      backgroundColor='white'
-                      overlayColor='rgba(250, 250, 250, 0)'
+                      backgroundColor="white"
+                      overlayColor="rgba(250, 250, 250, 0)"
                       height={120}
                       width={170}
                       withPointer={false}
                       skipAndroidStatusBar={true}
-                      containerStyle={{marginTop: -50}}
+                      containerStyle={{ marginTop: -50 }}
                     >
                       <FontAwesomeIcon
                         style={iconStyle}
                         icon={faInfoCircle}
-                        size={Dimensions.get('window').height * 0.03}
+                        size={Dimensions.get("window").height * 0.03}
                         color={Colors.White}
                         marginLeft={10}
                       />
@@ -165,42 +169,46 @@ const MainScreen = ({ navigation, route }) => {
                 )}
               </View>
               <Text style={mainStyle.availablelable}>
-                Available This Fortnight
+                Available This Period
               </Text>
               <View style={[mainStyle.heroUncategorised]}>
-                <Pill
-                  content={`${data.uncategorisedIncome} Paychecks Received`}
-                  color={Colors.White}
-                  backgroundColor={'#FF6A6A'}
-                  onPress={() => setRefreshModal(true)} // "income"
-                />
+                {data.uncategorisedIncome > 0 && (
+                  <Pill
+                    content={`${data.uncategorisedIncome} Paycheck(s) Received`}
+                    color={Colors.White}
+                    backgroundColor={"#FF6A6A"}
+                    onPress={() => setRefreshModal(true)} // "income"
+                  />
+                )}
               </View>
               <View style={mainStyle.heroUncategorised}>
-                <Pill
-                  content={`${data.uncategorisedSpending} Uncategorised Expenses`}
-                  color={Colors.DarkerGray}
-                  backgroundColor={Colors.White}
-                  onPress={() =>
-                    navigation.navigate('Transactions', {
-                      navigatedState: 'expense',
-                      filterString: 'Uncategorized',
-                    })
-                  } // "expense"
-                />
+                {data.uncategorisedSpending > 0 && (
+                  <Pill
+                    content={`${data.uncategorisedSpending} Uncategorised Expenses`}
+                    color={Colors.DarkerGray}
+                    backgroundColor={Colors.White}
+                    onPress={() =>
+                      navigation.navigate("Transactions", {
+                        navigatedState: "expense",
+                        filterString: "Uncategorized",
+                      })
+                    } // "expense"
+                  />
+                )}
               </View>
             </View>
 
             {/* Latest Transactions */}
             <View style={mainStyle.goalContainer}>
               <TouchableOpacity
-                style={{ flex: 1, justifyContent: 'center' }}
-                onPress={() => navigation.navigate('Transactions')}
+                style={{ flex: 1, justifyContent: "center" }}
+                onPress={() => navigation.navigate("Transactions")}
               >
                 <View
                   style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
                     paddingRight: 20,
                   }}
                 >
@@ -227,7 +235,7 @@ const MainScreen = ({ navigation, route }) => {
                         {Format.toCents(t.value)} */}
                       </Text>
                       <Text style={mainStyle.timeAndDate}>
-                        {moment(t.date).format('dddd')}
+                        {moment(t.date).format("dddd")}
                       </Text>
                     </View>
                   </TouchableOpacity>
@@ -238,15 +246,15 @@ const MainScreen = ({ navigation, route }) => {
             {/* Goals */}
             <View style={mainStyle.container}>
               <TouchableOpacity
-                style={{ flex: 1, justifyContent: 'center' }}
-                onPress={() => navigation.navigate('Goals')}
+                style={{ flex: 1, justifyContent: "center" }}
+                onPress={() => navigation.navigate("Goals")}
               >
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <View
                     style={{
                       marginTop: 20,
-                      width: Dimensions.get('window').width * 0.87,
-                      justifyContent: 'flex-end',
+                      width: Dimensions.get("window").width * 0.87,
+                      justifyContent: "flex-end",
                     }}
                   >
                     <Text style={mainStyle.title}>Goals</Text>
@@ -286,7 +294,7 @@ const MainScreen = ({ navigation, route }) => {
 
             {/* Spending */}
             <View style={[mainStyle.container, { marginTop: 15 }]}>
-              <Text style={mainStyle.title}>This Fortnight's Spending</Text>
+              <Text style={mainStyle.title}>This Period's Spending</Text>
               <View style={mainStyle.spendingsBubblePillView}>
                 {/* Spending Categories Data loop */}
                 {data.spendingCategories.map((category) => {
@@ -296,7 +304,7 @@ const MainScreen = ({ navigation, route }) => {
                         key={category.name}
                         style={mainStyle.pillAndTextView}
                         onPress={() =>
-                          navigation.navigate('Transactions', {
+                          navigation.navigate("Transactions", {
                             navigatedState: category.name,
                             filterString: category.name,
                           })
@@ -310,9 +318,11 @@ const MainScreen = ({ navigation, route }) => {
                             {
                               data.transactions.filter(
                                 (t) =>
-                                  t.category == category.name && !t.isIncome
+                                  t.category == category.name &&
+                                  !t.isIncome &&
+                                  moment(t.date) >= moment(data.periodStart)
                               ).length
-                            }{' '}
+                            }{" "}
                             Transactions
                           </Text>
                         </View>
@@ -329,9 +339,9 @@ const MainScreen = ({ navigation, route }) => {
                         </View>
                         <View
                           style={{
-                            width: Dimensions.get('window').width * 0.06,
+                            width: Dimensions.get("window").width * 0.06,
                             marginRight: -10,
-                            justifyContent: 'center',
+                            justifyContent: "center",
                           }}
                         >
                           <Arrow />

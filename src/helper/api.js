@@ -254,7 +254,7 @@ export class User {
     );
 
     this.spendingCategories = [];
-    spending = bodyJson['spending'];
+    spending = bodyJson['recent-spending'];
 
     this.categories = bodyJson['all-categories'];
     //console.log(this.categories);
