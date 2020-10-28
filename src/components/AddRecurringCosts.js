@@ -1,33 +1,33 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState } from 'react';
 import {
   View,
   Text,
   Dimensions,
   TextInput,
   TouchableOpacity,
-} from "react-native";
-import { STYLESHEET } from "../styles/stylesheet";
+} from 'react-native';
+import { STYLESHEET } from '../styles/stylesheet';
 import {
   FONT_FAMILY_BOLD,
   FONT_FAMILY_LIGHT,
   FONT_FAMILY_SEMIBOLD,
-} from "../styles/typography";
-import Colors from "../styles/colors";
-import Pill from "./Pill";
-import AppContext from "../helper/context";
+} from '../styles/typography';
+import Colors from '../styles/colors';
+import Pill from './Pill';
+import AppContext from '../helper/context';
 
 const AddRecurringCosts = ({ onClose }) => {
   const style = {
     wrapper: {
       flex: 0,
-      flexDirection: "column",
-      justifyContent: "space-between",
+      flexDirection: 'column',
+      justifyContent: 'space-between',
       paddingTop: 10,
       paddingBottom: 10,
       paddingLeft: 15,
       paddingRight: 15,
       borderRadius: 20,
-      backgroundColor: "white",
+      backgroundColor: 'white',
       margin: 0,
       marginTop: 10,
       ...STYLESHEET.shadowNormal,
@@ -53,46 +53,48 @@ const AddRecurringCosts = ({ onClose }) => {
     inputText: {
       fontSize: 18,
       fontFamily: FONT_FAMILY_LIGHT,
-      color: "#565758",
+      color: '#565758',
       paddingLeft: 5,
     },
     greyBubbleView: {
-      backgroundColor: "#232323",
-      width: Dimensions.get("window").width * 0.85,
+      backgroundColor: Colors.DarkGray,
+      width: Dimensions.get('window').width * 0.85,
       marginTop: 10,
       marginLeft: -5,
       marginBottom: 10,
       borderRadius: 15,
       padding: 18,
+      marginBottom: 20,
 
       flex: 0,
 
       ...STYLESHEET.shadowNormal,
     },
     defaultLineBlack: {
-      borderBottomColor: Colors.Black,
+      borderBottomColor: Colors.MediumGray,
       borderBottomWidth: 1,
+      marginTop: 6,
       marginLeft: 5,
-      width: Dimensions.get("window").width * 0.8,
-      alignSelf: "stretch",
+      width: Dimensions.get('window').width * 0.8,
+      alignSelf: 'stretch',
     },
   };
 
   const Context = useContext(AppContext);
 
-  const [costName, setCostName] = useState("");
-  const [costAmount, setCostAmount] = useState("");
+  const [costName, setCostName] = useState('');
+  const [costAmount, setCostAmount] = useState('');
 
-  const addItem = async () => {
-    resp = await Context.User.addBudgetItem(costName, costAmount, "recurring");
+  // const addItem = async () => {
+  //   resp = await Context.User.addBudgetItem(costName, costAmount, 'recurring');
 
-    if (resp) {
-      return true;
-    } else {
-      alert("Adding item failed");
-      return false;
-    }
-  };
+  //   if (resp) {
+  //     return true;
+  //   } else {
+  //     alert('Adding item failed');
+  //     return false;
+  //   }
+  // };
 
   return (
     <View style={style.wrapper}>
@@ -111,7 +113,7 @@ const AddRecurringCosts = ({ onClose }) => {
       <View style={{ paddingTop: 10 }}>
         <TextInput
           style={style.inputText}
-          placeholder="Cost Name"
+          placeholder='Cost Name'
           onChangeText={(costName) => setCostName(costName)}
           value={costName}
         />
@@ -120,52 +122,55 @@ const AddRecurringCosts = ({ onClose }) => {
       <View style={{ paddingTop: 20 }}>
         <TextInput
           style={style.inputText}
-          placeholder="Cost amount"
-          keyboardType="number-pad"
+          placeholder='Cost amount'
+          keyboardType='number-pad'
           onChangeText={(costAmount) => setCostAmount(costAmount)}
           value={costAmount}
         />
         <View style={style.defaultLineBlack}></View>
       </View>
       <View
-        style={{ flexDirection: "row", width: Dimensions.get("window").width }}
+        style={{ flexDirection: 'row', width: Dimensions.get('window').width }}
       >
         <TouchableOpacity onPress={onClose}>
           <View
             style={{
-              width: Dimensions.get("window").width * 0.35,
-              marginTop: 20,
+              width: Dimensions.get('window').width * 0.35,
+              marginTop: 40,
               marginBottom: 10,
               marginLeft: 10,
             }}
           >
             <Pill
-              content="Cancel"
+              content='Cancel'
               color={Colors.White}
-              backgroundColor={"#DB5B3C"}
+              backgroundColor={'#DB5B3C'}
             />
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={async () => {
-            if (await addItem()) {
-              onClose();
-            }
+            onClose({
+              name: costName,
+              amount: costAmount,
+              tag: 'recurring',
+              id: Math.random() * 99999,
+            });
           }}
         >
           <View
             style={{
-              width: Dimensions.get("window").width * 0.35,
-              marginTop: 20,
+              width: Dimensions.get('window').width * 0.35,
+              marginTop: 40,
               marginBottom: 10,
               marginLeft: 30,
             }}
           >
             <Pill
-              content="Add Cost"
+              content='Add Cost'
               color={Colors.White}
-              backgroundColor={"#2363BC"}
+              backgroundColor={'#2363BC'}
             />
           </View>
         </TouchableOpacity>

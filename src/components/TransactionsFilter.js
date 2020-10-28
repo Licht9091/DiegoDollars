@@ -108,7 +108,7 @@ const TransactionsFilter = ({
           {loading && <ActivityIndicator size='large' color='gray' />}
           {!loading &&
             transactions.map((t, idx) => (
-              <>
+              <View key={t.id}>
                 {(idx === 0 ||
                   moment(t.date).format('dddd Do MMMM') !==
                     moment(transactions[idx - 1].date).format(
@@ -127,7 +127,7 @@ const TransactionsFilter = ({
                 >
                   <TransactionListComponent transaction={t} />
                 </TouchableOpacity>
-              </>
+              </View>
             ))}
         </View>
         <View style={filterStyles.dummy}></View>
