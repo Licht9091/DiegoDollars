@@ -59,6 +59,10 @@ const mainStyle = {
     color: '#A2A2A2',
     alignSelf: 'flex-start',
   },
+  toolTipText: {
+    fontFamily: FONT_FAMILY_REGULAR,
+    textAlign: "center",
+  },
   transactionCategory: {
     fontFamily: FONT_FAMILY_SEMIBOLD,
     fontSize: 12,

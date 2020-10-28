@@ -42,24 +42,32 @@ export default function GoalsScreen({ navigation, route }) {
         {/* Goals */}
         <ScrollView style={s.displayCard}>
           {goals.map((g) => (
-            <TouchableOpacity
-              style={[s.row, s.goal]}
-              onPress={() =>
-                navigation.navigate('MyGoals', {
-                  goalId: g.id,
-                })
-              }
-            >
-              <View style={s.column}>
-                <Text style={s.goalTitle}>{g.description}</Text>
-                <Text style={s.goalAvailable}>
-                  ${Format.toDollars(g.currentContribution)}.
-                  {Format.toCents(g.currentContribution)} Available
-                </Text>
-                <Text style={s.goalComplete}>{g.percent}% Complete</Text>
-              </View>
-              <PieChart value={g.percent / 100} showPercentage />
-            </TouchableOpacity>
+            <View>
+              <TouchableOpacity
+                style={[s.row, s.goal]}
+                onPress={() =>
+                  navigation.navigate('MyGoals', {
+                    goalId: g.id,
+                  })
+                }
+              >
+                <View style={s.column}>
+                  <Text style={s.goalTitle}>{g.description}</Text>
+                  <View style={s.row}>
+                    <Text style={s.goalAvailable}>
+                      ${Format.toDollars(g.currentContribution)}.
+                      {Format.toCents(g.currentContribution)} 
+                    </Text>
+                    <Text style={s.goalAvailableText}> 
+                      Available
+                    </Text>
+                  </View>
+                  <Text style={s.goalComplete}>{g.percent}% Complete</Text>
+                </View>
+                <PieChart value={g.percent / 100} showPercentage />
+              </TouchableOpacity>
+              <Text style={s.defaultLine} />
+            </View>
           ))}
         </ScrollView>
       </View>

@@ -17,6 +17,10 @@ const goalsStyle = {
     flex: 0,
     flexDirection: 'column',
   },
+  row: {
+    flex: 0,
+    flexDirection: 'row',
+  },
   page: {
     height: Dimensions.get('window').height,
   },
@@ -60,7 +64,15 @@ const goalsStyle = {
     paddingTop: 15,
     ...STYLESHEET.shadowLight,
   },
-
+  defaultLine: {
+    borderBottomColor: Colors.LightGray,
+    borderBottomWidth: 1,
+    width: Dimensions.get('window').width,
+    alignSelf: 'stretch',
+    marginTop: -15,
+    marginBottom: 10,
+    marginLeft: 15,
+  },
   goal: {
     paddingLeft: 30,
     paddingRight: 40,
@@ -68,18 +80,26 @@ const goalsStyle = {
     justifyContent: 'space-between',
   },
   goalTitle: {
-    fontFamily: FONT_FAMILY_LIGHT,
+    fontFamily: FONT_FAMILY_SEMIBOLD,
     fontSize: 18,
-    marginBottom: 15,
+    marginBottom: 10,
   },
   goalAvailable: {
     fontFamily: FONT_FAMILY_REGULAR,
     fontSize: 16,
     marginBottom: 5,
   },
-  goalComplete: {
+  goalAvailableText: {
     fontFamily: FONT_FAMILY_REGULAR,
     fontSize: 12,
+    marginLeft: 3,
+    alignSelf: "center",
+  },
+  goalComplete: {
+    fontFamily: FONT_FAMILY_SEMIBOLD,
+    fontSize: 12,
+    color: Colors.Black,
+    color: '#A2A2A2',
   },
 };
 
