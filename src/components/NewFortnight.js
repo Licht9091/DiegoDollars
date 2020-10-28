@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
-import newFortnightStyle from './NewFortnight.style';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import AppContext from '../helper/context';
+import React, { useContext, useEffect, useState } from "react";
+import newFortnightStyle from "./NewFortnight.style";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import AppContext from "../helper/context";
 
 // Icon assets
-import CloudOne from '../assets/cloud.svg';
-import CloudTwo from '../assets/cloud2.svg';
-import Sun from '../assets/sun-red.svg';
+import CloudOne from "../assets/cloud.svg";
+import CloudTwo from "../assets/cloud2.svg";
+import Sun from "../assets/sun-red.svg";
 
 const NewFortnight = ({ onComplete, paycheckIds = [] }) => {
   const Context = useContext(AppContext);

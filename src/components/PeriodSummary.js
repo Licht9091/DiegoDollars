@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Text, ScrollView, TouchableOpacity, View } from 'react-native';
-import AppContext from '../helper/context';
-import Format from '../helper/Format';
-import moment from 'moment';
-const { default: pSummaryStyle } = require('./PeriodSummary.style');
+import React, { useContext, useEffect, useState } from "react";
+import { Text, ScrollView, TouchableOpacity, View } from "react-native";
+import AppContext from "../helper/context";
+import Format from "../helper/Format";
+import moment from "moment";
+const { default: pSummaryStyle } = require("./PeriodSummary.style");
 
 const PeriodSummary = ({ onComplete, paycheckIds = [] }) => {
   const Context = useContext(AppContext);
@@ -11,40 +11,53 @@ const PeriodSummary = ({ onComplete, paycheckIds = [] }) => {
   const [data, setData] = useState({});
 
   const loadData = async () => {
+    _user = Context.User;
+    _account = _user.account;
+
+    _totalSpending = Math.abs(
+      _account.allTransactions
+        .filter(
+          (t) =>
+            !t.isIncome &&
+            moment(t.date) > moment(Context.User.account.periodStart)
+        )
+        .reduce((a, b) => a + b.value, 0)
+    );
+    _allocatedToGoals = _user.goals.reduce(
+      (a, b) => a + b.fortnightlyContribution,
+      0
+    );
+
     setData({
       summaryItems: [
-        { label: 'Total Income', value: 1251.12 },
-        {
-          label: 'Total Spendings',
-          value: Math.abs(
-            Context.User.account.allTransactions
-              .filter(
-                (t) =>
-                  !t.isIncome &&
-                  moment(t.date) > moment(Context.User.account.periodStart)
-              )
-              .reduce((a, b) => a + b.value, 0)
-          ),
-        },
-        { label: 'Allocated to Goals', value: 300 },
-        { label: 'Spent Per Day', value: 55.2 },
+        { label: "Total Income", value: 1251.12 },
+        { label: "Total Spendings", value: _totalSpending },
+        { label: "Allocated to Goals", value: _allocatedToGoals },
+        { label: "Spent Per Day", value: 55.2 },
       ],
       rolloverSpending: 10.5,
       topSpendingCategories: [
-        { categoryName: 'Groceries', amount: 103.5 },
-        { categoryName: 'Transport', amount: 52.35 },
-        { categoryName: 'Groceries', amount: 71.3 },
-        { categoryName: 'Groceries', amount: 21.6 },
+        { categoryName: "Groceries", amount: 103.5 },
+        { categoryName: "Transport", amount: 52.35 },
+        { categoryName: "Groceries", amount: 71.3 },
+        { categoryName: "Groceries", amount: 21.6 },
       ],
       largestTransactions: [
-        { description: 'Groceries', amount: 103.5 },
-        { description: 'Transport', amount: 52.35 },
-        { description: 'Groceries', amount: 71.3 },
-        { description: 'Groceries', amount: 21.6 },
+        { description: "Groceries", amount: 103.5 },
+        { description: "Transport", amount: 52.35 },
+        { description: "Groceries", amount: 71.3 },
+        { description: "Groceries", amount: 21.6 },
       ],
     });
 
+    // Update the period after all the old values are used to calculate summary
     setLoaded(true);
+
+    await finishPeriod();
+  };
+
+  const finishPeriod = async () => {
+    await Context.User.startNewPeriod(paycheckIds);
   };
 
   // Initial load
@@ -97,7 +110,7 @@ const PeriodSummary = ({ onComplete, paycheckIds = [] }) => {
                 Rolled Over From Last Fornight
               </Text>
               <SummaryLine
-                label='Available Spending'
+                label="Available Spending"
                 value={Format.toDollarsDisplay(data.rolloverSpending)}
               />
 
@@ -141,11 +154,11 @@ const SummaryLine = ({ label, value }) => {
   const style = {
     wrapper: {
       flex: 0,
-      flexDirection: 'row',
+      flexDirection: "row",
       marginTop: 5,
       marginBottom: 5,
       width: 290,
-      justifyContent: 'space-between',
+      justifyContent: "space-between",
     },
     labelText: {
       flex: 0,
