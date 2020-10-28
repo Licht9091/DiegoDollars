@@ -1,29 +1,29 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState } from 'react';
 import {
   View,
   Text,
   Dimensions,
   TextInput,
   TouchableOpacity,
-} from "react-native";
-import { STYLESHEET } from "../styles/stylesheet";
-import { FONT_FAMILY_LIGHT, FONT_FAMILY_SEMIBOLD } from "../styles/typography";
-import Colors from "../styles/colors";
-import Pill from "./Pill";
-import AppContext from "../helper/context";
+} from 'react-native';
+import { STYLESHEET } from '../styles/stylesheet';
+import { FONT_FAMILY_LIGHT, FONT_FAMILY_SEMIBOLD } from '../styles/typography';
+import Colors from '../styles/colors';
+import Pill from './Pill';
+import AppContext from '../helper/context';
 
 const AddIncome = ({ onClose }) => {
   const style = {
     wrapper: {
       flex: 0,
-      flexDirection: "column",
-      justifyContent: "space-between",
+      flexDirection: 'column',
+      justifyContent: 'space-between',
       paddingTop: 10,
       paddingBottom: 10,
       paddingLeft: 15,
       paddingRight: 15,
       borderRadius: 20,
-      backgroundColor: "white",
+      backgroundColor: 'white',
       margin: 0,
       marginTop: 10,
       ...STYLESHEET.shadowNormal,
@@ -37,6 +37,7 @@ const AddIncome = ({ onClose }) => {
       fontSize: 13,
       fontFamily: FONT_FAMILY_SEMIBOLD,
       color: Colors.DarkGray,
+      marginBottom: 20,
       paddingTop: 12,
       paddingLeft: 5,
     },
@@ -49,15 +50,15 @@ const AddIncome = ({ onClose }) => {
     inputText: {
       fontSize: 18,
       fontFamily: FONT_FAMILY_LIGHT,
-      color: "#565758",
+      color: '#565758',
       paddingLeft: 5,
     },
     greyBubbleView: {
-      backgroundColor: "#232323",
-      width: Dimensions.get("window").width * 0.85,
+      backgroundColor: Colors.DarkerGray,
+      width: Dimensions.get('window').width * 0.85,
       marginTop: 10,
       marginLeft: -5,
-      marginBottom: 10,
+      marginBottom: 30,
       borderRadius: 15,
       padding: 18,
 
@@ -66,29 +67,19 @@ const AddIncome = ({ onClose }) => {
       ...STYLESHEET.shadowNormal,
     },
     defaultLineBlack: {
-      borderBottomColor: Colors.Black,
+      borderBottomColor: Colors.MediumGray,
       borderBottomWidth: 1,
+      marginTop: 6,
       marginLeft: 5,
-      width: Dimensions.get("window").width * 0.8,
-      alignSelf: "stretch",
+      width: Dimensions.get('window').width * 0.8,
+      alignSelf: 'stretch',
     },
   };
 
   const Context = useContext(AppContext);
 
-  const [incomeName, setIncomeName] = useState("");
-  const [incomeAmount, setIncomeAmount] = useState("");
-
-  const addItem = async () => {
-    resp = await Context.User.addBudgetItem(incomeName, incomeAmount, "income");
-
-    if (resp) {
-      return true;
-    } else {
-      alert("Adding item failed");
-      return false;
-    }
-  };
+  const [incomeName, setIncomeName] = useState('');
+  const [incomeAmount, setIncomeAmount] = useState('');
 
   return (
     <View style={style.wrapper}>
@@ -101,14 +92,14 @@ const AddIncome = ({ onClose }) => {
       <View style={style.greyBubbleView}>
         <Text style={style.description}>
           Income that is approximately this amount will be automatically
-          detected as paycheck in the future.
+          detected as a paycheck in the future.
         </Text>
       </View>
       <View></View>
       <View style={{ paddingTop: 10 }}>
         <TextInput
           style={style.inputText}
-          placeholder="Income Name"
+          placeholder='Name'
           onChangeText={(incomeName) => setIncomeName(incomeName)}
           value={incomeName}
         />
@@ -118,8 +109,8 @@ const AddIncome = ({ onClose }) => {
       <View style={{ paddingTop: 20 }}>
         <TextInput
           style={style.inputText}
-          placeholder="Income amount"
-          keyboardType="number-pad"
+          placeholder='Amount'
+          keyboardType='number-pad'
           onChangeText={(incomeAmount) => setIncomeAmount(incomeAmount)}
           value={incomeAmount}
         />
@@ -127,44 +118,47 @@ const AddIncome = ({ onClose }) => {
       </View>
 
       <View
-        style={{ flexDirection: "row", width: Dimensions.get("window").width }}
+        style={{ flexDirection: 'row', width: Dimensions.get('window').width }}
       >
         <TouchableOpacity onPress={onClose}>
           <View
             style={{
-              width: Dimensions.get("window").width * 0.35,
-              marginTop: 20,
+              width: Dimensions.get('window').width * 0.35,
+              marginTop: 40,
               marginBottom: 10,
               marginLeft: 10,
             }}
           >
             <Pill
-              content="Cancel"
+              content='Cancel'
               color={Colors.White}
-              backgroundColor={"#DB5B3C"}
+              backgroundColor={'#DB5B3C'}
             />
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={async () => {
-            if (await addItem()) {
-              onClose();
-            }
+            onClose({
+              name: incomeName,
+              amount: incomeAmount,
+              tag: 'income',
+              id: Math.round(Math.random() * 99999),
+            });
           }}
         >
           <View
             style={{
-              width: Dimensions.get("window").width * 0.35,
-              marginTop: 20,
+              width: Dimensions.get('window').width * 0.35,
+              marginTop: 40,
               marginBottom: 10,
               marginLeft: 30,
             }}
           >
             <Pill
-              content="Add Income"
+              content='Add Income'
               color={Colors.White}
-              backgroundColor={"#2363BC"}
+              backgroundColor={'#2363BC'}
             />
           </View>
         </TouchableOpacity>
