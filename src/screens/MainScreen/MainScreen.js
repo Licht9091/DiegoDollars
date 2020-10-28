@@ -84,7 +84,6 @@ const MainScreen = ({ navigation, route }) => {
   // This is called when the page is re focused to update any data that may have changed.
   useEffect(() => {
     if (isFocused) {
-      console.log('called');
       initUser();
     }
   }, [isFocused]);

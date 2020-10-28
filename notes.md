@@ -44,11 +44,12 @@ DONE:
 ---
 
 - Justin will do the Thursday screencap
+- Go through and time a practice demo on thursday
 
 Portfolio Sections:
 
-- Project background: what is our problem and who are we trying to help?
-- Our team
+- Project background: what is our problem and who are we trying to help? -- DARREN
+- Our team -- DONE
   - Brief description of everyone's role and background/experience
 - Initial research: what solutions currently exist and why are they no good?
   - YNAB requires you to categorise everything manually
@@ -56,22 +57,24 @@ Portfolio Sections:
   - N26 app is nice but doesn't work in australia
   - Other apps have tiring looking UIs that make bugeting a chore
   - There's massive potential for disruption in this area, there's massive potential for money to be made in this area as well
-- What we set out to do:
+- What we set out to do: -- JORDAN FOSS
   - Things we're trying to improve over existing solutions (fun fortnightly funds)
   - Help users manage their spending habits so they can get to their saving goals faster
   - DECO3800 report and suggestions we had
   - Testing/survey that we did
-- Working process: brief summary of this semester
-  - Agile cycles and iterations to hone in on the perfect solution for our target market
-  - We are a part of our target market and have an understanding of our users
-  - Show brief prototypes of our design iterations done in XD
-  - Testing and feedback gathered in studio session and through surveys/interviews
-- Tech Stack
+- Tech Stack -- JUSTIN
   - Frontend with react native
     - Platform agnostic, android and iOS
     - Finance is a lot more secure, trustworthy and convenient on a personal device
     - Easy to move to web
   - Backend with flask
+- Working process: brief summary of this semester -- JORDAN LEAN
+
+  - Agile cycles and iterations to hone in on the perfect solution for our target market
+  - We are a part of our target market and have an understanding of our users
+  - Show brief prototypes of our design iterations done in XD
+  - Testing and feedback gathered in studio session and through surveys/interviews
+
 - Improvements for the future
 
   - Bank integration through CDR
@@ -100,7 +103,7 @@ Portfolio Sections:
 
 Expo:
 
-- Problem statement
+- Problem statement (Ben will do slides and the talking for this)
 - Very brief process with through a single slide
 - Demo (with slides showing progression of each page/feature)
 - Ask judges questions, so they think about what you're doing
