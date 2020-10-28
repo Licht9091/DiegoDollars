@@ -69,7 +69,7 @@ function App() {
       <StatusBar backgroundColor='#2699FB' />
       <NavigationContainer>
         <ContextProvider>
-          <Stack.Navigator>
+          <Stack.Navigator screenOptions={{ animationEnabled: false }}>
             <Stack.Screen
               name='Login'
               component={LoginScreen}
