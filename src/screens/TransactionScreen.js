@@ -19,11 +19,6 @@ export default function TransactionScreen({ navigation, route }) {
   }
 
   const thisPeriod = route.params && route.params.thisPeriod;
-  console.log(User.account.allTransactions);
-  console.log('period start');
-  console.log(User.account.periodStart);
-  console.log('this period');
-  console.log(thisPeriod);
 
   // transactions
   const [allTransactions, setAllTransactions] = useState(
@@ -60,7 +55,10 @@ export default function TransactionScreen({ navigation, route }) {
             transaction={allTransactions.find(
               (t) => t.id === currentTransactionId
             )}
-            onClose={() => setCurrentTransactionId(null)}
+            onClose={() => {
+              setCurrentTransactionId(null);
+              fetchNewTransactions();
+            }}
           />
         </Modal>
       )}

@@ -517,12 +517,12 @@ export class User {
     if (index != -1) {
       if (this.account.allTransactions[index].category == 'Uncategorized') {
         this.uncategorisedSpending -= 1;
-        console.log(this.uncategorisedSpending);
+        // console.log(this.uncategorisedSpending);
       }
 
       if (category == 'Uncategorized') {
         this.uncategorisedSpending += 1;
-        console.log(this.uncategorisedSpending);
+        // console.log(this.uncategorisedSpending);
       }
 
       this.account.allTransactions[index].category = category;

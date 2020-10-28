@@ -57,8 +57,18 @@ const MainScreen = ({ navigation, route }) => {
     _recentTransactions = _allTransactions.slice(0, _numTransactions);
     _periodStart = moment(User.account.periodStart);
 
+    const uncategorisedSpending = User.account.allTransactions.filter(
+      (t) =>
+        t.category == 'Uncategorized' &&
+        t.value < 0 &&
+        new Date(t.date) > new Date(User.account.periodStart)
+    );
+
+    console.log(uncategorisedSpending);
+
     setData({
-      uncategorisedSpending: User.uncategorisedSpending,
+      // uncategorisedSpending: User.uncategorisedSpending,
+      uncategorisedSpending,
       uncategorisedIncome: _allTransactions.filter(
         (t) => t.isIncome && moment(t.date) > _periodStart
       ).length,
@@ -174,7 +184,9 @@ const MainScreen = ({ navigation, route }) => {
               <View style={[mainStyle.heroUncategorised]}>
                 {data.uncategorisedIncome > 0 && (
                   <Pill
-                    content={`${data.uncategorisedIncome} Paycheck(s) Received`}
+                    content={`${data.uncategorisedIncome} Paycheck${
+                      data.uncategorisedIncome.length > 1 ? 's' : ''
+                    } Received`}
                     color={Colors.White}
                     backgroundColor={'#FF6A6A'}
                     onPress={() => setRefreshModal(true)} // "income"
@@ -182,9 +194,9 @@ const MainScreen = ({ navigation, route }) => {
                 )}
               </View>
               <View style={mainStyle.heroUncategorised}>
-                {data.uncategorisedSpending > 0 && (
+                {data.uncategorisedSpending.length > 0 && (
                   <Pill
-                    content={`${data.uncategorisedSpending} Uncategorised Expenses`}
+                    content={`${data.uncategorisedSpending.length} Uncategorised Expenses`}
                     color={Colors.DarkerGray}
                     backgroundColor={Colors.White}
                     onPress={() =>
