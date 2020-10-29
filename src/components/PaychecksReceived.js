@@ -19,7 +19,7 @@ const PaychecksReceived = ({ onClose, onComplete }) => {
   const getPaychecks = async () => {
     const account = await Context.User.account;
     const paychecks = account.allTransactions
-      .filter((t) => t.isIncome && moment(t.date) > moment(account.periodStart))
+      .filter((t) => t.isIncome &&  new Date(t.date) > new Date(account.periodStart))
       .map((t) => ({ ...t, description: t.description.replace(/\s+/g, " ") }))
       .slice(0, 2);
 

@@ -63,16 +63,19 @@ const MainScreen = ({ navigation, route }) => {
         t.value < 0 &&
         new Date(t.date) > new Date(User.account.periodStart)
     );
+    
+    const transactionsAmount = User.account.allTransactions.filter((t) => !t.isIncome &&
+      new Date(t.date) > new Date(User.account.periodStart) && t.goalId == null).reduce( (a, b) => a + b.value, 0);
 
-    console.log(uncategorisedSpending);
+    console.log(transactionsAmount);
 
     setData({
       // uncategorisedSpending: User.uncategorisedSpending,
       uncategorisedSpending,
       uncategorisedIncome: _allTransactions.filter(
-        (t) => t.isIncome && moment(t.date) > _periodStart
+        (t) => t.isIncome && new Date(t.date) > new Date(User.account.periodStart)
       ).length,
-      availableSpending: User.account.spendingBalance,
+      availableSpending: User.account.spendingBalance + transactionsAmount,
       goals: User.goals,
       spendingCategories: User.spendingCategories,
       transactions: _allTransactions,
@@ -107,7 +110,11 @@ const MainScreen = ({ navigation, route }) => {
       <View style={{ height: Dimensions.get('window').height }}>
         {/* Refresh Modal */}
         {refreshModal && (
-          <RefreshModal onClose={() => setRefreshModal(false)}></RefreshModal>
+          <RefreshModal onClose={() => {
+            setRefreshModal(false);
+            fetchNewData();
+          }
+          }></RefreshModal>
         )}
 
         {/* Modal for the create goal button*/}
@@ -138,7 +145,7 @@ const MainScreen = ({ navigation, route }) => {
 
             <WavyHeader />
             <View style={mainStyle.logoWrapper}>
-              <Text style={mainStyle.logo}>DIEGO</Text>
+          <Text style={mainStyle.logo}>DIEGO</Text>
             </View>
             {/* Hero Content */}
             <View style={mainStyle.statusContainer}>
@@ -181,8 +188,9 @@ const MainScreen = ({ navigation, route }) => {
               <Text style={mainStyle.availablelable}>
                 Available This Period
               </Text>
+              {data.uncategorisedIncome > 0 && (
               <View style={[mainStyle.heroUncategorised]}>
-                {data.uncategorisedIncome > 0 && (
+
                   <Pill
                     content={`${data.uncategorisedIncome} Paycheck${
                       data.uncategorisedIncome.length > 1 ? 's' : ''
@@ -191,10 +199,11 @@ const MainScreen = ({ navigation, route }) => {
                     backgroundColor={'#FF6A6A'}
                     onPress={() => setRefreshModal(true)} // "income"
                   />
-                )}
+
               </View>
+              )}
+              {data.uncategorisedSpending.length > 0 && (
               <View style={mainStyle.heroUncategorised}>
-                {data.uncategorisedSpending.length > 0 && (
                   <Pill
                     content={`${
                       data.uncategorisedSpending.length
@@ -211,8 +220,8 @@ const MainScreen = ({ navigation, route }) => {
                       })
                     } // "expense"
                   />
-                )}
               </View>
+              )}
             </View>
 
             {/* Latest Transactions */}
@@ -338,7 +347,7 @@ const MainScreen = ({ navigation, route }) => {
                                 (t) =>
                                   t.category == category.name &&
                                   !t.isIncome &&
-                                  moment(t.date) >= moment(data.periodStart)
+                                  new Date(t.date) >= new Date(data.periodStart)
                               ).length
                             }{' '}
                             Transactions

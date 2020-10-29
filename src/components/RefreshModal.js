@@ -33,8 +33,8 @@ const RefreshModal = ({ onClose }) => {
   const [paycheckIds, setPaycheckIds] = useState([]);
 
   const onPaychecksComplete = (paycheckIds) => {
-    dispatch({ mode: 'review-period' });
     setPaycheckIds(paycheckIds);
+    dispatch({ mode: 'init-period' });
   };
 
   return (
@@ -43,7 +43,7 @@ const RefreshModal = ({ onClose }) => {
       {state && state.mode === 'review-paychecks' && (
         <PaychecksReceived
           onClose={onClose}
-          onComplete={() => dispatch({ mode: 'init-period' })}
+          onComplete={onPaychecksComplete}
         ></PaychecksReceived>
       )}
 
@@ -51,7 +51,7 @@ const RefreshModal = ({ onClose }) => {
       {state && state.mode === 'init-period' && (
         <Modal isVisible>
           <NewFortnight
-            onComplete={onPaychecksComplete}
+            onComplete={() => dispatch({ mode: 'review-period' })}
             paycheckIds={paycheckIds}
           ></NewFortnight>
         </Modal>

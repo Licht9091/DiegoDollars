@@ -670,9 +670,9 @@ export class User {
   startNewPeriod = async (paychecks) => {
     let API_CALL = API_START_PERIOD;
 
-    paycheckIds = [];
+    //paycheckIds = [];
 
-    console.log(paychecks.values);
+    console.log(paychecks);
 
     // for (var i = 0; i < paychecks.length; i++) {
     //   alert(paychecks[i]);
@@ -680,7 +680,7 @@ export class User {
     // }
 
     let postBody = {
-      transactionIds: paycheckIds,
+      transactionIds: paychecks[0],
     };
     const response = await fetch(API_CALL, {
       method: "POST",
@@ -695,7 +695,8 @@ export class User {
 
     if (response.ok) {
       if (bodyJson["status"] == 200) {
-        this.account.periodStart = bodyJson["periodStart"];
+        //this.account.periodStart = bodyJson["periodStart"];
+        this.fetchAll();
         return true;
       } else {
         return false;

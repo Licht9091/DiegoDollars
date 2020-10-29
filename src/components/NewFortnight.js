@@ -8,7 +8,7 @@ import CloudOne from "../assets/cloud.svg";
 import CloudTwo from "../assets/cloud2.svg";
 import Sun from "../assets/sun-red.svg";
 
-const NewFortnight = ({ onComplete, paycheckIds = [] }) => {
+const NewFortnight = ({ onComplete }) => {
   const Context = useContext(AppContext);
   const [displayGoals, setDisplayGoals] = useState([]);
   const [goals, setGoals] = useState([]);
