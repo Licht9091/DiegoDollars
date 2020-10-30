@@ -271,6 +271,21 @@ export class User {
       this.spendingCategories.push(new SpendingCategory(key, v, v / total));
     }
 
+    // Add all the category table categories
+    this.categories.forEach((c) => {
+      addCategory = true;
+
+      this.spendingCategories.forEach((sc) => {
+        if (c == sc.name) {
+          addCategory = false;
+        }
+      });
+
+      if (addCategory) {
+        this.spendingCategories.push(new SpendingCategory(c, 0, 0));
+      }
+    });
+
     this.uncategorisedIncome = parseFloat(bodyJson["uncategorised"]["income"]);
     this.uncategorisedSpending = parseFloat(
       bodyJson["uncategorised"]["spending"]
@@ -460,14 +475,19 @@ export class User {
     const jsonBody = await response.json();
 
     if (jsonBody["success"] == 200) {
-      goalIndex = this.goals.findIndex((g) => g.id == goal.id);
-      transIndex = this.account.allTransactions.findIndex(
+      goalIndex = await this.goals.findIndex((g) => g.id == goal.id);
+      transIndex = await this.account.allTransactions.findIndex(
         (t) => t.id == transaction.id
       );
 
       if (goalIndex != -1 && transIndex != -1) {
-        this.goals[goalIndex].totalSpent += transaction.value; // Add the amount
         oldGoalId = this.account.allTransactions[transIndex].goalId;
+
+        // If oldGoal and goal aren't the same, we add the amount to new goal
+        if (oldGoalId != goal.id) {
+          this.goals[goalIndex].totalSpent += transaction.value; // Add the amount
+        }
+
         if (oldGoalId != null) {
           // Remove amount from old goal
           oldGoalIndex = this.goals.findIndex((g) => g.id == oldGoalId);
@@ -475,7 +495,13 @@ export class User {
             this.goals[oldGoalIndex].totalSpent -= transaction.value;
           }
         }
-        this.account.allTransactions[transIndex].goalId = goal.id;
+
+        // If old goal and new goal are the same, this is a de-allocation
+        if (oldGoalId == goal.id) {
+          this.account.allTransactions[transIndex].goalId = null;
+        } else {
+          this.account.allTransactions[transIndex].goalId = goal.id;
+        }
       } else {
         // Something went wrong internally
         console.log("Something went wrong internally contributing to goal.");
@@ -483,11 +509,15 @@ export class User {
       }
 
       return true;
+    } else if (jsonBody["success"] == 500) {
+      alert("You have not saved enough to allocate that transaction.");
+      return false;
     } else {
-      alert("Allocation failed");
+      alert("Allocation failed: " + jsonBody["message"]);
       return false;
     }
   };
+
   /**
    * categoriseTransaction - async, make sure you wait for this to return.
    *
@@ -526,6 +556,7 @@ export class User {
       }
 
       this.account.allTransactions[index].category = category;
+      await this.fetchAccountStatus();
     } else {
       // SOmething went wrong locally
       console.log("Something went wrong locally");
